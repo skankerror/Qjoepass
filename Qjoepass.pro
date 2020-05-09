@@ -50,30 +50,30 @@ SOURCES += \
     runaround/listWindow.cpp \
     runaround/runaround.cpp \
     runaround/runaroundMenu.cpp \
-    system/ansi/ansiMovie.cpp \
-    system/ansi/ansiPlaySound.cpp \
-    system/ansi/ansifileaccess.cpp \
-    system/fileaccess.cpp \
-    system/mac10/MoreFilesX/MoreFilesX.c \
-    system/mac10/appleEvents.cpp \
-    system/mac10/macTypeCreator.cpp \
-    system/mac10/macfileaccess.cpp \
-    system/mac10/nav.c \
-    system/mac10mm/macMovie.cpp \
-    system/mac10mm/macSound.cpp \
-    system/mac10mm/newMovieRoutines.cpp \
-    system/mac10mm/quicktime.cpp \
-    system/movie.cpp \
-    system/myutil.cpp \
-    system/pathAccess.cpp \
-    system/sdInit.cpp \
-    system/unix/unix.cpp \
-    system/unix/unixMovie.cpp \
-    system/unix/unixPlaySound.cpp \
-    system/win/opensave.cpp \
-    system/win/winFileaccess.cpp \
-    system/win/winMovie.cpp \
-    system/win/winPlaySound.cpp \
+    syst/ansi/ansiMovie.cpp \
+    syst/ansi/ansiPlaySound.cpp \
+    syst/ansi/ansifileaccess.cpp \
+    syst/fileaccess.cpp \
+    syst/mac10/MoreFilesX/MoreFilesX.c \
+    syst/mac10/appleEvents.cpp \
+    syst/mac10/macTypeCreator.cpp \
+    syst/mac10/macfileaccess.cpp \
+    syst/mac10/nav.c \
+    syst/mac10mm/macMovie.cpp \
+    syst/mac10mm/macSound.cpp \
+    syst/mac10mm/newMovieRoutines.cpp \
+    syst/mac10mm/quicktime.cpp \
+    syst/movie.cpp \
+    syst/myutil.cpp \
+    syst/pathAccess.cpp \
+    syst/sdInit.cpp \
+    syst/unix/unix.cpp \
+    syst/unix/unixMovie.cpp \
+    syst/unix/unixPlaySound.cpp \
+    syst/win/opensave.cpp \
+    syst/win/winFileaccess.cpp \
+    syst/win/winMovie.cpp \
+    syst/win/winPlaySound.cpp \
     tools/applicationFolders.cpp \
     tools/cmdLine.cpp \
     tools/exitModules.cpp \
@@ -148,27 +148,27 @@ HEADERS += \
     runaround/runaround.h \
     runaround/runaroundClass.h \
     runaround/runaroundMenu.h \
-    system/JPResources.h \
-    system/fileSelector.h \
-    system/fileaccess.h \
-    system/mac10/MoreFilesX/MoreFilesX.h \
-    system/mac10/appleEvents.h \
-    system/mac10/fileSelectorCocoa.h \
-    system/mac10/macTypeCreator.h \
-    system/mac10/macfileaccess.h \
-    system/mac10/macio.h \
-    system/mac10/nav.h \
-    system/mac10mm/AudioPlayerViewController.h \
-    system/mac10mm/macMovie.h \
-    system/mac10mm/macSound.h \
-    system/mac10mm/newMovieRoutines.h \
-    system/mac10mm/quicktime.h \
-    system/movie.h \
-    system/myutil.h \
-    system/pathAccess.h \
-    system/playSound.h \
-    system/systemswitch.h \
-    system/win/opensave.h \
+    syst/JPResources.h \
+    syst/fileSelector.h \
+    syst/fileaccess.h \
+    syst/mac10/MoreFilesX/MoreFilesX.h \
+    syst/mac10/appleEvents.h \
+    syst/mac10/fileSelectorCocoa.h \
+    syst/mac10/macTypeCreator.h \
+    syst/mac10/macfileaccess.h \
+    syst/mac10/macio.h \
+    syst/mac10/nav.h \
+    syst/mac10mm/AudioPlayerViewController.h \
+    syst/mac10mm/macMovie.h \
+    syst/mac10mm/macSound.h \
+    syst/mac10mm/newMovieRoutines.h \
+    syst/mac10mm/quicktime.h \
+    syst/movie.h \
+    syst/myutil.h \
+    syst/pathAccess.h \
+    syst/playSound.h \
+    syst/systemswitch.h \
+    syst/win/opensave.h \
     tools/applicationFolders.h \
     tools/cmdLine.h \
     tools/exitModules.h \
@@ -265,7 +265,7 @@ DISTFILES += \
   sys/tmpNotationFile.pass \
   sys/watchfile.txt \
   sys/watchfileMac.txt \
-  system/mac10/MoreFilesX/MoreFilesXReadMe.txt \
-  system/mac10/fileSelectorCocoa.m \
-  system/mac10mm/AudioPlayerViewController.m \
-  system/mac10mm/audiofile.mp3
+  syst/mac10/MoreFilesX/MoreFilesXReadMe.txt \
+  syst/mac10/fileSelectorCocoa.m \
+  syst/mac10mm/AudioPlayerViewController.m \
+  syst/mac10mm/audiofile.mp3
