@@ -1,6 +1,7 @@
 #include "mymainwindow.h"
 
 #include <QApplication>
+#include "mainGL.cpp"
 
 int main(int argc, char *argv[])
 {
