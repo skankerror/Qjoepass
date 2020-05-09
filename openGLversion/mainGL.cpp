@@ -325,7 +325,7 @@ wwwBoolean checkScreensaverMode( )
 
 void 	InstallAppleEventHandlers( void );
 //-------------------- Start ------------------
-int main(int argc, char **argv)
+int mainGL(int argc, char **argv)
 {
 /*
 _myPrintf("argc = %d\n", argc);
