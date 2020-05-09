@@ -1,0 +1,40 @@
+! JoePass 7.6.0.1 (sourceforge rev. 185) file, created Mon Jul  7 01:09:55 2014
+! cdew siteswap output: 
+#sx
+#mhn*
+#objectCount 4
+<( -, 3) ( 5, -) |
+( -, -) ( -, -) >
+
+
+
+"-------------------hide cdew information / do not interprete as siteswap
+
+start of cdew output
+
+cdewSignature anonymous
+cdewLastChanged anonymous
+
+#cdew Version  2.000000
+
+cdewsize 2 2 2
+cdewDisplayMode 0
+cdewColorMode 0
+cdewCellBackground 1
+cdewLineSeperators 0
+cdewHandDelay 0
+cdewShowNumbers 0
+cdewShowHurries 0
+cdewHideCrosses 1
+cdewUnhurriedDiagram 0
+cdewPrintSiteswapMode 1
+cell 0 0 0 = -3 0 0 -1 1 -1 -1 0 0.000000 0 0 0.000000 0 0 0 0 -1 0 
+cell 0 1 0 = 1 0 0 -1 1 -1 -1 0 0.000000 0 0 0.000000 0 0 0 0 -1 0 
+cell 0 0 1 = 3 0 1 -1 1 -1 -1 0 0.000000 0 0 0.000000 0 0 0 0 -1 0 
+cell 0 1 1 = -3 0 1 -1 1 -1 -1 0 0.000000 0 0 0.000000 0 0 0 0 -1 0 
+cell 1 0 0 = -3 1 0 -1 1 -1 -1 0 0.000000 0 0 0.000000 0 0 0 0 -1 0 
+cell 1 1 0 = -3 1 0 -1 1 -1 -1 0 0.000000 0 0 0.000000 0 0 0 0 -1 0 
+cell 1 0 1 = -3 1 1 -1 1 -1 -1 0 0.000000 0 0 0.000000 0 0 0 0 -1 0 
+cell 1 1 1 = -3 1 1 -1 1 -1 -1 0 0.000000 0 0 0.000000 0 0 0 0 -1 0 
+end of cdew output
+-------------------"

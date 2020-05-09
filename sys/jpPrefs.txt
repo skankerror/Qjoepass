@@ -1,0 +1,264 @@
+Preference file
+generated Tue May 05 12:34:22 2020
+
+
+---------- new sorting:  --------------------------
+---------- was grouped by same gl setting call:  --
+---------- now grouped by object effects:        --
+
+========== obsolete: remove ===================
+---------- environment definitions: ----------
+environment:= 1
+showAbstracts:= 0
+
+========== to do ==============================
+---------- fog definitions: -------------------
+fog:= 0
+fogStart:= 0.000000
+fogEnd:= 50.000000
+fogDensity:= 0.030000
+fieldOfViewY:= 60.000000
+fog_color:= 0.500000 0.500000 0.500000
+
+---------- bugfix for crashes under some GLUT implementations: ----------
+menuMarkers:= 1
+
+========== behavious settings ================
+useCdewWorkspace:= 1
+
+========== windows settings ==================
+---------- window positions & visability ------
+worldWinSizeX:= 0.018750
+worldWinSizeY:= 0.147222
+worldWinSizeW:= 0.368750
+worldWinSizeH:= 0.618519
+infoWinSizeX:= 0.011458
+infoWinSizeY:= 0.732407
+infoWinSizeW:= 0.369792
+infoWinSizeH:= 0.213889
+patternWinSizeX:= 0.377734
+patternWinSizeY:= 0.031250
+patternWinSizeW:= 0.269141
+patternWinSizeH:= 0.620833
+runaroundInputWinSizeX:= 0.650000
+runaroundInputWinSizeY:= 0.350000
+runaroundInputWinSizeW:= 0.170000
+runaroundInputWinSizeH:= 0.300000
+runaroundListWinSizeX:= 0.650000
+runaroundListWinSizeY:= 0.030000
+runaroundListWinSizeW:= 0.170000
+runaroundListWinSizeH:= 0.300000
+showInfoWindow:= 1
+showEditorWindow:= 1
+showMessageWindow:= 0
+showScenesWindow:= 0
+showPositionWindow:= 0
+
+========== text editor settings ===================
+editorTextColor:= 0.000000 0.000000 0.000000
+editorErrColor:= 1.000000 0.300000 0.300000
+useFullCursor:= 1
+editorCursorTextColor:= 0.500000 0.000000 0.500000
+editorCursorBgColor:= 0.600000 0.600000 0.600000
+idleCursorWidth:= 1
+flashTime:= 100
+jumpToErrPosition:= 1
+showCmdLineFileInTextEditor:= 0
+helpActive:= 1
+generateCausalFromTextEditorOnStart:= 0
+autosaveCausalFromTextEditor:= 0
+generateTextToCausalInSameWindow:= 1
+editorDisplaySwitch:= 1
+
+========== animation window settings ==============
+---------- general --------------------------------
+useTapAnimationValues:=0
+
+---------- siteswap -------------------------------
+jpAnimationFPS:= 60
+movement:= 0
+walkFactor:= 5.000000
+gravity:= 96.236107
+emptyBeats:= 1
+maxDwell:= -1.000000
+minActionTime:= 0.200000
+animationSpeed:= 2.000000
+selfDwellElevation:= 1.000000
+emphaseShortDistanceFlag:=0
+minObjectDistance:= 50.000000
+positionMode:= 4
+
+---------- Light ------------------------------
+light_position:= 1000.000000 3000.000000 500.000000 0.000000
+specular0:= 0.930000 0.930000 0.930000 1.000000
+diffuse0:= 0.830000 0.830000 0.830000 1.000000
+ambient0:= 0.530000 0.530000 0.530000 1.000000
+lmodel_ambient:= 0.300000 0.300000 0.300000 1.000000
+luminance:= 0.800000
+
+---------- render mode ------------------------
+solidWorld:= 1
+shaderMode:= 1
+levelOfDetail:= 5
+smooth:= 1
+antialias:= 0
+
+---------- camera -----------------------------
+magnification:= 0.010000
+matrix:=  1.000000 0.000000 0.000000 0.000000 0.000000 0.984808 -0.173648 -1.738886 0.000000 0.173648 0.984808 -7.414598 0.000000 0.000000 0.000000 1.000000
+rotationAroundCenter:= 40.000000
+bendAngle:= 0.000000
+modelScale:= 100.000000
+showCameraPath:= 0
+showHandPath:= 0
+
+---------- Textures -------------------------------
+texturedClub:= 0
+texturedBall:= 0
+texturedSky:= 0
+texturedFloor:= 0
+texturedJuggler:= 0
+texturedHead:= 0
+
+---------- switches -------------------------------
+axis:= 0
+sky:= 0
+floor:= 0
+showScene:= 0
+showLogo:= 0
+showJugglerNumbers:= 0
+numbersColor:= 0.600000 0.600000 0.600000
+
+---------- color definitions: -----------------
+backgroundColor:= 0.300000 0.300000 0.800000
+skyColor:= 0.100000 0.100000 0.300000
+
+---------- Juggler --------------------------------
+jugglerMaterialSpecular:= 0.500000 0.500000 0.500000 1.000000
+jugglerMaterialShininess:= 10.000000
+jugglerMaterialEmission:= 0.000000 0.000000 0.000000 0.000000
+jugglerColor:= 0.800000 0.800000 0.800000
+bodyFaktor:= 1.000000
+jNumbers:= 0
+unicycles:= 0
+jointObjects:= 1
+blindfolded:=0
+showJugglerPos:= 1
+showJugglerPoi:= 0
+showShortTimeMovementPaths:= 1
+showJugglerModifiers:= 0
+
+---------- Material--------------------------------
+objMaterialSpecular:= 1.000000 1.000000 1.000000 0.000000
+objMaterialShininess:= 50.000000
+objMaterialEmission:= 0.000000 0.000000 0.000000 0.000000
+objectFaktor:= 1.000000
+objectSize:= 1.000000
+objectColor:= 1.000000 0.000000 0.000000
+colorOffset:= 0
+objectStyle:= 1
+objectColorMode:= 0
+showObjectVektors:= 0
+showObjectNumbers:= 0
+showSiteswapValue:= 0
+
+---------- Floor ----------------------------------
+floorColor:= 0.000000 0.600000 0.000000
+floorGridColorLight:= 0.900000 0.900000 0.900000
+floorGridColorDark:= 0.300000 0.300000 0.300000
+floorSize:= 512.000000
+solidFloor:= 0
+showFloorGrid:= 1
+showFrame:= 1
+repeatFloor:= 1
+lookThroughFloor:= 1
+
+---------- Levels ---------------------------------
+niveauBlendValue:= 0.300000
+niveauColor:= 1.000000 0.000000 0.000000
+niveauSize:= 512.000000
+niveauLines:= 6
+showNivieaus:= 0
+solidNiveaus:= 0
+
+---------- stage description ----------
+showStage:= 0
+stageColor:= 1.000000 1.000000 1.000000
+stageLowerLeft:= -400.000000 0.000000 -500.000000
+stageUpperRight:= 400.000000 800.000000 -500.000000
+
+---------- Sound ----------------------------------
+throwSound:= 0
+dynSoundHeight:= 0
+dynSoundPos:= 0
+playDropSound:= 0
+sound:= 0
+soundKind:= 0
+
+========== runaround ===========================
+runaroundRotateAllScenesTogetherFlag:= 0
+
+========== info ===========================
+fpsInMovieInfo:= 10
+patternInfo:= 0
+runaroundInfo:= 0
+frameRateInfo:= 0
+infoStringInfo:= 0
+eventInfo:= 1
+movieFrameRate:= 15
+fadeEvents:= 0
+fadeFactor:= 1.000000
+numberOfAdditionalEvents:= 5
+movieInfo:= 0
+showPatternTime:= 0
+showObjectColorFlag:= 0
+
+========== appl stuff =========================
+---------- command line ---------------------------
+
+---------- siteswap ---------------------------
+siteswapMode:= 0
+holdTwo:= 1
+syncMode:= 1
+oneTime:= 0.500000
+switch1x:= 1
+
+---------- juggling ---------------------------
+defhandDwell:= 0.500000
+jugglerStyle:= 1
+delayMode:= 1
+autoHurried:= 1
+
+---------- hand movement ---------------------
+vertHandMovement:= 8.000000
+deflection:= 1.000000
+armForeFactor:= 0.500000
+armSideFactor:= 0.500000
+ellbowDeflection:= 0.150000
+deflectionPassFactor:= 1.500000
+throwAngle:= 10.000000
+passCorrectionVector:= 2.000000 -30.000000 30.000000
+catchCorrectionVector:= 0.000000 0.000000 0.000000
+
+---------- misc  ------------------------------
+saved:= 1
+errorOut:= 0
+mouseControl:= 1
+inputPatternCode:= b
+textSize:= 0.800000
+soundOutput:= 1
+textEditorAutoStartFlag:= 0
+screenWidth:= 640.000000
+screenHeight:= 480.000000
+newGiraffeModel:= 1
+causalEditorHasOpenWindows:= 0
+askForSave:= 1
+
+---------- prefs  -----------------------------
+writeLogfile:= 1
+conOutput:= 0
+showMenuHotkeys:= 1
+showMenuSelectors:= 1
+waitForUserInputOnQuit:= 0
+
+---------- experimental: --------------------------------

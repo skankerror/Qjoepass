@@ -1,0 +1,383 @@
+logfile created on Tue May 05 12:36:03 2020
+
+0: close existing runaround projekt first
+1: press any key or mouse button
+2: open documentation
+3: quit
+4: File
+5: New
+6: Open project ...
+7: Save project
+8: Save project as ...
+9: Select pattern ...
+10: Close
+11: Default Positions
+12: Side to Side
+13: Back to Back
+14: Line
+15: Dropback Line
+16: Circle
+17: Feed
+18: Gorilla Feed
+19: Rotate Juggler Positions in All Scenes
+20: Edit Scenes List
+21: Copy to next field
+22: Add position at end
+23: Add position before selection
+24: Delete position at end
+25: Delete position at selection
+26: Cycle scenes clockwise
+27: Cycle scenes counterclockwise
+28: Add juggler
+29: Remove juggler
+30: Newline
+31: Double scenes
+32: Halve scenes
+33: Selection
+34: Select first scene
+35: Select second scene
+36: Remove scene selection
+37: Rotate Juggler Positions Clockwise
+38: Rotate Juggler Positions Counter-Clockwise
+39: Edit Selected Scene
+40: Flip horizontal
+41: Flip vertical
+42: Edit pattern in causal editor
+43: Edit pattern in text editor
+44: View
+45: Animated Scene
+46: Grid
+47: Position
+48: Point of Interest
+49: Frame
+50: Index
+51: More corners in frame
+52: Less corners in frame
+53: Rotate frame clockwise
+54: Rotate frame counterclockwise
+55: Scale up
+56: Scale down
+57: Experts
+58: remove unused files (see doc!)
+59: attach default pattern to all positions (see doc!)
+60: Run
+61: Movie
+62: Movie info
+63: More frames
+64: Less frames
+65: Throws
+66: Pattern
+67: Runaround status (if available)
+68: Framerate
+69: Time
+70: Information Text (if available)
+71: Object Color
+72: Hide window
+73: Show animation window
+74: Emphase short object distance
+75: MainMenu
+76: Animation
+77: Toggle Animation
+78: Step Through Animation
+79: Until Next Throw
+80: Hide Window
+81: Bigger Scene
+82: Smaller Scene
+83: Bigger Objects
+84: Smaller Objects
+85: Faster
+86: Slower
+87: Higher
+88: Lower
+89: Drop
+90: Table juggling
+91: Default speed
+92: Tap speed
+93: Shorter Warning Distance
+94: Wider Warning Distance
+95: Emphase short object distance
+96: Emphase only passes
+97: File
+98: Edit ...
+99: Animate ...
+100: Edit and animate ...
+101: Save as ...
+102: Animation to editor
+103: Animation to external editor
+104: Save changed files
+105: Workspace
+106: open...
+107: save as...
+108: Objects
+109: Random
+110: Clubs
+111: Fishes
+112: Balls
+113: Rings
+114: Pancakes
+115: Nothing
+116: More spin
+117: Less spin
+118: Reset spin
+119: Color
+120: Jugglers
+121: Objects
+122: Environment
+123: Sky
+124: Floor
+125: Fog
+126: Unicycles
+127: Blindfolded
+128: Scene
+129: Logo
+130: Juggler ID
+131: Object ID
+132: Siteswap
+133: Texture
+134: Head
+135: Sky
+136: Floor
+137: Balls
+138: Clubs
+139: All textures
+140: Camera
+141: Front
+142: Top
+143: Bird
+144: Next
+145: Move
+146: Vomit
+147: Tess
+148: Object
+149: Reset magnification
+150: Abstract
+151: Axis
+152: Niveaus
+153: Camera path
+154: Hand path
+155: Walk
+156: Floor grid
+157: Position
+158: Point of interest
+159: show just current movements
+160: Modifiers
+161: View
+162: Renderer
+163: Solid
+164: Solid niveaus
+165: Solid floor
+166: Smooth
+167: Antialias
+168: Look through floor
+169: toggle level of detail
+170: Fullscreen
+171: Sound
+172: Throw
+173: Catch
+174: Kind
+175: Dynamic height
+176: Dynamic position
+177: Faults
+178: Movies
+179: Make movie
+180: Make screenshot series
+181: Select compressor
+182: Make screenshot
+183: Windows
+184: Info window
+185: Editor window
+186: Causal window
+187: Causal window with animation pattern
+188: Runaround window
+189: previous window
+190: Styles
+191: Positions
+192: Configure
+193: Markers
+194: Hotkeys
+195: Select download folder...
+196: Logfile outout
+197: Select external editor...
+198: Restart
+199: Open PrechacThis
+200: About
+201: File
+202: Open ...
+203: Close 
+204: Save 
+205: Save as ...
+206: Edit
+207: Clear
+208: Capitalize
+209: Block cursor
+210: Vanilla
+211: Extended
+212: Animate
+213: Start pattern
+214: Start pattern 4 handed
+215: Start current line
+216: Start current line 4 handed
+217: Causal
+218: Generate causal on start
+219: Generate causal now
+220: Always in same window
+221: Suggest name when saving
+222: J2 generator
+223: Call j2
+224: J2 help page
+225: Show help text
+226: Postscript
+227: Save postscript as ...
+228: Add color to postscript
+229: Header
+230: Open ...
+231: Save as ...
+232: Clear
+233: Transfer
+234: Start animation
+235: Always start animation
+236: Open in text editor
+237: Always open in text editor
+238: File
+239: New
+240: Duplicate
+241: Open ...
+242: Close
+243: Save
+244: Save as ...
+245: Save auto name
+246: Add ...
+247: Merge ...
+248: Save as template
+249: Screenshot
+250: Sign pattern
+251: Show animation window
+252: Fix
+253: Fix connections now
+254: Always fix connections 
+255: No hurries 
+256: Markers
+257: Background Color
+258: Reset
+259: Arrow Color
+260: Reset
+261: dark blue
+262: green
+263: red
+264: yellow
+265: light blue
+266: violet
+267: grey
+268: rose
+269: Thickness
+270: Reset
+271: 1
+272: 2
+273: 3
+274: 4
+275: Repeat
+276: Start
+277: End
+278: Discard
+279: defaults
+280: Modifiers
+281: Toggle beep
+282: Toggle bounce
+283: Remove all beeps
+284: Remove all bounces
+285: Half spin
+286: Mark
+287: Path
+288: Pass
+289: Right side
+290: Beat
+291: Juggler
+292: Hand
+293: Invert marks
+294: Action
+295: Invert height
+296: Shift left
+297: Shift right
+298: Exchange hands
+299: Unmark
+300: Path
+301: Beat
+302: Juggler
+303: Hand
+304: All
+305: Cycle
+306: Left
+307: Right
+308: Up
+309: Down
+310: Swap 1 and 2
+311: Content
+312: Clear
+313: Default throw
+314: distribute throws per hand
+315: Distribute throws
+316: Rotate
+317: Reset arrow height
+318: Size
+319: Add juggler
+320: Remove juggler
+321: Add beat
+322: Remove beat
+323: Add reverse diagram
+324: Add symetric diagram
+325: Add same diagram
+326: Edit
+327: Undo
+328: Redo
+329: Cut
+330: Copy
+331: Paste
+332: Display
+333: Single line mode
+334: Sync line mode
+335: Color line mode
+336: Next display mode
+337: show display mode
+338: show color mode
+339: Color
+340: Reset user definitions
+341: Arrow length colors
+342: Causal path colors
+343: User defined color
+344: Juggler color
+345: Next color mode
+346: View
+347: Throws
+348: Hurries
+349: Crosses
+350: Faults
+351: Start
+352: Pattern
+353: Delays
+354: Line seperators
+355: Cell color
+356: Siteswap Display
+357: Object count
+358: Beat number
+359: Unused hands
+360: Time cursor
+361: General
+362: background for inactive windows
+363: Snap
+364: windows
+365: animation
+366: next causal
+call dndhelper as: C:\msys64\home\Patrice\joepass-code\Source\sys\install.cmd
+returns 1
+initialising runaround editor
+initialising runaround editor... done
+
+creating information window
+
+creating text editor
+create text editor ... done
+
+creating animation window
+dispose of text editor (id = 3)
+
+JoePass! ... done

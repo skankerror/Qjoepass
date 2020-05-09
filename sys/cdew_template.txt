@@ -1,0 +1,6 @@
+Preference file
+generated Sat Jan 10 23:12:25 2009
+
+
+templateCellWidth:= 96.000000
+templateCellHeight:= 79.000000

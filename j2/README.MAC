@@ -1,0 +1,20 @@
+
+The MacOS version of J2 is a no-frills port.  When you launch the application
+you get a text box, where you type the command-line arguments (without the
+'j2' part).
+
+Thus to run the command 'j2 3 5 3 -f -g -n' as given in the documentation,
+you type '3 5 3 -f -g -n' into the text box and hit enter.  The command line
+interface also gives you an option for redirecting output to a file.
+
+Other than this minor user interface difference, all program options given
+in the documentation file work fine.  In the case of the 'custom' mode,
+be sure that the rhythm file (the example '3person' is included here)
+is in the same folder as the J2 application itself.
+
+Email me if there are any problems.
+
+Jack Boyce
+jboyce@physics.berkeley.edu
+
+

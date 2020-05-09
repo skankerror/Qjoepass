@@ -1,0 +1,7 @@
+; This is a custom definition file for use the the J2 pattern
+; generator program.  Here we define 3 person passing, where
+; everybody is throwing asynchronously.
+
+1 |1| 2        ; person number 1, holdheight = 2
+2 |1| 2        ; person number 2
+3 |1| 2        ; person number 3

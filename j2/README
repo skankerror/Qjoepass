@@ -1,0 +1,14 @@
+This is the latest version of the juggling pattern generating program
+J2 (version 2.3, February 1999).
+
+Files here are:
+
+   j2.c          -- Source code for the program
+   j2.doc        -- How to run J2
+   notation.doc  -- Explains the notation used in J2
+   3person       -- Sample custom mode configuration file
+                      (defines 3 person passing)
+
+Jack Boyce
+jboyce@physics.berkeley.edu
+

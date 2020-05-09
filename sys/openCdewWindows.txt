@@ -1,0 +1,6 @@
+JoePass! Workspace File
+C:\msys64\home\Patrice\joepass-code\Source\sys\
+
+
+animationWindowPosition:=0.018750 0.147222 0.368750 0.618519
+;
