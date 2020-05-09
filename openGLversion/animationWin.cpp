@@ -62,7 +62,7 @@
 #include "fileaccess.h"
 
 
-#include "main.h"
+#include "mainGL.h"
 #include "info.h"
 #include "editor.h"
 #include "jugglers.h"

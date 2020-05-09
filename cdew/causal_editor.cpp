@@ -148,7 +148,7 @@
 #include "myutil.h"
 #include "prefs.h"
 
-#include "main.h"
+#include "mainGL.h"
 #include "cmdLine.h"
 
 #include "workspace.h"

@@ -56,7 +56,7 @@
 #ifdef MAC_CLASSIC_VERSION
 #include "macWin.h"
 #endif
-#include "main.h"
+#include "mainGL.h"
 #include "info.h"
 
 #include "exitModules.h"

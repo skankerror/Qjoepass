@@ -78,7 +78,7 @@ using namespace std;
 #include "grafik.h"
 
 
-#include "main.h"
+#include "mainGL.h"
 #include "dxf.h"
 #include "jpPrefs.h"
 #include "cameraControl.h"

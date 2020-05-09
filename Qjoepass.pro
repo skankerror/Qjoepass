@@ -15,8 +15,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+INCLUDEPATH += \
+    cdew \
+    dialog \
+    languageSupport \
+    openGLversion \
+    refactoring \
+    runaround \
+    syst \
+    syst/ansi \
+    syst/mac10 \
+    syst/mac10mm \
+    syst/unix \
+    syst/win \
+    tools \
+    universal \
+    headers \
+    j2
+
 SOURCES += \
-    main.c \
     main.cpp \
     mymainwindow.cpp \
     cdew/causal_editor.cpp \
@@ -36,7 +53,7 @@ SOURCES += \
     openGLversion/fs.mm \
     openGLversion/grafik.cpp \
     openGLversion/info.cpp \
-    openGLversion/main.cpp \
+    openGLversion/mainGL.cpp \
     openGLversion/opengltools.cpp \
     openGLversion/screenshot.cpp \
     openGLversion/stringtoscreen.cpp \
@@ -132,7 +149,7 @@ HEADERS += \
     openGLversion/grafik.h \
     openGLversion/info.h \
     openGLversion/infoClass.h \
-    openGLversion/main.h \
+    openGLversion/mainGL.h \
     openGLversion/opengltools.h \
     openGLversion/screenshot.h \
     openGLversion/stringtoscreen.h \

@@ -65,7 +65,7 @@ Note:
 #include <ctype.h>
 
 #include "notation.h"
-#include "main.h"
+#include "mainGL.h"
 #include "parseSiteswap.h"
 #include "fileIO.h"
 #include "myPrintf.h"
