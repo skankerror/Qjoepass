@@ -62,6 +62,7 @@ Thumbs.db
 # MinGW generated files
 *.Debug
 *.Release
+release/moc_predefs.h
 
 # Python byte code
 *.pyc
