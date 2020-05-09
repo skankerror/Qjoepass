@@ -2,9 +2,15 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-LIBS += -lglut \
-    -lGLU \
-    -lGL
+#LIBS += -lglut \
+#    -lGLU \
+#    -lGL
+
+LIBS += -lfreeglut \
+    -lglu32 \
+    -lopengl32 \
+     -lcomdlg32 \
+     -lwinmm
 
 CONFIG += c++11
 
@@ -13,6 +19,8 @@ CONFIG += c++11
 # depend on your compiler). Please consult the documentation of the
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
+#msys2 add
+DEFINES -= UNICODE
 
 # You can also make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -75,22 +83,22 @@ SOURCES += \
     syst/ansi/ansiPlaySound.cpp \
     syst/ansi/ansifileaccess.cpp \
     syst/fileaccess.cpp \
-    syst/mac10/MoreFilesX/MoreFilesX.c \
-    syst/mac10/appleEvents.cpp \
-    syst/mac10/macTypeCreator.cpp \
-    syst/mac10/macfileaccess.cpp \
-    syst/mac10/nav.c \
-    syst/mac10mm/macMovie.cpp \
-    syst/mac10mm/macSound.cpp \
-    syst/mac10mm/newMovieRoutines.cpp \
-    syst/mac10mm/quicktime.cpp \
+#    syst/mac10/MoreFilesX/MoreFilesX.c \
+#    syst/mac10/appleEvents.cpp \
+#    syst/mac10/macTypeCreator.cpp \
+#    syst/mac10/macfileaccess.cpp \
+#    syst/mac10/nav.c \
+#    syst/mac10mm/macMovie.cpp \
+#    syst/mac10mm/macSound.cpp \
+#    syst/mac10mm/newMovieRoutines.cpp \
+#    syst/mac10mm/quicktime.cpp \
     syst/movie.cpp \
     syst/myutil.cpp \
     syst/pathAccess.cpp \
     syst/sdInit.cpp \
-    syst/unix/unix.cpp \
-    syst/unix/unixMovie.cpp \
-    syst/unix/unixPlaySound.cpp \
+#    syst/unix/unix.cpp \
+#    syst/unix/unixMovie.cpp \
+#    syst/unix/unixPlaySound.cpp \
     syst/win/opensave.cpp \
     syst/win/winFileaccess.cpp \
     syst/win/winMovie.cpp \

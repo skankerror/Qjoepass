@@ -44,7 +44,9 @@
 #endif
 // rajout
 #include <stdlib.h>
+#ifdef LINUX_VERSION
 #include <linux/limits.h>
+#endif
 #define MAX_PATTERN_TITLE 	FILENAME_MAX
 #define DIR_SIZE			PATH_MAX
 #define MAX_FULL_FILE_NAME	(PATH_MAX + FILENAME_MAX)
