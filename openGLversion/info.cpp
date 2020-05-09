@@ -204,18 +204,18 @@ void showMovieInfo( void ) {
 }
 
 void moreFrames( int dummy ) {
-#pragma unused (dummy )
+//#pragma unused (dummy )
     jpPrefs.movieFrameRate ++;
 }
 
 void lessFrames( int dummy ) {
-#pragma unused (dummy )
+//#pragma unused (dummy )
     jpPrefs.movieFrameRate--;
     jpPrefs.movieFrameRate = max( jpPrefs.movieFrameRate, 3);
 }
 
 void infoQuit( int dummy ) {
-#pragma unused (dummy )
+//#pragma unused (dummy )
     exit( 0 );
 }
 
@@ -333,7 +333,7 @@ void showDebugInfo( void ) {
 // Was geschieht in einem Event?
 void showEvent( sse *e) {
 #ifdef MAC_CLASSIC_VERSION
-#pragma unused( e )
+//#pragma unused( e )
 #endif
 	
     char    *p;
@@ -822,7 +822,7 @@ void infoMenuSelection( int id ) {
 
 
 void infoKey(unsigned char theKey, int x, int y) {
-#pragma unused (x,y)
+//#pragma unused (x,y)
 	if( !_menuHotkeySelect( infoMenuList, theKey))
 		_menuHotkeySelect(worldMenuList, theKey);
 	
@@ -831,12 +831,12 @@ void infoKey(unsigned char theKey, int x, int y) {
 }
 
 void infoWinFunc( int dummy) {
-#pragma unused (dummy)
+//#pragma unused (dummy)
     createInfoWindow(false);
 }
 
 void quitFunc( int dummy) {
-#pragma unused (dummy)
+//#pragma unused (dummy)
     exit(0);
 }
 

@@ -373,16 +373,16 @@ void oglwin::postInputAction( void ) {
     redisplayAllCDEWWindows();
 	transferToAnimation();
 }
-#pragma mark ------ functions
+//#pragma mark ------ functions
 void cdewNewWin( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     new oglwin("untitled" );
 }
 
 #define COPIED_DIAGRAM_NAME "copiedDiagram"
-#pragma mark ------ functions
+//#pragma mark ------ functions
 void cdewDuplicateWin( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
 	char *p;
 	int wx, wy, ww, wh;
 	
@@ -405,7 +405,7 @@ void cdewDuplicateWin( int wwDummy) {
 }
 
 void cdewOpen( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
 	
     oglwin *w = getOglwinFromID( glutGetWindow() );
     w->readDiagram();
@@ -418,7 +418,7 @@ void cdewOpen( int wwDummy) {
 #endif
 }
 void cdewSave( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
 	
     oglwin *w = getOglwinFromID( glutGetWindow() );
     w->fileChangedFlag = true;
@@ -426,7 +426,7 @@ void cdewSave( int wwDummy) {
 }
 
 void cdewSaveAuto( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
 	
     oglwin *w = getOglwinFromID( glutGetWindow() );
     w->fileChangedFlag = true;
@@ -435,7 +435,7 @@ void cdewSaveAuto( int wwDummy) {
 }
 
 void cdewSaveAs( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
 	
     oglwin *w = getOglwinFromID( glutGetWindow() );
     w->fileChangedFlag = true;
@@ -443,7 +443,7 @@ void cdewSaveAs( int wwDummy) {
     w->saveDiagramAs();
 }
 void cdewSavePS( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
 	//    w->saveDiagramWithName(cdewTemplatePath);
 	//    w->writeTemplatePrefs();
@@ -454,18 +454,18 @@ void cdewSavePS( int wwDummy) {
     w->printThisWindowPS();
 }
 void cdewQuit( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
 	
 	exitModules();
 }
 void cdewTemplate( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->saveDiagramWithName(cdewTemplatePath);
     w->writeTemplatePrefs();
 }
 void cdewFixNow( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
 	
     wwwBoolean fixState = autoFixConnections;
 	oglwin *w = getOglwinFromID( glutGetWindow()) ;
@@ -476,23 +476,23 @@ void cdewFixNow( int wwDummy) {
     autoFixConnections = fixState;
 }
 void cdewNextDisplayMode( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->switchDisplayMode();
 }
 
 void cdewSingleLineMode( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->displayMode = singleLineMode;
 }
 void cdewSyncLineMode( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->displayMode = syncLineMode;
 }
 void cdewColorLineMode( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->displayMode = colorLineMode;
 }
@@ -507,12 +507,12 @@ void oglwin::setColorPattern( void ) {
 
 
 void cdewClear( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->clearDiagram();
 }
 void cdewCloseWin( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->closeWin();
@@ -521,7 +521,7 @@ void cdewCloseWin( int wwDummy) {
 }
 
 void cdewReadHeader( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->readHeaderFromFile();
 	
@@ -531,195 +531,195 @@ void cdewReadHeader( int wwDummy) {
 	}
 }
 void cdewWriteHeader( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->writeHeaderToFile();
 }
 void cdewClearHeader( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->clearHeader();
 }
 void cdewRedo( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->redo();
 }
 /*
  
  void cdewNextColor( int wwDummy) {
- #pragma unused (wwDummy)
+ //#pragma unused (wwDummy)
  oglwin *w = getOglwinFromID( glutGetWindow()) ;
  w->nextColor();
  }
  
  void cdewNextThickness( int wwDummy) {
- #pragma unused (wwDummy)
+ //#pragma unused (wwDummy)
  oglwin *w = getOglwinFromID( glutGetWindow()) ;
  w->nextThickness();
  }
  */
 
 void cdewBackgroundColorReset( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->setMarkedBackgroundColor(w->causalCells, NO_COLOR);
 }
 
 void cdewBackgroundColor1( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->setMarkedBackgroundColor(w->causalCells,  1);
 }
 
 void cdewBackgroundColor2( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->setMarkedBackgroundColor(w->causalCells, 2);
 }
 
 void cdewBackgroundColor3( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->setMarkedBackgroundColor(w->causalCells, 3);
 }
 
 void cdewBackgroundColor4( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->setMarkedBackgroundColor(w->causalCells, 4);
 }
 
 void cdewBackgroundColor5( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->setMarkedBackgroundColor(w->causalCells,  5);
 }
 
 void cdewBackgroundColor6( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->setMarkedBackgroundColor(w->causalCells, 6);
 }
 
 void cdewBackgroundColor7( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->setMarkedBackgroundColor(w->causalCells, 7);
 }
 
 void cdewBackgroundColor8( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->setMarkedBackgroundColor(w->causalCells, 8);
 }
 
 
 void cdewArrowColorReset( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->setMarkedArrowColor(w->causalCells, cdewLastColor = -1, markedColorMode);
 }
 
 void cdewArrowColor1( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->setMarkedArrowColor(w->causalCells, cdewLastColor = 1, userColorMode);
 }
 
 void cdewArrowColor2( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->setMarkedArrowColor(w->causalCells, cdewLastColor = 2, userColorMode);
 }
 
 void cdewArrowColor3( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->setMarkedArrowColor(w->causalCells, cdewLastColor = 3, userColorMode);
 }
 
 void cdewArrowColor4( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->setMarkedArrowColor(w->causalCells, cdewLastColor = 4, userColorMode);
 }
 
 void cdewArrowColor5( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->setMarkedArrowColor(w->causalCells, cdewLastColor = 5, userColorMode);
 }
 
 void cdewArrowColor6( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->setMarkedArrowColor(w->causalCells, cdewLastColor = 6, userColorMode);
 }
 
 void cdewArrowColor7( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->setMarkedArrowColor(w->causalCells, cdewLastColor = 7, userColorMode);
 }
 
 void cdewArrowColor8( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->setMarkedArrowColor(w->causalCells, cdewLastColor = 8, userColorMode);
 }
 
 void cdewThicknessReset( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->setMarkedWidth(defaultThickness);
 }
 
 void cdewThicknessMakeDefault( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
 	cdewDefaultThickness = cdewLastThickness;
 }
 
 
 void cdewThickness1( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->setMarkedWidth(cdewLastThickness = 1);
 }
 
 void cdewThickness2( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->setMarkedWidth(cdewLastThickness = 2);
 }
 
 void cdewThickness3( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->setMarkedWidth(cdewLastThickness = 3);
 }
 
 void cdewThickness4( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->setMarkedWidth(cdewLastThickness = 4);
 }
 
 void cdewArrowDefault( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->arrowDefault();
 }
 
 void cdewUndo( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->undo();
 }
 void cdewAnimate( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     wwwBoolean t;
     w = getOglwinFromID( glutGetWindow() );
@@ -729,136 +729,136 @@ void cdewAnimate( int wwDummy) {
     w->autoStartRestartFlag = t;
 }
 void cdewTextEdit( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->transferToTextEditor();
 }
 void cdewAdd( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->addDiagram();
 }
 void cdewMerge( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->mergeDiagram();
 }
 void cdewMarkPath( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->markPath();
 }
 void cdewMarkPass( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->markPass();
 }
 void cdewMarkBeat( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->markBeat();
 }
 void cdewMarkJuggler( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->markJuggler();
 }
 void cdewMarkHands( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->markJugglersHand();
 }
 void cdewInvertMarks( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->invertMarked();
 }
 void cdewShiftMarksRight( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->cycleMarksRight();
 }
 void cdewShiftMarksLeft( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->cycleMarksLeft();
 }
 void cdewUnmarkPath( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->unmarkPath();
 }
 void cdewUnmarkBeat( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->unmarkBeat();
 }
 void cdewUnmarkJuggler( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->unmarkJuggler();
 }
 void cdewUnmarkHands( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->unmarkJugglersHand();
 }
 void cdewUnmarkAll( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->unmarkAll();
 }
 void cdewSetDefault( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->setDefaultHand();
 }
 void cdewAddJuggler( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->addJuggler();
 }
 void cdewRemoveJuggler( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->removeJuggler();
 }
 void cdewAddThrow( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->addThrow();
 }
 void cdewRemoveThrow( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->removeThrow();
 }
 void cdewAddReverse( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->invertDiagram();
 }
 void cdewAddSym( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     changeCellSizeFlag = true;
@@ -867,7 +867,7 @@ void cdewAddSym( int wwDummy) {
 	
 }
 void cdewAddSame( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     changeCellSizeFlag = true;
@@ -875,65 +875,65 @@ void cdewAddSame( int wwDummy) {
     changeCellSizeFlag = false;
 }
 void cdewDistribute( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->distributeThrows();
 }
 void cdewDistributePerHand( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->distributeThrowsPerHand();
 }
 void cdewRedrawAll( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     redisplayAllCDEWWindows();
 }
 void cdewResetBows( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->resetBowFactor();
 }
 void cdewCycleLeft( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->cyclePatternLeft();
 }
 void cdewCycleRight( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->cyclePatternRight();
 }
 void cdewCycleUp( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->cyclePatternUp();
 }
 void cdewCycleDown( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->cyclePatternDown();
 }
 void cdewSwap1And2( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->swap1And2();
 }
 void cdewInvertMarked( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->invertMarked();
 }
 void cdewRotate( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->rotateDiagram();
@@ -941,64 +941,64 @@ void cdewRotate( int wwDummy) {
 
 
 void cdewInvertHeight( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->invertHeightForChristophesVisualisationModeFunc();
 }
 void cdewFixDelay( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->fixDelay();
 }
 void cdewMarkRight( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->markRight();
 }
 void cdewChangeHands( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->exchangeMarkedHands();
 }
 void cdewToggleBeepOnMarks( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->toggleBeepOnMarks();
 }
 void cdewBeepOff( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->beepOff();
 }
 
 void cdewToggleBounceOnMarks( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->toggleBounceOnMarks();
 }
 
 void cdewHalfSpinOnMarks( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->toggleHalfspinOnMarks();
 }
 void cdewTossAll( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->tossAll();
 }
 
 void cdewSign( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->setSignature(ownerSignature);
@@ -1007,7 +1007,7 @@ void cdewSign( int wwDummy) {
 
 #if 01
 void cdewScreenshot( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
 	oglwin *w;
 	w = getOglwinFromID( glutGetWindow() );
 	w->screenshot();
@@ -1082,20 +1082,20 @@ void oglwin::screenshot( void ){
 
 
 void cdewCellColors( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
 	w->cellColor++;
     w->cellColor = w->cellColor % MaxCellColors;
 }
 
 void cdewuserDefArrowColor( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
 	
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->cdewColorMode = LengthColorMode;
 }
 void cdewThrowDisplayMode( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->printSiteswap++;
     w->printSiteswap %= EndThrowDisplayMode;
@@ -1129,7 +1129,7 @@ void oglwin::reCreateCausalMenu( void ) {
 
 
 void cdewColorResetAll( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->setMarkedArrowColor(w->causalCells, cdewLastColor = -1, allColorMode);
     w->setMarkedBackgroundColor(w->causalCells, cdewLastColor = -1);
@@ -1139,13 +1139,13 @@ void cdewColorResetAll( int wwDummy) {
 
 
 void cdewLengthColor( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
 	
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->cdewColorMode = LengthColorMode;
 }
 void cdewCausalColor( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
 	
     oglwin *w = getOglwinFromID( glutGetWindow()) ;
     w->colorPattern(true);
@@ -1155,7 +1155,7 @@ void cdewCausalColor( int wwDummy) {
 
 
 void cdewNextColorMode( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
 	
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
@@ -1183,7 +1183,7 @@ void cdewNextColorMode( int wwDummy) {
 
 
 void cdewJugglerColor( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
 	
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
@@ -1193,7 +1193,7 @@ void cdewJugglerColor( int wwDummy) {
 }
 
 void cdewResetRepeat( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
 	
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
@@ -1203,7 +1203,7 @@ void cdewResetRepeat( int wwDummy) {
 
 
 void cdewToggleRepeatIn( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
 	
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
@@ -1212,7 +1212,7 @@ void cdewToggleRepeatIn( int wwDummy) {
 }
 
 void cdewToggleRepeatOut( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
 	
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
@@ -1223,7 +1223,7 @@ void cdewToggleRepeatOut( int wwDummy) {
 
 
 void cdewCalcStart( int wwDummy ){
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
 	
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
@@ -1233,7 +1233,7 @@ void cdewCalcStart( int wwDummy ){
 
 
 void cdewSwitchToLastOrAnimationWindow( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
 	switchToLastOrAnimationWindow(0);
 	glutHideWindow();
 	glutShowWindow();
@@ -1241,7 +1241,7 @@ void cdewSwitchToLastOrAnimationWindow( int wwDummy) {
 
 
 void cdewCycleThroughCdewWindows( int wwDummy) {
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
     oglwin *w,*n;
 	
     w = getOglwinFromID( glutGetWindow() );
@@ -1255,14 +1255,14 @@ void cdewCycleThroughCdewWindows( int wwDummy) {
 }	
 
 void cdewCut( int wwDummy ){
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
 	
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
     w->cutMarks();
 }
 void cdewCopy( int wwDummy ){
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
 	
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
@@ -1270,7 +1270,7 @@ void cdewCopy( int wwDummy ){
 }
 
 void cdewPaste( int wwDummy ){
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
 	
     oglwin *w;
     w = getOglwinFromID( glutGetWindow() );
@@ -1278,7 +1278,7 @@ void cdewPaste( int wwDummy ){
 }
 
 void backgroundColorMode(  int wwDummy ){
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
 	
 	inactiveBackgroundMode++;
 	if( inactiveBackgroundMode >= cdewBackgroundEnd )	
@@ -1288,7 +1288,7 @@ void backgroundColorMode(  int wwDummy ){
 }
 
 void toggleTimeCursor( int wwDummy ){
-#pragma unused (wwDummy)
+//#pragma unused (wwDummy)
 	
 	oglwin *w;
 	w = getOglwinFromID( glutGetWindow() );

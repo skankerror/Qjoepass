@@ -5473,8 +5473,7 @@ void oglwin::writeCDEWPrefs( void )
 	
 
 #ifdef VerboseCdewOutput
-	_myPrintf("writing cdew window size:
-%d %d %.f %.f \n",cdewWindowX,cdewWindowY, cdewCellWidth, cdewCellHeight);
+    _myPrintf("writing cdew window size: %d %d %.f %.f \n",cdewWindowX,cdewWindowY, cdewCellWidth, cdewCellHeight);
 #endif
 	saveTextPrefs(CDEW_PREF_NAME, cdewPrefList);
 	

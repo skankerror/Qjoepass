@@ -145,7 +145,7 @@ float	dM[4][4] = DefMatrix;
 
 void initJoePass( char *argv0 )
 {
-#pragma unused( argv0 )
+//#pragma unused( argv0 )
 	const char *sd, *ad;
 	char cd[1000];
 	atexit( done );
