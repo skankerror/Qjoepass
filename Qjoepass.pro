@@ -48,7 +48,9 @@ INCLUDEPATH += \
     j2
 
 SOURCES += \
+    animationview.cpp \
     main.cpp \
+#    mainmenu.cpp \
     mymainwindow.cpp \
 #    cdew/causal_editor.cpp \
 #    cdew/cdewDraw.cpp \
@@ -128,9 +130,12 @@ SOURCES += \
 #    universal/scanner.cpp \
 #    universal/siteswap.cpp \
 #    universal/styleScanner.cpp \
-#    universal/workspace.cpp
+ \#    universal/workspace.cpp
+    settings.cpp
 
 HEADERS += \
+    animationview.h \
+#    mainmenu.h \
     mymainwindow.h \
     cdew/causal_editor.h \
     cdew/cdewClass.h \
@@ -179,6 +184,7 @@ HEADERS += \
     runaround/runaround.h \
     runaround/runaroundClass.h \
     runaround/runaroundMenu.h \
+    settings.h \
     syst/JPResources.h \
     syst/fileSelector.h \
     syst/fileaccess.h \
@@ -300,3 +306,6 @@ DISTFILES += \
   syst/mac10/fileSelectorCocoa.m \
   syst/mac10mm/AudioPlayerViewController.m \
   syst/mac10mm/audiofile.mp3
+
+RESOURCES += \
+    application.qrc

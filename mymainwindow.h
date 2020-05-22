@@ -1,26 +1,55 @@
 #ifndef MYMAINWINDOW_H
 #define MYMAINWINDOW_H
 
-#include <QOpenGLWidget>
-#include <QOpenGLFunctions>
-#include <QMatrix4x4>
-#include <QBasicTimer>
+#include <QMainWindow>
 
-class MyMainWindow : public QOpenGLWidget, protected QOpenGLFunctions
+QT_BEGIN_NAMESPACE
+class QAction;
+class QActionGroup;
+class QLabel;
+class QMenu;
+QT_END_NAMESPACE
+
+class MyMainWindow : public QMainWindow
 {
   Q_OBJECT
 
 public:
-  MyMainWindow(QWidget *parent = nullptr);
-  ~MyMainWindow();
+  MyMainWindow();
+  void loadFile(const QString &fileName);
 
 protected:
-    void initializeGL() override;
-    void resizeGL(int w, int h) override;
-    void paintGL() override;
+  void closeEvent(QCloseEvent *event) override;
+
+private slots:
+  void newFile();
+  void open();
+  bool save();
+  bool saveAs();
+  void about();
+  void documentWasModified();
 
 private:
-    QBasicTimer timer;
-    QMatrix4x4 projection;
+  void createActions();
+  void createMenus();
+  void createStatusBar();
+  void readSettings();
+  void writeSettings();
+  bool maybeSave();
+  bool saveFile(const QString &fileName);
+  void setCurrentFile(const QString &fileName);
+  QString strippedName(const QString &fullFileName);
+  QString curFile;
+
+  QMenu *fileMenu;
+  QMenu *editMenu;
+  QMenu *helpMenu;
+  QAction *newAct;
+  QAction *openAct;
+  QAction *saveAct;
+  QAction *saveAsAct;
+  QAction *exitAct;
+  QAction *aboutAct;
+  QLabel *infoLabel;
 };
 #endif // MYMAINWINDOW_H
