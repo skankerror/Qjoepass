@@ -1,18 +1,18 @@
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-unix {
-LIBS += -lglut \
-    -lGLU \
-    -lGL
-}
-win32 {
-LIBS += -lfreeglut \
-    -lglu32 \
-    -lopengl32 \
-     -lcomdlg32 \
-     -lwinmm
-}
+#unix {
+#LIBS += -lglut \
+#    -lGLU \
+#    -lGL
+#}
+#win32 {
+#LIBS += -lfreeglut \
+#    -lglu32 \
+#    -lopengl32 \
+#     -lcomdlg32 \
+#     -lwinmm
+#}
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -50,85 +50,85 @@ INCLUDEPATH += \
 SOURCES += \
     main.cpp \
     mymainwindow.cpp \
-    cdew/causal_editor.cpp \
-    cdew/cdewDraw.cpp \
-    cdew/cdewMem.cpp \
-    cdew/cdewMenu.cpp \
-    cdew/cdewtools.cpp \
-    cdew/cdewWork.cpp \
-    dialog/dialog.cpp \
-    j2/j2.cpp \
-    languageSupport/languageSupport.cpp \
-    openGLversion/animationView.cpp \
-    openGLversion/animationWin.cpp \
-    openGLversion/dxf.cpp \
-    openGLversion/editor.cpp \
-    openGLversion/farbwerte.cpp \
-    openGLversion/fs.cpp \
-    openGLversion/grafik.cpp \
-    openGLversion/info.cpp \
+#    cdew/causal_editor.cpp \
+#    cdew/cdewDraw.cpp \
+#    cdew/cdewMem.cpp \
+#    cdew/cdewMenu.cpp \
+#    cdew/cdewtools.cpp \
+#    cdew/cdewWork.cpp \
+#    dialog/dialog.cpp \
+#    j2/j2.cpp \
+#    languageSupport/languageSupport.cpp \
+#    openGLversion/animationView.cpp \
+#    openGLversion/animationWin.cpp \
+#    openGLversion/dxf.cpp \
+#    openGLversion/editor.cpp \
+#    openGLversion/farbwerte.cpp \
+#    openGLversion/fs.cpp \
+#    openGLversion/grafik.cpp \
+#    openGLversion/info.cpp \
 #    openGLversion/mainGL.cpp \
-    openGLversion/opengltools.cpp \
-    openGLversion/screenshot.cpp \
-    openGLversion/stringtoscreen.cpp \
-    openGLversion/texture.cpp \
-    openGLversion/world.cpp \
-    refactoring/hand.cpp \
-    refactoring/hcurve.cpp \
-    refactoring/juggler.cpp \
-    refactoring/vector3d.cpp \
-    runaround/inputWindow.cpp \
-    runaround/listWindow.cpp \
-    runaround/runaround.cpp \
-    runaround/runaroundMenu.cpp \
-    syst/ansi/ansiMovie.cpp \
-    syst/ansi/ansiPlaySound.cpp \
-    syst/ansi/ansifileaccess.cpp \
-    syst/fileaccess.cpp \
-    syst/mac10/MoreFilesX/MoreFilesX.c \
-    syst/mac10/appleEvents.cpp \
-    syst/mac10/macTypeCreator.cpp \
-    syst/mac10/macfileaccess.cpp \
-    syst/mac10/nav.c \
-    syst/mac10mm/macMovie.cpp \
-    syst/mac10mm/macSound.cpp \
-    syst/mac10mm/newMovieRoutines.cpp \
-    syst/mac10mm/quicktime.cpp \
-    syst/movie.cpp \
-    syst/myutil.cpp \
-    syst/pathAccess.cpp \
-    syst/sdInit.cpp \
-    syst/unix/unix.cpp \
-    syst/unix/unixMovie.cpp \
-    syst/unix/unixPlaySound.cpp \
-    syst/win/opensave.cpp \
-    syst/win/winFileaccess.cpp \
-    syst/win/winMovie.cpp \
-    syst/win/winPlaySound.cpp \
-    tools/applicationFolders.cpp \
-    tools/cmdLine.cpp \
-    tools/exitModules.cpp \
-    tools/fileIO.cpp \
-    tools/free.cpp \
-    tools/myPrintf.cpp \
-    tools/openglmenu.cpp \
-    tools/prefs.cpp \
-    tools/vmath.cpp \
-    tools/windowsSize.cpp \
-    universal/cameraControl.cpp \
-    universal/fileHandler.cpp \
-    universal/jpPrefs.cpp \
-    universal/jugglers.cpp \
-    universal/mem.cpp \
-    universal/notation.cpp \
-    universal/parseSiteswap.cpp \
-    universal/pattern.cpp \
-    universal/prefDef.cpp \
-    universal/preprocess.cpp \
-    universal/scanner.cpp \
-    universal/siteswap.cpp \
-    universal/styleScanner.cpp \
-    universal/workspace.cpp
+#    openGLversion/opengltools.cpp \
+#    openGLversion/screenshot.cpp \
+#    openGLversion/stringtoscreen.cpp \
+#    openGLversion/texture.cpp \
+#    openGLversion/world.cpp \
+#    refactoring/hand.cpp \
+#    refactoring/hcurve.cpp \
+#    refactoring/juggler.cpp \
+#    refactoring/vector3d.cpp \
+#    runaround/inputWindow.cpp \
+#    runaround/listWindow.cpp \
+#    runaround/runaround.cpp \
+#    runaround/runaroundMenu.cpp \
+#    syst/ansi/ansiMovie.cpp \
+#    syst/ansi/ansiPlaySound.cpp \
+#    syst/ansi/ansifileaccess.cpp \
+#    syst/fileaccess.cpp \
+#    syst/mac10/MoreFilesX/MoreFilesX.c \
+#    syst/mac10/appleEvents.cpp \
+#    syst/mac10/macTypeCreator.cpp \
+#    syst/mac10/macfileaccess.cpp \
+#    syst/mac10/nav.c \
+#    syst/mac10mm/macMovie.cpp \
+#    syst/mac10mm/macSound.cpp \
+#    syst/mac10mm/newMovieRoutines.cpp \
+#    syst/mac10mm/quicktime.cpp \
+#    syst/movie.cpp \
+#    syst/myutil.cpp \
+#    syst/pathAccess.cpp \
+#    syst/sdInit.cpp \
+#    syst/unix/unix.cpp \
+#    syst/unix/unixMovie.cpp \
+#    syst/unix/unixPlaySound.cpp \
+#    syst/win/opensave.cpp \
+#    syst/win/winFileaccess.cpp \
+#    syst/win/winMovie.cpp \
+#    syst/win/winPlaySound.cpp \
+#    tools/applicationFolders.cpp \
+#    tools/cmdLine.cpp \
+#    tools/exitModules.cpp \
+#    tools/fileIO.cpp \
+#    tools/free.cpp \
+#    tools/myPrintf.cpp \
+#    tools/openglmenu.cpp \
+#    tools/prefs.cpp \
+#    tools/vmath.cpp \
+#    tools/windowsSize.cpp \
+#    universal/cameraControl.cpp \
+#    universal/fileHandler.cpp \
+#    universal/jpPrefs.cpp \
+#    universal/jugglers.cpp \
+#    universal/mem.cpp \
+#    universal/notation.cpp \
+#    universal/parseSiteswap.cpp \
+#    universal/pattern.cpp \
+#    universal/prefDef.cpp \
+#    universal/preprocess.cpp \
+#    universal/scanner.cpp \
+#    universal/siteswap.cpp \
+#    universal/styleScanner.cpp \
+#    universal/workspace.cpp
 
 HEADERS += \
     mymainwindow.h \
