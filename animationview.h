@@ -12,13 +12,14 @@ class animationView : public QOpenGLWidget, protected QOpenGLFunctions
   Q_OBJECT
 
 public:
-  animationView(QWidget *parent = nullptr);
+  animationView();
   ~animationView();
 
 protected:
     void initializeGL() override;
     void resizeGL(int w, int h) override;
     void paintGL() override;
+    void cleanup();
 
 
 private:

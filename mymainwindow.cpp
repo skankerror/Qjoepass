@@ -1,8 +1,8 @@
 #include <QtWidgets>
 #include "mymainwindow.h"
-
+#include "preferences.h"
 #include "settings.h"
-
+#include "animationview.h"
 MySettings settings;
 
 
@@ -14,6 +14,8 @@ MyMainWindow::MyMainWindow()
     QWidget *topFiller = new QWidget;
     topFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
+    animationView *anim = new animationView;
+
     infoLabel = new QLabel(tr("<i>Choose a menu option, or right-click to "
                               "invoke a context menu</i>"));
     infoLabel->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
@@ -23,15 +25,15 @@ MyMainWindow::MyMainWindow()
     bottomFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->setContentsMargins(5, 5, 5, 5);
-//    layout->addWidget(topFiller);
+    layout->setContentsMargins(1, 1, 1, 1);
+    layout->addWidget(topFiller);
     layout->addWidget(infoLabel);
+    layout->addWidget(anim);
     layout->addWidget(bottomFiller);
     widget->setLayout(layout);
 
 
-    createActions();
- //   createMenus();
+    createMenus();
 
     QString message = tr("A context menu is available by right-clicking");
     statusBar()->showMessage(message);
@@ -40,26 +42,12 @@ MyMainWindow::MyMainWindow()
     setMinimumSize(160, 160);
     resize(480, 320);
 }
+
 void MyMainWindow::createMenus()
 {
-    fileMenu = menuBar()->addMenu(tr("&File"));
-//    fileMenu->addAction(newAct);
-//    fileMenu->addAction(openAct);
-//    fileMenu->addAction(saveAct);
-//    fileMenu->addSeparator();
-//    fileMenu->addAction(exitAct);
-
-//    editMenu = menuBar()->addMenu(tr("&Edit"));
-//    editMenu->addSeparator();
-
-//    helpMenu = menuBar()->addMenu(tr("&Help"));
-//    helpMenu->addAction(aboutAct);
-
-}
-void MyMainWindow::createActions()
-{
     QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
-    QToolBar *fileToolBar = addToolBar(tr("File"));
+
+//    QToolBar *fileToolBar = addToolBar(tr("File"));
     const QIcon newIcon = QIcon::fromTheme("document-new", QIcon(":/images/new.png"));
     QAction *newAct = new QAction(newIcon, tr("&New"), this);
     newAct->setShortcuts(QKeySequence::New);
@@ -93,13 +81,44 @@ void MyMainWindow::createActions()
     fileMenu->addAction(saveAsAct);
 //    fileToolBar->addAction(saveAsAct);
 
+//    const QIcon exitIcon = QIcon::fromTheme("exit", QIcon(":/images/exit.png"));
+    QAction *exitAct = new QAction(tr("&Quit..."), this);
+    exitAct->setShortcuts(QKeySequence::Quit);
+    exitAct->setStatusTip(tr("Quit joePass"));
+    connect(exitAct, &QAction::triggered, this, &QWidget::close);
+    fileMenu->addAction(exitAct);
+    //    fileToolBar->addAction(saveAsAct);
+
+
+    QMenu *editMenu = menuBar()->addMenu(tr("&Edit"));
+    //    QToolBar *editToolBar = addToolBar(tr("Edit"));
+
+    QAction *prefAct = new QAction( tr("&Preferences..."), this);
+    QList<QKeySequence> shortcuts;
+    shortcuts << QKeySequence("Ctrl+P");
+    prefAct->setShortcuts(shortcuts);
+    prefAct->setStatusTip(tr("Open preferences dialog"));
+    connect(prefAct, &QAction::triggered, this, &MyMainWindow::preferencesDial);
+    editMenu->addAction(prefAct);
 
     QMenu *helpMenu = menuBar()->addMenu(tr("&Help"));
-    QToolBar *helpToolBar = addToolBar(tr("Help"));
+
     const QIcon aboutIcon = QIcon::fromTheme("help-about", QIcon(":/images/about.png"));
+    QAction *aboutAct = helpMenu->addAction(aboutIcon, tr("&About..."), this,  &MyMainWindow::about);
+    aboutAct->setStatusTip(tr("Show the QjoePass's About box"));
+    connect(aboutAct, &QAction::triggered, this, &MyMainWindow::about);
+    helpMenu->addAction(aboutAct);
+
+    const QIcon aboutQtIcon = QIcon::fromTheme("help-about", QIcon(":/images/about.png"));
     QAction *aboutQtAct = helpMenu->addAction(tr("About &Qt"), qApp, &QApplication::aboutQt);
     aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
-    helpToolBar->addAction(saveAsAct);
+}
+void MyMainWindow::preferencesDial()
+{
+
+    Preferences *pref = new Preferences(".");
+    pref->setWindowTitle("Preferences");
+    pref->show();
 }
 
 void MyMainWindow::newFile()

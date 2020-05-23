@@ -1,10 +1,10 @@
 #include "animationview.h"
 
-animationView::animationView(QWidget *parent)
-    : QOpenGLWidget(parent)
-  {
 
-  }
+animationView::animationView()
+{
+    setMinimumSize(640, 640);
+}
 
 animationView::~animationView()
 {
@@ -53,4 +53,9 @@ void animationView::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
+}
+void animationView::cleanup()
+{
+    makeCurrent();
+    doneCurrent();
 }

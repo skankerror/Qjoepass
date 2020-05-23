@@ -50,7 +50,6 @@ INCLUDEPATH += \
 SOURCES += \
     animationview.cpp \
     main.cpp \
-#    mainmenu.cpp \
     mymainwindow.cpp \
 #    cdew/causal_editor.cpp \
 #    cdew/cdewDraw.cpp \
@@ -131,11 +130,11 @@ SOURCES += \
 #    universal/siteswap.cpp \
 #    universal/styleScanner.cpp \
  \#    universal/workspace.cpp
+    preferences.cpp \
     settings.cpp
 
 HEADERS += \
     animationview.h \
-#    mainmenu.h \
     mymainwindow.h \
     cdew/causal_editor.h \
     cdew/cdewClass.h \
@@ -174,6 +173,7 @@ HEADERS += \
     openGLversion/stringtoscreen.h \
     openGLversion/texture.h \
     openGLversion/world.h \
+    preferences.h \
     refactoring/constants.h \
     refactoring/hand.h \
     refactoring/hcurve.h \

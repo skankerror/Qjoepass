@@ -28,9 +28,9 @@ private slots:
   bool saveAs();
   void about();
   void documentWasModified();
+  void preferencesDial();
 
 private:
-  void createActions();
   void createMenus();
   void createStatusBar();
   void readSettings();
