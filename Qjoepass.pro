@@ -48,7 +48,6 @@ INCLUDEPATH += \
     j2
 
 SOURCES += \
-    animationview.cpp \
     main.cpp \
   my3dwindow.cpp \
     mymainwindow.cpp \
@@ -135,7 +134,6 @@ SOURCES += \
     settings.cpp
 
 HEADERS += \
-    animationview.h \
   my3dwindow.h \
     mymainwindow.h \
     cdew/causal_editor.h \

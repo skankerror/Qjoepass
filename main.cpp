@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
   MyMainWindow mainWin;
 //  if (!parser.positionalArguments().isEmpty())
 //      mainWin.loadFile(parser.positionalArguments().first());
-//  mainWin.resize(1200, 900); // rajout 3D
+  mainWin.resize(1024, 768); // rajout 3D
   mainWin.show();
   return app.exec();
 }

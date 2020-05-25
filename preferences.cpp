@@ -59,7 +59,7 @@ void Preferences::backgroundColor()
 {
   //    MySettings settings;
   QColor colorBG = settings->value("world/colorbg").value<QColor>();
-  QColor color = QColorDialog::getColor(colorBG, this );
+  QColor color = QColorDialog::getColor(colorBG, this, "Choose background color", QColorDialog::DontUseNativeDialog);
   if( color.isValid() )
   {
     qDebug() << "Color Choosen : " << color.name();

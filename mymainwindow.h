@@ -4,7 +4,6 @@
 #include <QMainWindow>
 
 #include "settings.h"
-#include "animationview.h"
 #include "preferences.h"
 #include "my3dwindow.h"
 
@@ -59,7 +58,6 @@ private:
 
   MySettings *settings;
 
-  animationView *anim;
   Preferences *pref;
 
   QList<QKeySequence> prefShortcut;

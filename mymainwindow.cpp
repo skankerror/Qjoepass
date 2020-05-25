@@ -22,11 +22,10 @@ MyMainWindow::MyMainWindow()
   QWidget *bottomFiller = new QWidget;
   bottomFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-//  animationView *anim = new animationView();
   my3DWindow = new My3DWindow();
   container = QWidget::createWindowContainer(my3DWindow);
   QSize screenSize = my3DWindow->screen()->size();
-  container->setMinimumSize(QSize(200, 100));
+  container->setMinimumSize(QSize(800, 600));
   container->setMaximumSize(screenSize);
 
   QVBoxLayout *layout = new QVBoxLayout;

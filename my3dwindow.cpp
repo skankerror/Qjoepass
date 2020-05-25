@@ -2,6 +2,7 @@
 
 My3DWindow::My3DWindow()
 {
+  defaultFrameGraph()->setClearColor(QColor(0, 0, 1, 1));
   // Root entity
   Qt3DCore::QEntity *rootEntity = new Qt3DCore::QEntity();
 
@@ -172,10 +173,5 @@ My3DWindow::My3DWindow()
 
 void My3DWindow::changeBackground(QColor aColor)
 {
-  sphereMaterial->setDiffuse(aColor);
-  planeMaterial->setDiffuse(aColor);
-  cuboidMaterial->setDiffuse(aColor);
-  cylinderMaterial->setDiffuse(aColor);
-  coneMaterial->setDiffuse(aColor);
-  torusMaterial->setDiffuse(aColor);
+  defaultFrameGraph()->setClearColor(aColor);
 }
