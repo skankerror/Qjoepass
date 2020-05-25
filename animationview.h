@@ -21,6 +21,8 @@ protected:
     void paintGL() override;
     void cleanup();
 
+public slots:
+    void changeBackground(QColor aColor);
 
 private:
     QBasicTimer timer;

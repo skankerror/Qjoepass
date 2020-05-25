@@ -22,7 +22,7 @@ MyMainWindow::MyMainWindow()
   QWidget *bottomFiller = new QWidget;
   bottomFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-  animationView *anim = new animationView;
+  animationView *anim = new animationView();
   QVBoxLayout *layout = new QVBoxLayout;
   layout->setContentsMargins(1, 1, 1, 1);
   layout->addWidget(topFiller);
@@ -40,6 +40,10 @@ MyMainWindow::MyMainWindow()
   setMinimumSize(160, 160);
 
   resize(480, 320);
+
+  pref = new Preferences(settings);
+
+  connect(pref, SIGNAL(colorChanged(QColor)), anim, SLOT(changeBackground(QColor)));
 }
 
 void MyMainWindow::createMenus()
@@ -114,7 +118,7 @@ void MyMainWindow::createMenus()
 }
 void MyMainWindow::preferencesDial()
 {
-  pref = new Preferences(settings);
+//  pref = new Preferences(settings);
   pref->setWindowTitle("Preferences");
   pref->show();
 }
