@@ -6,6 +6,7 @@
 #include "settings.h"
 #include "animationview.h"
 #include "preferences.h"
+#include "my3dwindow.h"
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -62,5 +63,9 @@ private:
   Preferences *pref;
 
   QList<QKeySequence> prefShortcut;
+
+  QWidget *container;
+  My3DWindow *my3DWindow;
+
 };
 #endif // MYMAINWINDOW_H

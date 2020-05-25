@@ -22,12 +22,18 @@ MyMainWindow::MyMainWindow()
   QWidget *bottomFiller = new QWidget;
   bottomFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-  animationView *anim = new animationView();
+//  animationView *anim = new animationView();
+  my3DWindow = new My3DWindow();
+  container = QWidget::createWindowContainer(my3DWindow);
+  QSize screenSize = my3DWindow->screen()->size();
+  container->setMinimumSize(QSize(200, 100));
+  container->setMaximumSize(screenSize);
+
   QVBoxLayout *layout = new QVBoxLayout;
   layout->setContentsMargins(1, 1, 1, 1);
   layout->addWidget(topFiller);
   layout->addWidget(infoLabel);
-  layout->addWidget(anim);
+  layout->addWidget(container);
   layout->addWidget(bottomFiller);
   widget->setLayout(layout);
 
@@ -43,7 +49,7 @@ MyMainWindow::MyMainWindow()
 
   pref = new Preferences(settings);
 
-  connect(pref, SIGNAL(colorChanged(QColor)), anim, SLOT(changeBackground(QColor)));
+  connect(pref, SIGNAL(colorChanged(QColor)), my3DWindow, SLOT(changeBackground(QColor)));
 }
 
 void MyMainWindow::createMenus()

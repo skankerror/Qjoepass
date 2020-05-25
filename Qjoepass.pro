@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui 3dcore 3drender 3dinput 3dlogic 3dextras 3danimation
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 #unix {
@@ -50,6 +50,7 @@ INCLUDEPATH += \
 SOURCES += \
     animationview.cpp \
     main.cpp \
+  my3dwindow.cpp \
     mymainwindow.cpp \
 #    cdew/causal_editor.cpp \
 #    cdew/cdewDraw.cpp \
@@ -135,6 +136,7 @@ SOURCES += \
 
 HEADERS += \
     animationview.h \
+  my3dwindow.h \
     mymainwindow.h \
     cdew/causal_editor.h \
     cdew/cdewClass.h \
