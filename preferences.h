@@ -16,11 +16,12 @@ QT_END_NAMESPACE
 class Preferences: public QDialog
 {
  public:
-    explicit Preferences(MySettings *settings,QWidget *parent = nullptr);
+    explicit Preferences(MySettings *aSettings,QWidget *parent = nullptr);
 
 private:
     QTabWidget *tabWidget;
     QDialogButtonBox *buttonBox;
+    MySettings *settings;
 };
 
 class worldTab : public QWidget
@@ -28,11 +29,12 @@ class worldTab : public QWidget
     Q_OBJECT
 
 public:
-    explicit worldTab(MySettings *settings, QWidget *parent = nullptr);
+    explicit worldTab(MySettings *aSettings, QWidget *parent = nullptr);
 private slots:
     void backgroundColor();
 private:
     QPushButton *colorButton;
+    MySettings *settings;
 };
 
 class causalTab : public QWidget
@@ -40,7 +42,10 @@ class causalTab : public QWidget
     Q_OBJECT
 
 public:
-    explicit causalTab(MySettings *settings, QWidget *parent = nullptr);
+    explicit causalTab(MySettings *aSettings, QWidget *parent = nullptr);
+
+private:
+  MySettings *settings;
 };
 
 class soundTab : public QWidget
@@ -48,7 +53,10 @@ class soundTab : public QWidget
     Q_OBJECT
 
 public:
-    explicit soundTab(MySettings *settings, QWidget *parent = nullptr);
+    explicit soundTab(MySettings *aSettings, QWidget *parent = nullptr);
+
+private:
+  MySettings *settings;
 };
 
 #endif // PREFERENCES_H

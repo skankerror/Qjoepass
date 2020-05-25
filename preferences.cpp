@@ -2,15 +2,16 @@
 #include <QtWidgets>
 #include "preferences.h"
 
-Preferences::Preferences(MySettings *settings, QWidget *parent)
-    : QDialog(parent)
+Preferences::Preferences(MySettings *aSettings, QWidget *parent)
+    : QDialog(parent),
+      settings(aSettings)
 {
 //    QFileInfo fileInfo(fileName);
 
     tabWidget = new QTabWidget;
-    tabWidget->addTab(new worldTab(settings), tr("World"));
-    tabWidget->addTab(new causalTab(settings), tr("Causal Editor"));
-    tabWidget->addTab(new soundTab(settings), tr("Sound"));
+    tabWidget->addTab(new worldTab(aSettings), tr("World"));
+    tabWidget->addTab(new causalTab(aSettings), tr("Causal Editor"));
+    tabWidget->addTab(new soundTab(aSettings), tr("Sound"));
 
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok
                                      | QDialogButtonBox::Cancel);
@@ -30,8 +31,9 @@ Preferences::Preferences(MySettings *settings, QWidget *parent)
 //! [5]
 
 //! [6]
-worldTab::worldTab(MySettings *settings, QWidget *parent)
-    : QWidget(parent)
+worldTab::worldTab(MySettings *aSettings, QWidget *parent)
+    : QWidget(parent),
+      settings(aSettings)
 {
     QLabel *colorLabel = new QLabel(tr("Background:"));
     QPushButton *colorButton = new QPushButton("Change Color...", this);
@@ -52,24 +54,26 @@ worldTab::worldTab(MySettings *settings, QWidget *parent)
 }
 void worldTab::backgroundColor()
 {
-    MySettings settings;
-    QColor colorBG = settings.value("world/colorbg").value<QColor>();
+//    MySettings settings;
+    QColor colorBG = settings->value("world/colorbg").value<QColor>();
     QColor color = QColorDialog::getColor(colorBG, this );
     if( color.isValid() )
     {
       qDebug() << "Color Choosen : " << color.name();
     }
 }
-causalTab::causalTab(MySettings *settings, QWidget *parent)
-    : QWidget(parent)
+causalTab::causalTab(MySettings *aSettings, QWidget *parent)
+    : QWidget(parent),
+      settings(aSettings)
 {
 
 }
 //! [7]
 
 //! [8]
-soundTab::soundTab(MySettings *settings, QWidget *parent)
-    : QWidget(parent)
+soundTab::soundTab(MySettings *aSettings, QWidget *parent)
+    : QWidget(parent),
+      settings(aSettings)
 {
     QLabel *topLabel = new QLabel(tr("Open with:"));
 
