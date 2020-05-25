@@ -18,7 +18,7 @@ public:
 
     QVariant value(const QString &key, const QVariant &defaultValue = QVariant());
 private:
-    QSettings *pSettings_;
+    QSettings *settings;
 
 };
 

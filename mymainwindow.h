@@ -3,6 +3,10 @@
 
 #include <QMainWindow>
 
+#include "settings.h"
+#include "animationview.h"
+#include "preferences.h"
+
 QT_BEGIN_NAMESPACE
 class QAction;
 class QActionGroup;
@@ -49,7 +53,16 @@ private:
   QAction *saveAct;
   QAction *saveAsAct;
   QAction *exitAct;
+  QAction *prefAct;
   QAction *aboutAct;
+  QAction *aboutQtAct;
   QLabel *infoLabel;
+
+  MySettings *settings;
+
+  animationView *anim;
+  Preferences *pref;
+
+  QList<QKeySequence> prefShortcut;
 };
 #endif // MYMAINWINDOW_H

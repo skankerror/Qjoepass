@@ -1,20 +1,18 @@
 #include <QtWidgets>
 #include "mymainwindow.h"
-#include "preferences.h"
 #include "settings.h"
-#include "animationview.h"
-MySettings settings;
-
 
 MyMainWindow::MyMainWindow()
 {
+    QStringList cmdline_args = QCoreApplication::arguments();
+//    QFile file(cmdline_args[0]);
+//    MySettings *settings = new MySettings(cmdline_args[0]) ;
+
     QWidget *widget = new QWidget;
     setCentralWidget(widget);
 
     QWidget *topFiller = new QWidget;
     topFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-    animationView *anim = new animationView;
 
     infoLabel = new QLabel(tr("<i>Choose a menu option, or right-click to "
                               "invoke a context menu</i>"));
@@ -32,24 +30,24 @@ MyMainWindow::MyMainWindow()
     layout->addWidget(bottomFiller);
     widget->setLayout(layout);
 
-
     createMenus();
 
     QString message = tr("A context menu is available by right-clicking");
     statusBar()->showMessage(message);
 
-    setWindowTitle(tr("Menus"));
+    setWindowTitle(tr("joePass"));
     setMinimumSize(160, 160);
+
     resize(480, 320);
 }
 
 void MyMainWindow::createMenus()
 {
-    QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
+    fileMenu = menuBar()->addMenu(tr("&File"));
 
 //    QToolBar *fileToolBar = addToolBar(tr("File"));
     const QIcon newIcon = QIcon::fromTheme("document-new", QIcon(":/images/new.png"));
-    QAction *newAct = new QAction(newIcon, tr("&New"), this);
+    newAct = new QAction(newIcon, tr("&New"), this);
     newAct->setShortcuts(QKeySequence::New);
     newAct->setStatusTip(tr("Create a new file"));
     connect(newAct, &QAction::triggered, this, &MyMainWindow::newFile);
@@ -57,7 +55,7 @@ void MyMainWindow::createMenus()
 //    fileToolBar->addAction(newAct);
 
     const QIcon openIcon = QIcon::fromTheme("document-open", QIcon(":/images/open.png"));
-    QAction *openAct = new QAction(openIcon, tr("&Open..."), this);
+    openAct = new QAction(openIcon, tr("&Open..."), this);
     openAct->setShortcuts(QKeySequence::Open);
     openAct->setStatusTip(tr("Open an existing file"));
     connect(openAct, &QAction::triggered, this, &MyMainWindow::open);
@@ -65,7 +63,7 @@ void MyMainWindow::createMenus()
 //    fileToolBar->addAction(openAct);
 
     const QIcon saveIcon = QIcon::fromTheme("document-open", QIcon(":/images/save.png"));
-    QAction *saveAct = new QAction(saveIcon, tr("&Save..."), this);
+    saveAct = new QAction(saveIcon, tr("&Save..."), this);
     saveAct->setShortcuts(QKeySequence::Save);
     saveAct->setStatusTip(tr("Save to a file"));
     connect(saveAct, &QAction::triggered, this, &MyMainWindow::save);
@@ -74,7 +72,7 @@ void MyMainWindow::createMenus()
 
 
     const QIcon saveAsIcon = QIcon::fromTheme("document-open", QIcon(":/images/saveAs.png"));
-    QAction *saveAsAct = new QAction(saveAsIcon, tr("&SaveAs..."), this);
+    saveAsAct = new QAction(saveAsIcon, tr("&SaveAs..."), this);
     saveAsAct->setShortcuts(QKeySequence::SaveAs);
     saveAsAct->setStatusTip(tr("Save as a new file"));
     connect(saveAsAct, &QAction::triggered, this, &MyMainWindow::saveAs);
@@ -82,7 +80,7 @@ void MyMainWindow::createMenus()
 //    fileToolBar->addAction(saveAsAct);
 
 //    const QIcon exitIcon = QIcon::fromTheme("exit", QIcon(":/images/exit.png"));
-    QAction *exitAct = new QAction(tr("&Quit..."), this);
+    exitAct = new QAction(tr("&Quit..."), this);
     exitAct->setShortcuts(QKeySequence::Quit);
     exitAct->setStatusTip(tr("Quit joePass"));
     connect(exitAct, &QAction::triggered, this, &QWidget::close);
@@ -90,33 +88,33 @@ void MyMainWindow::createMenus()
     //    fileToolBar->addAction(saveAsAct);
 
 
-    QMenu *editMenu = menuBar()->addMenu(tr("&Edit"));
+    editMenu = menuBar()->addMenu(tr("&Edit"));
     //    QToolBar *editToolBar = addToolBar(tr("Edit"));
 
-    QAction *prefAct = new QAction( tr("&Preferences..."), this);
-    QList<QKeySequence> shortcuts;
-    shortcuts << QKeySequence("Ctrl+P");
-    prefAct->setShortcuts(shortcuts);
+    prefAct = new QAction( tr("&Preferences..."), this);
+
+    prefShortcut << QKeySequence("Ctrl+P");
+    prefAct->setShortcuts(prefShortcut);
     prefAct->setStatusTip(tr("Open preferences dialog"));
     connect(prefAct, &QAction::triggered, this, &MyMainWindow::preferencesDial);
     editMenu->addAction(prefAct);
 
-    QMenu *helpMenu = menuBar()->addMenu(tr("&Help"));
+    helpMenu = menuBar()->addMenu(tr("&Help"));
 
     const QIcon aboutIcon = QIcon::fromTheme("help-about", QIcon(":/images/about.png"));
-    QAction *aboutAct = helpMenu->addAction(aboutIcon, tr("&About..."), this,  &MyMainWindow::about);
+    aboutAct = helpMenu->addAction(aboutIcon, tr("&About..."), this,  &MyMainWindow::about);
     aboutAct->setStatusTip(tr("Show the QjoePass's About box"));
     connect(aboutAct, &QAction::triggered, this, &MyMainWindow::about);
     helpMenu->addAction(aboutAct);
 
     const QIcon aboutQtIcon = QIcon::fromTheme("help-about", QIcon(":/images/about.png"));
-    QAction *aboutQtAct = helpMenu->addAction(tr("About &Qt"), qApp, &QApplication::aboutQt);
+    aboutQtAct = helpMenu->addAction(aboutIcon, tr("About &Qt"), qApp, &QApplication::aboutQt);
     aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
 }
 void MyMainWindow::preferencesDial()
 {
 
-    Preferences *pref = new Preferences(".");
+    pref = new Preferences(MySettings *settings);
     pref->setWindowTitle("Preferences");
     pref->show();
 }
@@ -263,8 +261,3 @@ bool MyMainWindow::maybeSave()
     return true;
 }
 
-void MyMainWindow::writeSettings()
-{
-//    MySettings settings(QCoreApplication::organizationName(), QCoreApplication::applicationName());
-    settings.setValue("geometry", saveGeometry());
-}

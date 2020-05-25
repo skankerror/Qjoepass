@@ -8,36 +8,36 @@ MySettings::MySettings(QString fileName, QSettings::Format format)
         fileName = path + "/Settings.ini";
     }
 
-    pSettings_ = new QSettings(fileName, format);
+    settings = new QSettings(fileName, format);
 }
 
 MySettings::~MySettings()
 {
-    delete pSettings_;
+    delete settings;
 }
 
 bool MySettings::isValue(const QString &key)
 {
-   return pSettings_->contains(key);
+   return settings->contains(key);
 }
 
 void MySettings::setValue(const QString &key, const QVariant &value)
 {
-    pSettings_->setValue(key, value);
+    settings->setValue(key, value);
 }
 
 QVariant MySettings::value(const QString &key, const QVariant &defaultValue)
 {
-    return pSettings_->value(key, defaultValue);
+    return settings->value(key, defaultValue);
 }
 
 void MySettings::beginGroup(const QString &prefix)
 {
-    pSettings_->beginGroup(prefix);
+    settings->beginGroup(prefix);
 }
 
 void MySettings::endGroup()
 {
-    pSettings_->endGroup();
+    settings->endGroup();
 }
 
