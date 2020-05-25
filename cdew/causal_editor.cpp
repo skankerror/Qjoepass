@@ -5098,8 +5098,8 @@ void oglwin::transferToAnimation( void )
 void oglwin::transferToTextEditor( void )
 {
 #if !CDEW_STANDALONE
-	if( startingUp || disableTransferToTextEditor)
-		return;
+    if( startingUp || disableTransferToTextEditor)
+        return;
 	
 	/*
 	 muster mit eigenem Namen abspeichern und diesen als EditorNamen eintragen 
