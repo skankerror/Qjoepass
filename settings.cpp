@@ -1,5 +1,6 @@
 #include "settings.h"
 
+#include <QtWidgets>
 MySettings::MySettings(QString fileName, QSettings::Format format)
 {
     if( fileName.isEmpty() )
@@ -7,7 +8,7 @@ MySettings::MySettings(QString fileName, QSettings::Format format)
         QString path = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
         fileName = path + "/Settings.ini";
     }
-
+//    qDebug() << "Standard path : " << QStandardPaths::ConfigLocation;
     settings = new QSettings(fileName, format);
 }
 

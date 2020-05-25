@@ -37,8 +37,6 @@ private slots:
 private:
   void createMenus();
   void createStatusBar();
-  void readSettings();
-  void writeSettings();
   bool maybeSave();
   bool saveFile(const QString &fileName);
   void setCurrentFile(const QString &fileName);
