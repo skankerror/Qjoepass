@@ -74,11 +74,12 @@ My3DWindow::My3DWindow()
   //skeleton Transform
   skeletonTransform = new Qt3DCore::QTransform();
   skeletonTransform->setScale(3.0f);
-  skeletonTransform->setRotation(QQuaternion::fromEulerAngles(QVector3D(-90, 90, 0)));
+  skeletonTransform->setRotation(QQuaternion::fromEulerAngles(QVector3D(0, 90, 0)));
   skeletonTransform->setTranslation(QVector3D(-7, -4, 0));
   //skeletonMesh
   skeletonMesh = new Qt3DRender::QMesh();
-  skeletonMesh->setSource(QUrl::fromLocalFile(SKELETON_MODEL));
+//  skeletonMesh->setSource(QUrl::fromLocalFile(SKELETON_MODEL));
+  skeletonMesh->setSource(QUrl("qrc:/models/juggler.qgltf"));
   //skeleton
   skeleton = new Qt3DCore::QSkeletonLoader();
   skeleton->setSource(QUrl::fromLocalFile(SKELETON_MODEL));
@@ -99,11 +100,11 @@ My3DWindow::My3DWindow()
   //skeleton Transform
   skeletonTransform2 = new Qt3DCore::QTransform();
   skeletonTransform2->setScale(3.0f);
-  skeletonTransform2->setRotation(QQuaternion::fromEulerAngles(QVector3D(-90, -90, 0)));
+  skeletonTransform2->setRotation(QQuaternion::fromEulerAngles(QVector3D(0, -90, 0)));
   skeletonTransform2->setTranslation(QVector3D(7, -4, 0));
   //skeletonMesh
   skeletonMesh2 = new Qt3DRender::QMesh();
-  skeletonMesh2->setSource(QUrl::fromLocalFile(SKELETON_MODEL));
+  skeletonMesh2->setSource(QUrl("qrc:/models/juggler.qgltf"));
   //skeleton
   skeleton2 = new Qt3DCore::QSkeletonLoader();
   skeleton2->setSource(QUrl::fromLocalFile(SKELETON_MODEL));

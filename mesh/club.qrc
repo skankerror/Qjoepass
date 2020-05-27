@@ -1,6 +1,4 @@
 <RCC><qresource prefix="/models">
-  <file>club_shader_1_v.vert</file>
   <file>club_1.bin</file>
-  <file>club_shader_1_f.frag</file>
   <file>club.qgltf</file>
 </qresource></RCC>
