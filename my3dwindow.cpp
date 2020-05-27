@@ -23,13 +23,13 @@ My3DWindow::My3DWindow(MySettings *aSettings)
   // create 2 jugglers for testing purpose
   createJuggler(90, QVector2D(-7, 0), QColor(QRgb(0x204C9B)));
   createJuggler(-90, QVector2D(7, 0), QColor(QRgb(0x10561B)));
-  //create 1 pirouette for testing purpose
-//  createPirouette(QColor(QRgb(0xA3A600)));
-  //create 1 ball for testing purpose
-//  createBall(QColor(QRgb(0xA3A600)));
-  //create 1 ring for testing purpose
+  // create 1 pirouette for testing purpose
+  createPirouette(QColor(QRgb(0xA3A600)));
+  vPirouette[0]->setPosition(QVector3D(0, -4, 0));
+  // create 1 ball for testing purpose
+  createBall(QColor(QRgb(0xA3A600)));
+  // create 1 ring for testing purpose
   createRing(QColor(QRgb(0xA3A600)));
-
 
 }
 

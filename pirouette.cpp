@@ -5,9 +5,9 @@ Pirouette::Pirouette(Qt3DCore::QEntity *aRootEntity, QColor aColor)
     color(aColor)
 {
   pirouetteTransform = new Qt3DCore::QTransform();
-  pirouetteTransform->setScale(0.1);
+  pirouetteTransform->setScale(CLUB_SCALE);
   pirouetteMesh = new Qt3DRender::QMesh();
-  pirouetteMesh->setSource(QUrl("qrc:/models/club.qgltf"));
+  pirouetteMesh->setSource(QUrl(CLUB_MESH_SRC));
   pirouetteMaterial = new Qt3DExtras::QPhongMaterial();
   pirouetteMaterial->setDiffuse(color);
   Qt3DCore::QEntity::setParent(rootEntity);
@@ -15,4 +15,10 @@ Pirouette::Pirouette(Qt3DCore::QEntity *aRootEntity, QColor aColor)
   addComponent(pirouetteMesh);
   addComponent(pirouetteMaterial);
   setEnabled(enabled);
+}
+
+void Pirouette::setPosition(QVector3D aPosition)
+{
+  position = aPosition;
+  pirouetteTransform->setTranslation(position); // A voir...
 }

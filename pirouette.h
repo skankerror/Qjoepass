@@ -12,6 +12,8 @@ class Pirouette: public Qt3DCore::QEntity
 public:
   Pirouette(Qt3DCore::QEntity *aRootEntity, QColor aColor);
 
+  void setPosition(QVector3D aPosition);
+
 private:
   Qt3DRender::QMesh *pirouetteMesh;
   Qt3DExtras::QPhongMaterial *pirouetteMaterial;
@@ -19,6 +21,8 @@ private:
 
   Qt3DCore::QEntity *rootEntity;
   QColor color;
+
+  QVector3D position;
 
   bool enabled = true;
 };
