@@ -9,9 +9,7 @@
 #include <Qt3DAnimation>
 //#include <Kuesa>
 #include "settings.h"
-
-#define SKELETON_MODEL "/home/ray/dev/Qjoepass/mesh/RiggedFigure.gltf"
-#define JUGGLER_MODEL "mesh/RiggedFigure.gltf"
+#include "juggler.h"
 
 class My3DWindow: public Qt3DExtras::Qt3DWindow
 {
@@ -21,6 +19,7 @@ public:
 
 public slots:
   void changeBackground(QColor aColor);
+  void createJuggler(float aRoty, QVector2D aPosition, QColor aColor);
 
 private:
   Qt3DCore::QEntity *rootEntity;
@@ -46,19 +45,7 @@ private:
   Qt3DExtras::QPhongMaterial *planeMaterial;
   Qt3DCore::QEntity *planeEntity;
 
-  Qt3DCore::QEntity *skeletonEntity;
-  Qt3DCore::QSkeletonLoader *skeleton;
-  Qt3DRender::QMesh *skeletonMesh;
-  Qt3DExtras::QPhongMaterial *skeletonMaterial;
-  Qt3DCore::QTransform *skeletonTransform;
-  Qt3DCore::QArmature *skeletonArmature;
-
-  Qt3DCore::QEntity *skeletonEntity2;
-  Qt3DCore::QSkeletonLoader *skeleton2;
-  Qt3DRender::QMesh *skeletonMesh2;
-  Qt3DExtras::QPhongMaterial *skeletonMaterial2;
-  Qt3DCore::QTransform *skeletonTransform2;
-  Qt3DCore::QArmature *skeletonArmature2;
+  QVector<Juggler *> vJuggler;
 
   MySettings *settings;
 

@@ -50,6 +50,7 @@ INCLUDEPATH += \
 
 SOURCES += \
   camera.cpp \
+  juggler.cpp \
     main.cpp \
   my3dwindow.cpp \
     mymainwindow.cpp \
@@ -137,6 +138,7 @@ SOURCES += \
 
 HEADERS += \
   camera.h \
+  juggler.h \
   my3dwindow.h \
     mymainwindow.h \
     cdew/causal_editor.h \
@@ -180,7 +182,7 @@ HEADERS += \
     refactoring/constants.h \
     refactoring/hand.h \
     refactoring/hcurve.h \
-    refactoring/juggler.h \
+#    refactoring/juggler.h \
     refactoring/vector3d.h \
     runaround/inputWindow.h \
     runaround/listWindow.h \

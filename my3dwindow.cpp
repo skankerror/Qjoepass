@@ -73,62 +73,17 @@ My3DWindow::My3DWindow(MySettings *aSettings)
   planeEntity->addComponent(planeTransform);
   planeEntity->setEnabled(true);
 
-  //skeleton Transform
-  skeletonTransform = new Qt3DCore::QTransform();
-  skeletonTransform->setScale(3.0f);
-  skeletonTransform->setRotation(QQuaternion::fromEulerAngles(QVector3D(0, 90, 0)));
-  skeletonTransform->setTranslation(QVector3D(-7, -4, 0));
-  //skeletonMesh
-  skeletonMesh = new Qt3DRender::QMesh();
-//  skeletonMesh->setSource(QUrl::fromLocalFile(SKELETON_MODEL));
-  skeletonMesh->setSource(QUrl("qrc:/models/juggler.qgltf"));
-  //skeleton
-  skeleton = new Qt3DCore::QSkeletonLoader();
-//  skeleton->setSource(QUrl::fromLocalFile(SKELETON_MODEL));
-  skeleton->setSource(QUrl("qrc:/models/RiggedFigure.gltf"));
-  //skeletonArmature
-  skeletonArmature = new Qt3DCore::QArmature();
-  skeletonArmature->setSkeleton(skeleton);
-  //skeletonMaterial
-  skeletonMaterial = new Qt3DExtras::QPhongMaterial();
-  skeletonMaterial->setDiffuse(QColor(QRgb(0x204C9B)));
-  //skeletonEntity
-  skeletonEntity = new Qt3DCore::QEntity(rootEntity);
-  skeletonEntity->addComponent(skeletonTransform);
-  skeletonEntity->addComponent(skeletonMesh);
-  skeletonEntity->addComponent(skeletonArmature);
-  skeletonEntity->addComponent(skeletonMaterial);
-  skeletonEntity->setEnabled(true);
-
-  //skeleton Transform
-  skeletonTransform2 = new Qt3DCore::QTransform();
-  skeletonTransform2->setScale(3.0f);
-  skeletonTransform2->setRotation(QQuaternion::fromEulerAngles(QVector3D(0, -90, 0)));
-  skeletonTransform2->setTranslation(QVector3D(7, -4, 0));
-  //skeletonMesh
-  skeletonMesh2 = new Qt3DRender::QMesh();
-  skeletonMesh2->setSource(QUrl("qrc:/models/juggler.qgltf"));
-  //skeleton
-  skeleton2 = new Qt3DCore::QSkeletonLoader();
-  skeleton2->setSource(QUrl("qrc:/models/RiggedFigure.gltf"));
-  //skeletonArmature
-  skeletonArmature2 = new Qt3DCore::QArmature();
-  skeletonArmature2->setSkeleton(skeleton2);
-  //skeletonMaterial
-  skeletonMaterial2 = new Qt3DExtras::QPhongMaterial();
-  skeletonMaterial2->setDiffuse(QColor(QRgb(0x10561B)));
-  //skeletonEntity
-  skeletonEntity2 = new Qt3DCore::QEntity(rootEntity);
-  skeletonEntity2->addComponent(skeletonTransform2);
-  skeletonEntity2->addComponent(skeletonMesh2);
-  skeletonEntity2->addComponent(skeletonArmature2);
-  skeletonEntity2->addComponent(skeletonMaterial2);
-  skeletonEntity2->setEnabled(true);
-
-
+  createJuggler(90, QVector2D(-7, 0), QColor(QRgb(0x204C9B)));
+  createJuggler(-90, QVector2D(7, 0), QColor(QRgb(0x10561B)));
 }
 
 void My3DWindow::changeBackground(QColor aColor)
 {
   defaultFrameGraph()->setClearColor(aColor);
+}
+
+void My3DWindow::createJuggler(float aRoty, QVector2D aPosition, QColor aColor)
+{
+  auto juggler = new Juggler(rootEntity, aRoty, aPosition, aColor);
+  vJuggler.append(juggler);
 }
