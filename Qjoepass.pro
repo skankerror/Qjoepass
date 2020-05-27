@@ -179,6 +179,7 @@ HEADERS += \
     openGLversion/texture.h \
     openGLversion/world.h \
     preferences.h \
+  qjoepass.h \
     refactoring/constants.h \
     refactoring/hand.h \
     refactoring/hcurve.h \

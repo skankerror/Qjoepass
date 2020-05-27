@@ -19,7 +19,7 @@ public:
 
 public slots:
   void changeBackground(QColor aColor);
-  void createJuggler(float aRoty, QVector2D aPosition, QColor aColor);
+  void createJuggler(const float aRoty, const QVector2D aPosition, const QColor aColor);
 
 private:
   Qt3DCore::QEntity *rootEntity;

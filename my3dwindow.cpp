@@ -82,7 +82,7 @@ void My3DWindow::changeBackground(QColor aColor)
   defaultFrameGraph()->setClearColor(aColor);
 }
 
-void My3DWindow::createJuggler(float aRoty, QVector2D aPosition, QColor aColor)
+void My3DWindow::createJuggler(const float aRoty, const QVector2D aPosition, const QColor aColor)
 {
   auto juggler = new Juggler(rootEntity, aRoty, aPosition, aColor);
   vJuggler.append(juggler);

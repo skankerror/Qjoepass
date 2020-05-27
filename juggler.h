@@ -4,13 +4,7 @@
 #include <Qt3DCore>
 #include <Qt3DExtras>
 #include <Qt3DRender>
-
-#define JUGGLER_SCALE 3.0f
-#define JUGGLER_ROT_X 0
-#define JUGGLER_ROT_Z 0
-#define JUGGLER_TRANSLATION_Y -4
-#define SKELETON_MESH_SRC "qrc:/models/juggler.qgltf"
-#define SKELETON_SRC "qrc:/models/RiggedFigure.gltf"
+#include "qjoepass.h"
 
 class Juggler: public Qt3DCore::QEntity
 {
