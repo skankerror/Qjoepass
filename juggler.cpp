@@ -2,9 +2,9 @@
 
 
 Juggler::Juggler(Qt3DCore::QEntity *aRootEntity,
-                 float aRoty,
-                 QVector2D aPosition,
-                 QColor aColor)
+                 float &aRoty,
+                 QVector2D &aPosition,
+                 QColor &aColor)
   :rootEntity(aRootEntity),
     color(aColor)
 {
@@ -29,12 +29,11 @@ Juggler::Juggler(Qt3DCore::QEntity *aRootEntity,
   //skeletonMaterial
   skeletonMaterial = new Qt3DExtras::QPhongMaterial();
   skeletonMaterial->setDiffuse(color);
-  //skeletonEntity
-  skeletonEntity = new Qt3DCore::QEntity(rootEntity);
-  skeletonEntity->addComponent(skeletonTransform);
-  skeletonEntity->addComponent(skeletonMesh);
-  skeletonEntity->addComponent(skeletonArmature);
-  skeletonEntity->addComponent(skeletonMaterial);
-  skeletonEntity->setEnabled(enabled);
+  Qt3DCore::QEntity::setParent(rootEntity);
+  addComponent(skeletonTransform);
+  addComponent(skeletonMesh);
+  addComponent(skeletonArmature);
+  addComponent(skeletonMaterial);
+  setEnabled(enabled);
 
 }

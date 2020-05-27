@@ -7,5 +7,8 @@
 #define JUGGLER_TRANSLATION_Y -4
 #define SKELETON_MESH_SRC "qrc:/models/juggler.qgltf"
 #define SKELETON_SRC "qrc:/models/RiggedFigure.gltf"
+#define GROUND_WIDTH 20
+#define GROUND_HEIGHT 20
+#define GROUND_POSY -4
 
 #endif // QJOEPASS_H

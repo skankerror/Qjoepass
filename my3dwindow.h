@@ -10,6 +10,8 @@
 //#include <Kuesa>
 #include "settings.h"
 #include "juggler.h"
+#include "light.h"
+#include "ground.h"
 
 class My3DWindow: public Qt3DExtras::Qt3DWindow
 {
@@ -17,9 +19,13 @@ class My3DWindow: public Qt3DExtras::Qt3DWindow
 public:
   My3DWindow(MySettings *aSettings);
 
+private:
+  void createCam();
+
 public slots:
   void changeBackground(QColor aColor);
-  void createJuggler(const float aRoty, const QVector2D aPosition, const QColor aColor);
+  void createJuggler(float aRoty, QVector2D aPosition, QColor aColor);
+  void createLight(QVector3D aPosition, QColor aColor, float aIntensity);
 
 private:
   Qt3DCore::QEntity *rootEntity;
@@ -28,28 +34,12 @@ private:
   Qt3DExtras::QFirstPersonCameraController *camFPController;
   Qt3DExtras::QOrbitCameraController *camOController;
 
-  Qt3DCore::QEntity *lightEntity;
-  Qt3DRender::QPointLight *light;
-  Qt3DCore::QTransform *lightTransform;
-
-  Qt3DCore::QEntity *lightEntity2;
-  Qt3DRender::QPointLight *light2;
-  Qt3DCore::QTransform *lightTransform2;
-
-  Qt3DCore::QEntity *lightEntity3;
-  Qt3DRender::QPointLight *light3;
-  Qt3DCore::QTransform *lightTransform3;
-
-  Qt3DExtras::QPlaneMesh *planeMesh;
-  Qt3DCore::QTransform *planeTransform;
-  Qt3DExtras::QPhongMaterial *planeMaterial;
-  Qt3DCore::QEntity *planeEntity;
-
+  Ground *ground;
+  QVector<Light *> vLight;
   QVector<Juggler *> vJuggler;
 
   MySettings *settings;
 
-  bool enabled = true;
 };
 
 #endif // MY3DWINDOW_H

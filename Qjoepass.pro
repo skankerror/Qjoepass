@@ -50,7 +50,9 @@ INCLUDEPATH += \
 
 SOURCES += \
   camera.cpp \
+  ground.cpp \
   juggler.cpp \
+  light.cpp \
     main.cpp \
   my3dwindow.cpp \
     mymainwindow.cpp \
@@ -138,7 +140,9 @@ SOURCES += \
 
 HEADERS += \
   camera.h \
+  ground.h \
   juggler.h \
+  light.h \
   my3dwindow.h \
     mymainwindow.h \
     cdew/causal_editor.h \

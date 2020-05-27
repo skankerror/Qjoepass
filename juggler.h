@@ -11,12 +11,11 @@ class Juggler: public Qt3DCore::QEntity
   Q_OBJECT
 public:
   explicit Juggler(Qt3DCore::QEntity *aRootEntity,
-                   float aRoty,
-                   QVector2D aPosition,
-                   QColor aColor);
+                   float &aRoty,
+                   QVector2D &aPosition,
+                   QColor &aColor);
 
 private:
-  Qt3DCore::QEntity *skeletonEntity;
   Qt3DCore::QSkeletonLoader *skeleton;
   Qt3DRender::QMesh *skeletonMesh;
   Qt3DExtras::QPhongMaterial *skeletonMaterial;
