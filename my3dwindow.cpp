@@ -2,172 +2,125 @@
 
 My3DWindow::My3DWindow()
 {
+  //background
   defaultFrameGraph()->setClearColor(QColor(0, 0, 1, 1));
+
   // Root entity
-  Qt3DCore::QEntity *rootEntity = new Qt3DCore::QEntity();
+  rootEntity = new Qt3DCore::QEntity();
 
   // Camera
-  Qt3DRender::QCamera *cameraEntity = camera();
+  m_camera = camera();
+  m_camera->lens()->setPerspectiveProjection(45.0f, 4.0f/3.0f, 0.1f, 1000.0f);
+  m_camera->setPosition(QVector3D(0, 0, 20.0f));
+  m_camera->setUpVector(QVector3D(0, 1, 0));
+  m_camera->setViewCenter(QVector3D(0, 0, 0));
+  // For camera controls
+  camFPController = new Qt3DExtras::QFirstPersonCameraController(rootEntity);
+  camOController = new Qt3DExtras::QOrbitCameraController(rootEntity);
+  camOController->setCamera(m_camera);
 
-  cameraEntity->lens()->setPerspectiveProjection(45.0f, 16.0f/9.0f, 0.1f, 1000.0f);
-  cameraEntity->setPosition(QVector3D(0, 0, 20.0f));
-  cameraEntity->setUpVector(QVector3D(0, 1, 0));
-  cameraEntity->setViewCenter(QVector3D(0, 0, 0));
-
-  Qt3DCore::QEntity *lightEntity = new Qt3DCore::QEntity(rootEntity);
-  Qt3DRender::QPointLight *light = new Qt3DRender::QPointLight(lightEntity);
-  light->setColor("white");
-  light->setIntensity(1);
+  //light
+  lightEntity = new Qt3DCore::QEntity(rootEntity);
+  light = new Qt3DRender::QPointLight(lightEntity);
+  light->setColor(QColor(QRgb(0xFFEFE1)));
+  light->setIntensity(2);
   lightEntity->addComponent(light);
-  Qt3DCore::QTransform *lightTransform = new Qt3DCore::QTransform(lightEntity);
-  lightTransform->setTranslation(cameraEntity->position());
+  lightTransform = new Qt3DCore::QTransform(lightEntity);
+  lightTransform->setTranslation(QVector3D(-20, 10, 20));
   lightEntity->addComponent(lightTransform);
 
-  // For camera controls
-  Qt3DExtras::QFirstPersonCameraController *camController = new Qt3DExtras::QFirstPersonCameraController(rootEntity);
-  camController->setCamera(cameraEntity);
+  //light2
+  lightEntity2 = new Qt3DCore::QEntity(rootEntity);
+  light2 = new Qt3DRender::QPointLight(lightEntity2);
+  light2->setColor(QColor(QRgb(0xD0E1FF)));
+  light2->setIntensity(1);
+  lightEntity2->addComponent(light2);
+  lightTransform2 = new Qt3DCore::QTransform(lightEntity2);
+  lightTransform2->setTranslation(QVector3D(20, 10, 20));
+  lightEntity2->addComponent(lightTransform2);
+
+  //light3
+  lightEntity3 = new Qt3DCore::QEntity(rootEntity);
+  light3 = new Qt3DRender::QPointLight(lightEntity3);
+  light3->setColor(QColor(QRgb(0xFFFFFF)));
+  light3->setIntensity(3);
+  lightEntity3->addComponent(light3);
+  lightTransform3 = new Qt3DCore::QTransform(lightEntity3);
+  lightTransform3->setTranslation(QVector3D(0, 10, -20));
+  lightEntity3->addComponent(lightTransform3);
 
   // Set root object of the scene
   setRootEntity(rootEntity);
 
-  // Torus shape data
-  //! [0]
-  m_torus = new Qt3DExtras::QTorusMesh();
-  m_torus->setRadius(1.0f);
-  m_torus->setMinorRadius(0.4f);
-  m_torus->setRings(100);
-  m_torus->setSlices(20);
-  //! [0]
-
-  // TorusMesh Transform
-  //! [1]
-  Qt3DCore::QTransform *torusTransform = new Qt3DCore::QTransform();
-  torusTransform->setScale(2.0f);
-  torusTransform->setRotation(QQuaternion::fromAxisAndAngle(QVector3D(0.0f, 1.0f, 0.0f), 25.0f));
-  torusTransform->setTranslation(QVector3D(5.0f, 4.0f, 0.0f));
-  //! [1]
-
-  //! [2]
-  torusMaterial = new Qt3DExtras::QPhongMaterial();
-  torusMaterial->setDiffuse(QColor(QRgb(0xbeb32b)));
-  //! [2]
-
-  // Torus
-  //! [3]
-  m_torusEntity = new Qt3DCore::QEntity(rootEntity);
-  m_torusEntity->addComponent(m_torus);
-  m_torusEntity->addComponent(torusMaterial);
-  m_torusEntity->addComponent(torusTransform);
-  //! [3]
-
-  // Cone shape data
-  Qt3DExtras::QConeMesh *cone = new Qt3DExtras::QConeMesh();
-  cone->setTopRadius(0.5);
-  cone->setBottomRadius(1);
-  cone->setLength(3);
-  cone->setRings(50);
-  cone->setSlices(20);
-
-  // ConeMesh Transform
-  Qt3DCore::QTransform *coneTransform = new Qt3DCore::QTransform();
-  coneTransform->setScale(1.5f);
-  coneTransform->setRotation(QQuaternion::fromAxisAndAngle(QVector3D(1.0f, 0.0f, 0.0f), 45.0f));
-  coneTransform->setTranslation(QVector3D(0.0f, 4.0f, -1.5));
-
-  coneMaterial = new Qt3DExtras::QPhongMaterial();
-  coneMaterial->setDiffuse(QColor(QRgb(0x928327)));
-
-  // Cone
-  m_coneEntity = new Qt3DCore::QEntity(rootEntity);
-  m_coneEntity->addComponent(cone);
-  m_coneEntity->addComponent(coneMaterial);
-  m_coneEntity->addComponent(coneTransform);
-
-  // Cylinder shape data
-  Qt3DExtras::QCylinderMesh *cylinder = new Qt3DExtras::QCylinderMesh();
-  cylinder->setRadius(1);
-  cylinder->setLength(3);
-  cylinder->setRings(100);
-  cylinder->setSlices(20);
-
-  // CylinderMesh Transform
-  Qt3DCore::QTransform *cylinderTransform = new Qt3DCore::QTransform();
-  cylinderTransform->setScale(1.5f);
-  cylinderTransform->setRotation(QQuaternion::fromAxisAndAngle(QVector3D(1.0f, 0.0f, 0.0f), 45.0f));
-  cylinderTransform->setTranslation(QVector3D(-5.0f, 4.0f, -1.5));
-
-  cylinderMaterial = new Qt3DExtras::QPhongMaterial();
-  cylinderMaterial->setDiffuse(QColor(QRgb(0x928327)));
-
-  // Cylinder
-  m_cylinderEntity = new Qt3DCore::QEntity(rootEntity);
-  m_cylinderEntity->addComponent(cylinder);
-  m_cylinderEntity->addComponent(cylinderMaterial);
-  m_cylinderEntity->addComponent(cylinderTransform);
-
-  // Cuboid shape data
-  Qt3DExtras::QCuboidMesh *cuboid = new Qt3DExtras::QCuboidMesh();
-
-  // CuboidMesh Transform
-  Qt3DCore::QTransform *cuboidTransform = new Qt3DCore::QTransform();
-  cuboidTransform->setScale(4.0f);
-  cuboidTransform->setTranslation(QVector3D(5.0f, -4.0f, 0.0f));
-
-  cuboidMaterial = new Qt3DExtras::QPhongMaterial();
-  cuboidMaterial->setDiffuse(QColor(QRgb(0x665423)));
-
-  //Cuboid
-  m_cuboidEntity = new Qt3DCore::QEntity(rootEntity);
-  m_cuboidEntity->addComponent(cuboid);
-  m_cuboidEntity->addComponent(cuboidMaterial);
-  m_cuboidEntity->addComponent(cuboidTransform);
-
   // Plane shape data
-  Qt3DExtras::QPlaneMesh *planeMesh = new Qt3DExtras::QPlaneMesh();
+  planeMesh = new Qt3DExtras::QPlaneMesh();
   planeMesh->setWidth(2);
   planeMesh->setHeight(2);
-
   // Plane mesh transform
-  Qt3DCore::QTransform *planeTransform = new Qt3DCore::QTransform();
-  planeTransform->setScale(1.3f);
-  planeTransform->setRotation(QQuaternion::fromAxisAndAngle(QVector3D(1.0f, 0.0f, 0.0f), 45.0f));
+  planeTransform = new Qt3DCore::QTransform();
+  planeTransform->setScale(10.0f);
+  planeTransform->setRotation(QQuaternion::fromAxisAndAngle(QVector3D(1.0f, 0.0f, 0.0f), 0.0f));
   planeTransform->setTranslation(QVector3D(0.0f, -4.0f, 0.0f));
-
+  // Plane Material
   planeMaterial = new Qt3DExtras::QPhongMaterial();
-  planeMaterial->setDiffuse(QColor(QRgb(0xa69929)));
-
+  planeMaterial->setDiffuse(QColor(QRgb(0x301510)));
   // Plane
-  m_planeEntity = new Qt3DCore::QEntity(rootEntity);
-  m_planeEntity->addComponent(planeMesh);
-  m_planeEntity->addComponent(planeMaterial);
-  m_planeEntity->addComponent(planeTransform);
+  planeEntity = new Qt3DCore::QEntity(rootEntity);
+  planeEntity->addComponent(planeMesh);
+  planeEntity->addComponent(planeMaterial);
+  planeEntity->addComponent(planeTransform);
+  planeEntity->setEnabled(true);
 
-  // Sphere shape data
-  Qt3DExtras::QSphereMesh *sphereMesh = new Qt3DExtras::QSphereMesh();
-  sphereMesh->setRings(20);
-  sphereMesh->setSlices(20);
-  sphereMesh->setRadius(2);
+  //skeleton Transform
+  skeletonTransform = new Qt3DCore::QTransform();
+  skeletonTransform->setScale(3.0f);
+  skeletonTransform->setRotation(QQuaternion::fromEulerAngles(QVector3D(-90, 90, 0)));
+  skeletonTransform->setTranslation(QVector3D(-7, -4, 0));
+  //skeletonMesh
+  skeletonMesh = new Qt3DRender::QMesh();
+  skeletonMesh->setSource(QUrl::fromLocalFile(SKELETON_MODEL));
+  //skeleton
+  skeleton = new Qt3DCore::QSkeletonLoader();
+  skeleton->setSource(QUrl::fromLocalFile(SKELETON_MODEL));
+  //skeletonArmature
+  skeletonArmature = new Qt3DCore::QArmature();
+  skeletonArmature->setSkeleton(skeleton);
+  //skeletonMaterial
+  skeletonMaterial = new Qt3DExtras::QPhongMaterial();
+  skeletonMaterial->setDiffuse(QColor(QRgb(0x204C9B)));
+  //skeletonEntity
+  skeletonEntity = new Qt3DCore::QEntity(rootEntity);
+  skeletonEntity->addComponent(skeletonTransform);
+  skeletonEntity->addComponent(skeletonMesh);
+  skeletonEntity->addComponent(skeletonArmature);
+  skeletonEntity->addComponent(skeletonMaterial);
+  skeletonEntity->setEnabled(true);
 
-  // Sphere mesh transform
-  Qt3DCore::QTransform *sphereTransform = new Qt3DCore::QTransform();
+  //skeleton Transform
+  skeletonTransform2 = new Qt3DCore::QTransform();
+  skeletonTransform2->setScale(3.0f);
+  skeletonTransform2->setRotation(QQuaternion::fromEulerAngles(QVector3D(-90, -90, 0)));
+  skeletonTransform2->setTranslation(QVector3D(7, -4, 0));
+  //skeletonMesh
+  skeletonMesh2 = new Qt3DRender::QMesh();
+  skeletonMesh2->setSource(QUrl::fromLocalFile(SKELETON_MODEL));
+  //skeleton
+  skeleton2 = new Qt3DCore::QSkeletonLoader();
+  skeleton2->setSource(QUrl::fromLocalFile(SKELETON_MODEL));
+  //skeletonArmature
+  skeletonArmature2 = new Qt3DCore::QArmature();
+  skeletonArmature2->setSkeleton(skeleton2);
+  //skeletonMaterial
+  skeletonMaterial2 = new Qt3DExtras::QPhongMaterial();
+  skeletonMaterial2->setDiffuse(QColor(QRgb(0x10561B)));
+  //skeletonEntity
+  skeletonEntity2 = new Qt3DCore::QEntity(rootEntity);
+  skeletonEntity2->addComponent(skeletonTransform2);
+  skeletonEntity2->addComponent(skeletonMesh2);
+  skeletonEntity2->addComponent(skeletonArmature2);
+  skeletonEntity2->addComponent(skeletonMaterial2);
+  skeletonEntity2->setEnabled(true);
 
-  sphereTransform->setScale(1.3f);
-  sphereTransform->setTranslation(QVector3D(-5.0f, -4.0f, 0.0f));
-
-  sphereMaterial = new Qt3DExtras::QPhongMaterial();
-  sphereMaterial->setDiffuse(QColor(QRgb(0xa69929)));
-
-  // Sphere
-  m_sphereEntity = new Qt3DCore::QEntity(rootEntity);
-  m_sphereEntity->addComponent(sphereMesh);
-  m_sphereEntity->addComponent(sphereMaterial);
-  m_sphereEntity->addComponent(sphereTransform);
-
-  m_torusEntity->setEnabled(enabled);
-  m_coneEntity->setEnabled(enabled);
-  m_cuboidEntity->setEnabled(enabled);
-  m_planeEntity->setEnabled(enabled);
-  m_sphereEntity->setEnabled(enabled);
 
 }
 

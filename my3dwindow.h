@@ -7,11 +7,14 @@
 #include <Qt3DLogic>
 #include <Qt3DExtras>
 #include <Qt3DAnimation>
+//#include <Kuesa>
+
+#define SKELETON_MODEL "/home/ray/dev/Qjoepass/mesh/RiggedFigure.gltf"
+#define JUGGLER_MODEL "mesh/RiggedFigure.gltf"
 
 class My3DWindow: public Qt3DExtras::Qt3DWindow
 {
   Q_OBJECT
-
 public:
   My3DWindow();
 
@@ -19,20 +22,43 @@ public slots:
   void changeBackground(QColor aColor);
 
 private:
-  Qt3DExtras::QTorusMesh *m_torus;
-  Qt3DCore::QEntity *m_coneEntity;
-  Qt3DCore::QEntity *m_cylinderEntity;
-  Qt3DCore::QEntity *m_torusEntity;
-  Qt3DCore::QEntity *m_cuboidEntity;
-  Qt3DCore::QEntity *m_planeEntity;
-  Qt3DCore::QEntity *m_sphereEntity;
+  Qt3DCore::QEntity *rootEntity;
 
-  Qt3DExtras::QPhongMaterial *sphereMaterial;
+  Qt3DRender::QCamera *m_camera;
+  Qt3DExtras::QFirstPersonCameraController *camFPController;
+  Qt3DExtras::QOrbitCameraController *camOController;
+
+  Qt3DCore::QEntity *lightEntity;
+  Qt3DRender::QPointLight *light;
+  Qt3DCore::QTransform *lightTransform;
+
+  Qt3DCore::QEntity *lightEntity2;
+  Qt3DRender::QPointLight *light2;
+  Qt3DCore::QTransform *lightTransform2;
+
+  Qt3DCore::QEntity *lightEntity3;
+  Qt3DRender::QPointLight *light3;
+  Qt3DCore::QTransform *lightTransform3;
+
+  Qt3DExtras::QPlaneMesh *planeMesh;
+  Qt3DCore::QTransform *planeTransform;
   Qt3DExtras::QPhongMaterial *planeMaterial;
-  Qt3DExtras::QPhongMaterial *cuboidMaterial;
-  Qt3DExtras::QPhongMaterial *cylinderMaterial;
-  Qt3DExtras::QPhongMaterial *coneMaterial;
-  Qt3DExtras::QPhongMaterial *torusMaterial;
+  Qt3DCore::QEntity *planeEntity;
+
+  Qt3DCore::QEntity *skeletonEntity;
+  Qt3DCore::QSkeletonLoader *skeleton;
+  Qt3DRender::QMesh *skeletonMesh;
+  Qt3DExtras::QPhongMaterial *skeletonMaterial;
+  Qt3DCore::QTransform *skeletonTransform;
+  Qt3DCore::QArmature *skeletonArmature;
+
+  Qt3DCore::QEntity *skeletonEntity2;
+  Qt3DCore::QSkeletonLoader *skeleton2;
+  Qt3DRender::QMesh *skeletonMesh2;
+  Qt3DExtras::QPhongMaterial *skeletonMaterial2;
+  Qt3DCore::QTransform *skeletonTransform2;
+  Qt3DCore::QArmature *skeletonArmature2;
+
 
   bool enabled = true;
 };

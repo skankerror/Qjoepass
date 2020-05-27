@@ -1,4 +1,5 @@
 QT       += core gui 3dcore 3drender 3dinput 3dlogic 3dextras 3danimation
+#QT += kuesa
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 #unix {
@@ -48,6 +49,7 @@ INCLUDEPATH += \
     j2
 
 SOURCES += \
+  camera.cpp \
     main.cpp \
   my3dwindow.cpp \
     mymainwindow.cpp \
@@ -129,11 +131,12 @@ SOURCES += \
 #    universal/scanner.cpp \
 #    universal/siteswap.cpp \
 #    universal/styleScanner.cpp \
- \#    universal/workspace.cpp
+#    universal/workspace.cpp
     preferences.cpp \
     settings.cpp
 
 HEADERS += \
+  camera.h \
   my3dwindow.h \
     mymainwindow.h \
     cdew/causal_editor.h \
@@ -308,4 +311,5 @@ DISTFILES += \
   syst/mac10mm/audiofile.mp3
 
 RESOURCES += \
-    application.qrc
+    application.qrc \
+    mesh/club.qrc
