@@ -5,7 +5,7 @@
 MyMainWindow::MyMainWindow()
 {
   QStringList cmdline_args = QCoreApplication::arguments();
-//    QFile file(cmdline_args[0]);
+  //    QFile file(cmdline_args[0]);
   settings = new MySettings() ;
 
   QWidget *widget = new QWidget;
@@ -15,25 +15,25 @@ MyMainWindow::MyMainWindow()
   topFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
   infoLabel = new QLabel(tr("<i>Choose a menu option, or right-click to "
-                              "invoke a context menu</i>"));
+                            "invoke a context menu</i>"));
   infoLabel->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
   infoLabel->setAlignment(Qt::AlignCenter);
 
   QWidget *bottomFiller = new QWidget;
   bottomFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-  my3DWindow = new My3DWindow();
+  my3DWindow = new My3DWindow(settings);
   container = QWidget::createWindowContainer(my3DWindow);
   QSize screenSize = my3DWindow->screen()->size();
   container->setMinimumSize(QSize(800, 600));
   container->setMaximumSize(screenSize);
 
   QVBoxLayout *layout = new QVBoxLayout;
-  layout->setContentsMargins(1, 1, 1, 1);
-  layout->addWidget(topFiller);
-  layout->addWidget(infoLabel);
+//  layout->setContentsMargins(1, 1, 1, 1);
+//  layout->addWidget(topFiller);
+//  layout->addWidget(infoLabel);
   layout->addWidget(container);
-  layout->addWidget(bottomFiller);
+//  layout->addWidget(bottomFiller);
   widget->setLayout(layout);
 
   createMenus();
@@ -55,14 +55,14 @@ void MyMainWindow::createMenus()
 {
   fileMenu = menuBar()->addMenu(tr("&File"));
 
-//    QToolBar *fileToolBar = addToolBar(tr("File"));
+  //    QToolBar *fileToolBar = addToolBar(tr("File"));
   const QIcon newIcon = QIcon::fromTheme("document-new", QIcon(":/images/new.png"));
   newAct = new QAction(newIcon, tr("&New"), this);
   newAct->setShortcuts(QKeySequence::New);
   newAct->setStatusTip(tr("Create a new file"));
   connect(newAct, &QAction::triggered, this, &MyMainWindow::newFile);
   fileMenu->addAction(newAct);
-//    fileToolBar->addAction(newAct);
+  //    fileToolBar->addAction(newAct);
 
   const QIcon openIcon = QIcon::fromTheme("document-open", QIcon(":/images/open.png"));
   openAct = new QAction(openIcon, tr("&Open..."), this);
@@ -70,7 +70,7 @@ void MyMainWindow::createMenus()
   openAct->setStatusTip(tr("Open an existing file"));
   connect(openAct, &QAction::triggered, this, &MyMainWindow::open);
   fileMenu->addAction(openAct);
-//    fileToolBar->addAction(openAct);
+  //    fileToolBar->addAction(openAct);
 
   const QIcon saveIcon = QIcon::fromTheme("document-open", QIcon(":/images/save.png"));
   saveAct = new QAction(saveIcon, tr("&Save..."), this);
@@ -78,7 +78,7 @@ void MyMainWindow::createMenus()
   saveAct->setStatusTip(tr("Save to a file"));
   connect(saveAct, &QAction::triggered, this, &MyMainWindow::save);
   fileMenu->addAction(saveAct);
-//    fileToolBar->addAction(saveAct);
+  //    fileToolBar->addAction(saveAct);
 
 
   const QIcon saveAsIcon = QIcon::fromTheme("document-open", QIcon(":/images/saveAs.png"));
@@ -87,19 +87,19 @@ void MyMainWindow::createMenus()
   saveAsAct->setStatusTip(tr("Save as a new file"));
   connect(saveAsAct, &QAction::triggered, this, &MyMainWindow::saveAs);
   fileMenu->addAction(saveAsAct);
-//    fileToolBar->addAction(saveAsAct);
+  //    fileToolBar->addAction(saveAsAct);
 
-//    const QIcon exitIcon = QIcon::fromTheme("exit", QIcon(":/images/exit.png"));
+  //    const QIcon exitIcon = QIcon::fromTheme("exit", QIcon(":/images/exit.png"));
   exitAct = new QAction(tr("&Quit..."), this);
   exitAct->setShortcuts(QKeySequence::Quit);
   exitAct->setStatusTip(tr("Quit joePass"));
   connect(exitAct, &QAction::triggered, this, &QWidget::close);
   fileMenu->addAction(exitAct);
-   //    fileToolBar->addAction(saveAsAct);
+  //    fileToolBar->addAction(saveAsAct);
 
 
   editMenu = menuBar()->addMenu(tr("&Edit"));
-    //    QToolBar *editToolBar = addToolBar(tr("Edit"));
+  //    QToolBar *editToolBar = addToolBar(tr("Edit"));
 
   prefAct = new QAction( tr("&Preferences..."), this);
 
@@ -123,7 +123,7 @@ void MyMainWindow::createMenus()
 }
 void MyMainWindow::preferencesDial()
 {
-//  pref = new Preferences(settings);
+  //  pref = new Preferences(settings);
   pref->setWindowTitle("Preferences");
   pref->show();
 }
@@ -131,26 +131,26 @@ void MyMainWindow::preferencesDial()
 void MyMainWindow::newFile()
 {
   if (maybeSave()) {
-        setCurrentFile(QString());
-    }
+    setCurrentFile(QString());
+  }
 }
 
 void MyMainWindow::open()
 {
   if (maybeSave()) {
-        QString fileName = QFileDialog::getOpenFileName(this);
-        if (!fileName.isEmpty())
-            loadFile(fileName);
-    }
+    QString fileName = QFileDialog::getOpenFileName(this);
+    if (!fileName.isEmpty())
+      loadFile(fileName);
+  }
 }
 
 bool MyMainWindow::save()
 {
   if (curFile.isEmpty()) {
-        return saveAs();
-    } else {
-        return saveFile(curFile);
-    }
+    return saveAs();
+  } else {
+    return saveFile(curFile);
+  }
 }
 
 bool MyMainWindow::saveAs()
@@ -166,9 +166,9 @@ bool MyMainWindow::saveAs()
 void MyMainWindow::about()
 {
   QMessageBox::about(this, tr("About Application"),
-    tr("The <b>Application</b> example demonstrates how to "
-      "write modern GUI applications using Qt, with a menu bar, "
-      "toolbars, and a status bar."));
+                     tr("The <b>Application</b> example demonstrates how to "
+                        "write modern GUI applications using Qt, with a menu bar, "
+                        "toolbars, and a status bar."));
 }
 
 void MyMainWindow::loadFile(const QString &fileName)
@@ -176,8 +176,8 @@ void MyMainWindow::loadFile(const QString &fileName)
   QFile file(fileName);
   if (!file.open(QFile::ReadOnly | QFile::Text)) {
     QMessageBox::warning(this, tr("Application"),
-                             tr("Cannot read file %1:\n%2.")
-                             .arg(QDir::toNativeSeparators(fileName), file.errorString()));
+                         tr("Cannot read file %1:\n%2.")
+                         .arg(QDir::toNativeSeparators(fileName), file.errorString()));
     return;
   }
 
@@ -185,7 +185,7 @@ void MyMainWindow::loadFile(const QString &fileName)
 #ifndef QT_NO_CURSOR
   QGuiApplication::setOverrideCursor(Qt::WaitCursor);
 #endif
-//    textEdit->setPlainText(in.readAll());
+  //    textEdit->setPlainText(in.readAll());
 #ifndef QT_NO_CURSOR
   QGuiApplication::restoreOverrideCursor();
 #endif
@@ -202,15 +202,15 @@ bool MyMainWindow::saveFile(const QString &fileName)
   QSaveFile file(fileName);
   if (file.open(QFile::WriteOnly | QFile::Text)) {
     QTextStream out(&file);
-//        out << textEdit->toPlainText();
+    //        out << textEdit->toPlainText();
     if (!file.commit()) {
       errorMessage = tr("Cannot write file %1:\n%2.")
-        .arg(QDir::toNativeSeparators(fileName), file.errorString());
-     }
+          .arg(QDir::toNativeSeparators(fileName), file.errorString());
+    }
   } else {
     errorMessage = tr("Cannot open file %1 for writing:\n%2.")
-      .arg(QDir::toNativeSeparators(fileName), file.errorString());
-    }
+        .arg(QDir::toNativeSeparators(fileName), file.errorString());
+  }
   QGuiApplication::restoreOverrideCursor();
 
   if (!errorMessage.isEmpty()) {
@@ -226,24 +226,24 @@ bool MyMainWindow::saveFile(const QString &fileName)
 void MyMainWindow::setCurrentFile(const QString &fileName)
 {
   curFile = fileName;
-//    textEdit->document()->setModified(false);
+  //    textEdit->document()->setModified(false);
   setWindowModified(false);
 
   QString shownName = curFile;
   if (curFile.isEmpty())
-      shownName = "untitled.txt";
+    shownName = "untitled.txt";
   setWindowFilePath(shownName);
 }
 
 void MyMainWindow::documentWasModified()
 {
-//    setWindowModified(textEdit->document()->isModified());
+  //    setWindowModified(textEdit->document()->isModified());
 }
 
 void MyMainWindow::closeEvent(QCloseEvent *event)
 {
   if (maybeSave()) {
-//        writeSettings();
+    //        writeSettings();
     event->accept();
   } else {
     event->ignore();
@@ -252,13 +252,13 @@ void MyMainWindow::closeEvent(QCloseEvent *event)
 
 bool MyMainWindow::maybeSave()
 {
-//    if (!textEdit->document()->isModified())
-//        return true;
+  //    if (!textEdit->document()->isModified())
+  //        return true;
   const QMessageBox::StandardButton ret
-    = QMessageBox::warning(this, tr("Application"),
-              tr("The document has been modified.\n"
-                 "Do you want to save your changes?"),
-        QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+      = QMessageBox::warning(this, tr("Application"),
+                             tr("The document has been modified.\n"
+                                "Do you want to save your changes?"),
+                             QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
   switch (ret) {
   case QMessageBox::Save:
     return save();

@@ -63,6 +63,7 @@ void Preferences::backgroundColor()
   if( color.isValid() )
   {
     qDebug() << "Color Choosen : " << color.name();
+    settings->setValue("world/colorbg",color);
     emit colorChanged(color);
   }
 }

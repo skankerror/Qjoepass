@@ -1,0 +1,4 @@
+<RCC><qresource prefix="/models">
+  <file>club_1.bin</file>
+  <file>club.qgltf</file>
+</qresource></RCC>

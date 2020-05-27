@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="juggler">mesh/RiggedFigure.gltf</file>
+        <file alias="club">mesh/club.obj</file>
+    </qresource>
+</RCC>
