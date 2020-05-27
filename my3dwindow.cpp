@@ -1,9 +1,11 @@
 #include "my3dwindow.h"
 
-My3DWindow::My3DWindow()
+My3DWindow::My3DWindow(MySettings *aSettings)
+  :settings(aSettings)
 {
   //background
-  defaultFrameGraph()->setClearColor(QColor(0, 0, 1, 1));
+  QColor colorBG = settings->value("world/colorbg").value<QColor>();
+  defaultFrameGraph()->setClearColor(colorBG);
 
   // Root entity
   rootEntity = new Qt3DCore::QEntity();

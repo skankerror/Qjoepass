@@ -22,7 +22,7 @@ MyMainWindow::MyMainWindow()
   QWidget *bottomFiller = new QWidget;
   bottomFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-  my3DWindow = new My3DWindow();
+  my3DWindow = new My3DWindow(settings);
   container = QWidget::createWindowContainer(my3DWindow);
   QSize screenSize = my3DWindow->screen()->size();
   container->setMinimumSize(QSize(800, 600));

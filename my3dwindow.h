@@ -8,6 +8,7 @@
 #include <Qt3DExtras>
 #include <Qt3DAnimation>
 //#include <Kuesa>
+#include "settings.h"
 
 #define SKELETON_MODEL "/home/ray/dev/Qjoepass/mesh/RiggedFigure.gltf"
 #define JUGGLER_MODEL "mesh/RiggedFigure.gltf"
@@ -16,7 +17,7 @@ class My3DWindow: public Qt3DExtras::Qt3DWindow
 {
   Q_OBJECT
 public:
-  My3DWindow();
+  My3DWindow(MySettings *aSettings);
 
 public slots:
   void changeBackground(QColor aColor);
@@ -59,6 +60,7 @@ private:
   Qt3DCore::QTransform *skeletonTransform2;
   Qt3DCore::QArmature *skeletonArmature2;
 
+  MySettings *settings;
 
   bool enabled = true;
 };
