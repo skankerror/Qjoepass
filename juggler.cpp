@@ -17,11 +17,9 @@ Juggler::Juggler(Qt3DCore::QEntity *aRootEntity,
   skeletonTransform->setTranslation(position);
   //skeletonMesh
   skeletonMesh = new Qt3DRender::QMesh();
-  //  skeletonMesh->setSource(QUrl::fromLocalFile(SKELETON_MODEL));
   skeletonMesh->setSource(QUrl(SKELETON_MESH_SRC));
   //skeleton
   skeleton = new Qt3DCore::QSkeletonLoader();
-  //  skeleton->setSource(QUrl::fromLocalFile(SKELETON_MODEL));
   skeleton->setSource(QUrl(SKELETON_SRC));
   //skeletonArmature
   skeletonArmature = new Qt3DCore::QArmature();

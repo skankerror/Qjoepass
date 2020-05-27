@@ -1,5 +1,4 @@
 QT       += core gui 3dcore 3drender 3dinput 3dlogic 3dextras 3danimation
-#QT += kuesa
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 #unix {
@@ -52,6 +51,8 @@ SOURCES += \
   camera.cpp \
   ground.cpp \
   juggler.cpp \
+  jugglingball.cpp \
+  jugglingring.cpp \
   light.cpp \
     main.cpp \
   my3dwindow.cpp \
@@ -135,6 +136,7 @@ SOURCES += \
 #    universal/siteswap.cpp \
 #    universal/styleScanner.cpp \
 #    universal/workspace.cpp
+  pirouette.cpp \
     preferences.cpp \
     settings.cpp
 
@@ -142,6 +144,8 @@ HEADERS += \
   camera.h \
   ground.h \
   juggler.h \
+  jugglingball.h \
+  jugglingring.h \
   light.h \
   my3dwindow.h \
     mymainwindow.h \
@@ -182,6 +186,7 @@ HEADERS += \
     openGLversion/stringtoscreen.h \
     openGLversion/texture.h \
     openGLversion/world.h \
+  pirouette.h \
     preferences.h \
   qjoepass.h \
     refactoring/constants.h \
