@@ -84,7 +84,8 @@ My3DWindow::My3DWindow(MySettings *aSettings)
   skeletonMesh->setSource(QUrl("qrc:/models/juggler.qgltf"));
   //skeleton
   skeleton = new Qt3DCore::QSkeletonLoader();
-  skeleton->setSource(QUrl::fromLocalFile(SKELETON_MODEL));
+//  skeleton->setSource(QUrl::fromLocalFile(SKELETON_MODEL));
+  skeleton->setSource(QUrl("qrc:/models/RiggedFigure.gltf"));
   //skeletonArmature
   skeletonArmature = new Qt3DCore::QArmature();
   skeletonArmature->setSkeleton(skeleton);
@@ -109,7 +110,7 @@ My3DWindow::My3DWindow(MySettings *aSettings)
   skeletonMesh2->setSource(QUrl("qrc:/models/juggler.qgltf"));
   //skeleton
   skeleton2 = new Qt3DCore::QSkeletonLoader();
-  skeleton2->setSource(QUrl::fromLocalFile(SKELETON_MODEL));
+  skeleton2->setSource(QUrl("qrc:/models/RiggedFigure.gltf"));
   //skeletonArmature
   skeletonArmature2 = new Qt3DCore::QArmature();
   skeletonArmature2->setSkeleton(skeleton2);
