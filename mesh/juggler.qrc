@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/models">
-        <file>juggler_1.bin</file>
-        <file>juggler.qgltf</file>
-        <file>RiggedFigure.gltf</file>
-        <file>RiggedFigure0.bin</file>
-    </qresource>
-</RCC>
