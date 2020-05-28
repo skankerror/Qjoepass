@@ -14,6 +14,7 @@
 #include "pirouette.h"
 #include "jugglingball.h"
 #include "jugglingring.h"
+#include "animationfactory.h"
 
 
 class My3DWindow: public Qt3DExtras::Qt3DWindow
@@ -33,9 +34,13 @@ public slots:
   void createPirouette(QColor aColor);
   void createBall(QColor aColor);
   void createRing(QColor aColor);
+  void upateBallAnim(Qt3DAnimation::QAnimationClipData clipData);
 
 private:
   Qt3DCore::QEntity *rootEntity;
+//  Qt3DRender::QRenderSettings *renderSettings;
+//  Qt3DExtras::QForwardRenderer *forwardRenderer;
+//  Qt3DInput::QInputSettings *inputSettings;
 
   Qt3DRender::QCamera *m_camera;
   Qt3DExtras::QFirstPersonCameraController *camFPController;
@@ -50,6 +55,7 @@ private:
 
   MySettings *settings;
 
+  AnimationFactory *animation;
 };
 
 #endif // MY3DWINDOW_H

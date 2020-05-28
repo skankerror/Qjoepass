@@ -12,7 +12,7 @@ Ground::Ground(Qt3DCore::QEntity *aRootEntity, QColor &aColor)
   planeTransform = new Qt3DCore::QTransform();
   planeTransform->setTranslation(QVector3D(0.0f, GROUND_POSY, 0.0f));
   // Plane Material
-  planeMaterial = new Qt3DExtras::QPhongMaterial();
+  planeMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
   planeMaterial->setDiffuse(color);
   planeMaterial->setShininess(10);
 

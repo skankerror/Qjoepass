@@ -14,7 +14,7 @@ public:
 private:
   Qt3DExtras::QPlaneMesh *planeMesh;
   Qt3DCore::QTransform *planeTransform;
-  Qt3DExtras::QPhongMaterial *planeMaterial;
+  Qt3DExtras::QDiffuseSpecularMaterial *planeMaterial;
 
   Qt3DCore::QEntity *rootEntity;
   QColor color;

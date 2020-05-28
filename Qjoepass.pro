@@ -48,6 +48,7 @@ INCLUDEPATH += \
     j2
 
 SOURCES += \
+  animationfactory.cpp \
   camera.cpp \
   ground.cpp \
   juggler.cpp \
@@ -141,6 +142,7 @@ SOURCES += \
     settings.cpp
 
 HEADERS += \
+  animationfactory.h \
   camera.h \
   ground.h \
   juggler.h \
@@ -325,5 +327,5 @@ DISTFILES += \
 RESOURCES += \
     application.qrc \
     mesh/J_club2.qrc \
-    mesh/juggler.qrc \
-    mesh/stickyJuggler.qrc
+    mesh/juggler_.qrc
+

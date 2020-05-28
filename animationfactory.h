@@ -2,12 +2,28 @@
 #define ANIMATIONFACTORY_H
 
 #include <QObject>
+#include <Qt3DAnimation>
 
-class AnimationFactory
+class AnimationFactory : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
+    Q_PROPERTY(Qt3DAnimation::QAnimationClipData clipData READ clipData NOTIFY clipDataChanged)
+
 public:
-  AnimationFactory();
+    explicit AnimationFactory(QObject *parent = 0);
+
+    Qt3DAnimation::QAnimationClipData clipData() const
+    {
+        return m_clipData;
+    }
+
+signals:
+    void clipDataChanged(Qt3DAnimation::QAnimationClipData clipData);
+
+private:
+    void updateClipData();
+
+    Qt3DAnimation::QAnimationClipData m_clipData;
 };
 
 #endif // ANIMATIONFACTORY_H

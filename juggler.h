@@ -18,7 +18,7 @@ public:
 private:
   Qt3DCore::QSkeletonLoader *skeleton;
   Qt3DRender::QMesh *skeletonMesh;
-  Qt3DExtras::QPhongMaterial *skeletonMaterial;
+  Qt3DExtras::QDiffuseSpecularMaterial *skeletonMaterial;
   Qt3DCore::QTransform *skeletonTransform;
   Qt3DCore::QArmature *skeletonArmature;
 

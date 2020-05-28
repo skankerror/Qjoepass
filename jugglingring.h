@@ -14,7 +14,7 @@ public:
 private:
   Qt3DExtras::QTorusMesh *ringMesh;
   Qt3DCore::QTransform *ringTransform;
-  Qt3DExtras::QPhongMaterial *ringMaterial;
+  Qt3DExtras::QDiffuseSpecularMaterial *ringMaterial;
 
   Qt3DCore::QEntity *rootEntity;
   QColor color;

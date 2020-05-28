@@ -3,15 +3,26 @@
 My3DWindow::My3DWindow(MySettings *aSettings)
   :settings(aSettings)
 {
-  //background
-  QColor colorBG = settings->value("world/colorbg").value<QColor>();
-  defaultFrameGraph()->setClearColor(colorBG);
+  animation = new AnimationFactory(this);
 
   // Root entity, root object of the scene
   rootEntity = new Qt3DCore::QEntity();
   setRootEntity(rootEntity);
 
   createCam();
+
+//  inputSettings = new Qt3DInput::QInputSettings();
+//  renderSettings = new Qt3DRender::QRenderSettings();
+//  forwardRenderer = new Qt3DExtras::QForwardRenderer();
+//  forwardRenderer->setCamera(m_camera);
+//  renderSettings->setActiveFrameGraph(forwardRenderer);
+//  rootEntity->addComponent(renderSettings);
+//  rootEntity->addComponent(inputSettings);
+
+  //background
+  QColor colorBG = settings->value("world/colorbg").value<QColor>();
+//  forwardRenderer->setClearColor(colorBG);
+  defaultFrameGraph()->setClearColor(colorBG);
 
   createGround();
 
@@ -35,6 +46,7 @@ My3DWindow::My3DWindow(MySettings *aSettings)
 
 void My3DWindow::createCam()
 {
+//  m_camera = new Qt3DRender::QCamera();
   m_camera = camera();
   m_camera->lens()->setPerspectiveProjection(45.0f, 4.0f/3.0f, 0.1f, 1000.0f);
   m_camera->setPosition(QVector3D(0, 10, 25));
@@ -54,6 +66,7 @@ void My3DWindow::createGround()
 
 void My3DWindow::changeBackground(QColor aColor)
 {
+//  forwardRenderer->setClearColor(aColor);
   defaultFrameGraph()->setClearColor(aColor);
 }
 
@@ -77,6 +90,8 @@ void My3DWindow::createPirouette(QColor aColor)
 
 void My3DWindow::createBall(QColor aColor)
 {
+//  auto clipData = new Qt3DAnimation::QAnimationClipData();
+//  Qt3DAnimation::QAnimationClipData clipData = animation->clipData();
   auto ball = new JugglingBall(rootEntity, aColor);
   vBall.append(ball);
 }
@@ -85,4 +100,11 @@ void My3DWindow::createRing(QColor aColor)
 {
   auto ring = new JugglingRing(rootEntity, aColor);
   vRing.append(ring);
+}
+
+void My3DWindow::upateBallAnim(Qt3DAnimation::QAnimationClipData clipData)
+{
+  JugglingBall *ball = vBall.at(0);
+  ball->updateAnim(clipData);
+
 }

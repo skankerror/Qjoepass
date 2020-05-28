@@ -16,7 +16,7 @@ public:
 
 private:
   Qt3DRender::QMesh *pirouetteMesh;
-  Qt3DExtras::QPhongMaterial *pirouetteMaterial;
+  Qt3DExtras::QDiffuseSpecularMaterial *pirouetteMaterial;
   Qt3DCore::QTransform *pirouetteTransform;
 
   Qt3DCore::QEntity *rootEntity;

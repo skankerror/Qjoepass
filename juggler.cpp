@@ -25,7 +25,7 @@ Juggler::Juggler(Qt3DCore::QEntity *aRootEntity,
   skeletonArmature = new Qt3DCore::QArmature();
   skeletonArmature->setSkeleton(skeleton);
   //skeletonMaterial
-  skeletonMaterial = new Qt3DExtras::QPhongMaterial();
+  skeletonMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
   skeletonMaterial->setDiffuse(color);
   Qt3DCore::QEntity::setParent(rootEntity);
   addComponent(skeletonTransform);

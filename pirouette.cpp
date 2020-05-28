@@ -8,7 +8,7 @@ Pirouette::Pirouette(Qt3DCore::QEntity *aRootEntity, QColor aColor)
   pirouetteTransform->setScale(CLUB_SCALE);
   pirouetteMesh = new Qt3DRender::QMesh();
   pirouetteMesh->setSource(QUrl(CLUB_MESH_SRC));
-  pirouetteMaterial = new Qt3DExtras::QPhongMaterial();
+  pirouetteMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
   pirouetteMaterial->setDiffuse(color);
   Qt3DCore::QEntity::setParent(rootEntity);
   addComponent(pirouetteTransform);
