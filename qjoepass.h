@@ -10,6 +10,8 @@
 #define JUGGLER_TRANSLATION_Y -4
 #define SKELETON_MESH_SRC "qrc:/models/juggler.qgltf"
 #define SKELETON_SRC "qrc:/models/RiggedFigure.gltf"
+//#define SKELETON_MESH_SRC "qrc:/models/stickyJuggler.qgltf"
+//#define SKELETON_SRC "qrc:/models/stickyJuggler.gltf"
 // Ground
 #define GROUND_WIDTH 20
 #define GROUND_HEIGHT 20

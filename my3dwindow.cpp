@@ -25,7 +25,7 @@ My3DWindow::My3DWindow(MySettings *aSettings)
   createJuggler(-90, QVector2D(7, 0), QColor(QRgb(0x10561B)));
   // create 1 pirouette for testing purpose
   createPirouette(QColor(QRgb(0xA3A600)));
-  vPirouette[0]->setPosition(QVector3D(0, -4, 0));
+  vPirouette.at(0)->setPosition(QVector3D(0, -4, 0));
   // create 1 ball for testing purpose
   createBall(QColor(QRgb(0xA3A600)));
   // create 1 ring for testing purpose
@@ -37,7 +37,7 @@ void My3DWindow::createCam()
 {
   m_camera = camera();
   m_camera->lens()->setPerspectiveProjection(45.0f, 4.0f/3.0f, 0.1f, 1000.0f);
-  m_camera->setPosition(QVector3D(0, 0, 20.0f));
+  m_camera->setPosition(QVector3D(0, 10, 25));
   m_camera->setUpVector(QVector3D(0, 1, 0));
   m_camera->setViewCenter(QVector3D(0, 0, 0));
   // For camera controls
@@ -71,13 +71,13 @@ void My3DWindow::createLight(QVector3D aPosition, QColor aColor, float aIntensit
 
 void My3DWindow::createPirouette(QColor aColor)
 {
-  Pirouette *pirouette = new Pirouette(rootEntity, aColor);
+  auto pirouette = new Pirouette(rootEntity, aColor);
   vPirouette.append(pirouette);
 }
 
 void My3DWindow::createBall(QColor aColor)
 {
-  JugglingBall *ball = new JugglingBall(rootEntity, aColor);
+  auto ball = new JugglingBall(rootEntity, aColor);
   vBall.append(ball);
 }
 

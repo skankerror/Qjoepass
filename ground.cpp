@@ -14,6 +14,7 @@ Ground::Ground(Qt3DCore::QEntity *aRootEntity, QColor &aColor)
   // Plane Material
   planeMaterial = new Qt3DExtras::QPhongMaterial();
   planeMaterial->setDiffuse(color);
+  planeMaterial->setShininess(10);
 
   Qt3DCore::QEntity::setParent(rootEntity);
   addComponent(planeMesh);

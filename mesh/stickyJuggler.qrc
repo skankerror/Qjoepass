@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/models">
+        <file>stickyJuggler.qgltf</file>
+        <file>stickyJuggler_1.bin</file>
+        <file>stickyJuggler.gltf</file>
+    </qresource>
+</RCC>
