@@ -5,21 +5,24 @@
 #include <Qt3DRender>
 #include "qjoepass.h"
 
+using namespace Qt3DCore;
+using namespace Qt3DRender;
 
-class Light: public Qt3DCore::QEntity
+
+class Light: public QEntity
 {
   Q_OBJECT
 public:
-  explicit Light(Qt3DCore::QEntity *aRootEntity,
+  explicit Light(QEntity *aRootEntity,
                  QVector3D &aPosition,
                  QColor &aColor,
                  float &aIntensity);
 
 private:
-  Qt3DRender::QPointLight *light;
+  QPointLight *light;
   Qt3DCore::QTransform *lightTransform;
 
-  Qt3DCore::QEntity *rootEntity;
+  QEntity *rootEntity;
   QVector3D position;
   QColor color;
   float intensity;

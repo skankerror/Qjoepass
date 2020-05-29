@@ -6,30 +6,34 @@
 #include <Qt3DAnimation>
 #include "qjoepass.h"
 
-class JugglingBall: public Qt3DCore::QEntity
+using namespace Qt3DCore;
+using namespace Qt3DExtras;
+using namespace Qt3DAnimation;
+
+class JugglingBall: public QEntity
 {
   Q_OBJECT
 public:
-  JugglingBall(Qt3DCore::QEntity *aRootEntity,
+  JugglingBall(QEntity *aRootEntity,
                QColor aColor/*,
                Qt3DAnimation::QAnimationClipData *aclipData*/);
 
 public slots:
-  void updateAnim(Qt3DAnimation::QAnimationClipData clipData);
+  void updateAnim(QAnimationClipData clipData);
 
 private:
-  Qt3DExtras::QSphereMesh *sphereMesh;
+  QSphereMesh *sphereMesh;
   Qt3DCore::QTransform *sphereTransform;
-  Qt3DExtras::QDiffuseSpecularMaterial *sphereMaterial;
+  QDiffuseSpecularMaterial *sphereMaterial;
 
-  Qt3DAnimation::QClipAnimator *clipAnimator;
-  Qt3DAnimation::QAnimationClip *animationClip;
-  Qt3DAnimation::QChannelMapper *channelMapper;
-  Qt3DAnimation::QChannelMapping *location;
+  QClipAnimator *clipAnimator;
+  QAnimationClip *animationClip;
+  QChannelMapper *channelMapper;
+  QChannelMapping *location;
 
-  Qt3DCore::QEntity *rootEntity;
+  QEntity *rootEntity;
   QColor color;
-  Qt3DAnimation::QAnimationClipData clipData;
+  QAnimationClipData clipData;
 
 
   bool enabled = true;

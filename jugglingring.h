@@ -5,18 +5,23 @@
 #include <Qt3DExtras>
 #include "qjoepass.h"
 
-class JugglingRing: public Qt3DCore::QEntity
+using namespace Qt3DCore;
+using namespace Qt3DExtras;
+//using namespace Qt3DAnimation;
+
+
+class JugglingRing: public QEntity
 {
   Q_OBJECT
 public:
-  JugglingRing(Qt3DCore::QEntity *aRootEntity, QColor aColor);
+  JugglingRing(QEntity *aRootEntity, QColor aColor);
 
 private:
-  Qt3DExtras::QTorusMesh *ringMesh;
+  QTorusMesh *ringMesh;
   Qt3DCore::QTransform *ringTransform;
-  Qt3DExtras::QDiffuseSpecularMaterial *ringMaterial;
+  QDiffuseSpecularMaterial *ringMaterial;
 
-  Qt3DCore::QEntity *rootEntity;
+  QEntity *rootEntity;
   QColor color;
 
   bool enabled = true;

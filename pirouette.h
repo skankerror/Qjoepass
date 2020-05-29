@@ -6,20 +6,25 @@
 #include <Qt3DRender>
 #include "qjoepass.h"
 
-class Pirouette: public Qt3DCore::QEntity
+using namespace Qt3DCore;
+using namespace Qt3DExtras;
+//using namespace Qt3DAnimation;
+using namespace Qt3DRender;
+
+class Pirouette: public QEntity
 {
   Q_OBJECT
 public:
-  Pirouette(Qt3DCore::QEntity *aRootEntity, QColor aColor);
+  Pirouette(QEntity *aRootEntity, QColor aColor);
 
   void setPosition(QVector3D aPosition);
 
 private:
-  Qt3DRender::QMesh *pirouetteMesh;
-  Qt3DExtras::QDiffuseSpecularMaterial *pirouetteMaterial;
+  QMesh *pirouetteMesh;
+  QDiffuseSpecularMaterial *pirouetteMaterial;
   Qt3DCore::QTransform *pirouetteTransform;
 
-  Qt3DCore::QEntity *rootEntity;
+  QEntity *rootEntity;
   QColor color;
 
   QVector3D position;

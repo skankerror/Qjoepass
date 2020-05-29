@@ -1,6 +1,6 @@
 #include "light.h"
 
-Light::Light(Qt3DCore::QEntity *aRootEntity,
+Light::Light(QEntity *aRootEntity,
              QVector3D &aPosition,
              QColor &aColor,
              float &aIntensity)
@@ -9,8 +9,8 @@ Light::Light(Qt3DCore::QEntity *aRootEntity,
     color(aColor),
     intensity(aIntensity)
 {
-  Qt3DCore::QEntity::setParent(rootEntity);
-  light = new Qt3DRender::QPointLight(this);
+  QEntity::setParent(rootEntity);
+  light = new QPointLight(this);
   light->setColor(color);
   light->setIntensity(intensity);
   addComponent(light);

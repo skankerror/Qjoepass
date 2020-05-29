@@ -6,23 +6,27 @@
 #include <Qt3DRender>
 #include "qjoepass.h"
 
-class Juggler: public Qt3DCore::QEntity
+using namespace Qt3DCore;
+using namespace Qt3DExtras;
+using namespace Qt3DRender;
+
+class Juggler: public QEntity
 {
   Q_OBJECT
 public:
-  explicit Juggler(Qt3DCore::QEntity *aRootEntity,
+  explicit Juggler(QEntity *aRootEntity,
                    float &aRoty,
                    QVector2D &aPosition,
                    QColor &aColor);
 
 private:
-  Qt3DCore::QSkeletonLoader *skeleton;
-  Qt3DRender::QMesh *skeletonMesh;
-  Qt3DExtras::QDiffuseSpecularMaterial *skeletonMaterial;
+  QSkeletonLoader *skeleton;
+  QMesh *skeletonMesh;
+  QDiffuseSpecularMaterial *skeletonMaterial;
   Qt3DCore::QTransform *skeletonTransform;
-  Qt3DCore::QArmature *skeletonArmature;
+  QArmature *skeletonArmature;
 
-  Qt3DCore::QEntity *rootEntity;
+  QEntity *rootEntity;
   QVector3D eulerAngles;
   QVector3D position;
   QColor color;

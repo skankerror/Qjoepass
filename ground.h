@@ -5,18 +5,22 @@
 #include <Qt3DExtras>
 #include "qjoepass.h"
 
-class Ground: public Qt3DCore::QEntity
+using namespace Qt3DCore;
+using namespace Qt3DExtras;
+
+
+class Ground: public QEntity
 {
   Q_OBJECT
 public:
-  explicit Ground(Qt3DCore::QEntity *aRootEntity, QColor &aColor);
+  explicit Ground(QEntity *aRootEntity, QColor &aColor);
 
 private:
-  Qt3DExtras::QPlaneMesh *planeMesh;
+  QPlaneMesh *planeMesh;
   Qt3DCore::QTransform *planeTransform;
-  Qt3DExtras::QDiffuseSpecularMaterial *planeMaterial;
+  QDiffuseSpecularMaterial *planeMaterial;
 
-  Qt3DCore::QEntity *rootEntity;
+  QEntity *rootEntity;
   QColor color;
   bool enabled = true;
 };

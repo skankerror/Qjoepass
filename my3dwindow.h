@@ -16,8 +16,14 @@
 #include "jugglingring.h"
 #include "animationfactory.h"
 
+using namespace Qt3DCore;
+using namespace Qt3DRender;
+using namespace Qt3DExtras;
+//using namespace Qt3DInput;
+using namespace Qt3DAnimation;
 
-class My3DWindow: public Qt3DExtras::Qt3DWindow
+
+class My3DWindow: public Qt3DWindow
 {
   Q_OBJECT
 public:
@@ -34,17 +40,17 @@ public slots:
   void createPirouette(QColor aColor);
   void createBall(QColor aColor);
   void createRing(QColor aColor);
-  void upateBallAnim(Qt3DAnimation::QAnimationClipData clipData);
+  void upateBallAnim(QAnimationClipData clipData);
 
 private:
-  Qt3DCore::QEntity *rootEntity;
-//  Qt3DRender::QRenderSettings *renderSettings;
-//  Qt3DExtras::QForwardRenderer *forwardRenderer;
+  QEntity *rootEntity;
+//  QRenderSettings *renderSettings;
+//  QForwardRenderer *forwardRenderer;
 //  Qt3DInput::QInputSettings *inputSettings;
 
-  Qt3DRender::QCamera *m_camera;
-  Qt3DExtras::QFirstPersonCameraController *camFPController;
-  Qt3DExtras::QOrbitCameraController *camOController;
+  QCamera *m_camera;
+  QFirstPersonCameraController *camFPController;
+  QOrbitCameraController *camOController;
 
   Ground *ground;
   QVector<Light *> vLight;

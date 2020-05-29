@@ -1,7 +1,7 @@
 #include "juggler.h"
 
 
-Juggler::Juggler(Qt3DCore::QEntity *aRootEntity,
+Juggler::Juggler(QEntity *aRootEntity,
                  float &aRoty,
                  QVector2D &aPosition,
                  QColor &aColor)
@@ -16,18 +16,18 @@ Juggler::Juggler(Qt3DCore::QEntity *aRootEntity,
   position = QVector3D(aPosition.x(), JUGGLER_TRANSLATION_Y, aPosition.y());
   skeletonTransform->setTranslation(position);
   //skeletonMesh
-  skeletonMesh = new Qt3DRender::QMesh();
+  skeletonMesh = new QMesh();
   skeletonMesh->setSource(QUrl(SKELETON_MESH_SRC));
   //skeleton
-  skeleton = new Qt3DCore::QSkeletonLoader();
+  skeleton = new QSkeletonLoader();
   skeleton->setSource(QUrl(SKELETON_SRC));
   //skeletonArmature
-  skeletonArmature = new Qt3DCore::QArmature();
+  skeletonArmature = new QArmature();
   skeletonArmature->setSkeleton(skeleton);
   //skeletonMaterial
-  skeletonMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
+  skeletonMaterial = new QDiffuseSpecularMaterial();
   skeletonMaterial->setDiffuse(color);
-  Qt3DCore::QEntity::setParent(rootEntity);
+  QEntity::setParent(rootEntity);
   addComponent(skeletonTransform);
   addComponent(skeletonMesh);
   addComponent(skeletonArmature);

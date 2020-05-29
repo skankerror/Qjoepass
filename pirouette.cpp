@@ -1,16 +1,16 @@
 #include "pirouette.h"
 
-Pirouette::Pirouette(Qt3DCore::QEntity *aRootEntity, QColor aColor)
+Pirouette::Pirouette(QEntity *aRootEntity, QColor aColor)
   :rootEntity(aRootEntity),
     color(aColor)
 {
   pirouetteTransform = new Qt3DCore::QTransform();
   pirouetteTransform->setScale(CLUB_SCALE);
-  pirouetteMesh = new Qt3DRender::QMesh();
+  pirouetteMesh = new QMesh();
   pirouetteMesh->setSource(QUrl(CLUB_MESH_SRC));
-  pirouetteMaterial = new Qt3DExtras::QDiffuseSpecularMaterial();
+  pirouetteMaterial = new QDiffuseSpecularMaterial();
   pirouetteMaterial->setDiffuse(color);
-  Qt3DCore::QEntity::setParent(rootEntity);
+  QEntity::setParent(rootEntity);
   addComponent(pirouetteTransform);
   addComponent(pirouetteMesh);
   addComponent(pirouetteMaterial);
