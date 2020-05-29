@@ -14,18 +14,15 @@ class Light: public QEntity
   Q_OBJECT
 public:
   explicit Light(QEntity *aRootEntity,
-                 QVector3D &aPosition,
-                 QColor &aColor,
-                 float &aIntensity);
+                 QPointLight *aLight,
+                 QVector3D &aPosition);
 
 private:
-  QPointLight *light;
   Qt3DCore::QTransform *lightTransform;
 
   QEntity *rootEntity;
+  QPointLight *light;
   QVector3D position;
-  QColor color;
-  float intensity;
 
   bool enabled = true;
 };

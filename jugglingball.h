@@ -3,11 +3,13 @@
 
 #include <Qt3DCore>
 #include <Qt3DExtras>
+#include <Qt3DRender>
 #include <Qt3DAnimation>
 #include "qjoepass.h"
 
 using namespace Qt3DCore;
 using namespace Qt3DExtras;
+using namespace Qt3DRender;
 using namespace Qt3DAnimation;
 
 class JugglingBall: public QEntity
@@ -15,26 +17,19 @@ class JugglingBall: public QEntity
   Q_OBJECT
 public:
   JugglingBall(QEntity *aRootEntity,
-               QColor aColor/*,
-               Qt3DAnimation::QAnimationClipData *aclipData*/);
+               QSphereMesh *aSphereMesh,
+               QEffect *aEffect,
+               QColor &aColor);
 
 public slots:
-  void updateAnim(QAnimationClipData clipData);
 
 private:
-  QSphereMesh *sphereMesh;
+  QMaterial *sphereMaterial;
+  QParameter *diffuseColorParameter;
+  QParameter *shininessParameter;
   Qt3DCore::QTransform *sphereTransform;
-  QDiffuseSpecularMaterial *sphereMaterial;
 
-  QClipAnimator *clipAnimator;
-  QAnimationClip *animationClip;
-  QChannelMapper *channelMapper;
-  QChannelMapping *location;
-
-  QEntity *rootEntity;
   QColor color;
-  QAnimationClipData clipData;
-
 
   bool enabled = true;
 };

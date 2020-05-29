@@ -15,18 +15,20 @@ class Juggler: public QEntity
   Q_OBJECT
 public:
   explicit Juggler(QEntity *aRootEntity,
+                   QSkeletonLoader *aSkeleton,
+                   QMesh *aSkeletonMesh,
+                   QEffect *aEffect,
                    float &aRoty,
                    QVector2D &aPosition,
                    QColor &aColor);
 
 private:
-  QSkeletonLoader *skeleton;
-  QMesh *skeletonMesh;
-  QDiffuseSpecularMaterial *skeletonMaterial;
+  QMaterial *skeletonMaterial;
+  QParameter *diffuseColorParameter;
+  QParameter *shininessParameter;
   Qt3DCore::QTransform *skeletonTransform;
   QArmature *skeletonArmature;
 
-  QEntity *rootEntity;
   QVector3D eulerAngles;
   QVector3D position;
   QColor color;

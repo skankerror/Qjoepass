@@ -19,7 +19,6 @@
 using namespace Qt3DCore;
 using namespace Qt3DRender;
 using namespace Qt3DExtras;
-//using namespace Qt3DInput;
 using namespace Qt3DAnimation;
 
 
@@ -32,36 +31,55 @@ public:
 private:
   void createCam();
   void createGround();
+  void setGlobalObject();
 
 public slots:
   void changeBackground(QColor aColor);
   void createJuggler(float aRoty, QVector2D aPosition, QColor aColor);
-  void createLight(QVector3D aPosition, QColor aColor, float aIntensity);
+  void createLighting();
   void createPirouette(QColor aColor);
   void createBall(QColor aColor);
   void createRing(QColor aColor);
-  void upateBallAnim(QAnimationClipData clipData);
 
 private:
   QEntity *rootEntity;
-//  QRenderSettings *renderSettings;
-//  QForwardRenderer *forwardRenderer;
-//  Qt3DInput::QInputSettings *inputSettings;
 
+  // Camera
   QCamera *m_camera;
   QFirstPersonCameraController *camFPController;
   QOrbitCameraController *camOController;
 
+  // Global Material, we create one for the whole scene
+  // and pass effect to each 3d object
+  QDiffuseSpecularMaterial *material;
+  QEffect *effect;
+
+  // Ground
   Ground *ground;
+
+  // light
+  QPointLight *pointLight;
   QVector<Light *> vLight;
+
+  // juggler
+  QSkeletonLoader *skeleton;
+  QMesh *skeletonMesh;
   QVector<Juggler *> vJuggler;
+
+  // club
+  QMesh *pirouetteMesh;
   QVector<Pirouette *> vPirouette;
+
+  // ball
+  QSphereMesh *sphereMesh;
   QVector<JugglingBall *> vBall;
+
+  // ring
+  QTorusMesh *torusMesh;
   QVector<JugglingRing *> vRing;
 
   MySettings *settings;
 
-  AnimationFactory *animation;
 };
 
 #endif // MY3DWINDOW_H

@@ -1,18 +1,29 @@
 #include "pirouette.h"
 
-Pirouette::Pirouette(QEntity *aRootEntity, QColor aColor)
-  :rootEntity(aRootEntity),
+Pirouette::Pirouette(QEntity *aRootEntity,
+                     QMesh *aPirouetteMesh,
+                     QEffect *aEffect,
+                     QColor aColor)
+  :pirouetteMaterial(new QMaterial()),
+    diffuseColorParameter(new QParameter()),
+    shininessParameter(new QParameter()),
+    pirouetteTransform(new Qt3DCore::QTransform()),
     color(aColor)
 {
-  pirouetteTransform = new Qt3DCore::QTransform();
   pirouetteTransform->setScale(CLUB_SCALE);
-  pirouetteMesh = new QMesh();
-  pirouetteMesh->setSource(QUrl(CLUB_MESH_SRC));
-  pirouetteMaterial = new QDiffuseSpecularMaterial();
-  pirouetteMaterial->setDiffuse(color);
-  QEntity::setParent(rootEntity);
+
+  diffuseColorParameter->setName(QLatin1String("kd"));
+  shininessParameter->setName(QLatin1String("shininess"));
+  pirouetteMaterial->addParameter(diffuseColorParameter);
+  diffuseColorParameter->setValue(QVariant::fromValue(color));
+  pirouetteMaterial->addParameter(shininessParameter);
+  shininessParameter->setValue(QVariant::fromValue(CLUB_SHININESS));
+  pirouetteMaterial->setEffect(aEffect);
+
+
+  QEntity::setParent(aRootEntity);
   addComponent(pirouetteTransform);
-  addComponent(pirouetteMesh);
+  addComponent(aPirouetteMesh);
   addComponent(pirouetteMaterial);
   setEnabled(enabled);
 }

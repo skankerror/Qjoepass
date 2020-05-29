@@ -15,16 +15,19 @@ class Pirouette: public QEntity
 {
   Q_OBJECT
 public:
-  Pirouette(QEntity *aRootEntity, QColor aColor);
+  Pirouette(QEntity *aRootEntity,
+            QMesh *aPirouetteMesh,
+            QEffect *aEffect,
+            QColor aColor);
 
   void setPosition(QVector3D aPosition);
 
 private:
-  QMesh *pirouetteMesh;
-  QDiffuseSpecularMaterial *pirouetteMaterial;
+  QMaterial *pirouetteMaterial;
+  QParameter *diffuseColorParameter;
+  QParameter *shininessParameter;
   Qt3DCore::QTransform *pirouetteTransform;
 
-  QEntity *rootEntity;
   QColor color;
 
   QVector3D position;
