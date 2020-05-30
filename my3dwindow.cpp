@@ -35,28 +35,35 @@ My3DWindow::My3DWindow(MySettings *aSettings)
   // create 1 ring for testing purpose
   createRing(QColor(QRgb(0xA3A600)));
 
-
+  auto animGroup = new QSequentialAnimationGroup;
   auto ball = vBall.at(0);
   posBall = vJuggler.at(0)->position();
+  posBall.setY(0);
   posFinal = vJuggler.at(1)->position();
+  posFinal.setY(0);
   velBall = ((posFinal - posBall) - 0.5 * (gravity * nLaunch * nLaunch))/nLaunch;
-  QVector3D top = (gravity * nLaunch) / 4 + (nLaunch / 2) * velBall + posBall;
-  auto animBall = new QPropertyAnimation(ball, QByteArrayLiteral("position"));
-  animBall->setDuration(nLaunch * 1000);
-  animBall->setKeyValueAt(0, posBall);
-  animBall->setKeyValueAt(0.5, top);
-  animBall->setKeyValueAt(1, posFinal);
-  animBall->setLoopCount(-1);
-  animBall->start();
-
+  int frameCount = (int)(nLaunch / DELTA_TIME);
+  for (int i = 0; i < frameCount; i++)
+  {
+    auto animBall = new QPropertyAnimation(ball, QByteArrayLiteral("position"));
+    animBall->setDuration((int)(DELTA_TIME * 500));
+    animBall->setStartValue(posBall);
+    QVector3D posBall2 = posBall + (DELTA_TIME * velBall);
+    animBall->setEndValue(posBall2);
+    animBall->setLoopCount(1);
+    animGroup->addAnimation(animBall);
+    posBall = posBall2;
+    velBall = velBall + (DELTA_TIME * gravity);
+  }
+  animGroup->start();
 }
 
 void My3DWindow::createCam()
 {
   //  m_camera = new Qt3DRender::QCamera();
   m_camera = camera();
-  m_camera->lens()->setPerspectiveProjection(45.0f, 4.0f/3.0f, 0.1f, 1000.0f);
-  m_camera->setPosition(QVector3D(0, 10, 25));
+  m_camera->lens()->setPerspectiveProjection(60.0f, 4.0f/3.0f, 0.1f, 1000.0f);
+  m_camera->setPosition(QVector3D(0, 20, 25));
   m_camera->setUpVector(QVector3D(0, 1, 0));
   m_camera->setViewCenter(QVector3D(0, 0, 0));
   // For camera controls

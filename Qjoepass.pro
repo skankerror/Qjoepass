@@ -14,11 +14,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 #     -lwinmm
 #}
 CONFIG += c++11
-CONFIG += console debug
+#CONFIG += console debug
+#CONFIG += debug
 
-#TARGET +=qtdebug
-#TEMPLATE = app
-CONFIG += debug
 
 
 # The following define makes your compiler emit warnings if you use

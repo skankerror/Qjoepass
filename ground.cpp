@@ -33,6 +33,6 @@ Ground::Ground(QEntity *aRootEntity, QEffect *aEffect, QColor &aColor)
 void Ground::setColor(QColor aColor)
 {
   color = aColor;
-  diffuseColorParameter->setValue(QVariant::fromValue(color));
+  diffuseColorParameter->setValue(color);
 
 }

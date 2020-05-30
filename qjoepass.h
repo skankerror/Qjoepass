@@ -44,6 +44,6 @@
 #define LIGHT_COLOR 0xFFFFFF
 #define LIGHT_INTENSITY 2
 // anim
-#define DELTA_TIME 0.017
+#define DELTA_TIME 0.03333f
 
 #endif // QJOEPASS_H
