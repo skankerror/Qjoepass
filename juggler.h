@@ -22,6 +22,8 @@ public:
                    QVector2D &aPosition,
                    QColor &aColor);
 
+  QVector3D position() const {return m_position;}
+
 private:
   QMaterial *skeletonMaterial;
   QParameter *diffuseColorParameter;
@@ -30,7 +32,7 @@ private:
   QArmature *skeletonArmature;
 
   QVector3D eulerAngles;
-  QVector3D position;
+  QVector3D m_position;
   QColor color;
 
   bool enabled = true;

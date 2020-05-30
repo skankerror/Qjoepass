@@ -12,8 +12,8 @@ JugglingBall::JugglingBall(QEntity *aRootEntity,
 {
     sphereTransform->setScale(BALL_SCALE);
 
-    diffuseColorParameter->setName(QLatin1String("kd"));
-    shininessParameter->setName(QLatin1String("shininess"));
+    diffuseColorParameter->setName(QLatin1String(DIFFUSE_COLOR));
+    shininessParameter->setName(QLatin1String(SHININESS));
     sphereMaterial->addParameter(diffuseColorParameter);
     diffuseColorParameter->setValue(QVariant::fromValue(color));
     sphereMaterial->addParameter(shininessParameter);
@@ -25,4 +25,19 @@ JugglingBall::JugglingBall(QEntity *aRootEntity,
     addComponent(sphereMaterial);
     addComponent(sphereTransform);
 
+}
+
+void JugglingBall::setPosition(QVector3D position)
+{
+  if (m_position == position)
+    return;
+
+  m_position = position;
+  emit positionChanged(position);
+  updateTransForm();
+}
+
+void JugglingBall::updateTransForm()
+{
+  sphereTransform->setTranslation(m_position);
 }

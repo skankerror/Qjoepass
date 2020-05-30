@@ -11,14 +11,21 @@ Preferences::Preferences(MySettings *aSettings, QWidget *parent)
 
   worldTab = new QWidget(this);
 
+  QVBoxLayout *mainLayout = new QVBoxLayout;
+
   QLabel *colorLabel = new QLabel(tr("Background:"));
   QPushButton *colorButton = new QPushButton("Change Color...", this);
   connect(colorButton, SIGNAL (released()), this, SLOT (backgroundColor()));
-  QVBoxLayout *mainLayout = new QVBoxLayout;
   mainLayout->addWidget(colorLabel);
   mainLayout->addWidget(colorButton);
   //    mainLayout->addWidget(pathLabel);
 
+  QLabel *groundColorLabel = new QLabel(tr("Ground:"));
+  QPushButton *groundColorButton = new QPushButton("Change Color...", this);
+  connect(groundColorButton, SIGNAL (released()), this, SLOT (groundColor()));
+
+  mainLayout->addWidget(groundColorLabel);
+  mainLayout->addWidget(groundColorButton);
   mainLayout->addStretch(1);
   worldTab->setLayout(mainLayout);
 
@@ -57,13 +64,23 @@ Preferences::Preferences(MySettings *aSettings, QWidget *parent)
 
 void Preferences::backgroundColor()
 {
-  //    MySettings settings;
   QColor colorBG = settings->value("world/colorbg").value<QColor>();
   QColor color = QColorDialog::getColor(colorBG, this, "Choose background color", QColorDialog::DontUseNativeDialog);
   if( color.isValid() )
   {
-    qDebug() << "Color Choosen : " << color.name();
     settings->setValue("world/colorbg",color);
     emit colorChanged(color);
+  }
+}
+
+void Preferences::groundColor()
+{
+  QColor groundColor = settings->value("world/groundColor").value<QColor>();
+  QColor color = QColorDialog::getColor(groundColor, this, "Choose ground color", QColorDialog::DontUseNativeDialog);
+  if( color.isValid() )
+  {
+    qDebug() << "Ground Color Choosen : " << color.name();
+    settings->setValue("world/groundColor",color);
+    emit groundColorChanged(color);
   }
 }

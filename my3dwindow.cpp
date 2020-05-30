@@ -1,4 +1,6 @@
 #include "my3dwindow.h"
+#include <QPropertyAnimation>
+#include <QDebug>
 
 My3DWindow::My3DWindow(MySettings *aSettings)
   :rootEntity(new QEntity()),
@@ -33,6 +35,20 @@ My3DWindow::My3DWindow(MySettings *aSettings)
   // create 1 ring for testing purpose
   createRing(QColor(QRgb(0xA3A600)));
 
+
+  auto ball = vBall.at(0);
+  posBall = vJuggler.at(0)->position();
+  posFinal = vJuggler.at(1)->position();
+  velBall = ((posFinal - posBall) - 0.5 * (gravity * nLaunch * nLaunch))/nLaunch;
+  QVector3D top = (gravity * nLaunch) / 4 + (nLaunch / 2) * velBall + posBall;
+  auto animBall = new QPropertyAnimation(ball, QByteArrayLiteral("position"));
+  animBall->setDuration(nLaunch * 1000);
+  animBall->setKeyValueAt(0, posBall);
+  animBall->setKeyValueAt(0.5, top);
+  animBall->setKeyValueAt(1, posFinal);
+  animBall->setLoopCount(-1);
+  animBall->start();
+
 }
 
 void My3DWindow::createCam()
@@ -51,8 +67,8 @@ void My3DWindow::createCam()
 
 void My3DWindow::createGround()
 {
-  QColor color(QColor(QRgb(0x301510))); // Ground color
-  ground = new Ground(rootEntity, effect, color);
+  QColor colorG = settings->value("world/groundColor").value<QColor>();
+  ground = new Ground(rootEntity, effect, colorG);
 }
 
 void My3DWindow::setGlobalObject()
@@ -87,6 +103,11 @@ void My3DWindow::setGlobalObject()
 void My3DWindow::changeBackground(QColor aColor)
 {
   defaultFrameGraph()->setClearColor(aColor);
+}
+
+void My3DWindow::changeGroundColor(QColor aColor)
+{
+  ground->setColor(aColor);
 }
 
 void My3DWindow::createJuggler(float aRoty, QVector2D aPosition, QColor aColor)
@@ -127,4 +148,7 @@ void My3DWindow::createRing(QColor aColor)
   auto ring = new JugglingRing(rootEntity, torusMesh, effect, aColor);
   vRing.append(ring);
 }
+
+
+
 

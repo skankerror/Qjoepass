@@ -19,13 +19,13 @@ Juggler::Juggler(QEntity *aRootEntity,
   skeletonTransform->setScale(JUGGLER_SCALE);
   eulerAngles = QVector3D(JUGGLER_ROT_X, aRoty, JUGGLER_ROT_Z);
   skeletonTransform->setRotation(QQuaternion::fromEulerAngles(eulerAngles));
-  position = QVector3D(aPosition.x(), JUGGLER_TRANSLATION_Y, aPosition.y());
-  skeletonTransform->setTranslation(position);
+  m_position = QVector3D(aPosition.x(), JUGGLER_TRANSLATION_Y, aPosition.y());
+  skeletonTransform->setTranslation(m_position);
   //skeletonArmature
   skeletonArmature->setSkeleton(aSkeleton);
   //skeletonMaterial
-  diffuseColorParameter->setName(QLatin1String("kd"));
-  shininessParameter->setName(QLatin1String("shininess"));
+  diffuseColorParameter->setName(QLatin1String(DIFFUSE_COLOR));
+  shininessParameter->setName(QLatin1String(SHININESS));
   skeletonMaterial->addParameter(diffuseColorParameter);
   diffuseColorParameter->setValue(QVariant::fromValue(color));
   skeletonMaterial->addParameter(shininessParameter);

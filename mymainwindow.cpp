@@ -49,6 +49,7 @@ MyMainWindow::MyMainWindow()
   pref = new Preferences(settings);
 
   connect(pref, SIGNAL(colorChanged(QColor)), my3DWindow, SLOT(changeBackground(QColor)));
+  connect(pref, SIGNAL(groundColorChanged(QColor)), my3DWindow, SLOT(changeGroundColor(QColor)));
 }
 
 void MyMainWindow::createMenus()

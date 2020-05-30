@@ -12,8 +12,8 @@ Pirouette::Pirouette(QEntity *aRootEntity,
 {
   pirouetteTransform->setScale(CLUB_SCALE);
 
-  diffuseColorParameter->setName(QLatin1String("kd"));
-  shininessParameter->setName(QLatin1String("shininess"));
+  diffuseColorParameter->setName(QLatin1String(DIFFUSE_COLOR));
+  shininessParameter->setName(QLatin1String(SHININESS));
   pirouetteMaterial->addParameter(diffuseColorParameter);
   diffuseColorParameter->setValue(QVariant::fromValue(color));
   pirouetteMaterial->addParameter(shininessParameter);

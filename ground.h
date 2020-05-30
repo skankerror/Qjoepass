@@ -19,6 +19,9 @@ public:
                   QEffect *aEffect,
                   QColor &aColor);
 
+  QColor getColor() const {return color;};
+  void setColor(QColor aColor);
+
 private:
   QPlaneMesh *planeMesh;
   Qt3DCore::QTransform *planeTransform;

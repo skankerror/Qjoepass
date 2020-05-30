@@ -3,6 +3,11 @@
 
 /**************************** 3D definitions ****************************/
 
+// QMaterial shader names
+#define DIFFUSE_COLOR "kd"
+#define AMBIANT_COLOR "ka"
+#define SPECULAR_COLOR "ks"
+#define SHININESS "shininess"
 // Juggler
 #define JUGGLER_SCALE 1.6f
 #define JUGGLER_ROT_X 0
@@ -38,5 +43,7 @@
 // Light
 #define LIGHT_COLOR 0xFFFFFF
 #define LIGHT_INTENSITY 2
+// anim
+#define DELTA_TIME 0.017
 
 #endif // QJOEPASS_H

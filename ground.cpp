@@ -14,8 +14,8 @@ Ground::Ground(QEntity *aRootEntity, QEffect *aEffect, QColor &aColor)
   // Plane mesh transform
   planeTransform->setTranslation(QVector3D(0.0f, GROUND_POSY, 0.0f));
   // Plane Material
-  diffuseColorParameter->setName(QLatin1String("kd"));
-  shininessParameter->setName(QLatin1String("shininess"));
+  diffuseColorParameter->setName(QLatin1String(DIFFUSE_COLOR));
+  shininessParameter->setName(QLatin1String(SHININESS));
   planeMaterial->addParameter(diffuseColorParameter);
   diffuseColorParameter->setValue(QVariant::fromValue(color));
   planeMaterial->addParameter(shininessParameter);
@@ -27,5 +27,12 @@ Ground::Ground(QEntity *aRootEntity, QEffect *aEffect, QColor &aColor)
   addComponent(planeMaterial);
   addComponent(planeTransform);
   setEnabled(enabled);
+
+}
+
+void Ground::setColor(QColor aColor)
+{
+  color = aColor;
+  diffuseColorParameter->setValue(QVariant::fromValue(color));
 
 }

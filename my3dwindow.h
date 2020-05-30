@@ -35,6 +35,7 @@ private:
 
 public slots:
   void changeBackground(QColor aColor);
+  void changeGroundColor(QColor aColor);
   void createJuggler(float aRoty, QVector2D aPosition, QColor aColor);
   void createLighting();
   void createPirouette(QColor aColor);
@@ -79,6 +80,17 @@ private:
   QVector<JugglingRing *> vRing;
 
   MySettings *settings;
+
+  // pour tester
+  QTimer *timer;
+  JugglingBall *ball;
+  QVector3D posBall;
+  QVector3D posFinal;
+  QVector3D velBall;
+  const QVector3D gravity = QVector3D(0, -9.8, 0);
+  int count = 0;
+  float nLaunch = 3.0f;
+  float fCount = 0.0f;
 
 };
 

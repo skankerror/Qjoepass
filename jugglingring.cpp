@@ -14,8 +14,8 @@ JugglingRing::JugglingRing(QEntity *aRootEntity,
 {
   ringTransform->setScale3D(QVector3D(RING_SCALE_X, RING_SCALE_Y, RING_SCALE_Z));
 
-  diffuseColorParameter->setName(QLatin1String("kd"));
-  shininessParameter->setName(QLatin1String("shininess"));
+  diffuseColorParameter->setName(QLatin1String(DIFFUSE_COLOR));
+  shininessParameter->setName(QLatin1String(SHININESS));
   ringMaterial->addParameter(diffuseColorParameter);
   diffuseColorParameter->setValue(QVariant::fromValue(color));
   ringMaterial->addParameter(shininessParameter);
