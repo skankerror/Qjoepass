@@ -11,6 +11,7 @@ Ground::Ground(QEntity *aRootEntity, QEffect *aEffect, QColor &aColor)
   // Plane shape data
   planeMesh->setWidth(GROUND_WIDTH);
   planeMesh->setHeight(GROUND_HEIGHT);
+
   // Plane mesh transform
   planeTransform->setTranslation(QVector3D(0.0f, GROUND_POSY, 0.0f));
   // Plane Material

@@ -14,7 +14,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 #     -lwinmm
 #}
 CONFIG += c++11
-#CONFIG += console debug
+CONFIG += console
 #CONFIG += debug
 
 
@@ -67,7 +67,7 @@ SOURCES += \
 #    cdew/cdewMem.cpp \
 #    cdew/cdewMenu.cpp \
 #    cdew/cdewtools.cpp \
-#    cdew/cdewWork.cpp \
+#    cdew/cdewWork.cpp \skeleton(aSkeleton),
 #    dialog/dialog.cpp \
 #    j2/j2.cpp \
 #    languageSupport/languageSupport.cpp \

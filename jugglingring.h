@@ -4,11 +4,14 @@
 #include <Qt3DCore>
 #include <Qt3DExtras>
 #include <Qt3DRender>
+#include <Qt3DAnimation>
 #include "qjoepass.h"
 
 using namespace Qt3DCore;
 using namespace Qt3DExtras;
 using namespace Qt3DRender;
+using namespace Qt3DAnimation;
+
 
 
 class JugglingRing: public QEntity

@@ -35,6 +35,8 @@ My3DWindow::My3DWindow(MySettings *aSettings)
   // create 1 ring for testing purpose
   createRing(QColor(QRgb(0xA3A600)));
 
+//  connect(skeleton, SIGNAL(statusChanged()), this, SLOT(testSkelet()));
+
   auto animGroup = new QSequentialAnimationGroup;
   auto ball = vBall.at(0);
   posBall = vJuggler.at(0)->position();
@@ -55,7 +57,18 @@ My3DWindow::My3DWindow(MySettings *aSettings)
     posBall = posBall2;
     velBall = velBall + (DELTA_TIME * gravity);
   }
+  animGroup->setLoopCount(-1);
   animGroup->start();
+
+//  auto animGroupJug = new QSequentialAnimationGroup;
+//  auto juggler = vJuggler.at(0);
+//  auto animJug = new QPropertyAnimation(juggler, QByteArrayLiteral("position"));
+//  animJug->setDuration(1000);
+//  animJug->setStartValue(QVector3D(0, 0, 0));
+//  animJug->setEndValue(QVector3D(10, 10, 10));
+//  animJug->setLoopCount(-1);
+//  animGroupJug->addAnimation(animJug);
+//  animGroupJug->start();
 }
 
 void My3DWindow::createCam()
@@ -89,8 +102,14 @@ void My3DWindow::setGlobalObject()
   pointLight->setIntensity(LIGHT_INTENSITY);
 
   // For jugglers creations
+  skeleton->setCreateJointsEnabled(true);
+  skeleton->setEnabled(true);
   skeleton->setSource(QUrl(SKELETON_SRC));
+//  skeleton->createJointsEnabledChanged(true);
+//  skeleton->setParent(rootEntity);
   skeletonMesh->setSource(QUrl(SKELETON_MESH_SRC));
+//  qDebug() << skeleton->status();
+
 
   // For ball creations
   sphereMesh->setRings(BALL_RINGS);

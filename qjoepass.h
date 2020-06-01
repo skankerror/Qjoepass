@@ -14,7 +14,13 @@
 #define JUGGLER_ROT_Z 0
 #define JUGGLER_TRANSLATION_Y -4
 #define SKELETON_MESH_SRC "qrc:/models/juggler_.qgltf"
+//#define SKELETON_MESH_SRC "qrc:/models/juggler01.gltf"
 #define SKELETON_SRC "qrc:/models/juggler01.gltf"
+//#define SKELETON_MESH_SRC "file:/home/ray/dev/qt_exemples/exampleresources/assets/gltf/2.0/RiggedSimple/RiggedSimple.gltf"
+//#define SKELETON_SRC "file:/home/ray/dev/qt_exemples/exampleresources/assets/gltf/2.0/RiggedSimple/RiggedSimple.gltf"
+//#define SKELETON_MESH_SRC "file:/home/ray/Data/dev/qt3d-examples-master/resources/assets/gltf/2.0/Robot/robot.gltf"
+//#define SKELETON_SRC "file:/home/ray/Data/dev/qt3d-examples-master/resources/assets/gltf/2.0/Robot/robot.gltf"
+
 #define JUGGLER_SHININESS 50
 // Ground
 #define GROUND_WIDTH 20

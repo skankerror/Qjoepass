@@ -28,4 +28,16 @@ JugglingRing::JugglingRing(QEntity *aRootEntity,
   addComponent(ringMaterial);
   setEnabled(enabled);
 
+  //animation test
+//  QAnimationClip animClip;
+//  QAnimationClipData clipData;
+//  QChannelMapper channelMapper;
+//  QChannelMapping channelMapping;
+
+//  QClipAnimator clipAnimator;
+//  clipAnimator.setClip(&animClip);
+//  animClip.setClipData(clipData);
+//  addComponent(&clipAnimator);
+
+
 }

@@ -41,6 +41,7 @@ public slots:
   void createPirouette(QColor aColor);
   void createBall(QColor aColor);
   void createRing(QColor aColor);
+  void testSkelet() {qDebug() << "bluk";}
 
 private:
   QEntity *rootEntity;

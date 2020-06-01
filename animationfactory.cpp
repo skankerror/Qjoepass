@@ -32,4 +32,7 @@ void AnimationFactory::updateClipData()
     location.appendChannelComponent(locationZ);
 
     m_clipData.appendChannel(location);
+//  QKeyframeAnimation *qkfa;
+//  qkfa->
+
 }
