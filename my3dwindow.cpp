@@ -37,28 +37,28 @@ My3DWindow::My3DWindow(MySettings *aSettings)
 
 //  connect(skeleton, SIGNAL(statusChanged()), this, SLOT(testSkelet()));
 
-  auto animGroup = new QSequentialAnimationGroup;
-  auto ball = vBall.at(0);
-  posBall = vJuggler.at(0)->position();
-  posBall.setY(0);
-  posFinal = vJuggler.at(1)->position();
-  posFinal.setY(0);
-  velBall = ((posFinal - posBall) - 0.5 * (gravity * nLaunch * nLaunch))/nLaunch;
-  int frameCount = (int)(nLaunch / DELTA_TIME);
-  for (int i = 0; i < frameCount; i++)
-  {
-    auto animBall = new QPropertyAnimation(ball, QByteArrayLiteral("position"));
-    animBall->setDuration((int)(DELTA_TIME * 500));
-    animBall->setStartValue(posBall);
-    QVector3D posBall2 = posBall + (DELTA_TIME * velBall);
-    animBall->setEndValue(posBall2);
-    animBall->setLoopCount(1);
-    animGroup->addAnimation(animBall);
-    posBall = posBall2;
-    velBall = velBall + (DELTA_TIME * gravity);
-  }
-  animGroup->setLoopCount(-1);
-  animGroup->start();
+//  auto animGroup = new QSequentialAnimationGroup;
+//  auto ball = vBall.at(0);
+//  posBall = vJuggler.at(0)->position();
+//  posBall.setY(0);
+//  posFinal = vJuggler.at(1)->position();
+//  posFinal.setY(0);
+//  velBall = ((posFinal - posBall) - 0.5 * (gravity * nLaunch * nLaunch))/nLaunch;
+//  int frameCount = (int)(nLaunch / DELTA_TIME);
+//  for (int i = 0; i < frameCount; i++)
+//  {
+//    auto animBall = new QPropertyAnimation(ball, QByteArrayLiteral("position"));
+//    animBall->setDuration((int)(DELTA_TIME * 500));
+//    animBall->setStartValue(posBall);
+//    QVector3D posBall2 = posBall + (DELTA_TIME * velBall);
+//    animBall->setEndValue(posBall2);
+//    animBall->setLoopCount(1);
+//    animGroup->addAnimation(animBall);
+//    posBall = posBall2;
+//    velBall = velBall + (DELTA_TIME * gravity);
+//  }
+//  animGroup->setLoopCount(-1);
+//  animGroup->start();
 
 //  auto animGroupJug = new QSequentialAnimationGroup;
 //  auto juggler = vJuggler.at(0);
