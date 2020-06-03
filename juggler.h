@@ -6,7 +6,7 @@
 #include <Qt3DRender>
 #include <Qt3DAnimation>
 #include "qjoepass.h"
-#include "animationfactory.h"
+//#include "animationfactory.h"
 
 using namespace Qt3DCore;
 using namespace Qt3DExtras;
@@ -20,21 +20,12 @@ class Juggler: public QEntity
              READ getSkeletonTransform
              WRITE setSkeletonTransform
              NOTIFY skeletonTransformChanged)
-  Q_PROPERTY(QJoint *rootJoint
-             READ getRootJoint
-             WRITE setRootJoint
-             NOTIFY rootJointChanged)
-  Q_PROPERTY(QSkeletonLoader *skeleton
-             READ getSkeleton
-             WRITE setSkeleton
-             NOTIFY skeletonChanged)
   Q_PROPERTY(QVector3D position
              READ position
              WRITE setPosition
              NOTIFY positionChanged)
 public:
   explicit Juggler(QEntity *aRootEntity,
-                   QSkeletonLoader *aSkeleton,
                    QMesh *aSkeletonMesh,
                    QEffect *aEffect,
                    float &aRoty,
@@ -43,44 +34,56 @@ public:
 
   QVector3D position() const {return m_position;}
   Qt3DCore::QTransform * getSkeletonTransform() const {return skeletonTransform;};
-  QJoint * getRootJoint() const {return rootJoint;};
-  QSkeletonLoader * getSkeleton() const {return skeleton;};
   void setPosition(QVector3D aPosition);
   void setSkeletonTransform(Qt3DCore::QTransform *aTransform) {skeletonTransform = aTransform;};
-  void setRootJoint(QJoint * aJoint) {rootJoint = aJoint;};
-  void setSkeleton(QSkeletonLoader * aSkeleton) {skeleton = aSkeleton;};
+
+  // getters for hands positions ext to catch, int to launch, med for siteswap 2
+  QVector3D getPositionLHext() const {return posLHext;};
+  QVector3D getPositionLHint() const {return posLHint;};
+  QVector3D getPositionLHmed() const {return posLHmed;};
+  QVector3D getPositionRHext() const {return posRHext;};
+  QVector3D getPositionRHint() const {return posRHint;};
+  QVector3D getPositionRHmed() const {return posRHmed;};
+
 
 private:
   void updateTransform();
 
+  // setters for hands pos
+  void setPositionLHext();
+  void setPositionLHint();
+  void setPositionLHmed();
+  void setPositionRHext();
+  void setPositionRHint();
+  void setPositionRHmed();
+
+private slots:
+  void setPositionHands();
+
 signals:
   void skeletonTransformChanged();
-  void rootJointChanged();
-  void skeletonChanged();
-  void positionChanged(QVector3D position);
+  void positionChanged();
 
 private:
-  QSkeletonLoader *skeleton;
   QMaterial *skeletonMaterial;
   QParameter *diffuseColorParameter;
   QParameter *shininessParameter;
   Qt3DCore::QTransform *skeletonTransform;
-  QArmature *skeletonArmature;
-
-  // pour tester
-//  QClipAnimator *animator;
-//  QAnimationClip *clip;
-//  AnimationFactory *factory;
-//  QChannelMapper *channelMapper;
-//  QChannelMapping *positionMapping;
 
   QVector3D eulerAngles;
   QVector3D m_position;
   QColor color;
 
-  QJoint *rootJoint;
-
   bool enabled = true;
+
+  // handPos
+  QVector3D posLHext;
+  QVector3D posLHint;
+  QVector3D posLHmed;
+  QVector3D posRHext;
+  QVector3D posRHint;
+  QVector3D posRHmed;
+
 };
 
 #endif // JUGGLER_H

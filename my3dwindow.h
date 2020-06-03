@@ -14,7 +14,7 @@
 #include "pirouette.h"
 #include "jugglingball.h"
 #include "jugglingring.h"
-#include "animationfactory.h"
+#include "animsimple.h"
 
 using namespace Qt3DCore;
 using namespace Qt3DRender;
@@ -41,7 +41,6 @@ public slots:
   void createPirouette(QColor aColor);
   void createBall(QColor aColor);
   void createRing(QColor aColor);
-  void testSkelet() {qDebug() << "bluk";}
 
 private:
   QEntity *rootEntity;
@@ -64,7 +63,6 @@ private:
   QVector<Light *> vLight;
 
   // juggler
-  QSkeletonLoader *skeleton;
   QMesh *skeletonMesh;
   QVector<Juggler *> vJuggler;
 
@@ -81,15 +79,6 @@ private:
   QVector<JugglingRing *> vRing;
 
   MySettings *settings;
-
-  // pour tester
-  JugglingBall *ball;
-  QVector3D posBall;
-  QVector3D posFinal;
-  QVector3D velBall;
-  const QVector3D gravity = QVector3D(0, -9.8, 0);
-  int count = 0;
-  float nLaunch = 3.0f;
 
 };
 

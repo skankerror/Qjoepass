@@ -5,7 +5,6 @@
 My3DWindow::My3DWindow(MySettings *aSettings)
   :rootEntity(new QEntity()),
     pointLight(new QPointLight()),
-    skeleton(new QSkeletonLoader()),
     skeletonMesh(new QMesh()),
     pirouetteMesh(new QMesh()),
     sphereMesh(new QSphereMesh()),
@@ -25,58 +24,26 @@ My3DWindow::My3DWindow(MySettings *aSettings)
   createLighting();
 
   // create 2 jugglers for testing purpose
-  createJuggler(90, QVector2D(-7, 0), QColor(QRgb(0x204C9B)));
-  createJuggler(-90, QVector2D(7, 0), QColor(QRgb(0x10561B)));
+  createJuggler(10, QVector2D(0, 0), QColor(QRgb(0x204C9B)));
+//  createJuggler(-90, QVector2D(7, 0), QColor(QRgb(0x10561B)));
   // create 1 pirouette for testing purpose
-  createPirouette(QColor(QRgb(0xA3A600)));
-  vPirouette.at(0)->setPosition(QVector3D(0, -4, 0));
+//  createPirouette(QColor(QRgb(0xA3A600)));
+//  vPirouette.at(0)->setPosition(QVector3D(0, -4, 0));
   // create 1 ball for testing purpose
   createBall(QColor(QRgb(0xA3A600)));
+  vBall.at(0)->setPosition(vJuggler.at(0)->getPositionRHext());
   // create 1 ring for testing purpose
-  createRing(QColor(QRgb(0xA3A600)));
-
-//  connect(skeleton, SIGNAL(statusChanged()), this, SLOT(testSkelet()));
-
-//  auto animGroup = new QSequentialAnimationGroup;
-//  auto ball = vBall.at(0);
-//  posBall = vJuggler.at(0)->position();
-//  posBall.setY(0);
-//  posFinal = vJuggler.at(1)->position();
-//  posFinal.setY(0);
-//  velBall = ((posFinal - posBall) - 0.5 * (gravity * nLaunch * nLaunch))/nLaunch;
-//  int frameCount = (int)(nLaunch / DELTA_TIME);
-//  for (int i = 0; i < frameCount; i++)
-//  {
-//    auto animBall = new QPropertyAnimation(ball, QByteArrayLiteral("position"));
-//    animBall->setDuration((int)(DELTA_TIME * 500));
-//    animBall->setStartValue(posBall);
-//    QVector3D posBall2 = posBall + (DELTA_TIME * velBall);
-//    animBall->setEndValue(posBall2);
-//    animBall->setLoopCount(1);
-//    animGroup->addAnimation(animBall);
-//    posBall = posBall2;
-//    velBall = velBall + (DELTA_TIME * gravity);
-//  }
-//  animGroup->setLoopCount(-1);
-//  animGroup->start();
-
-//  auto animGroupJug = new QSequentialAnimationGroup;
-//  auto juggler = vJuggler.at(0);
-//  auto animJug = new QPropertyAnimation(juggler, QByteArrayLiteral("position"));
-//  animJug->setDuration(1000);
-//  animJug->setStartValue(QVector3D(0, 0, 0));
-//  animJug->setEndValue(QVector3D(10, 10, 10));
-//  animJug->setLoopCount(-1);
-//  animGroupJug->addAnimation(animJug);
-//  animGroupJug->start();
+//  createRing(QColor(QRgb(0xA3A600)));
+  QVector<int> vecInt;
+  AnimSimple *animTest = new AnimSimple(vJuggler.at(0), vBall, vecInt);
 }
 
 void My3DWindow::createCam()
 {
   //  m_camera = new Qt3DRender::QCamera();
   m_camera = camera();
-  m_camera->lens()->setPerspectiveProjection(60.0f, 4.0f/3.0f, 0.1f, 1000.0f);
-  m_camera->setPosition(QVector3D(0, 20, 25));
+  m_camera->lens()->setPerspectiveProjection(45.0f, 4.0f/3.0f, 0.1f, 1000.0f);
+  m_camera->setPosition(QVector3D(0, 5, 10));
   m_camera->setUpVector(QVector3D(0, 1, 0));
   m_camera->setViewCenter(QVector3D(0, 0, 0));
   // For camera controls
@@ -102,14 +69,7 @@ void My3DWindow::setGlobalObject()
   pointLight->setIntensity(LIGHT_INTENSITY);
 
   // For jugglers creations
-  skeleton->setCreateJointsEnabled(true);
-  skeleton->setEnabled(true);
-  skeleton->setSource(QUrl(SKELETON_SRC));
-//  skeleton->createJointsEnabledChanged(true);
-//  skeleton->setParent(rootEntity);
   skeletonMesh->setSource(QUrl(SKELETON_MESH_SRC));
-//  qDebug() << skeleton->status();
-
 
   // For ball creations
   sphereMesh->setRings(BALL_RINGS);
@@ -138,7 +98,7 @@ void My3DWindow::changeGroundColor(QColor aColor)
 
 void My3DWindow::createJuggler(float aRoty, QVector2D aPosition, QColor aColor)
 {
-  auto juggler = new Juggler(rootEntity, skeleton, skeletonMesh, effect, aRoty, aPosition, aColor);
+  auto juggler = new Juggler(rootEntity, skeletonMesh, effect, aRoty, aPosition, aColor);
   vJuggler.append(juggler);
 }
 
@@ -174,7 +134,4 @@ void My3DWindow::createRing(QColor aColor)
   auto ring = new JugglingRing(rootEntity, torusMesh, effect, aColor);
   vRing.append(ring);
 }
-
-
-
 

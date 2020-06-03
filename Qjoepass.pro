@@ -53,6 +53,7 @@ INCLUDEPATH += \
 
 SOURCES += \
   animationfactory.cpp \
+  animsimple.cpp \
   camera.cpp \
   ground.cpp \
   juggler.cpp \
@@ -147,6 +148,7 @@ SOURCES += \
 
 HEADERS += \
   animationfactory.h \
+  animsimple.h \
   camera.h \
   ground.h \
   juggler.h \
@@ -252,7 +254,7 @@ HEADERS += \
     universal/prefDefinitionValues.h \
     universal/preprocess.h \
     universal/scanner.h \
-    universal/siteswap.h \
+#    universal/siteswap.h \
     universal/styleScanner.h \
     universal/workspace.h
 

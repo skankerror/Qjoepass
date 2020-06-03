@@ -14,14 +14,12 @@
 #define JUGGLER_ROT_Z 0
 #define JUGGLER_TRANSLATION_Y -4
 #define SKELETON_MESH_SRC "qrc:/models/juggler_.qgltf"
-//#define SKELETON_MESH_SRC "qrc:/models/juggler01.gltf"
-#define SKELETON_SRC "qrc:/models/juggler01.gltf"
-//#define SKELETON_MESH_SRC "file:/home/ray/dev/qt_exemples/exampleresources/assets/gltf/2.0/RiggedSimple/RiggedSimple.gltf"
-//#define SKELETON_SRC "file:/home/ray/dev/qt_exemples/exampleresources/assets/gltf/2.0/RiggedSimple/RiggedSimple.gltf"
-//#define SKELETON_MESH_SRC "file:/home/ray/Data/dev/qt3d-examples-master/resources/assets/gltf/2.0/Robot/robot.gltf"
-//#define SKELETON_SRC "file:/home/ray/Data/dev/qt3d-examples-master/resources/assets/gltf/2.0/Robot/robot.gltf"
-
 #define JUGGLER_SHININESS 50
+#define HAND_OFFSET_X 0.65
+#define HAND_OFFSET_Y 3.75
+#define HAND_OFFSET_Z 1.3
+#define HAND_OFFSET_EXT 30
+#define HAND_OFFSET_INT -15
 // Ground
 #define GROUND_WIDTH 20
 #define GROUND_HEIGHT 20
@@ -50,6 +48,9 @@
 #define LIGHT_COLOR 0xFFFFFF
 #define LIGHT_INTENSITY 2
 // anim
-#define DELTA_TIME 0.03333f
+#define DELTA_TIME 0.0166667f // en seconde
+#define TEMPO 2.0f // lancers / secondes
+#define DWELL_TIME 0.16666667f // en seconde
+enum hand{leftHand, rightHand};
 
 #endif // QJOEPASS_H
