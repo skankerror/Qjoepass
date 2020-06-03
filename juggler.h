@@ -45,6 +45,7 @@ public:
   QVector3D getPositionRHint() const {return posRHint;};
   QVector3D getPositionRHmed() const {return posRHmed;};
 
+  float getRotY() const {return eulerAngles.y();};
 
 private:
   void updateTransform();

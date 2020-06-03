@@ -18,8 +18,8 @@
 #define HAND_OFFSET_X 0.65
 #define HAND_OFFSET_Y 3.75
 #define HAND_OFFSET_Z 1.3
-#define HAND_OFFSET_EXT 30
-#define HAND_OFFSET_INT -15
+#define HAND_OFFSET_EXT 0.65
+#define HAND_OFFSET_INT 0.3
 // Ground
 #define GROUND_WIDTH 20
 #define GROUND_HEIGHT 20
@@ -51,7 +51,9 @@
 #define GRAVITY QVector3D(0, -9.8, 0)
 #define DELTA_TIME 0.0166667f // in second
 #define TEMPO 0.5f // time between 2 launchs in sec
-#define DWELL_TIME 0.16666667f // in second
+//#define DWELL_TIME 0.16666667f // in second
+#define DWELL_TIME 0.2f // in second
+
 enum hand{leftHand, rightHand};
 
 #endif // QJOEPASS_H

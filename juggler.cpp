@@ -35,7 +35,7 @@ Juggler::Juggler(QEntity *aRootEntity,
   addComponent(skeletonMaterial);
   setEnabled(enabled);
 
-  // on met à jour les positions des mains
+  // we update hands positions
   setPositionHands();
 
   connect(this, SIGNAL(positionChanged()), this, SLOT(setPositionHands()));
@@ -58,18 +58,24 @@ void Juggler::updateTransform()
 
 void Juggler::setPositionLHext()
 {
+  QVector3D vecOffset(HAND_OFFSET_X + HAND_OFFSET_EXT, HAND_OFFSET_Y, HAND_OFFSET_Z);
+  QVector3D vecMain = m_position + vecOffset;
   QMatrix4x4 rot;
   rot.setToIdentity();
-  rot.rotate(HAND_OFFSET_EXT, QVector3D(0, 1, 0));
-  posLHext = rot * posLHmed;
+  rot.rotate(eulerAngles.y(), QVector3D(0, 1, 0));
+  vecMain = rot * vecMain;
+  posLHext = vecMain;
 }
 
 void Juggler::setPositionLHint()
 {
+  QVector3D vecOffset(HAND_OFFSET_X - HAND_OFFSET_INT, HAND_OFFSET_Y, HAND_OFFSET_Z);
+  QVector3D vecMain = m_position + vecOffset;
   QMatrix4x4 rot;
   rot.setToIdentity();
-  rot.rotate(HAND_OFFSET_INT, QVector3D(0, 1, 0));
-  posLHint = rot * posLHmed;
+  rot.rotate(eulerAngles.y(), QVector3D(0, 1, 0));
+  vecMain = rot * vecMain;
+  posLHint = vecMain;
 }
 
 void Juggler::setPositionLHmed()
@@ -85,18 +91,24 @@ void Juggler::setPositionLHmed()
 
 void Juggler::setPositionRHext()
 {
+  QVector3D vecOffset(-HAND_OFFSET_X - HAND_OFFSET_EXT, HAND_OFFSET_Y, HAND_OFFSET_Z);
+  QVector3D vecMain = m_position + vecOffset;
   QMatrix4x4 rot;
   rot.setToIdentity();
-  rot.rotate(-HAND_OFFSET_EXT, QVector3D(0, 1, 0));
-  posRHext = rot * posRHmed;
+  rot.rotate(eulerAngles.y(), QVector3D(0, 1, 0));
+  vecMain = rot * vecMain;
+  posRHext = vecMain;
 }
 
 void Juggler::setPositionRHint()
 {
+  QVector3D vecOffset(-HAND_OFFSET_X + HAND_OFFSET_INT, HAND_OFFSET_Y, HAND_OFFSET_Z);
+  QVector3D vecMain = m_position + vecOffset;
   QMatrix4x4 rot;
   rot.setToIdentity();
-  rot.rotate(-HAND_OFFSET_INT, QVector3D(0, 1, 0));
-  posRHint = rot * posRHmed;
+  rot.rotate(eulerAngles.y(), QVector3D(0, 1, 0));
+  vecMain = rot * vecMain;
+  posRHint = vecMain;
 }
 
 void Juggler::setPositionRHmed()
@@ -112,12 +124,12 @@ void Juggler::setPositionRHmed()
 
 void Juggler::setPositionHands()
 {
-  // on crée d'abord les meds, les autres n'en sont qu'une rotation
   setPositionLHmed();
   setPositionRHmed();
-
   setPositionLHext();
   setPositionLHint();
   setPositionRHext();
   setPositionRHint();
+  qDebug() << posRHext << posRHmed << posRHint;
+  qDebug() << posLHext << posLHmed << posLHint;
 }

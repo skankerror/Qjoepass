@@ -25,7 +25,7 @@ private:
   Juggler *juggler;
   QVector<JugglingBall *> vBall;
   QVector<int> siteswap;
-//  const QVector3D gravity = QVector3D(0, -18, 0);
+  int period;
 };
 
 #endif // ANIMSIMPLE_H

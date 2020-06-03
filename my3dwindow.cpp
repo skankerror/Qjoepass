@@ -31,7 +31,9 @@ My3DWindow::My3DWindow(MySettings *aSettings)
 //  vPirouette.at(0)->setPosition(QVector3D(0, -4, 0));
   // create 1 ball for testing purpose
   createBall(QColor(QRgb(0xA3A600)));
-  vBall.at(0)->setPosition(vJuggler.at(0)->getPositionRHext());
+  createBall(QColor(QRgb(0xFF0000)));
+  createBall(QColor(QRgb(0xA3A600)));
+//  vBall.at(0)->setPosition(vJuggler.at(0)->getPositionRHext());
   // create 1 ring for testing purpose
 //  createRing(QColor(QRgb(0xA3A600)));
   QVector<int> vecInt;
@@ -50,6 +52,10 @@ void My3DWindow::createCam()
   camFPController = new QFirstPersonCameraController(rootEntity);
   camOController = new QOrbitCameraController(rootEntity);
   camOController->setCamera(m_camera);
+
+//  Qt3DCore::QTransform *globalTransform = new Qt3DCore::QTransform(rootEntity);
+//  globalTransform->setScale(0.1);
+//  rootEntity->addComponent(globalTransform);
 }
 
 void My3DWindow::createGround()
