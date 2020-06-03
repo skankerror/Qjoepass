@@ -48,9 +48,10 @@
 #define LIGHT_COLOR 0xFFFFFF
 #define LIGHT_INTENSITY 2
 // anim
-#define DELTA_TIME 0.0166667f // en seconde
-#define TEMPO 2.0f // lancers / secondes
-#define DWELL_TIME 0.16666667f // en seconde
+#define GRAVITY QVector3D(0, -9.8, 0)
+#define DELTA_TIME 0.0166667f // in second
+#define TEMPO 0.5f // time between 2 launchs in sec
+#define DWELL_TIME 0.16666667f // in second
 enum hand{leftHand, rightHand};
 
 #endif // QJOEPASS_H

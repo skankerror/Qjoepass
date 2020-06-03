@@ -24,8 +24,8 @@ My3DWindow::My3DWindow(MySettings *aSettings)
   createLighting();
 
   // create 2 jugglers for testing purpose
-  createJuggler(10, QVector2D(0, 0), QColor(QRgb(0x204C9B)));
-//  createJuggler(-90, QVector2D(7, 0), QColor(QRgb(0x10561B)));
+  createJuggler(0, QVector2D(0, 0), QColor(QRgb(0x10561B)));
+//  createJuggler(-90, QVector2D(7, 0), QColor(QRgb(0x204C9B)));
   // create 1 pirouette for testing purpose
 //  createPirouette(QColor(QRgb(0xA3A600)));
 //  vPirouette.at(0)->setPosition(QVector3D(0, -4, 0));
