@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/models">
+        <file>juggler__1.bin</file>
+        <file>juggler_.qgltf</file>
+        <file>juggler01.gltf</file>
+        <file>juggler01.bin</file>
+    </qresource>
+</RCC>

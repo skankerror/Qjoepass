@@ -1,5 +1,4 @@
 QT       += core gui 3dcore 3drender 3dinput 3dlogic 3dextras 3danimation
-#QT += kuesa
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 #unix {
@@ -15,6 +14,10 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 #     -lwinmm
 #}
 CONFIG += c++11
+CONFIG += console
+#CONFIG += debug
+
+
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -49,7 +52,14 @@ INCLUDEPATH += \
     j2
 
 SOURCES += \
+  animationfactory.cpp \
+  animsimple.cpp \
   camera.cpp \
+  ground.cpp \
+  juggler.cpp \
+  jugglingball.cpp \
+  jugglingring.cpp \
+  light.cpp \
     main.cpp \
   my3dwindow.cpp \
     mymainwindow.cpp \
@@ -58,7 +68,7 @@ SOURCES += \
 #    cdew/cdewMem.cpp \
 #    cdew/cdewMenu.cpp \
 #    cdew/cdewtools.cpp \
-#    cdew/cdewWork.cpp \
+#    cdew/cdewWork.cpp \skeleton(aSkeleton),
 #    dialog/dialog.cpp \
 #    j2/j2.cpp \
 #    languageSupport/languageSupport.cpp \
@@ -132,11 +142,19 @@ SOURCES += \
 #    universal/siteswap.cpp \
 #    universal/styleScanner.cpp \
 #    universal/workspace.cpp
+  pirouette.cpp \
     preferences.cpp \
     settings.cpp
 
 HEADERS += \
+  animationfactory.h \
+  animsimple.h \
   camera.h \
+  ground.h \
+  juggler.h \
+  jugglingball.h \
+  jugglingring.h \
+  light.h \
   my3dwindow.h \
     mymainwindow.h \
     cdew/causal_editor.h \
@@ -176,11 +194,13 @@ HEADERS += \
     openGLversion/stringtoscreen.h \
     openGLversion/texture.h \
     openGLversion/world.h \
+  pirouette.h \
     preferences.h \
+  qjoepass.h \
     refactoring/constants.h \
     refactoring/hand.h \
     refactoring/hcurve.h \
-    refactoring/juggler.h \
+#    refactoring/juggler.h \
     refactoring/vector3d.h \
     runaround/inputWindow.h \
     runaround/listWindow.h \
@@ -234,7 +254,7 @@ HEADERS += \
     universal/prefDefinitionValues.h \
     universal/preprocess.h \
     universal/scanner.h \
-    universal/siteswap.h \
+#    universal/siteswap.h \
     universal/styleScanner.h \
     universal/workspace.h
 
@@ -312,5 +332,6 @@ DISTFILES += \
 
 RESOURCES += \
     application.qrc \
-    mesh/club.qrc \
-    mesh/juggler.qrc
+    mesh/J_club2.qrc \
+    mesh/juggler_.qrc
+

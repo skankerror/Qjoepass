@@ -7,62 +7,79 @@
 #include <Qt3DLogic>
 #include <Qt3DExtras>
 #include <Qt3DAnimation>
-//#include <Kuesa>
 #include "settings.h"
+#include "juggler.h"
+#include "light.h"
+#include "ground.h"
+#include "pirouette.h"
+#include "jugglingball.h"
+#include "jugglingring.h"
+#include "animsimple.h"
 
-#define SKELETON_MODEL "/home/ray/dev/Qjoepass/mesh/RiggedFigure.gltf"
-#define JUGGLER_MODEL "mesh/RiggedFigure.gltf"
+using namespace Qt3DCore;
+using namespace Qt3DRender;
+using namespace Qt3DExtras;
+using namespace Qt3DAnimation;
 
-class My3DWindow: public Qt3DExtras::Qt3DWindow
+
+class My3DWindow: public Qt3DWindow
 {
   Q_OBJECT
 public:
   My3DWindow(MySettings *aSettings);
 
+private:
+  void createCam();
+  void createGround();
+  void setGlobalObject();
+
 public slots:
   void changeBackground(QColor aColor);
+  void changeGroundColor(QColor aColor);
+  void createJuggler(float aRoty, QVector2D aPosition, QColor aColor);
+  void createLighting();
+  void createPirouette(QColor aColor);
+  void createBall(QColor aColor);
+  void createRing(QColor aColor);
 
 private:
-  Qt3DCore::QEntity *rootEntity;
+  QEntity *rootEntity;
 
-  Qt3DRender::QCamera *m_camera;
-  Qt3DExtras::QFirstPersonCameraController *camFPController;
-  Qt3DExtras::QOrbitCameraController *camOController;
+  // Camera
+  QCamera *m_camera;
+  QFirstPersonCameraController *camFPController;
+  QOrbitCameraController *camOController;
 
-  Qt3DCore::QEntity *lightEntity;
-  Qt3DRender::QPointLight *light;
-  Qt3DCore::QTransform *lightTransform;
+  // Global Material, we create one for the whole scene
+  // and pass effect to each 3d object
+  QDiffuseSpecularMaterial *material;
+  QEffect *effect;
 
-  Qt3DCore::QEntity *lightEntity2;
-  Qt3DRender::QPointLight *light2;
-  Qt3DCore::QTransform *lightTransform2;
+  // Ground
+  Ground *ground;
 
-  Qt3DCore::QEntity *lightEntity3;
-  Qt3DRender::QPointLight *light3;
-  Qt3DCore::QTransform *lightTransform3;
+  // light
+  QPointLight *pointLight;
+  QVector<Light *> vLight;
 
-  Qt3DExtras::QPlaneMesh *planeMesh;
-  Qt3DCore::QTransform *planeTransform;
-  Qt3DExtras::QPhongMaterial *planeMaterial;
-  Qt3DCore::QEntity *planeEntity;
+  // juggler
+  QMesh *skeletonMesh;
+  QVector<Juggler *> vJuggler;
 
-  Qt3DCore::QEntity *skeletonEntity;
-  Qt3DCore::QSkeletonLoader *skeleton;
-  Qt3DRender::QMesh *skeletonMesh;
-  Qt3DExtras::QPhongMaterial *skeletonMaterial;
-  Qt3DCore::QTransform *skeletonTransform;
-  Qt3DCore::QArmature *skeletonArmature;
+  // club
+  QMesh *pirouetteMesh;
+  QVector<Pirouette *> vPirouette;
 
-  Qt3DCore::QEntity *skeletonEntity2;
-  Qt3DCore::QSkeletonLoader *skeleton2;
-  Qt3DRender::QMesh *skeletonMesh2;
-  Qt3DExtras::QPhongMaterial *skeletonMaterial2;
-  Qt3DCore::QTransform *skeletonTransform2;
-  Qt3DCore::QArmature *skeletonArmature2;
+  // ball
+  QSphereMesh *sphereMesh;
+  QVector<JugglingBall *> vBall;
+
+  // ring
+  QTorusMesh *torusMesh;
+  QVector<JugglingRing *> vRing;
 
   MySettings *settings;
 
-  bool enabled = true;
 };
 
 #endif // MY3DWINDOW_H
