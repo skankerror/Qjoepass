@@ -31,13 +31,21 @@ My3DWindow::My3DWindow(MySettings *aSettings)
 //  vPirouette.at(0)->setPosition(QVector3D(0, -4, 0));
   // create 1 ball for testing purpose
   createBall(QColor(QRgb(0xA3A600)));
-  createBall(QColor(QRgb(0xFF0000)));
   createBall(QColor(QRgb(0xA3A600)));
+  createBall(QColor(QRgb(0xA3A600)));
+  createBall(QColor(QRgb(0xA3A600)));
+  createBall(QColor(QRgb(0xA3A600)));
+  createBall(QColor(QRgb(0xA3A600)));
+  createBall(QColor(QRgb(0xA3A600)));
+
 //  vBall.at(0)->setPosition(vJuggler.at(0)->getPositionRHext());
   // create 1 ring for testing purpose
 //  createRing(QColor(QRgb(0xA3A600)));
   QVector<int> vecInt;
+  vecInt.append(7);
+//  vecInt[0] = 3;
   AnimSimple *animTest = new AnimSimple(vJuggler.at(0), vBall, vecInt);
+  animTest->startAnimation();
 }
 
 void My3DWindow::createCam()

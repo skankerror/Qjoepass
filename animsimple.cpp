@@ -1,60 +1,113 @@
 #include "animsimple.h"
-#include <qmath.h>
+//#include <qmath.h>
 
 AnimSimple::AnimSimple(Juggler *aJuggler,
                        QVector<JugglingBall *> aVBall,
                        QVector<int> aSiteswap)
   :juggler(aJuggler),
     vBall(aVBall),
-    siteswap(aSiteswap)
+    siteswap(aSiteswap),
+    siteswapAnimation(new QParallelAnimationGroup())
 {
   period = siteswap.size();
+  int numProp = aVBall.size();
+//  int numProp = 3;
+  // test pour période 1
+  int launch = aSiteswap.at(0);
+//  int launch = 3;
 
-  auto ball = vBall.at(0);
-  auto launch1Animation = launchBall(juggler, ball, 3, rightHand);
-  launch1Animation->setLoopCount(1);
-  auto launch2Animation = launchBall(juggler, ball, 3, leftHand);
-  launch2Animation->setLoopCount(1);
-  auto ball1Animation = new QSequentialAnimationGroup();
-  ball1Animation->addAnimation(launch1Animation);
-  ball1Animation->addAnimation(launch2Animation);
-  ball1Animation->setLoopCount(-1);
-  qDebug() << ball1Animation->duration();
+  for (int i = 0; i < numProp; i++)
+  {
+    auto ball = vBall.at(i);
+    auto launchAnim = new QSequentialAnimationGroup(); // anim 1 pour pair et impair
+    auto ballAnim = new QSequentialAnimationGroup(); // regroupe si impair
+    auto ballGlobAnim = new QSequentialAnimationGroup();// nécessaire pour la pause au début
 
-  auto ball2 = vBall.at(1);
-  auto launch3Animation = launchBall(juggler, ball2, 3, leftHand);
-  launch3Animation->setLoopCount(1);
-  auto launch4Animation = launchBall(juggler, ball2, 3, rightHand);
-  launch4Animation->setLoopCount(1);
-  auto ball2Animation = new QSequentialAnimationGroup();
-  ball2Animation->addAnimation(launch3Animation);
-  ball2Animation->addAnimation(launch4Animation);
-  ball2Animation->setLoopCount(-1);
-  auto ball2SeqAnim = new QSequentialAnimationGroup();
-  ball2SeqAnim->addPause(DELAY_LAUNCH);
-  ball2SeqAnim->addAnimation(ball2Animation);
+    // on rajoute le delay pour chaque balle
+    if (i)
+      ballGlobAnim->addPause(DELAY_LAUNCH * i);
+
+    // voir si i est pair ou impair pour savoir si c'est left ou right
+    if (i % 2 == 0) // leftHand
+    {
+      launchAnim = launchBall(juggler, ball, launch, rightHand);
+      launchAnim->setLoopCount(1);
+    }
+    else
+    {
+      launchAnim = launchBall(juggler, ball, launch, leftHand);
+      launchAnim->setLoopCount(1);
+    }
+    ballAnim->addAnimation(launchAnim);
+    if (launch % 2 !=0) // si launch est impair
+    {
+      auto launchAnim2 = new QSequentialAnimationGroup();
+      if (i % 2 == 0)
+      {
+        launchAnim2 = launchBall(juggler, ball, launch, leftHand);
+        launchAnim2->setLoopCount(1);
+      }
+      else
+      {
+        launchAnim2 = launchBall(juggler, ball, launch, rightHand);
+        launchAnim2->setLoopCount(1);
+      }
+      ballAnim->addAnimation(launchAnim2);
+    }
+    ballAnim->setLoopCount(-1);
+    ballGlobAnim->addAnimation(ballAnim); // permet de coller la pause une seule fois au début
+    siteswapAnimation->addAnimation(ballGlobAnim);
+    siteswapAnimation->setLoopCount(-1);
+  }
+
+//  auto ball = vBall.at(0);
+//  auto launch1Animation = launchBall(juggler, ball, 3, rightHand);
+//  launch1Animation->setLoopCount(1);
+//  auto launch2Animation = launchBall(juggler, ball, 3, leftHand);
+//  launch2Animation->setLoopCount(1);
+//  auto ball1Animation = new QSequentialAnimationGroup();
+//  ball1Animation->addAnimation(launch1Animation);
+//  ball1Animation->addAnimation(launch2Animation);
+//  ball1Animation->setLoopCount(-1);
+//  //  qDebug() << ball1Animation->duration();
+
+//  auto ball2 = vBall.at(1);
+//  auto launch3Animation = launchBall(juggler, ball2, 3, leftHand);
+//  launch3Animation->setLoopCount(1);
+//  auto launch4Animation = launchBall(juggler, ball2, 3, rightHand);
+//  launch4Animation->setLoopCount(1);
+//  auto ball2Animation = new QSequentialAnimationGroup();
+//  ball2Animation->addAnimation(launch3Animation);
+//  ball2Animation->addAnimation(launch4Animation);
+//  ball2Animation->setLoopCount(-1);
+//  auto ball2SeqAnim = new QSequentialAnimationGroup();
+//  ball2SeqAnim->addPause(DELAY_LAUNCH);
+//  ball2SeqAnim->addAnimation(ball2Animation);
 
 
-  auto ball3 = vBall.at(2);
-  auto launch5Animation = launchBall(juggler, ball3, 3, rightHand);
-  launch5Animation->setLoopCount(1);
-  auto launch6Animation = launchBall(juggler, ball3, 3, leftHand);
-  launch6Animation->setLoopCount(1);
-  auto ball3Animation = new QSequentialAnimationGroup();
-  ball3Animation->addAnimation(launch5Animation);
-  ball3Animation->addAnimation(launch6Animation);
-  ball3Animation->setLoopCount(-1);
-  auto ball3SeqAnim = new QSequentialAnimationGroup();
-  ball3SeqAnim->addPause(DELAY_LAUNCH * 2);
-  ball3SeqAnim->addAnimation(ball3Animation);
+//  auto ball3 = vBall.at(2);
+//  auto launch5Animation = launchBall(juggler, ball3, 3, rightHand);
+//  launch5Animation->setLoopCount(1);
+//  auto launch6Animation = launchBall(juggler, ball3, 3, leftHand);
+//  launch6Animation->setLoopCount(1);
+//  auto ball3Animation = new QSequentialAnimationGroup();
+//  ball3Animation->addAnimation(launch5Animation);
+//  ball3Animation->addAnimation(launch6Animation);
+//  ball3Animation->setLoopCount(-1);
+//  auto ball3SeqAnim = new QSequentialAnimationGroup();
+//  ball3SeqAnim->addPause(DELAY_LAUNCH * 2);
+//  ball3SeqAnim->addAnimation(ball3Animation);
 
-  auto siteswapAnimation = new QParallelAnimationGroup();
-  siteswapAnimation->addAnimation(ball1Animation);
-  siteswapAnimation->addAnimation(ball2SeqAnim);
-  siteswapAnimation->addAnimation(ball3SeqAnim);
-  siteswapAnimation->setLoopCount(-1);
+//  siteswapAnimation->addAnimation(ball1Animation);
+//  siteswapAnimation->addAnimation(ball2SeqAnim);
+//  siteswapAnimation->addAnimation(ball3SeqAnim);
+//  siteswapAnimation->setLoopCount(-1);
+
+}
+
+void AnimSimple::startAnimation()
+{
   siteswapAnimation->start();
-
 }
 
 QSequentialAnimationGroup *AnimSimple::launchBall(Juggler *aJuggler,
@@ -95,10 +148,10 @@ QSequentialAnimationGroup *AnimSimple::launchBall(Juggler *aJuggler,
     posFinal = aJuggler->getPositionRHext();
     receiveHand = rightHand;
   }
-//  qDebug() << posBall;
+  //  qDebug() << posBall;
 
   float timeLaunch = ((float)(launch) * TEMPO) - DWELL_TIME;
-//  qDebug() << timeLaunch;
+  //  qDebug() << timeLaunch;
 
   // we calculate velocity launch
   QVector3D velBall = ((posFinal - posBall) - 0.5 *
@@ -106,7 +159,7 @@ QSequentialAnimationGroup *AnimSimple::launchBall(Juggler *aJuggler,
 
   // By counting frames we add 1 due to float to integer approx.
   int frameCount = (int)((timeLaunch / (DELTA_TIME)) + 1);
-//  qDebug() << frameCount;
+  //  qDebug() << frameCount;
 
   // loop creates all our animations for launch
   for (int i = 0; i <= frameCount; i++)
@@ -119,7 +172,7 @@ QSequentialAnimationGroup *AnimSimple::launchBall(Juggler *aJuggler,
     animBall->setLoopCount(1);
     animGroup->addAnimation(animBall);
     posBall = posBall2;
-//    qDebug() << posBall;
+    //    qDebug() << posBall;
     velBall = velBall + (DELTA_TIME * GRAVITY);
   }
 
@@ -133,16 +186,16 @@ QSequentialAnimationGroup *AnimSimple::launchBall(Juggler *aJuggler,
   if (receiveHand == leftHand)
   {
     centerCurve = (posBall + aJuggler->getPositionLHint()) / 2;
-//    qDebug() << posBall;
-//    qDebug() << centerCurve;
-//    qDebug() << aJuggler->getPositionLHint();
+    //    qDebug() << posBall;
+    //    qDebug() << centerCurve;
+    //    qDebug() << aJuggler->getPositionLHint();
   }
   else
   {
     centerCurve = (posBall + aJuggler->getPositionRHint()) / 2;
-//    qDebug() << posBall;
-//    qDebug() << centerCurve;
-//    qDebug() << aJuggler->getPositionRHint();
+    //    qDebug() << posBall;
+    //    qDebug() << centerCurve;
+    //    qDebug() << aJuggler->getPositionRHint();
   }
 
   // determine axis for rotation
@@ -176,7 +229,7 @@ QSequentialAnimationGroup *AnimSimple::launchBall(Juggler *aJuggler,
     animBall->setLoopCount(1);
     animGroup->addAnimation(animBall);
     posBall = posBall2;
-//    qDebug() << posBall;
+    //    qDebug() << posBall;
   }
 
   return animGroup;

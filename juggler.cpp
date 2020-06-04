@@ -130,6 +130,6 @@ void Juggler::setPositionHands()
   setPositionLHint();
   setPositionRHext();
   setPositionRHint();
-  qDebug() << posRHext << posRHmed << posRHint;
-  qDebug() << posLHext << posLHmed << posLHint;
+//  qDebug() << posRHext << posRHmed << posRHint;
+//  qDebug() << posLHext << posLHmed << posLHint;
 }
