@@ -24,6 +24,8 @@ private:
                                         int launch,
                                         hand aHand);
 
+  hand changeHand(hand aHand);
+
 private:
   Juggler *juggler;
   QVector<JugglingBall *> vBall;

@@ -11,97 +11,135 @@ AnimSimple::AnimSimple(Juggler *aJuggler,
 {
   period = siteswap.size();
   int numProp = aVBall.size();
-//  int numProp = 3;
-  // test pour période 1
-  int launch = aSiteswap.at(0);
-//  int launch = 3;
 
-  for (int i = 0; i < numProp; i++)
+  /*************************** test pour période > 1 *************************/
+
+  for (int i = 0; i < numProp; i++) // pour chaque objet
   {
-    auto ball = vBall.at(i);
-    auto launchAnim = new QSequentialAnimationGroup(); // anim 1 pour pair et impair
-    auto ballAnim = new QSequentialAnimationGroup(); // regroupe si impair
-    auto ballGlobAnim = new QSequentialAnimationGroup();// nécessaire pour la pause au début
+    int launchPos = i % period;
+    int launch = siteswap.at(launchPos);
+    if (launch) // si c'est 0, rien à faire
+    {
+      hand launchHand;
+      auto ball = vBall.at(i);
+      auto ballAnim = new QSequentialAnimationGroup(); // pour agréger tout le trajet
+      auto ballGlobAnim = new QSequentialAnimationGroup();// nécessaire pour la pause au début
 
-    // on rajoute le delay pour chaque balle
-    if (i)
-      ballGlobAnim->addPause(DELAY_LAUNCH * i);
+      // on rajoute le delay pour chaque balle
+      if (i)
+        ballGlobAnim->addPause(DELAY_LAUNCH * i);
 
-    // voir si i est pair ou impair pour savoir si c'est left ou right
-    if (i % 2 == 0) // leftHand
-    {
-      launchAnim = launchBall(juggler, ball, launch, rightHand);
-      launchAnim->setLoopCount(1);
-    }
-    else
-    {
-      launchAnim = launchBall(juggler, ball, launch, leftHand);
-      launchAnim->setLoopCount(1);
-    }
-    ballAnim->addAnimation(launchAnim);
-    if (launch % 2 !=0) // si launch est impair
-    {
-      auto launchAnim2 = new QSequentialAnimationGroup();
+      // faire la 1ère anim
       if (i % 2 == 0)
-      {
-        launchAnim2 = launchBall(juggler, ball, launch, leftHand);
-        launchAnim2->setLoopCount(1);
-      }
+        launchHand = rightHand;
       else
+        launchHand = leftHand;
+      auto launchAnim = launchBall(juggler, ball, launch, launchHand);
+      launchAnim->setLoopCount(1);
+      ballAnim->addAnimation(launchAnim);
+
+      // la suite
+      // on cherche la suite de la balle dans le siteswap
+      int newLaunchPos = (launch + launchPos) % period;
+      // on se met sur la main qui a reçu
+      // si launch est impair on change de main
+      hand newLaunchHand;
+      if (launch % 2 == 1)
+        newLaunchHand = changeHand(launchHand);
+      else
+        newLaunchHand = launchHand;
+      // si on n'arrive pas sur la même position on continue
+      while (newLaunchPos != launchPos)
       {
-        launchAnim2 = launchBall(juggler, ball, launch, rightHand);
-        launchAnim2->setLoopCount(1);
+        int newLaunch = siteswap.at(newLaunchPos);
+        auto followLaunchAnim = launchBall(juggler, ball, newLaunch, newLaunchHand);
+        followLaunchAnim->setLoopCount(1);
+        ballAnim->addAnimation(followLaunchAnim);
+        // changer de main ?
+        if (newLaunch % 2 == 1)
+          newLaunchHand = changeHand(newLaunchHand);
+        newLaunchPos = (newLaunch + newLaunchPos) % period;
       }
-      ballAnim->addAnimation(launchAnim2);
-    }
-    ballAnim->setLoopCount(-1);
-    ballGlobAnim->addAnimation(ballAnim); // permet de coller la pause une seule fois au début
-    siteswapAnimation->addAnimation(ballGlobAnim);
-    siteswapAnimation->setLoopCount(-1);
-  }
 
-//  auto ball = vBall.at(0);
-//  auto launch1Animation = launchBall(juggler, ball, 3, rightHand);
-//  launch1Animation->setLoopCount(1);
-//  auto launch2Animation = launchBall(juggler, ball, 3, leftHand);
-//  launch2Animation->setLoopCount(1);
-//  auto ball1Animation = new QSequentialAnimationGroup();
-//  ball1Animation->addAnimation(launch1Animation);
-//  ball1Animation->addAnimation(launch2Animation);
-//  ball1Animation->setLoopCount(-1);
-//  //  qDebug() << ball1Animation->duration();
+      // on arrive au début mais si on a changé de main faut refaire
+      if (newLaunchHand != launchHand)
+      {
+        auto backLaunchAnim = launchBall(juggler, ball, launch, newLaunchHand);
+        backLaunchAnim->setLoopCount(1);
+        ballAnim->addAnimation(backLaunchAnim);
+        // la suite
+        // on cherche la suite de la balle dans le siteswap
+        newLaunchPos = (launch + launchPos) % period;
+        if (launch % 2 == 1) // suivant le cas on change de main
+          newLaunchHand = changeHand(newLaunchHand);
+        // si on n'arrive pas sur la même position on continue
+        while (newLaunchPos != launchPos)
+        {
+          int newLaunch = siteswap.at(newLaunchPos);
+          auto backFollowLaunchAnim = launchBall(juggler, ball, newLaunch, newLaunchHand);
+          backFollowLaunchAnim->setLoopCount(1);
+          ballAnim->addAnimation(backFollowLaunchAnim);
+          // changer de main ?
+          if (newLaunch % 2 == 1)
+            newLaunchHand = changeHand(newLaunchHand);
+          newLaunchPos = (newLaunch + newLaunchPos) % period;
+        }
+      }
+      // on rajoute le tout à notre global anim qui contient la pause
+      ballGlobAnim->addAnimation(ballAnim);
+      ballAnim->setLoopCount(-1);
+      siteswapAnimation->addAnimation(ballGlobAnim); // on ajoute à notre anim parallele
+    }// fin de if (launch != 0)
+  }// fin de for()
 
-//  auto ball2 = vBall.at(1);
-//  auto launch3Animation = launchBall(juggler, ball2, 3, leftHand);
-//  launch3Animation->setLoopCount(1);
-//  auto launch4Animation = launchBall(juggler, ball2, 3, rightHand);
-//  launch4Animation->setLoopCount(1);
-//  auto ball2Animation = new QSequentialAnimationGroup();
-//  ball2Animation->addAnimation(launch3Animation);
-//  ball2Animation->addAnimation(launch4Animation);
-//  ball2Animation->setLoopCount(-1);
-//  auto ball2SeqAnim = new QSequentialAnimationGroup();
-//  ball2SeqAnim->addPause(DELAY_LAUNCH);
-//  ball2SeqAnim->addAnimation(ball2Animation);
 
+  /********************** test pour période 1 **********************************/
 
-//  auto ball3 = vBall.at(2);
-//  auto launch5Animation = launchBall(juggler, ball3, 3, rightHand);
-//  launch5Animation->setLoopCount(1);
-//  auto launch6Animation = launchBall(juggler, ball3, 3, leftHand);
-//  launch6Animation->setLoopCount(1);
-//  auto ball3Animation = new QSequentialAnimationGroup();
-//  ball3Animation->addAnimation(launch5Animation);
-//  ball3Animation->addAnimation(launch6Animation);
-//  ball3Animation->setLoopCount(-1);
-//  auto ball3SeqAnim = new QSequentialAnimationGroup();
-//  ball3SeqAnim->addPause(DELAY_LAUNCH * 2);
-//  ball3SeqAnim->addAnimation(ball3Animation);
+//  int launch = siteswap.at(0);
 
-//  siteswapAnimation->addAnimation(ball1Animation);
-//  siteswapAnimation->addAnimation(ball2SeqAnim);
-//  siteswapAnimation->addAnimation(ball3SeqAnim);
-//  siteswapAnimation->setLoopCount(-1);
+//  for (int i = 0; i < numProp; i++)
+//  {
+//    auto ball = vBall.at(i);
+//    auto launchAnim = new QSequentialAnimationGroup(); // anim 1 pour pair et impair
+//    auto ballAnim = new QSequentialAnimationGroup(); // regroupe si impair
+//    auto ballGlobAnim = new QSequentialAnimationGroup();// nécessaire pour la pause au début
+
+//    // on rajoute le delay pour chaque balle
+//    if (i)
+//      ballGlobAnim->addPause(DELAY_LAUNCH * i);
+
+//    // voir si i est pair ou impair pour savoir si c'est left ou right
+//    if (i % 2 == 0) // rightHand
+//    {
+//      launchAnim = launchBall(juggler, ball, launch, rightHand);
+//      launchAnim->setLoopCount(1);
+//    }
+//    else // leftHand
+//    {
+//      launchAnim = launchBall(juggler, ball, launch, leftHand);
+//      launchAnim->setLoopCount(1);
+//    }
+//    ballAnim->addAnimation(launchAnim);
+//    // si launch est impair il faut faire un nouveau trajet pour boucler au départ
+//    if (launch % 2 !=0)
+//    {
+//      auto launchAnim2 = new QSequentialAnimationGroup();
+//      if (i % 2 == 0) // si on est parti de la droite on repart de la gauche
+//      {
+//        launchAnim2 = launchBall(juggler, ball, launch, leftHand);
+//        launchAnim2->setLoopCount(1);
+//      }
+//      else // et inversement
+//      {
+//        launchAnim2 = launchBall(juggler, ball, launch, rightHand);
+//        launchAnim2->setLoopCount(1);
+//      }
+//      ballAnim->addAnimation(launchAnim2);
+//    }
+//    ballAnim->setLoopCount(-1);
+//    ballGlobAnim->addAnimation(ballAnim); // permet de coller la pause une seule fois au début
+//    siteswapAnimation->addAnimation(ballGlobAnim); // on ajoute à notre anim parallele
+//  }
 
 }
 
@@ -233,4 +271,12 @@ QSequentialAnimationGroup *AnimSimple::launchBall(Juggler *aJuggler,
   }
 
   return animGroup;
+}
+
+hand AnimSimple::changeHand(hand aHand)
+{
+  if (aHand == leftHand)
+    return rightHand;
+  else
+    return leftHand;
 }
