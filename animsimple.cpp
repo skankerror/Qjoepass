@@ -27,10 +27,13 @@ AnimSimple::AnimSimple(Juggler *aJuggler,
   auto launch4Animation = launchBall(juggler, ball2, 3, rightHand);
   launch4Animation->setLoopCount(1);
   auto ball2Animation = new QSequentialAnimationGroup();
-//  ball2Animation->addPause(TEMPO * 600);
   ball2Animation->addAnimation(launch3Animation);
   ball2Animation->addAnimation(launch4Animation);
   ball2Animation->setLoopCount(-1);
+  auto ball2SeqAnim = new QSequentialAnimationGroup();
+  ball2SeqAnim->addPause(DELAY_LAUNCH);
+  ball2SeqAnim->addAnimation(ball2Animation);
+
 
   auto ball3 = vBall.at(2);
   auto launch5Animation = launchBall(juggler, ball3, 3, rightHand);
@@ -38,27 +41,19 @@ AnimSimple::AnimSimple(Juggler *aJuggler,
   auto launch6Animation = launchBall(juggler, ball3, 3, leftHand);
   launch6Animation->setLoopCount(1);
   auto ball3Animation = new QSequentialAnimationGroup();
-//  ball3Animation->addPause(TEMPO * 2 * 600);
   ball3Animation->addAnimation(launch5Animation);
   ball3Animation->addAnimation(launch6Animation);
   ball3Animation->setLoopCount(-1);
+  auto ball3SeqAnim = new QSequentialAnimationGroup();
+  ball3SeqAnim->addPause(DELAY_LAUNCH * 2);
+  ball3SeqAnim->addAnimation(ball3Animation);
 
-  ball1Animation->start();
-  QTimer::singleShot(400, ball2Animation, SLOT(start()));
-  QTimer::singleShot(800, ball3Animation, SLOT(start()));
-
-  //  ball2Animation->start();
-//  ball3Animation->start();
-
-//  auto siteswapAnimation = new QParallelAnimationGroup();
-//  siteswapAnimation->addAnimation(ball1Animation);
-//  siteswapAnimation->addAnimation(ball2Animation);
-//  siteswapAnimation->addAnimation(ball3Animation);
-//  siteswapAnimation->setLoopCount(-1);
-//  siteswapAnimation->start();
-////  ball2Animation->pause;
-////  ball3Animation->pause();
-
+  auto siteswapAnimation = new QParallelAnimationGroup();
+  siteswapAnimation->addAnimation(ball1Animation);
+  siteswapAnimation->addAnimation(ball2SeqAnim);
+  siteswapAnimation->addAnimation(ball3SeqAnim);
+  siteswapAnimation->setLoopCount(-1);
+  siteswapAnimation->start();
 
 }
 

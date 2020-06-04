@@ -53,6 +53,7 @@
 #define TEMPO 0.5f // time between 2 launchs in sec
 //#define DWELL_TIME 0.16666667f // in second
 #define DWELL_TIME 0.2f // in second
+#define DELAY_LAUNCH 300
 
 enum hand{leftHand, rightHand};
 
