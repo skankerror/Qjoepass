@@ -116,7 +116,7 @@ void My3DWindow::changeGroundColor(QColor aColor)
 
 void My3DWindow::createJuggler(float aRoty, QVector2D aPosition, QColor aColor)
 {
-  auto juggler = new Juggler(rootEntity, skeletonMesh, effect, aRoty, aPosition, aColor);
+  auto juggler = new Juggler(rootEntity, effect, aRoty, aPosition, aColor);
   vJuggler.append(juggler);
 }
 

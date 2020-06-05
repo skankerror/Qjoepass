@@ -89,7 +89,16 @@ AnimSimple::AnimSimple(Juggler *aJuggler,
     ballAnim->setLoopCount(-1);
     siteswapAnimation->addAnimation(ballGlobAnim); // on ajoute à notre anim parallele
   }
-
+  auto animLeftHand = new QPropertyAnimation(juggler, QByteArrayLiteral("leftForearmPosition"));
+  animLeftHand->setDuration(DELAY_LAUNCH * 2);
+  animLeftHand->setStartValue(0);
+  animLeftHand->setEndValue(360);
+  animLeftHand->setLoopCount(-1);
+  auto seqAnimLeftHand = new QSequentialAnimationGroup();
+  seqAnimLeftHand->addPause(DELAY_LAUNCH);
+  seqAnimLeftHand->addAnimation(animLeftHand);
+  seqAnimLeftHand->setLoopCount(1);
+  siteswapAnimation->addAnimation(seqAnimLeftHand);
 
   /********************** test pour période 1 **********************************/
 
@@ -266,6 +275,9 @@ QSequentialAnimationGroup *AnimSimple::launchBall(Juggler *aJuggler,
     animGroup->addAnimation(animBall);
     posBall = posBall2;
     //    qDebug() << posBall;
+
+
+//    animGroup->addAnimation(animHand);
   }
 
   return animGroup;

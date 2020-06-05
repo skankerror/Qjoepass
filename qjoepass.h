@@ -9,7 +9,7 @@
 #define SPECULAR_COLOR "ks"
 #define SHININESS "shininess"
 // Juggler
-#define JUGGLER_SCALE 1.6f
+#define JUGGLER_SCALE 0.8f
 #define JUGGLER_ROT_X 0
 #define JUGGLER_ROT_Z 0
 #define JUGGLER_TRANSLATION_Y -4
