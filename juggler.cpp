@@ -90,6 +90,7 @@ Juggler::Juggler(QEntity *aRootEntity,
   makeMember(LeftForearm,leftForearmTransform, aLeftForearmEntity,
              QVector3D(90.0f, 0.0f, 0.0f),
              QVector3D(-1.0f, 4.8f, 0.75f), aRoty, 1.5f);
+  leftForearmMatrix = leftArmTransform->matrix();
 
   aRightForearmEntity = new Qt3DCore::QEntity(this);
   RightForearm = new Qt3DExtras::QCylinderMesh();
@@ -162,7 +163,8 @@ Juggler::Juggler(QEntity *aRootEntity,
 }
 void Juggler::setLeftForearmPosition(float rot)
 {
-  QMatrix4x4 aMatrix = leftForearmTransform->matrix();
+//  QMatrix4x4 aMatrix;/* = leftForearmTransform->matrix()*/;
+  QMatrix4x4 aMatrix = leftForearmMatrix;
   aMatrix.translate(0.0f, 0.0f, 0.75f);
   aMatrix.rotate(rot, QVector3D(0.0f, 0.5f, 0.5f));
   aMatrix.translate(0.0f, 0.0f, -0.75f);

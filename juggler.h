@@ -140,6 +140,7 @@ private:
     QEntity *aLeftForearmEntity;
     QCylinderMesh *LeftForearm;
     Qt3DCore::QTransform *leftForearmTransform;
+    QMatrix4x4 leftForearmMatrix;
 
     QEntity *aRightForearmEntity;
     QCylinderMesh *RightForearm;
