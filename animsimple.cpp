@@ -1,60 +1,158 @@
 #include "animsimple.h"
-#include <qmath.h>
+//#include <qmath.h>
 
 AnimSimple::AnimSimple(Juggler *aJuggler,
                        QVector<JugglingBall *> aVBall,
                        QVector<int> aSiteswap)
   :juggler(aJuggler),
     vBall(aVBall),
-    siteswap(aSiteswap)
+    siteswap(aSiteswap),
+    siteswapAnimation(new QParallelAnimationGroup())
 {
   period = siteswap.size();
+  int numProp = aVBall.size();
+  // Il faudrait vérifier la validité du site swap
 
-  auto ball = vBall.at(0);
-  auto launch1Animation = launchBall(juggler, ball, 3, rightHand);
-  launch1Animation->setLoopCount(1);
-  auto launch2Animation = launchBall(juggler, ball, 3, leftHand);
-  launch2Animation->setLoopCount(1);
-  auto ball1Animation = new QSequentialAnimationGroup();
-  ball1Animation->addAnimation(launch1Animation);
-  ball1Animation->addAnimation(launch2Animation);
-  ball1Animation->setLoopCount(-1);
-  qDebug() << ball1Animation->duration();
+  /*************************** test pour période > 1 *************************/
 
-  auto ball2 = vBall.at(1);
-  auto launch3Animation = launchBall(juggler, ball2, 3, leftHand);
-  launch3Animation->setLoopCount(1);
-  auto launch4Animation = launchBall(juggler, ball2, 3, rightHand);
-  launch4Animation->setLoopCount(1);
-  auto ball2Animation = new QSequentialAnimationGroup();
-  ball2Animation->addAnimation(launch3Animation);
-  ball2Animation->addAnimation(launch4Animation);
-  ball2Animation->setLoopCount(-1);
-  auto ball2SeqAnim = new QSequentialAnimationGroup();
-  ball2SeqAnim->addPause(DELAY_LAUNCH);
-  ball2SeqAnim->addAnimation(ball2Animation);
+  for (int i = 0; i < numProp; i++) // pour chaque objet
+  {
+    int launchPos = i % period;
+    int launch = siteswap.at(launchPos);
+    hand launchHand;
+    auto ball = vBall.at(i);
+    auto ballAnim = new QSequentialAnimationGroup(); // pour agréger tout le trajet
+    auto ballGlobAnim = new QSequentialAnimationGroup();// nécessaire pour la pause au début
 
+    // on rajoute le delay pour chaque balle
+    if (i)
+      ballGlobAnim->addPause(DELAY_LAUNCH * i);
 
-  auto ball3 = vBall.at(2);
-  auto launch5Animation = launchBall(juggler, ball3, 3, rightHand);
-  launch5Animation->setLoopCount(1);
-  auto launch6Animation = launchBall(juggler, ball3, 3, leftHand);
-  launch6Animation->setLoopCount(1);
-  auto ball3Animation = new QSequentialAnimationGroup();
-  ball3Animation->addAnimation(launch5Animation);
-  ball3Animation->addAnimation(launch6Animation);
-  ball3Animation->setLoopCount(-1);
-  auto ball3SeqAnim = new QSequentialAnimationGroup();
-  ball3SeqAnim->addPause(DELAY_LAUNCH * 2);
-  ball3SeqAnim->addAnimation(ball3Animation);
+    // faire la 1ère anim
+    if (i % 2 == 0)
+      launchHand = rightHand;
+    else
+      launchHand = leftHand;
+    auto launchAnim = launchBall(juggler, ball, launch, launchHand);
+    launchAnim->setLoopCount(1);
+    ballAnim->addAnimation(launchAnim);
 
-  auto siteswapAnimation = new QParallelAnimationGroup();
-  siteswapAnimation->addAnimation(ball1Animation);
-  siteswapAnimation->addAnimation(ball2SeqAnim);
-  siteswapAnimation->addAnimation(ball3SeqAnim);
-  siteswapAnimation->setLoopCount(-1);
+    // la suite
+    // on cherche la suite de la balle dans le siteswap
+    int newLaunchPos = (launch + launchPos) % period;
+    // on se met sur la main qui a reçu
+    // si launch est impair on change de main
+    hand newLaunchHand;
+    if (launch % 2 == 1)
+      newLaunchHand = changeHand(launchHand);
+    else
+      newLaunchHand = launchHand;
+    // si on n'arrive pas sur la même position on continue
+    while (newLaunchPos != launchPos)
+    {
+      int newLaunch = siteswap.at(newLaunchPos);
+      auto followLaunchAnim = launchBall(juggler, ball, newLaunch, newLaunchHand);
+      followLaunchAnim->setLoopCount(1);
+      ballAnim->addAnimation(followLaunchAnim);
+      // changer de main ?
+      if (newLaunch % 2 == 1)
+        newLaunchHand = changeHand(newLaunchHand);
+      newLaunchPos = (newLaunch + newLaunchPos) % period;
+    }
+
+    // on arrive au début mais si on a changé de main faut refaire
+    if (newLaunchHand != launchHand)
+    {
+      auto backLaunchAnim = launchBall(juggler, ball, launch, newLaunchHand);
+      backLaunchAnim->setLoopCount(1);
+      ballAnim->addAnimation(backLaunchAnim);
+      // la suite
+      // on cherche la suite de la balle dans le siteswap
+      newLaunchPos = (launch + launchPos) % period;
+      if (launch % 2 == 1) // suivant le cas on change de main
+        newLaunchHand = changeHand(newLaunchHand);
+      // si on n'arrive pas sur la même position on continue
+      while (newLaunchPos != launchPos)
+      {
+        int newLaunch = siteswap.at(newLaunchPos);
+        auto backFollowLaunchAnim = launchBall(juggler, ball, newLaunch, newLaunchHand);
+        backFollowLaunchAnim->setLoopCount(1);
+        ballAnim->addAnimation(backFollowLaunchAnim);
+        // changer de main ?
+        if (newLaunch % 2 == 1)
+          newLaunchHand = changeHand(newLaunchHand);
+        newLaunchPos = (newLaunch + newLaunchPos) % period;
+      }
+    }
+    // on rajoute le tout à notre global anim qui contient la pause
+    ballGlobAnim->addAnimation(ballAnim);
+    ballAnim->setLoopCount(-1);
+    siteswapAnimation->addAnimation(ballGlobAnim); // on ajoute à notre anim parallele
+  }
+  auto animLeftHand = new QPropertyAnimation(juggler, QByteArrayLiteral("leftForearmPosition"));
+  animLeftHand->setDuration(DELAY_LAUNCH * 2);
+  animLeftHand->setStartValue(0);
+  animLeftHand->setEndValue(360);
+  animLeftHand->setLoopCount(-1);
+  auto seqAnimLeftHand = new QSequentialAnimationGroup();
+  seqAnimLeftHand->addPause(DELAY_LAUNCH);
+  seqAnimLeftHand->addAnimation(animLeftHand);
+  seqAnimLeftHand->setLoopCount(1);
+  siteswapAnimation->addAnimation(seqAnimLeftHand);
+
+  /********************** test pour période 1 **********************************/
+
+  //  int launch = siteswap.at(0);
+
+  //  for (int i = 0; i < numProp; i++)
+  //  {
+  //    auto ball = vBall.at(i);
+  //    auto launchAnim = new QSequentialAnimationGroup(); // anim 1 pour pair et impair
+  //    auto ballAnim = new QSequentialAnimationGroup(); // regroupe si impair
+  //    auto ballGlobAnim = new QSequentialAnimationGroup();// nécessaire pour la pause au début
+
+  //    // on rajoute le delay pour chaque balle
+  //    if (i)
+  //      ballGlobAnim->addPause(DELAY_LAUNCH * i);
+
+  //    // voir si i est pair ou impair pour savoir si c'est left ou right
+  //    if (i % 2 == 0) // rightHand
+  //    {
+  //      launchAnim = launchBall(juggler, ball, launch, rightHand);
+  //      launchAnim->setLoopCount(1);
+  //    }
+  //    else // leftHand
+  //    {
+  //      launchAnim = launchBall(juggler, ball, launch, leftHand);
+  //      launchAnim->setLoopCount(1);
+  //    }
+  //    ballAnim->addAnimation(launchAnim);
+  //    // si launch est impair il faut faire un nouveau trajet pour boucler au départ
+  //    if (launch % 2 !=0)
+  //    {
+  //      auto launchAnim2 = new QSequentialAnimationGroup();
+  //      if (i % 2 == 0) // si on est parti de la droite on repart de la gauche
+  //      {
+  //        launchAnim2 = launchBall(juggler, ball, launch, leftHand);
+  //        launchAnim2->setLoopCount(1);
+  //      }
+  //      else // et inversement
+  //      {
+  //        launchAnim2 = launchBall(juggler, ball, launch, rightHand);
+  //        launchAnim2->setLoopCount(1);
+  //      }
+  //      ballAnim->addAnimation(launchAnim2);
+  //    }
+  //    ballAnim->setLoopCount(-1);
+  //    ballGlobAnim->addAnimation(ballAnim); // permet de coller la pause une seule fois au début
+  //    siteswapAnimation->addAnimation(ballGlobAnim); // on ajoute à notre anim parallele
+  //  }
+
+}
+
+void AnimSimple::startAnimation()
+{
   siteswapAnimation->start();
-
 }
 
 QSequentialAnimationGroup *AnimSimple::launchBall(Juggler *aJuggler,
@@ -95,10 +193,10 @@ QSequentialAnimationGroup *AnimSimple::launchBall(Juggler *aJuggler,
     posFinal = aJuggler->getPositionRHext();
     receiveHand = rightHand;
   }
-//  qDebug() << posBall;
+  //  qDebug() << posBall;
 
   float timeLaunch = ((float)(launch) * TEMPO) - DWELL_TIME;
-//  qDebug() << timeLaunch;
+  //  qDebug() << timeLaunch;
 
   // we calculate velocity launch
   QVector3D velBall = ((posFinal - posBall) - 0.5 *
@@ -106,7 +204,7 @@ QSequentialAnimationGroup *AnimSimple::launchBall(Juggler *aJuggler,
 
   // By counting frames we add 1 due to float to integer approx.
   int frameCount = (int)((timeLaunch / (DELTA_TIME)) + 1);
-//  qDebug() << frameCount;
+  //  qDebug() << frameCount;
 
   // loop creates all our animations for launch
   for (int i = 0; i <= frameCount; i++)
@@ -119,7 +217,7 @@ QSequentialAnimationGroup *AnimSimple::launchBall(Juggler *aJuggler,
     animBall->setLoopCount(1);
     animGroup->addAnimation(animBall);
     posBall = posBall2;
-//    qDebug() << posBall;
+    //    qDebug() << posBall;
     velBall = velBall + (DELTA_TIME * GRAVITY);
   }
 
@@ -133,16 +231,16 @@ QSequentialAnimationGroup *AnimSimple::launchBall(Juggler *aJuggler,
   if (receiveHand == leftHand)
   {
     centerCurve = (posBall + aJuggler->getPositionLHint()) / 2;
-//    qDebug() << posBall;
-//    qDebug() << centerCurve;
-//    qDebug() << aJuggler->getPositionLHint();
+    //    qDebug() << posBall;
+    //    qDebug() << centerCurve;
+    //    qDebug() << aJuggler->getPositionLHint();
   }
   else
   {
     centerCurve = (posBall + aJuggler->getPositionRHint()) / 2;
-//    qDebug() << posBall;
-//    qDebug() << centerCurve;
-//    qDebug() << aJuggler->getPositionRHint();
+    //    qDebug() << posBall;
+    //    qDebug() << centerCurve;
+    //    qDebug() << aJuggler->getPositionRHint();
   }
 
   // determine axis for rotation
@@ -176,8 +274,19 @@ QSequentialAnimationGroup *AnimSimple::launchBall(Juggler *aJuggler,
     animBall->setLoopCount(1);
     animGroup->addAnimation(animBall);
     posBall = posBall2;
-//    qDebug() << posBall;
+    //    qDebug() << posBall;
+
+
+//    animGroup->addAnimation(animHand);
   }
 
   return animGroup;
+}
+
+hand AnimSimple::changeHand(hand aHand)
+{
+  if (aHand == leftHand)
+    return rightHand;
+  else
+    return leftHand;
 }

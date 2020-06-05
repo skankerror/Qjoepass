@@ -23,39 +23,51 @@ My3DWindow::My3DWindow(MySettings *aSettings)
   createGround();
   createLighting();
 
-  // create 2 jugglers for testing purpose
-  createJuggler(0, QVector2D(0, 0), QColor(QRgb(0x10561B)));
+/**************************** testing zone ***************************/
+
 //  createJuggler(-90, QVector2D(7, 0), QColor(QRgb(0x204C9B)));
   // create 1 pirouette for testing purpose
 //  createPirouette(QColor(QRgb(0xA3A600)));
 //  vPirouette.at(0)->setPosition(QVector3D(0, -4, 0));
-  // create 1 ball for testing purpose
-  createBall(QColor(QRgb(0xA3A600)));
-  createBall(QColor(QRgb(0xFF0000)));
-  createBall(QColor(QRgb(0xA3A600)));
-//  vBall.at(0)->setPosition(vJuggler.at(0)->getPositionRHext());
   // create 1 ring for testing purpose
 //  createRing(QColor(QRgb(0xA3A600)));
+
+  // create 1 juggler for testing purpose
+  createJuggler(0, QVector2D(0, 0), QColor(QRgb(0x10561B)));
+  // create balls for testing purpose
+  createBall(QColor(QRgb(0xA3A600)));
+  createBall(QColor(QRgb(0xA3A600)));
+  createBall(QColor(QRgb(0xA3A600)));
+//  createBall(QColor(QRgb(0xA3A600)));
+//  createBall(QColor(QRgb(0xA3A600)));
+//  createBall(QColor(QRgb(0xA3A600)));
+//  createBall(QColor(QRgb(0xA3A600)));
+//  createBall(QColor(QRgb(0xA3A600)));
+//  createBall(QColor(QRgb(0xA3A600)));
+  // siteswap test
   QVector<int> vecInt;
+  vecInt.append(4);
+  vecInt.append(4);
+  vecInt.append(5);
+  vecInt.append(0);
+  vecInt.append(4);
+  vecInt.append(1);
   AnimSimple *animTest = new AnimSimple(vJuggler.at(0), vBall, vecInt);
+  animTest->startAnimation();
 }
 
 void My3DWindow::createCam()
 {
   //  m_camera = new Qt3DRender::QCamera();
   m_camera = camera();
-  m_camera->lens()->setPerspectiveProjection(45.0f, 4.0f/3.0f, 0.1f, 1000.0f);
-  m_camera->setPosition(QVector3D(0, 5, 10));
+  m_camera->lens()->setPerspectiveProjection(60.0f, 4.0f/3.0f, 0.1f, 1000.0f);
+  m_camera->setPosition(QVector3D(0, 10, 15));
   m_camera->setUpVector(QVector3D(0, 1, 0));
   m_camera->setViewCenter(QVector3D(0, 0, 0));
   // For camera controls
   camFPController = new QFirstPersonCameraController(rootEntity);
   camOController = new QOrbitCameraController(rootEntity);
   camOController->setCamera(m_camera);
-
-//  Qt3DCore::QTransform *globalTransform = new Qt3DCore::QTransform(rootEntity);
-//  globalTransform->setScale(0.1);
-//  rootEntity->addComponent(globalTransform);
 }
 
 void My3DWindow::createGround()
@@ -104,7 +116,7 @@ void My3DWindow::changeGroundColor(QColor aColor)
 
 void My3DWindow::createJuggler(float aRoty, QVector2D aPosition, QColor aColor)
 {
-  auto juggler = new Juggler(rootEntity, skeletonMesh, effect, aRoty, aPosition, aColor);
+  auto juggler = new Juggler(rootEntity, effect, aRoty, aPosition, aColor);
   vJuggler.append(juggler);
 }
 
