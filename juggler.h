@@ -26,7 +26,6 @@ class Juggler: public QEntity
              NOTIFY positionChanged)
 public:
   explicit Juggler(QEntity *aRootEntity,
-                   QMesh *aSkeletonMesh,
                    QEffect *aEffect,
                    float &aRoty,
                    QVector2D &aPosition,
@@ -58,6 +57,7 @@ private:
   void setPositionRHint();
   void setPositionRHmed();
 
+  void moveLeftForearm(float rot);
 private slots:
   void setPositionHands();
 
@@ -84,6 +84,88 @@ private:
   QVector3D posRHext;
   QVector3D posRHint;
   QVector3D posRHmed;
+
+  void makeMember(QCylinderMesh *aMember,
+                       Qt3DCore::QTransform *aMemberTransform,
+                       QEntity *aMemberEntity,
+                       QVector3D aRot,
+                       QVector3D aTrans,
+                       float globalRotation,
+                       float length);
+
+    void makeArticulation(QSphereMesh *aSphere,
+                       Qt3DCore::QTransform *aSphereTransform,
+                       QEntity *aSphereEntity,
+                       QVector3D aTrans,
+                       float globalRotation);
+
+    QEntity *aHeadEntity;
+    QSphereMesh *Head;
+    Qt3DCore::QTransform *headTransform;
+
+    QEntity *aShoulderEntity;
+    QCylinderMesh *Shoulders;
+    Qt3DCore::QTransform *shouldersTransform;
+
+    QEntity *aRightShoulderEntity;
+    QSphereMesh *RightShoulder;
+    Qt3DCore::QTransform *rightShoulderTransform;
+
+    QEntity *aLeftShoulderEntity;
+    QSphereMesh *LeftShoulder;
+    Qt3DCore::QTransform *leftShoulderTransform;
+
+    QEntity *aLeftArmEntity;
+    QCylinderMesh *LeftArm;
+    Qt3DCore::QTransform *leftArmTransform;
+
+    QEntity *aRightArmEntity;
+    QCylinderMesh *RightArm;
+    Qt3DCore::QTransform *rightArmTransform;
+
+    QEntity *aRightElbowEntity;
+    QSphereMesh *RightElbow;
+    Qt3DCore::QTransform *rightElbowTransform;
+
+    QEntity *aLeftElbowEntity;
+    QSphereMesh *LeftElbow;
+    Qt3DCore::QTransform *leftElbowTransform;
+
+    QEntity *aLeftForearmEntity;
+    QCylinderMesh *LeftForearm;
+    Qt3DCore::QTransform *leftForearmTransform;
+
+    QEntity *aRightForearmEntity;
+    QCylinderMesh *RightForearm;
+    Qt3DCore::QTransform *rightForearmTransform;
+
+    QEntity *aTrunkEntity;
+    QCylinderMesh *Trunk;
+    Qt3DCore::QTransform *trunkTransform;
+
+    QEntity *aLeftThighEntity;
+    QCylinderMesh *LeftThigh;
+    Qt3DCore::QTransform *leftThighTransform;
+
+    QEntity *aRightThighEntity;
+    QCylinderMesh *RightThigh;
+    Qt3DCore::QTransform *rightThighTransform;
+
+    QEntity *aRightKneeEntity;
+    QSphereMesh *RightKnee;
+    Qt3DCore::QTransform *rightKneeTransform;
+
+    QEntity *aLeftKneeEntity;
+    QSphereMesh *LeftKnee;
+    Qt3DCore::QTransform *leftKneeTransform;
+
+    QEntity *aRightLegEntity;
+    QCylinderMesh *RightLeg;
+    Qt3DCore::QTransform *rightLegTransform;
+
+    QEntity *aLeftLegEntity;
+    QCylinderMesh *LeftLeg;
+    Qt3DCore::QTransform *leftLegTransform;
 
 };
 
