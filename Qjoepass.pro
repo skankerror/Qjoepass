@@ -62,6 +62,7 @@ SOURCES += \
   light.cpp \
     main.cpp \
   my3dwindow.cpp \
+  mycurves.cpp \
     mymainwindow.cpp \
 #    cdew/causal_editor.cpp \
 #    cdew/cdewDraw.cpp \
@@ -144,7 +145,8 @@ SOURCES += \
 #    universal/workspace.cpp
   pirouette.cpp \
     preferences.cpp \
-    settings.cpp
+    settings.cpp \
+  siteswap.cpp
 
 HEADERS += \
   animationfactory.h \
@@ -156,6 +158,7 @@ HEADERS += \
   jugglingring.h \
   light.h \
   my3dwindow.h \
+  mycurves.h \
     mymainwindow.h \
     cdew/causal_editor.h \
     cdew/cdewClass.h \
@@ -208,6 +211,7 @@ HEADERS += \
     runaround/runaroundClass.h \
     runaround/runaroundMenu.h \
     settings.h \
+  siteswap.h \
     syst/JPResources.h \
     syst/fileSelector.h \
     syst/fileaccess.h \

@@ -38,20 +38,20 @@ My3DWindow::My3DWindow(MySettings *aSettings)
   createBall(QColor(QRgb(0xA3A600)));
   createBall(QColor(QRgb(0xA3A600)));
   createBall(QColor(QRgb(0xA3A600)));
-//  createBall(QColor(QRgb(0xA3A600)));
-//  createBall(QColor(QRgb(0xA3A600)));
-//  createBall(QColor(QRgb(0xA3A600)));
-//  createBall(QColor(QRgb(0xA3A600)));
+  createBall(QColor(QRgb(0xA3A600)));
+  createBall(QColor(QRgb(0xA3A600)));
+  createBall(QColor(QRgb(0xA3A600)));
+  createBall(QColor(QRgb(0xA3A600)));
 //  createBall(QColor(QRgb(0xA3A600)));
 //  createBall(QColor(QRgb(0xA3A600)));
   // siteswap test
   QVector<int> vecInt;
-  vecInt.append(4);
-  vecInt.append(4);
-  vecInt.append(5);
-  vecInt.append(0);
-  vecInt.append(4);
-  vecInt.append(1);
+  vecInt.append(7);
+//  vecInt.append(4);
+//  vecInt.append(5);
+//  vecInt.append(0);
+//  vecInt.append(4);
+//  vecInt.append(1);
   AnimSimple *animTest = new AnimSimple(vJuggler.at(0), vBall, vecInt);
   animTest->startAnimation();
 }

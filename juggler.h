@@ -27,6 +27,9 @@ class Juggler: public QEntity
   Q_PROPERTY(float leftForearmPosition
              READ getLeftForearmPosition
              WRITE setLeftForearmPosition)
+  Q_PROPERTY(float rightForearmPosition
+             READ getRightForearmPosition
+             WRITE setRightForearmPosition)
 
 public:
   explicit Juggler(QEntity *aRootEntity,
@@ -42,6 +45,9 @@ public:
 
   float getLeftForearmPosition() {return leftForearmPosition;};
   void setLeftForearmPosition(float rot);
+  float getRightForearmPosition() {return rightForearmPosition;};
+  void setRightForearmPosition(float rot);
+
 
   // getters for hands positions ext to catch, int to launch, med for siteswap 2
   QVector3D getPositionLHext() const {return posLHext;};
@@ -145,6 +151,7 @@ private:
     QEntity *aRightForearmEntity;
     QCylinderMesh *RightForearm;
     Qt3DCore::QTransform *rightForearmTransform;
+    QMatrix4x4 rightForearmMatrix;
 
     QEntity *aTrunkEntity;
     QCylinderMesh *Trunk;
@@ -175,6 +182,7 @@ private:
     Qt3DCore::QTransform *leftLegTransform;
 
     float leftForearmPosition;
+    float rightForearmPosition;
 };
 
 #endif // JUGGLER_H
