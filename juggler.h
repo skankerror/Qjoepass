@@ -24,6 +24,11 @@ class Juggler: public QEntity
              READ position
              WRITE setPosition
              NOTIFY positionChanged)
+  Q_PROPERTY(QVector3D leftForearmPosition
+             READ leftForearmPosition
+             WRITE setLeftForearmPosition
+             NOTIFY leftForearmPositionChanged)
+
 public:
   explicit Juggler(QEntity *aRootEntity,
                    QEffect *aEffect,
@@ -57,7 +62,6 @@ private:
   void setPositionRHint();
   void setPositionRHmed();
 
-  void moveLeftForearm(float rot);
 private slots:
   void setPositionHands();
 

@@ -160,18 +160,13 @@ Juggler::Juggler(QEntity *aRootEntity,
 
   connect(this, SIGNAL(positionChanged()), this, SLOT(setPositionHands()));
 }
-void Juggler::moveLeftForearm(float rot)
+void Juggler::setLeftForearmPosition(float rot)
 {
   QMatrix4x4 aMatrix = leftForearmTransform->matrix();
-  aMatrix.rotate(rot, QVector3D(0.0f, 1.0f, 0.0f));
-  aMatrix.translate(0.5f,0.0f,0.0f);
-//  aMatrix.rotate(QQuaternion::fromEulerAngles(aRot));
+  aMatrix.translate(0.0f, 0.0f, 0.75f);
+  aMatrix.rotate(rot, QVector3D(0.0f, 0.5f, 0.5f));
+  aMatrix.translate(0.0f, 0.0f, -0.75f);
   leftForearmTransform->setMatrix(aMatrix);
-
-//  aMemberTransform->setRotation(QQuaternion::fromEulerAngles(aRot));
-
-
-  aLeftForearmEntity->addComponent(leftForearmTransform);
 }
 void Juggler::setPosition(QVector3D aPosition)
 {

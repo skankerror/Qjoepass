@@ -266,6 +266,9 @@ QSequentialAnimationGroup *AnimSimple::launchBall(Juggler *aJuggler,
     animGroup->addAnimation(animBall);
     posBall = posBall2;
     //    qDebug() << posBall;
+
+
+//    animGroup->addAnimation(animHand);
   }
 
   return animGroup;
