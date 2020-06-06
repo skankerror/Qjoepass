@@ -6,7 +6,7 @@ Poject is at an early stage of developpement.
 
 # Screenshot
 
-![](QJoepass.png)
+![](Qjoepass.png)
 
 ## Getting Started
 
@@ -28,15 +28,15 @@ $ git clone https://github.com/skankerror/Qjoepass.git
 Enter the directory and compile
 
 ```
-$ cd QJoepass
-$ qmake QJoepass.pro
+$ cd Qjoepass
+$ qmake Qjoepass.pro
 $ make
 ```
 
 Launch the app
 
 ```
-$ ./QJoepass
+$ ./Qjoepass
 ```
 
 Have fun (or not)
