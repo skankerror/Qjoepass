@@ -1,6 +1,5 @@
 #include <QtWidgets>
 #include "mymainwindow.h"
-//#include "settings.h"
 
 MyMainWindow::MyMainWindow()
 {
@@ -56,6 +55,9 @@ MyMainWindow::MyMainWindow()
 
   connect(periodSpinBox, SIGNAL(valueChanged(int)), this, SLOT(periodChanged(int)));
   connect(launchPushButton, SIGNAL(clicked()), this, SLOT(launchSiteSwap()));
+
+  connect(my3DWindow, SIGNAL(jugglerCountChanged()), this, SLOT(updateCameraComboBox()));
+  connect(cameraComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(cameraIndexChanged(int)));
 }
 
 void MyMainWindow::createMenus()
@@ -132,6 +134,7 @@ void MyMainWindow::createMenus()
 void MyMainWindow::createToolBar()
 {
   myToolBar = addToolBar("siteswap bar");
+
   auto myToolBarWidget = new QWidget(this);
   toolBarLayout = new QHBoxLayout();
   propLabel = new QLabel("type of prop", this);
@@ -158,10 +161,20 @@ void MyMainWindow::createToolBar()
   myToolBarWidget->setLayout(toolBarLayout);
   myToolBar->addWidget(myToolBarWidget);
 
+  auto MyToolBarWidget2 = new QWidget(this);
+  toolBar2Layout = new QHBoxLayout();
+  cameraLabel = new QLabel("change Camera", this);
+  cameraComboBox = new QComboBox(this);
+  updateCameraComboBox();
+  toolBar2Layout->addWidget(cameraLabel);
+  toolBar2Layout->addWidget(cameraComboBox);
+
+  MyToolBarWidget2->setLayout(toolBar2Layout);
+  myToolBar->addWidget(MyToolBarWidget2);
+
 }
 void MyMainWindow::preferencesDial()
 {
-  //  pref = new Preferences(settings);
   pref->setWindowTitle("Preferences");
   pref->show();
 }
@@ -204,6 +217,28 @@ void MyMainWindow::periodChanged(int i)
     }
     toolBarLayout->addWidget(launchPushButton);
   }
+}
+
+void MyMainWindow::updateCameraComboBox()
+{
+  cameraComboBox->clear();
+  cameraComboBox->addItem("Orbit Camera");
+  for (int i = 0; i < my3DWindow->getJugglerCount(); i++)
+    cameraComboBox->addItem(QString("Juggler %1 view").arg(i + 1));
+}
+
+void MyMainWindow::cameraIndexChanged(int index)
+{
+  if (index == 0)
+  {
+    my3DWindow->setCameraToOrbit();
+    return;
+  }
+
+  if (index < 0)
+    return;
+
+  my3DWindow->setCameraToFirstPers(index - 1);
 }
 
 void MyMainWindow::newFile()

@@ -38,6 +38,8 @@ private slots:
   void preferencesDial();
   void launchSiteSwap();
   void periodChanged(int i);
+  void updateCameraComboBox();
+  void cameraIndexChanged(int index);
 
 private:
   void createMenus();
@@ -82,6 +84,10 @@ private:
       QSpinBox *firstSiteSpinBox;
       QVector<QSpinBox *> vSpinBox;
     QPushButton *launchPushButton;
+
+    QHBoxLayout *toolBar2Layout;
+    QLabel *cameraLabel;
+    QComboBox *cameraComboBox;
 
 };
 #endif // MYMAINWINDOW_H

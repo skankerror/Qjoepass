@@ -35,16 +35,12 @@ My3DWindow::My3DWindow(MySettings *aSettings)
 
 void My3DWindow::createCam()
 {
-  //  m_camera = new Qt3DRender::QCamera();
   m_camera = camera();
-  m_camera->lens()->setPerspectiveProjection(60.0f, 4.0f/3.0f, 0.1f, 1000.0f);
-  m_camera->setPosition(QVector3D(0, 10, 15));
-  m_camera->setUpVector(QVector3D(0, 1, 0));
-  m_camera->setViewCenter(QVector3D(0, 0, 0));
-  // For camera controls
+  m_camera->lens()->setPerspectiveProjection(CAM_FOV, CAM_RATIO, CAM_NEARPLANE, CAM_FARPLANE);
+  positionCamera = CAM_INITIAL_POSITION;
   camFPController = new QFirstPersonCameraController(rootEntity);
   camOController = new QOrbitCameraController(rootEntity);
-  camOController->setCamera(m_camera);
+  setCameraToOrbit();
 }
 
 void My3DWindow::createGround()
@@ -78,6 +74,11 @@ void My3DWindow::setGlobalObject()
   pirouetteMesh->setSource(QUrl(CLUB_MESH_SRC));
 }
 
+int My3DWindow::getJugglerCount() const
+{
+  return vJuggler.size();
+}
+
 void My3DWindow::changeBackground(QColor aColor)
 {
   defaultFrameGraph()->setClearColor(aColor);
@@ -92,19 +93,17 @@ void My3DWindow::createJuggler(float aRoty, QVector2D aPosition, QColor aColor)
 {
   auto juggler = new Juggler(rootEntity, effect, aRoty, aPosition, aColor);
   vJuggler.append(juggler);
+  emit jugglerCountChanged();
 }
 
 void My3DWindow::createSkybox()
 {
   skybox = new QSkyboxEntity(rootEntity);
-  skybox->setBaseName(QStringLiteral("qrc:/skybox/images/skybox/skybox"));
-  skybox->setExtension(QStringLiteral(".jpg"));
-
-  const float baseScale = 0.1f;
+  skybox->setBaseName(QStringLiteral(SKYBOX_BASE_NAME));
+  skybox->setExtension(QStringLiteral(SKYBOX_EXTENSION));
 
   Qt3DCore::QTransform * skyTransform = new Qt3DCore::QTransform(skybox);
-  skyTransform->setTranslation(QVector3D(0.0f, 0.0f, 0.0f));
-  skyTransform->setScale3D(QVector3D( baseScale, baseScale, baseScale));
+  skyTransform->setScale3D(QVector3D( SKYBOX_SCALE, SKYBOX_SCALE, SKYBOX_SCALE));
   skybox->addComponent(skyTransform);
 
 }
@@ -153,12 +152,17 @@ void My3DWindow::createSiteSwap(QVector<int> aVecInt, jugglingProp aPropType, bo
   anim->stopAnimation();
 
   if (vBall.size())
-  {
     for (int i = 0; i < vBall.size(); i++)
-    {
       vBall.at(i)->setEnabled(false);
-    }
-  }
+
+  if (vRing.size())
+    for (int i = 0; i < vRing.size(); i++)
+      vRing.at(i)->setEnabled(false);
+
+  if (vPirouette.size())
+    for (int i = 0; i < vPirouette.size(); i++)
+      vPirouette.at(i)->setEnabled(false);
+
   vBall.clear();
   vBall.squeeze();
   vRing.clear();
@@ -194,3 +198,22 @@ void My3DWindow::createSiteSwap(QVector<int> aVecInt, jugglingProp aPropType, bo
   }
 }
 
+void My3DWindow::setCameraToOrbit()
+{
+  m_camera->setPosition(positionCamera);
+  m_camera->setUpVector(CAM_UP_VECTOR);
+  m_camera->setViewCenter(CAM_ORBIT_VIEW_CENTER);
+  camOController->setCamera(m_camera);
+}
+
+void My3DWindow::setCameraToFirstPers(int index)
+{
+  if (index < 0 || index >= vJuggler.size())
+    return;
+  QVector3D headPos = vJuggler.at(index)->getPositionHead();
+  float rotY = vJuggler.at(index)->getRotY();
+  m_camera->setPosition(headPos);
+  m_camera->setUpVector(CAM_UP_VECTOR);
+  m_camera->setViewCenter(QVector3D(sinf(rotY) + headPos.x(), HEAD_POS_Y, cosf(rotY) + headPos.z()));
+  camFPController->setCamera(m_camera);
+}

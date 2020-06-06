@@ -261,6 +261,11 @@ void Juggler::setPositionRHmed()
   posRHmed = vecMain;
 }
 
+void Juggler::setPosHead()
+{
+  posHead = QVector3D(m_position.x(), HEAD_POS_Y, m_position.z());
+}
+
 void Juggler::setPositionHands()
 {
   setPositionLHmed();
@@ -269,6 +274,7 @@ void Juggler::setPositionHands()
   setPositionLHint();
   setPositionRHext();
   setPositionRHint();
+  setPosHead();
 }
 
 void Juggler::makeMember(QCylinderMesh *aMember,

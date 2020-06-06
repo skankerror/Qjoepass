@@ -29,10 +29,15 @@ class My3DWindow: public Qt3DWindow
 public:
   My3DWindow(MySettings *aSettings);
 
+  int getJugglerCount() const;
+
 private:
   void createCam();
   void createGround();
   void setGlobalObject();
+
+signals:
+  void jugglerCountChanged();
 
 public slots:
   void changeBackground(QColor aColor);
@@ -46,6 +51,8 @@ public slots:
   void createSiteSwap(QVector<int> aVecInt,
                       jugglingProp aPropType = ball,
                       bool someSynchron = false);
+  void setCameraToOrbit();
+  void setCameraToFirstPers(int index);
 
 private:
   QEntity *rootEntity;
@@ -54,6 +61,8 @@ private:
   QCamera *m_camera;
   QFirstPersonCameraController *camFPController;
   QOrbitCameraController *camOController;
+  QVector3D positionCamera;
+
 
   // Global Material, we create one for the whole scene
   // and pass effect to each 3d object
