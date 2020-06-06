@@ -32,6 +32,9 @@ private:
 
   QColor color;
   bool enabled = true;
+
+  QTextureMaterial *groundTextureMaterial;
+  QTextureLoader *groundTextureLoader;
 };
 
 #endif // GROUND_H

@@ -38,6 +38,7 @@ public slots:
   void changeBackground(QColor aColor);
   void changeGroundColor(QColor aColor);
   void createJuggler(float aRoty, QVector2D aPosition, QColor aColor);
+  void createSkybox();
   void createLighting();
   void createPirouette(QColor aColor);
   void createBall(QColor aColor);
@@ -58,6 +59,9 @@ private:
   // and pass effect to each 3d object
   QDiffuseSpecularMaterial *material;
   QEffect *effect;
+
+  // Skybox
+  QSkyboxEntity *skybox;
 
   // Ground
   Ground *ground;

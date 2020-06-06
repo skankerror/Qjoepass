@@ -4,8 +4,8 @@
 
 My3DWindow::My3DWindow(MySettings *aSettings)
   :rootEntity(new QEntity()),
+//    skybox(new QSkyboxEntity()),
     pointLight(new QPointLight()),
-//    skeletonMesh(new QMesh()),
     pirouetteMesh(new QMesh()),
     sphereMesh(new QSphereMesh()),
     torusMesh(new QTorusMesh()),
@@ -23,6 +23,8 @@ My3DWindow::My3DWindow(MySettings *aSettings)
   createCam();
   createGround();
   createLighting();
+  createSkybox();
+
 
 /**************************** testing zone ***************************/
 
@@ -90,6 +92,21 @@ void My3DWindow::createJuggler(float aRoty, QVector2D aPosition, QColor aColor)
 {
   auto juggler = new Juggler(rootEntity, effect, aRoty, aPosition, aColor);
   vJuggler.append(juggler);
+}
+
+void My3DWindow::createSkybox()
+{
+  skybox = new QSkyboxEntity(rootEntity);
+  skybox->setBaseName(QStringLiteral("qrc:/skybox/images/skybox/skybox"));
+  skybox->setExtension(QStringLiteral(".jpg"));
+
+  const float baseScale = 0.1f;
+
+  Qt3DCore::QTransform * skyTransform = new Qt3DCore::QTransform(skybox);
+  skyTransform->setTranslation(QVector3D(0.0f, 0.0f, 0.0f));
+  skyTransform->setScale3D(QVector3D( baseScale, baseScale, baseScale));
+  skybox->addComponent(skyTransform);
+
 }
 
 void My3DWindow::createLighting()
