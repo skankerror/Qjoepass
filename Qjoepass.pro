@@ -1,23 +1,10 @@
 QT       += core gui 3dcore 3drender 3dinput 3dlogic 3dextras 3danimation
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-#unix {
-#LIBS += -lglut \
-#    -lGLU \
-#    -lGL
-#}
-#win32 {
-#LIBS += -lfreeglut \
-#    -lglu32 \
-#    -lopengl32 \
-#     -lcomdlg32 \
-#     -lwinmm
-#}
+
+
 CONFIG += c++11
 CONFIG += console
-#CONFIG += debug
-
-
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -43,13 +30,13 @@ SOURCES += \
   jugglingball.cpp \
   jugglingring.cpp \
   light.cpp \
-    main.cpp \
+  main.cpp \
   my3dwindow.cpp \
   mycurves.cpp \
-    mymainwindow.cpp \
+  mymainwindow.cpp \
   pirouette.cpp \
-    preferences.cpp \
-    settings.cpp \
+  preferences.cpp \
+  settings.cpp \
   siteswap.cpp
 
 HEADERS += \
@@ -67,7 +54,7 @@ HEADERS += \
   preferences.h \
   qjoepass.h \
   settings.h \
-  siteswap.h \
+  siteswap.h
 
 TRANSLATIONS += \
     Qjoepass_fr_FR.ts
