@@ -70,3 +70,7 @@ RESOURCES += \
     application.qrc \
     mesh/J_club2.qrc
 
+DISTFILES += \
+  LICENCE.md \
+  README.md
+
