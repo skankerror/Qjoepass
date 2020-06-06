@@ -39,6 +39,7 @@ MyMainWindow::MyMainWindow()
   widget->setLayout(layout);
 
   createMenus();
+  createToolBar();
 
   QString message = tr("A context menu is available by right-clicking");
   statusBar()->showMessage(message);
@@ -52,6 +53,9 @@ MyMainWindow::MyMainWindow()
 
   connect(pref, SIGNAL(colorChanged(QColor)), my3DWindow, SLOT(changeBackground(QColor)));
   connect(pref, SIGNAL(groundColorChanged(QColor)), my3DWindow, SLOT(changeGroundColor(QColor)));
+
+  connect(periodSpinBox, SIGNAL(valueChanged(int)), this, SLOT(periodChanged(int)));
+  connect(launchPushButton, SIGNAL(clicked()), this, SLOT(launchSiteSwap()));
 }
 
 void MyMainWindow::createMenus()
@@ -124,11 +128,77 @@ void MyMainWindow::createMenus()
   aboutQtAct = helpMenu->addAction(aboutIcon, tr("About &Qt"), qApp, &QApplication::aboutQt);
   aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
 }
+
+void MyMainWindow::createToolBar()
+{
+  myToolBar = addToolBar("siteswap bar");
+  auto myToolBarWidget = new QWidget(this);
+  toolBarLayout = new QHBoxLayout();
+  // persistent
+  periodLabel = new QLabel("period", this);
+  periodSpinBox = new QSpinBox(this);
+  periodSpinBox->setMinimum(1);
+  periodSpinBox->setValue(1);
+  firstSiteSpinBox = new QSpinBox(this);
+  firstSiteSpinBox->setMinimum(1);
+  firstSiteSpinBox->setValue(3);
+//  auto layoutTemp = new QHBoxLayout();
+  launchPushButton = new QPushButton("launch !", this);
+  launchPushButton->setToolTip("Start animation");
+  launchPushButton->setToolTipDuration(2000);
+  toolBarLayout->addWidget(periodLabel);
+  toolBarLayout->addWidget(periodSpinBox);
+  toolBarLayout->addWidget(firstSiteSpinBox);
+//  layout->addLayout(layoutTemp);
+  toolBarLayout->addWidget(launchPushButton, 0, Qt::AlignRight);
+  myToolBarWidget->setLayout(toolBarLayout);
+  myToolBar->addWidget(myToolBarWidget);
+
+}
 void MyMainWindow::preferencesDial()
 {
   //  pref = new Preferences(settings);
   pref->setWindowTitle("Preferences");
   pref->show();
+}
+
+void MyMainWindow::launchSiteSwap()
+{
+  QVector<int> vecInt;
+  vecInt.append(firstSiteSpinBox->value());
+  for (int i = 0; i < vSpinBox.size(); i++)
+  {
+    vecInt.append(vSpinBox.at(i)->value());
+  }
+  my3DWindow->createSiteSwap(vecInt, ball, false);
+}
+
+void MyMainWindow::periodChanged(int i)
+{
+  int numSpinBox = vSpinBox.size();
+  if (numSpinBox)
+  {
+    for (int j = 0; j < numSpinBox; j++)
+    {
+      auto spinBox = vSpinBox.at(j);
+      spinBox->hide();
+      toolBarLayout->removeWidget(spinBox);
+    }
+    vSpinBox.clear();
+    vSpinBox.squeeze();
+  }
+  if (i > 1)
+  {
+    toolBarLayout->removeWidget(launchPushButton);
+    for (int k = 1; k < i; k++)
+    {
+      auto newSpinBox = new QSpinBox(this);
+      newSpinBox->setMinimum(0);
+      vSpinBox.append(newSpinBox);
+      toolBarLayout->addWidget(newSpinBox);
+    }
+    toolBarLayout->addWidget(launchPushButton);
+  }
 }
 
 void MyMainWindow::newFile()

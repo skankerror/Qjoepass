@@ -6,17 +6,25 @@
 #include <QSequentialAnimationGroup>
 #include "juggler.h"
 #include "jugglingball.h"
+#include "siteswap.h"
 
 class AnimSimple: public QObject
 {
   Q_OBJECT
 public:
+  AnimSimple();
   AnimSimple(Juggler *aJuggler,
              QVector<JugglingBall *> aVBall,
-             QVector<int> aSiteswap);
+             SiteSwap *aSiteSwap);
+
+  void setJuggler(Juggler *aJuggler){ juggler = aJuggler;};
+  void setVBall(QVector<JugglingBall *> aVBall) { vBall = aVBall;};
+  void setSiteSwap(SiteSwap *aSiteSwap) {siteSwap = aSiteSwap;};
+  void setAnim();
 
 public slots:
   void startAnimation();
+  void stopAnimation();
 
 private:
   QSequentialAnimationGroup* launchBall(Juggler *aJuggler,
@@ -29,11 +37,10 @@ private:
 private:
   Juggler *juggler;
   QVector<JugglingBall *> vBall;
-  QVector<int> siteswap;
+  SiteSwap *siteSwap;
   int period;
 
   QParallelAnimationGroup *siteswapAnimation; // anim global
-  QVector<QSequentialAnimationGroup *> vPropAnim; // vecteur pour anim pour chaque balle
 };
 
 #endif // ANIMSIMPLE_H

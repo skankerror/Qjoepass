@@ -2,7 +2,7 @@
 #define MYMAINWINDOW_H
 
 #include <QMainWindow>
-
+#include <QtWidgets>
 #include "settings.h"
 #include "preferences.h"
 #include "my3dwindow.h"
@@ -33,14 +33,19 @@ private slots:
   void about();
   void documentWasModified();
   void preferencesDial();
+  void launchSiteSwap();
+  void periodChanged(int i);
 
 private:
   void createMenus();
   void createStatusBar();
+  void createToolBar();
   bool maybeSave();
   bool saveFile(const QString &fileName);
   void setCurrentFile(const QString &fileName);
   QString strippedName(const QString &fullFileName);
+
+
   QString curFile;
 
   QMenu *fileMenu;
@@ -64,6 +69,14 @@ private:
 
   QWidget *container;
   My3DWindow *my3DWindow;
+
+  QToolBar *myToolBar;
+    QHBoxLayout *toolBarLayout;
+    QLabel *periodLabel;
+    QSpinBox *periodSpinBox;
+      QSpinBox *firstSiteSpinBox;
+      QVector<QSpinBox *> vSpinBox;
+    QPushButton *launchPushButton;
 
 };
 #endif // MYMAINWINDOW_H

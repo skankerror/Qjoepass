@@ -15,6 +15,7 @@
 #include "jugglingball.h"
 #include "jugglingring.h"
 #include "animsimple.h"
+#include "siteswap.h"
 
 using namespace Qt3DCore;
 using namespace Qt3DRender;
@@ -37,10 +38,14 @@ public slots:
   void changeBackground(QColor aColor);
   void changeGroundColor(QColor aColor);
   void createJuggler(float aRoty, QVector2D aPosition, QColor aColor);
+  void createSkybox();
   void createLighting();
   void createPirouette(QColor aColor);
   void createBall(QColor aColor);
   void createRing(QColor aColor);
+  void createSiteSwap(QVector<int> aVecInt,
+                      jugglingProp aPropType = ball,
+                      bool someSynchron = false);
 
 private:
   QEntity *rootEntity;
@@ -55,6 +60,9 @@ private:
   QDiffuseSpecularMaterial *material;
   QEffect *effect;
 
+  // Skybox
+  QSkyboxEntity *skybox;
+
   // Ground
   Ground *ground;
 
@@ -63,7 +71,6 @@ private:
   QVector<Light *> vLight;
 
   // juggler
-  QMesh *skeletonMesh;
   QVector<Juggler *> vJuggler;
 
   // club
@@ -79,6 +86,8 @@ private:
   QVector<JugglingRing *> vRing;
 
   MySettings *settings;
+
+  AnimSimple *anim;
 
 };
 

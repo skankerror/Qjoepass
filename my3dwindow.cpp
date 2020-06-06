@@ -4,12 +4,13 @@
 
 My3DWindow::My3DWindow(MySettings *aSettings)
   :rootEntity(new QEntity()),
+//    skybox(new QSkyboxEntity()),
     pointLight(new QPointLight()),
-    skeletonMesh(new QMesh()),
     pirouetteMesh(new QMesh()),
     sphereMesh(new QSphereMesh()),
     torusMesh(new QTorusMesh()),
-    settings(aSettings)
+    settings(aSettings),
+    anim(new AnimSimple())
 {
   // Root entity, root object of the scene
   setRootEntity(rootEntity);
@@ -22,38 +23,14 @@ My3DWindow::My3DWindow(MySettings *aSettings)
   createCam();
   createGround();
   createLighting();
+  createSkybox();
+
 
 /**************************** testing zone ***************************/
 
-//  createJuggler(-90, QVector2D(7, 0), QColor(QRgb(0x204C9B)));
-  // create 1 pirouette for testing purpose
-//  createPirouette(QColor(QRgb(0xA3A600)));
-//  vPirouette.at(0)->setPosition(QVector3D(0, -4, 0));
-  // create 1 ring for testing purpose
-//  createRing(QColor(QRgb(0xA3A600)));
-
   // create 1 juggler for testing purpose
   createJuggler(0, QVector2D(0, 0), QColor(QRgb(0x10561B)));
-  // create balls for testing purpose
-  createBall(QColor(QRgb(0xA3A600)));
-  createBall(QColor(QRgb(0xA3A600)));
-  createBall(QColor(QRgb(0xA3A600)));
-//  createBall(QColor(QRgb(0xA3A600)));
-//  createBall(QColor(QRgb(0xA3A600)));
-//  createBall(QColor(QRgb(0xA3A600)));
-//  createBall(QColor(QRgb(0xA3A600)));
-//  createBall(QColor(QRgb(0xA3A600)));
-//  createBall(QColor(QRgb(0xA3A600)));
-  // siteswap test
-  QVector<int> vecInt;
-  vecInt.append(4);
-  vecInt.append(4);
-  vecInt.append(5);
-  vecInt.append(0);
-  vecInt.append(4);
-  vecInt.append(1);
-  AnimSimple *animTest = new AnimSimple(vJuggler.at(0), vBall, vecInt);
-  animTest->startAnimation();
+
 }
 
 void My3DWindow::createCam()
@@ -86,9 +63,6 @@ void My3DWindow::setGlobalObject()
   pointLight->setColor(QColor(QRgb(LIGHT_COLOR)));
   pointLight->setIntensity(LIGHT_INTENSITY);
 
-  // For jugglers creations
-  skeletonMesh->setSource(QUrl(SKELETON_MESH_SRC));
-
   // For ball creations
   sphereMesh->setRings(BALL_RINGS);
   sphereMesh->setSlices(BALL_SLICES);
@@ -118,6 +92,21 @@ void My3DWindow::createJuggler(float aRoty, QVector2D aPosition, QColor aColor)
 {
   auto juggler = new Juggler(rootEntity, effect, aRoty, aPosition, aColor);
   vJuggler.append(juggler);
+}
+
+void My3DWindow::createSkybox()
+{
+  skybox = new QSkyboxEntity(rootEntity);
+  skybox->setBaseName(QStringLiteral("qrc:/skybox/images/skybox/skybox"));
+  skybox->setExtension(QStringLiteral(".jpg"));
+
+  const float baseScale = 0.1f;
+
+  Qt3DCore::QTransform * skyTransform = new Qt3DCore::QTransform(skybox);
+  skyTransform->setTranslation(QVector3D(0.0f, 0.0f, 0.0f));
+  skyTransform->setScale3D(QVector3D( baseScale, baseScale, baseScale));
+  skybox->addComponent(skyTransform);
+
 }
 
 void My3DWindow::createLighting()
@@ -151,5 +140,57 @@ void My3DWindow::createRing(QColor aColor)
 {
   auto ring = new JugglingRing(rootEntity, torusMesh, effect, aColor);
   vRing.append(ring);
+}
+
+void My3DWindow::createSiteSwap(QVector<int> aVecInt, jugglingProp aPropType, bool someSynchron)
+{
+  SiteSwap *siteSwap = new SiteSwap(aVecInt, someSynchron, this);
+  if (!(siteSwap->isValid()))
+  {
+    qDebug() << "siteswap is not valid !";
+    return;
+  }
+  anim->stopAnimation();
+
+  if (vBall.size())
+  {
+    for (int i = 0; i < vBall.size(); i++)
+    {
+      vBall.at(i)->setEnabled(false);
+    }
+  }
+  vBall.clear();
+  vBall.squeeze();
+  vRing.clear();
+  vRing.squeeze();
+  vPirouette.clear();
+  vPirouette.squeeze();
+
+  int numProp = siteSwap->getNumProp();
+  for (int i = 0; i < numProp; i++)
+  {
+    switch(aPropType)
+    {
+    case ball: createBall(QColor(QRgb(0xA3A600))); break;
+    case ring: createRing(QColor(QRgb(0xA3A600))); break;
+    case club: createPirouette(QColor(QRgb(0xA3A600))); break;
+    default: break;
+    }
+  }
+  switch(aPropType)
+  {
+  case ball:
+    anim->setJuggler(vJuggler.at(0));
+    anim->setVBall(vBall);
+    anim->setSiteSwap(siteSwap);
+    anim->setAnim();
+    anim->startAnimation();
+    break;
+  case ring:
+    break;
+  case club:
+    break;
+  default: break;
+  }
 }
 
