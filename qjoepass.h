@@ -13,7 +13,6 @@
 #define JUGGLER_ROT_X 0
 #define JUGGLER_ROT_Z 0
 #define JUGGLER_TRANSLATION_Y -4
-#define SKELETON_MESH_SRC "qrc:/models/juggler_.qgltf"
 #define JUGGLER_SHININESS 50
 #define HAND_OFFSET_X 0.65
 #define HAND_OFFSET_Y 3.75

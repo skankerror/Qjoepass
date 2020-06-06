@@ -5,7 +5,7 @@
 My3DWindow::My3DWindow(MySettings *aSettings)
   :rootEntity(new QEntity()),
     pointLight(new QPointLight()),
-    skeletonMesh(new QMesh()),
+//    skeletonMesh(new QMesh()),
     pirouetteMesh(new QMesh()),
     sphereMesh(new QSphereMesh()),
     torusMesh(new QTorusMesh()),
@@ -60,9 +60,6 @@ void My3DWindow::setGlobalObject()
   // create one pointlight for 3 sources
   pointLight->setColor(QColor(QRgb(LIGHT_COLOR)));
   pointLight->setIntensity(LIGHT_INTENSITY);
-
-  // For jugglers creations
-  skeletonMesh->setSource(QUrl(SKELETON_MESH_SRC));
 
   // For ball creations
   sphereMesh->setRings(BALL_RINGS);
@@ -137,10 +134,14 @@ void My3DWindow::createSiteSwap(QVector<int> aVecInt, jugglingProp aPropType, bo
     return;
   }
   anim->stopAnimation();
-//  for (int i = 0; vBall.size(); i++)
-//  {
-//    vBall.at(i)->setEnabled(false);
-//  }
+
+  if (vBall.size())
+  {
+    for (int i = 0; i < vBall.size(); i++)
+    {
+      vBall.at(i)->setEnabled(false);
+    }
+  }
   vBall.clear();
   vBall.squeeze();
   vRing.clear();
@@ -159,23 +160,18 @@ void My3DWindow::createSiteSwap(QVector<int> aVecInt, jugglingProp aPropType, bo
     default: break;
     }
   }
-//  AnimSimple *anim;
   switch(aPropType)
   {
   case ball:
-    anim = new AnimSimple(vJuggler.at(0), vBall, siteSwap);
-//    anim->setJuggler(vJuggler.at(0));
-//    anim->setVBall(vBall);
-//    anim->setSiteSwap(siteSwap);
+    anim->setJuggler(vJuggler.at(0));
+    anim->setVBall(vBall);
+    anim->setSiteSwap(siteSwap);
+    anim->setAnim();
     anim->startAnimation();
     break;
   case ring:
-//    anim = new AnimSimple(vJuggler.at(0), vRing, siteSwap);
-//    anim->startAnimation();
     break;
   case club:
-//    anim = new AnimSimple(vJuggler.at(0), vPirouette, siteSwap);
-//    anim->startAnimation();
     break;
   default: break;
   }

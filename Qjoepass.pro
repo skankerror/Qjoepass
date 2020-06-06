@@ -336,6 +336,5 @@ DISTFILES += \
 
 RESOURCES += \
     application.qrc \
-    mesh/J_club2.qrc \
-    mesh/juggler_.qrc
+    mesh/J_club2.qrc
 

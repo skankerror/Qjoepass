@@ -67,7 +67,6 @@ private:
   QVector<Light *> vLight;
 
   // juggler
-  QMesh *skeletonMesh;
   QVector<Juggler *> vJuggler;
 
   // club
