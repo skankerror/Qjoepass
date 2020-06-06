@@ -55,6 +55,6 @@
 #define DELAY_LAUNCH 300
 
 enum hand{leftHand, rightHand};
-enum jugglingProp{ball, ring, club};
+enum jugglingProp{ball, ring, club, propNumb};
 
 #endif // QJOEPASS_H

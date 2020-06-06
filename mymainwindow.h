@@ -22,6 +22,9 @@ public:
   MyMainWindow();
   void loadFile(const QString &fileName);
 
+  static QString getPropToString(const int prop);
+  static jugglingProp getPropFromString(const QString &value);
+
 protected:
   void closeEvent(QCloseEvent *event) override;
 
@@ -72,6 +75,8 @@ private:
 
   QToolBar *myToolBar;
     QHBoxLayout *toolBarLayout;
+    QLabel *propLabel;
+    QComboBox *propTypeComboBox;
     QLabel *periodLabel;
     QSpinBox *periodSpinBox;
       QSpinBox *firstSiteSpinBox;

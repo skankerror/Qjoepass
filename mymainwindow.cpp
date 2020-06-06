@@ -31,11 +31,11 @@ MyMainWindow::MyMainWindow()
   container->setMaximumSize(screenSize);
 
   QVBoxLayout *layout = new QVBoxLayout;
-//  layout->setContentsMargins(1, 1, 1, 1);
-//  layout->addWidget(topFiller);
-//  layout->addWidget(infoLabel);
+  //  layout->setContentsMargins(1, 1, 1, 1);
+  //  layout->addWidget(topFiller);
+  //  layout->addWidget(infoLabel);
   layout->addWidget(container);
-//  layout->addWidget(bottomFiller);
+  //  layout->addWidget(bottomFiller);
   widget->setLayout(layout);
 
   createMenus();
@@ -134,7 +134,11 @@ void MyMainWindow::createToolBar()
   myToolBar = addToolBar("siteswap bar");
   auto myToolBarWidget = new QWidget(this);
   toolBarLayout = new QHBoxLayout();
-  // persistent
+  propLabel = new QLabel("type of prop", this);
+  propTypeComboBox = new QComboBox(this);
+  for (int i = 0; i < propNumb; i++)
+    propTypeComboBox->addItem(getPropToString(i));
+  propTypeComboBox->setCurrentIndex(ball);
   periodLabel = new QLabel("period", this);
   periodSpinBox = new QSpinBox(this);
   periodSpinBox->setMinimum(1);
@@ -142,14 +146,14 @@ void MyMainWindow::createToolBar()
   firstSiteSpinBox = new QSpinBox(this);
   firstSiteSpinBox->setMinimum(1);
   firstSiteSpinBox->setValue(3);
-//  auto layoutTemp = new QHBoxLayout();
   launchPushButton = new QPushButton("launch !", this);
   launchPushButton->setToolTip("Start animation");
   launchPushButton->setToolTipDuration(2000);
+  toolBarLayout->addWidget(propLabel);
+  toolBarLayout->addWidget(propTypeComboBox);
   toolBarLayout->addWidget(periodLabel);
   toolBarLayout->addWidget(periodSpinBox);
   toolBarLayout->addWidget(firstSiteSpinBox);
-//  layout->addLayout(layoutTemp);
   toolBarLayout->addWidget(launchPushButton, 0, Qt::AlignRight);
   myToolBarWidget->setLayout(toolBarLayout);
   myToolBar->addWidget(myToolBarWidget);
@@ -170,7 +174,8 @@ void MyMainWindow::launchSiteSwap()
   {
     vecInt.append(vSpinBox.at(i)->value());
   }
-  my3DWindow->createSiteSwap(vecInt, ball, false);
+  jugglingProp prop = getPropFromString(propTypeComboBox->currentText());
+  my3DWindow->createSiteSwap(vecInt, prop, false);
 }
 
 void MyMainWindow::periodChanged(int i)
@@ -265,6 +270,25 @@ void MyMainWindow::loadFile(const QString &fileName)
 
   setCurrentFile(fileName);
   statusBar()->showMessage(tr("File loaded"), 2000);
+}
+
+QString MyMainWindow::getPropToString(const int prop)
+{
+  switch (prop)
+  {
+  case ball: return QString("Ball"); break;
+  case ring: return QString("Ring"); break;
+  case club: return QString("Club"); break;
+  default: return QString(""); break;
+  }
+}
+
+jugglingProp MyMainWindow::getPropFromString(const QString &value)
+{
+  if (value == "Ball") return ball;
+  else if (value == "Ring") return ring;
+  else if (value == "Club") return club;
+  else return ball;
 }
 
 bool MyMainWindow::saveFile(const QString &fileName)

@@ -29,7 +29,7 @@ My3DWindow::My3DWindow(MySettings *aSettings)
 /**************************** testing zone ***************************/
 
   // create 1 juggler for testing purpose
-  createJuggler(0, QVector2D(0, 0), QColor(QRgb(0x10561B)));
+  createJuggler(0, QVector2D(0, 0), QColor(QRgb(0x3C559A)));
 
 }
 
