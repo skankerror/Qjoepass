@@ -37,12 +37,10 @@ private:
 private:
   Juggler *juggler;
   QVector<JugglingBall *> vBall;
-//  QVector<int> siteswap;
   SiteSwap *siteSwap;
   int period;
 
   QParallelAnimationGroup *siteswapAnimation; // anim global
-  QVector<QSequentialAnimationGroup *> vPropAnim; // vecteur pour anim pour chaque balle
 };
 
 #endif // ANIMSIMPLE_H

@@ -16,10 +16,6 @@ using namespace Qt3DAnimation;
 class Juggler: public QEntity
 {
   Q_OBJECT
-  Q_PROPERTY(Qt3DCore::QTransform *skeletonTransform
-             READ getSkeletonTransform
-             WRITE setSkeletonTransform
-             NOTIFY skeletonTransformChanged)
   Q_PROPERTY(QVector3D position
              READ position
              WRITE setPosition
@@ -47,7 +43,6 @@ public:
   void setLeftForearmPosition(float rot);
   float getRightForearmPosition() {return rightForearmPosition;};
   void setRightForearmPosition(float rot);
-
 
   // getters for hands positions ext to catch, int to launch, med for siteswap 2
   QVector3D getPositionLHext() const {return posLHext;};

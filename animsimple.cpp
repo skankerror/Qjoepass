@@ -3,9 +3,7 @@
 
 AnimSimple::AnimSimple():
   siteswapAnimation(new QParallelAnimationGroup())
-{
-
-}
+{}
 
 AnimSimple::AnimSimple(Juggler *aJuggler,
                        QVector<JugglingBall *> aVBall,
@@ -15,6 +13,7 @@ AnimSimple::AnimSimple(Juggler *aJuggler,
     siteSwap(aSiteSwap),
     siteswapAnimation(new QParallelAnimationGroup())
 {
+  // In case we call this cstr we cat set the anim
   setAnim();
 }
 
@@ -25,25 +24,23 @@ void AnimSimple::setAnim()
 
   if (!(siteSwap->isValid()) || numProp != siteSwap->getNumProp())
   {
-    qDebug() << "siteswap pas valide ou problème sur le nombre d'objets !";
+    qDebug() << "Siteswap isn't valid or internal problem about number of props";
   }
 
-  /*************************** test pour période > 1 *************************/
-
-  for (int i = 0; i < numProp; i++) // pour chaque objet
+  for (int i = 0; i < numProp; i++) // for each prop
   {
     int launchPos = i % period;
     int launch = siteSwap->at(launchPos);
     hand launchHand;
     auto ball = vBall.at(i);
-    auto ballAnim = new QSequentialAnimationGroup(); // pour agréger tout le trajet
-    auto ballGlobAnim = new QSequentialAnimationGroup();// nécessaire pour la pause au début
+    auto ballAnim = new QSequentialAnimationGroup(); // will handle the whole moving
+    auto ballGlobAnim = new QSequentialAnimationGroup();// needed to add pause at the beginning
 
-    // on rajoute le delay pour chaque balle
+    // we had delay for each prop
     if (i)
       ballGlobAnim->addPause(DELAY_LAUNCH * i);
 
-    // faire la 1ère anim
+    // handle first move
     if (i % 2 == 0)
       launchHand = rightHand;
     else
@@ -52,57 +49,52 @@ void AnimSimple::setAnim()
     launchAnim->setLoopCount(1);
     ballAnim->addAnimation(launchAnim);
 
-    // la suite
-    // on cherche la suite de la balle dans le siteswap
+    // search for new site
     int newLaunchPos = (launch + launchPos) % period;
-    // on se met sur la main qui a reçu
-    // si launch est impair on change de main
+    // setting the new hand
+    // if launch is odd we change hand
     hand newLaunchHand;
     if (launch % 2 == 1)
       newLaunchHand = changeHand(launchHand);
     else
       newLaunchHand = launchHand;
-    // si on n'arrive pas sur la même position on continue
+    // if we're not on the same site, let's keep on animate
     while (newLaunchPos != launchPos)
     {
       int newLaunch = siteSwap->at(newLaunchPos);
       auto followLaunchAnim = launchBall(juggler, ball, newLaunch, newLaunchHand);
       followLaunchAnim->setLoopCount(1);
       ballAnim->addAnimation(followLaunchAnim);
-      // changer de main ?
+      // is it the other hand ?
       if (newLaunch % 2 == 1)
         newLaunchHand = changeHand(newLaunchHand);
       newLaunchPos = (newLaunch + newLaunchPos) % period;
     }
 
-    // on arrive au début mais si on a changé de main faut refaire
+    // now we get back to initial site, if we changed hand, let's do the whole thing again
     if (newLaunchHand != launchHand)
     {
       auto backLaunchAnim = launchBall(juggler, ball, launch, newLaunchHand);
       backLaunchAnim->setLoopCount(1);
       ballAnim->addAnimation(backLaunchAnim);
-      // la suite
-      // on cherche la suite de la balle dans le siteswap
       newLaunchPos = (launch + launchPos) % period;
-      if (launch % 2 == 1) // suivant le cas on change de main
+      if (launch % 2 == 1)
         newLaunchHand = changeHand(newLaunchHand);
-      // si on n'arrive pas sur la même position on continue
       while (newLaunchPos != launchPos)
       {
         int newLaunch = siteSwap->at(newLaunchPos);
         auto backFollowLaunchAnim = launchBall(juggler, ball, newLaunch, newLaunchHand);
         backFollowLaunchAnim->setLoopCount(1);
         ballAnim->addAnimation(backFollowLaunchAnim);
-        // changer de main ?
         if (newLaunch % 2 == 1)
           newLaunchHand = changeHand(newLaunchHand);
         newLaunchPos = (newLaunch + newLaunchPos) % period;
       }
     }
-    // on rajoute le tout à notre global anim qui contient la pause
+    // we add to the anim containing starting pause
     ballGlobAnim->addAnimation(ballAnim);
     ballAnim->setLoopCount(-1);
-    siteswapAnimation->addAnimation(ballGlobAnim); // on ajoute à notre anim parallele
+    siteswapAnimation->addAnimation(ballGlobAnim); // and we add to the global parallel anim
   }
 
 //  // test anim hand en mode moulin lol

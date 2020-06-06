@@ -269,8 +269,6 @@ void Juggler::setPositionHands()
   setPositionLHint();
   setPositionRHext();
   setPositionRHint();
-//  qDebug() << posRHext << posRHmed << posRHint;
-//  qDebug() << posLHext << posLHmed << posLHint;
 }
 
 void Juggler::makeMember(QCylinderMesh *aMember,

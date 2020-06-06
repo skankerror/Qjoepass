@@ -52,7 +52,6 @@ INCLUDEPATH += \
     j2
 
 SOURCES += \
-  animationfactory.cpp \
   animsimple.cpp \
   camera.cpp \
   ground.cpp \
@@ -149,7 +148,6 @@ SOURCES += \
   siteswap.cpp
 
 HEADERS += \
-  animationfactory.h \
   animsimple.h \
   camera.h \
   ground.h \
