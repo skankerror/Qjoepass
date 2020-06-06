@@ -6,7 +6,6 @@
 #include <Qt3DRender>
 #include <Qt3DAnimation>
 #include "qjoepass.h"
-//#include "animationfactory.h"
 
 using namespace Qt3DCore;
 using namespace Qt3DExtras;
@@ -51,6 +50,7 @@ public:
   QVector3D getPositionRHext() const {return posRHext;};
   QVector3D getPositionRHint() const {return posRHint;};
   QVector3D getPositionRHmed() const {return posRHmed;};
+  QVector3D getPositionHead() const {return posHead;};
 
   float getRotY() const {return eulerAngles.y();};
 
@@ -64,6 +64,7 @@ private:
   void setPositionRHext();
   void setPositionRHint();
   void setPositionRHmed();
+  void setPosHead();
 
 private slots:
   void setPositionHands();
@@ -91,6 +92,8 @@ private:
   QVector3D posRHext;
   QVector3D posRHint;
   QVector3D posRHmed;
+  // headPos
+  QVector3D posHead;
 
   void makeMember(QCylinderMesh *aMember,
                        Qt3DCore::QTransform *aMemberTransform,

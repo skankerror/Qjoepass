@@ -22,6 +22,9 @@ public:
   MyMainWindow();
   void loadFile(const QString &fileName);
 
+  static QString getPropToString(const int prop);
+  static jugglingProp getPropFromString(const QString &value);
+
 protected:
   void closeEvent(QCloseEvent *event) override;
 
@@ -35,6 +38,8 @@ private slots:
   void preferencesDial();
   void launchSiteSwap();
   void periodChanged(int i);
+  void updateCameraComboBox();
+  void cameraIndexChanged(int index);
 
 private:
   void createMenus();
@@ -72,11 +77,17 @@ private:
 
   QToolBar *myToolBar;
     QHBoxLayout *toolBarLayout;
+    QLabel *propLabel;
+    QComboBox *propTypeComboBox;
     QLabel *periodLabel;
     QSpinBox *periodSpinBox;
       QSpinBox *firstSiteSpinBox;
       QVector<QSpinBox *> vSpinBox;
     QPushButton *launchPushButton;
+
+    QHBoxLayout *toolBar2Layout;
+    QLabel *cameraLabel;
+    QComboBox *cameraComboBox;
 
 };
 #endif // MYMAINWINDOW_H

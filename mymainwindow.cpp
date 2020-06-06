@@ -1,6 +1,5 @@
 #include <QtWidgets>
 #include "mymainwindow.h"
-//#include "settings.h"
 
 MyMainWindow::MyMainWindow()
 {
@@ -31,11 +30,11 @@ MyMainWindow::MyMainWindow()
   container->setMaximumSize(screenSize);
 
   QVBoxLayout *layout = new QVBoxLayout;
-//  layout->setContentsMargins(1, 1, 1, 1);
-//  layout->addWidget(topFiller);
-//  layout->addWidget(infoLabel);
+  //  layout->setContentsMargins(1, 1, 1, 1);
+  //  layout->addWidget(topFiller);
+  //  layout->addWidget(infoLabel);
   layout->addWidget(container);
-//  layout->addWidget(bottomFiller);
+  //  layout->addWidget(bottomFiller);
   widget->setLayout(layout);
 
   createMenus();
@@ -56,6 +55,9 @@ MyMainWindow::MyMainWindow()
 
   connect(periodSpinBox, SIGNAL(valueChanged(int)), this, SLOT(periodChanged(int)));
   connect(launchPushButton, SIGNAL(clicked()), this, SLOT(launchSiteSwap()));
+
+  connect(my3DWindow, SIGNAL(jugglerCountChanged()), this, SLOT(updateCameraComboBox()));
+  connect(cameraComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(cameraIndexChanged(int)));
 }
 
 void MyMainWindow::createMenus()
@@ -132,9 +134,14 @@ void MyMainWindow::createMenus()
 void MyMainWindow::createToolBar()
 {
   myToolBar = addToolBar("siteswap bar");
+
   auto myToolBarWidget = new QWidget(this);
   toolBarLayout = new QHBoxLayout();
-  // persistent
+  propLabel = new QLabel("type of prop", this);
+  propTypeComboBox = new QComboBox(this);
+  for (int i = 0; i < propNumb; i++)
+    propTypeComboBox->addItem(getPropToString(i));
+  propTypeComboBox->setCurrentIndex(ball);
   periodLabel = new QLabel("period", this);
   periodSpinBox = new QSpinBox(this);
   periodSpinBox->setMinimum(1);
@@ -142,22 +149,32 @@ void MyMainWindow::createToolBar()
   firstSiteSpinBox = new QSpinBox(this);
   firstSiteSpinBox->setMinimum(1);
   firstSiteSpinBox->setValue(3);
-//  auto layoutTemp = new QHBoxLayout();
   launchPushButton = new QPushButton("launch !", this);
   launchPushButton->setToolTip("Start animation");
   launchPushButton->setToolTipDuration(2000);
+  toolBarLayout->addWidget(propLabel);
+  toolBarLayout->addWidget(propTypeComboBox);
   toolBarLayout->addWidget(periodLabel);
   toolBarLayout->addWidget(periodSpinBox);
   toolBarLayout->addWidget(firstSiteSpinBox);
-//  layout->addLayout(layoutTemp);
   toolBarLayout->addWidget(launchPushButton, 0, Qt::AlignRight);
   myToolBarWidget->setLayout(toolBarLayout);
   myToolBar->addWidget(myToolBarWidget);
 
+  auto MyToolBarWidget2 = new QWidget(this);
+  toolBar2Layout = new QHBoxLayout();
+  cameraLabel = new QLabel("change Camera", this);
+  cameraComboBox = new QComboBox(this);
+  updateCameraComboBox();
+  toolBar2Layout->addWidget(cameraLabel);
+  toolBar2Layout->addWidget(cameraComboBox);
+
+  MyToolBarWidget2->setLayout(toolBar2Layout);
+  myToolBar->addWidget(MyToolBarWidget2);
+
 }
 void MyMainWindow::preferencesDial()
 {
-  //  pref = new Preferences(settings);
   pref->setWindowTitle("Preferences");
   pref->show();
 }
@@ -170,7 +187,8 @@ void MyMainWindow::launchSiteSwap()
   {
     vecInt.append(vSpinBox.at(i)->value());
   }
-  my3DWindow->createSiteSwap(vecInt, ball, false);
+  jugglingProp prop = getPropFromString(propTypeComboBox->currentText());
+  my3DWindow->createSiteSwap(vecInt, prop, false);
 }
 
 void MyMainWindow::periodChanged(int i)
@@ -199,6 +217,28 @@ void MyMainWindow::periodChanged(int i)
     }
     toolBarLayout->addWidget(launchPushButton);
   }
+}
+
+void MyMainWindow::updateCameraComboBox()
+{
+  cameraComboBox->clear();
+  cameraComboBox->addItem("Orbit Camera");
+  for (int i = 0; i < my3DWindow->getJugglerCount(); i++)
+    cameraComboBox->addItem(QString("Juggler %1 view").arg(i + 1));
+}
+
+void MyMainWindow::cameraIndexChanged(int index)
+{
+  if (index == 0)
+  {
+    my3DWindow->setCameraToOrbit();
+    return;
+  }
+
+  if (index < 0)
+    return;
+
+  my3DWindow->setCameraToFirstPers(index - 1);
 }
 
 void MyMainWindow::newFile()
@@ -265,6 +305,25 @@ void MyMainWindow::loadFile(const QString &fileName)
 
   setCurrentFile(fileName);
   statusBar()->showMessage(tr("File loaded"), 2000);
+}
+
+QString MyMainWindow::getPropToString(const int prop)
+{
+  switch (prop)
+  {
+  case ball: return QString("Ball"); break;
+  case ring: return QString("Ring"); break;
+  case club: return QString("Club"); break;
+  default: return QString(""); break;
+  }
+}
+
+jugglingProp MyMainWindow::getPropFromString(const QString &value)
+{
+  if (value == "Ball") return ball;
+  else if (value == "Ring") return ring;
+  else if (value == "Club") return club;
+  else return ball;
 }
 
 bool MyMainWindow::saveFile(const QString &fileName)
