@@ -9,7 +9,8 @@ My3DWindow::My3DWindow(MySettings *aSettings)
     pirouetteMesh(new QMesh()),
     sphereMesh(new QSphereMesh()),
     torusMesh(new QTorusMesh()),
-    settings(aSettings)
+    settings(aSettings),
+    anim(new AnimSimple())
 {
   // Root entity, root object of the scene
   setRootEntity(rootEntity);
@@ -25,35 +26,9 @@ My3DWindow::My3DWindow(MySettings *aSettings)
 
 /**************************** testing zone ***************************/
 
-//  createJuggler(-90, QVector2D(7, 0), QColor(QRgb(0x204C9B)));
-  // create 1 pirouette for testing purpose
-//  createPirouette(QColor(QRgb(0xA3A600)));
-//  vPirouette.at(0)->setPosition(QVector3D(0, -4, 0));
-  // create 1 ring for testing purpose
-//  createRing(QColor(QRgb(0xA3A600)));
-
   // create 1 juggler for testing purpose
   createJuggler(0, QVector2D(0, 0), QColor(QRgb(0x10561B)));
-  // create balls for testing purpose
-  createBall(QColor(QRgb(0xA3A600)));
-  createBall(QColor(QRgb(0xA3A600)));
-  createBall(QColor(QRgb(0xA3A600)));
-  createBall(QColor(QRgb(0xA3A600)));
-  createBall(QColor(QRgb(0xA3A600)));
-  createBall(QColor(QRgb(0xA3A600)));
-  createBall(QColor(QRgb(0xA3A600)));
-//  createBall(QColor(QRgb(0xA3A600)));
-//  createBall(QColor(QRgb(0xA3A600)));
-  // siteswap test
-  QVector<int> vecInt;
-  vecInt.append(7);
-//  vecInt.append(4);
-//  vecInt.append(5);
-//  vecInt.append(0);
-//  vecInt.append(4);
-//  vecInt.append(1);
-  AnimSimple *animTest = new AnimSimple(vJuggler.at(0), vBall, vecInt);
-  animTest->startAnimation();
+
 }
 
 void My3DWindow::createCam()
@@ -151,5 +126,58 @@ void My3DWindow::createRing(QColor aColor)
 {
   auto ring = new JugglingRing(rootEntity, torusMesh, effect, aColor);
   vRing.append(ring);
+}
+
+void My3DWindow::createSiteSwap(QVector<int> aVecInt, jugglingProp aPropType, bool someSynchron)
+{
+  SiteSwap *siteSwap = new SiteSwap(aVecInt, someSynchron, this);
+  if (!(siteSwap->isValid()))
+  {
+    qDebug() << "siteswap is not valid !";
+    return;
+  }
+  anim->stopAnimation();
+//  for (int i = 0; vBall.size(); i++)
+//  {
+//    vBall.at(i)->setEnabled(false);
+//  }
+  vBall.clear();
+  vBall.squeeze();
+  vRing.clear();
+  vRing.squeeze();
+  vPirouette.clear();
+  vPirouette.squeeze();
+
+  int numProp = siteSwap->getNumProp();
+  for (int i = 0; i < numProp; i++)
+  {
+    switch(aPropType)
+    {
+    case ball: createBall(QColor(QRgb(0xA3A600))); break;
+    case ring: createRing(QColor(QRgb(0xA3A600))); break;
+    case club: createPirouette(QColor(QRgb(0xA3A600))); break;
+    default: break;
+    }
+  }
+//  AnimSimple *anim;
+  switch(aPropType)
+  {
+  case ball:
+    anim = new AnimSimple(vJuggler.at(0), vBall, siteSwap);
+//    anim->setJuggler(vJuggler.at(0));
+//    anim->setVBall(vBall);
+//    anim->setSiteSwap(siteSwap);
+    anim->startAnimation();
+    break;
+  case ring:
+//    anim = new AnimSimple(vJuggler.at(0), vRing, siteSwap);
+//    anim->startAnimation();
+    break;
+  case club:
+//    anim = new AnimSimple(vJuggler.at(0), vPirouette, siteSwap);
+//    anim->startAnimation();
+    break;
+  default: break;
+  }
 }
 

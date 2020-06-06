@@ -1,24 +1,39 @@
 #include "animsimple.h"
 #include "mycurves.h"
 
+AnimSimple::AnimSimple():
+  siteswapAnimation(new QParallelAnimationGroup())
+{
+
+}
+
 AnimSimple::AnimSimple(Juggler *aJuggler,
                        QVector<JugglingBall *> aVBall,
-                       QVector<int> aSiteswap)
+                       SiteSwap *aSiteSwap)
   :juggler(aJuggler),
     vBall(aVBall),
-    siteswap(aSiteswap),
+    siteSwap(aSiteSwap),
     siteswapAnimation(new QParallelAnimationGroup())
 {
-  period = siteswap.size();
-  int numProp = aVBall.size();
-  // Il faudrait vérifier la validité du site swap
+  setAnim();
+}
+
+void AnimSimple::setAnim()
+{
+  period = siteSwap->getPeriod();
+  int numProp = vBall.size();
+
+  if (!(siteSwap->isValid()) || numProp != siteSwap->getNumProp())
+  {
+    qDebug() << "siteswap pas valide ou problème sur le nombre d'objets !";
+  }
 
   /*************************** test pour période > 1 *************************/
 
   for (int i = 0; i < numProp; i++) // pour chaque objet
   {
     int launchPos = i % period;
-    int launch = siteswap.at(launchPos);
+    int launch = siteSwap->at(launchPos);
     hand launchHand;
     auto ball = vBall.at(i);
     auto ballAnim = new QSequentialAnimationGroup(); // pour agréger tout le trajet
@@ -50,7 +65,7 @@ AnimSimple::AnimSimple(Juggler *aJuggler,
     // si on n'arrive pas sur la même position on continue
     while (newLaunchPos != launchPos)
     {
-      int newLaunch = siteswap.at(newLaunchPos);
+      int newLaunch = siteSwap->at(newLaunchPos);
       auto followLaunchAnim = launchBall(juggler, ball, newLaunch, newLaunchHand);
       followLaunchAnim->setLoopCount(1);
       ballAnim->addAnimation(followLaunchAnim);
@@ -74,7 +89,7 @@ AnimSimple::AnimSimple(Juggler *aJuggler,
       // si on n'arrive pas sur la même position on continue
       while (newLaunchPos != launchPos)
       {
-        int newLaunch = siteswap.at(newLaunchPos);
+        int newLaunch = siteSwap->at(newLaunchPos);
         auto backFollowLaunchAnim = launchBall(juggler, ball, newLaunch, newLaunchHand);
         backFollowLaunchAnim->setLoopCount(1);
         ballAnim->addAnimation(backFollowLaunchAnim);
@@ -112,6 +127,12 @@ AnimSimple::AnimSimple(Juggler *aJuggler,
 void AnimSimple::startAnimation()
 {
   siteswapAnimation->start();
+}
+
+void AnimSimple::stopAnimation()
+{
+  siteswapAnimation->stop();
+  siteswapAnimation->clear();
 }
 
 QSequentialAnimationGroup *AnimSimple::launchBall(Juggler *aJuggler,
@@ -220,9 +241,7 @@ QSequentialAnimationGroup *AnimSimple::launchBall(Juggler *aJuggler,
     animBall->setLoopCount(1);
     animGroup->addAnimation(animBall);
     posBall = posBall2;
-
   }
-
   return animGroup;
 }
 

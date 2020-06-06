@@ -7,13 +7,23 @@ class SiteSwap : public QObject
 {
   Q_OBJECT
 public:
-  explicit SiteSwap(QObject *parent = nullptr);
+  explicit SiteSwap(QVector<int> &aVInt,
+                    bool aSynchron = false,
+                    QObject *parent = nullptr);
+
+  bool isValid() const;
+  int getNumProp() const;
+  int getPeriod() const {return period;};
+  int at(int i) const {return v_event.at(i);};
 
 signals:
 
 private:
-  QVector<QVector<int>> v_v_Event;
-  bool isSynchron = false;
+  QVector<int> v_event; // without multiplex
+  QVector<QVector<int>> v_v_Event; // with multiplex
+  int period;
+  bool valid = false;
+  bool synchron = false;
 };
 
 #endif // SITESWAP_H

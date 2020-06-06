@@ -15,6 +15,7 @@
 #include "jugglingball.h"
 #include "jugglingring.h"
 #include "animsimple.h"
+#include "siteswap.h"
 
 using namespace Qt3DCore;
 using namespace Qt3DRender;
@@ -41,6 +42,9 @@ public slots:
   void createPirouette(QColor aColor);
   void createBall(QColor aColor);
   void createRing(QColor aColor);
+  void createSiteSwap(QVector<int> aVecInt,
+                      jugglingProp aPropType = ball,
+                      bool someSynchron = false);
 
 private:
   QEntity *rootEntity;
@@ -79,6 +83,8 @@ private:
   QVector<JugglingRing *> vRing;
 
   MySettings *settings;
+
+  AnimSimple *anim;
 
 };
 

@@ -159,7 +159,7 @@ HEADERS += \
   light.h \
   my3dwindow.h \
   mycurves.h \
-    mymainwindow.h \
+  mymainwindow.h \
     cdew/causal_editor.h \
     cdew/cdewClass.h \
     cdew/cdewDefs.h \
