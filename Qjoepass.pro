@@ -20,41 +20,47 @@ DEFINES -= UNICODE
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-#INCLUDEPATH += \
+INCLUDEPATH += \
+  src \
+#  src/gui \
+#  src/3d \
+#  src/control \
+  qrc \
+  translations
 
 SOURCES += \
-  animsimple.cpp \
-  camera.cpp \
-  ground.cpp \
-  juggler.cpp \
-  jugglingball.cpp \
-  jugglingring.cpp \
-  light.cpp \
-  main.cpp \
-  my3dwindow.cpp \
-  mycurves.cpp \
-  mymainwindow.cpp \
-  pirouette.cpp \
-  preferences.cpp \
-  settings.cpp \
-  siteswap.cpp
+  src/animsimple.cpp \
+  src/camera.cpp \
+  src/ground.cpp \
+  src/juggler.cpp \
+  src/jugglingball.cpp \
+  src/jugglingring.cpp \
+  src/light.cpp \
+  src/main.cpp \
+  src/my3dwindow.cpp \
+  src/mycurves.cpp \
+  src/mymainwindow.cpp \
+  src/pirouette.cpp \
+  src/preferences.cpp \
+  src/settings.cpp \
+  src/siteswap.cpp
 
 HEADERS += \
-  animsimple.h \
-  camera.h \
-  ground.h \
-  juggler.h \
-  jugglingball.h \
-  jugglingring.h \
-  light.h \
-  my3dwindow.h \
-  mycurves.h \
-  mymainwindow.h \
-  pirouette.h \
-  preferences.h \
-  qjoepass.h \
-  settings.h \
-  siteswap.h
+  src/animsimple.h \
+  src/camera.h \
+  src/ground.h \
+  src/juggler.h \
+  src/jugglingball.h \
+  src/jugglingring.h \
+  src/light.h \
+  src/my3dwindow.h \
+  src/mycurves.h \
+  src/mymainwindow.h \
+  src/pirouette.h \
+  src/preferences.h \
+  src/qjoepass.h \
+  src/settings.h \
+  src/siteswap.h
 
 TRANSLATIONS += \
     Qjoepass_fr_FR.ts
