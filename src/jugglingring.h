@@ -37,13 +37,14 @@ class JugglingRing: public QEntity
 public:
   JugglingRing(QEntity *aRootEntity,
                QTorusMesh *torusMesh,
-               QEffect *aEffect,
+//               QEffect *aEffect,
                QColor aColor);
 
 private:
-  QMaterial *ringMaterial;
-  QParameter *diffuseColorParameter;
-  QParameter *shininessParameter;
+//  QMaterial *ringMaterial;
+//  QParameter *diffuseColorParameter;
+//  QParameter *shininessParameter;
+  QMetalRoughMaterial *ringMetalRoughMaterial;
   Qt3DCore::QTransform *ringTransform;
 
   QColor color;

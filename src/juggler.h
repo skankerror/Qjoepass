@@ -45,7 +45,6 @@ class Juggler: public QEntity
 
 public:
   explicit Juggler(QEntity *aRootEntity,
-                   QEffect *aEffect,
                    float &aRoty,
                    QVector2D &aPosition,
                    QColor &aColor);
@@ -91,9 +90,8 @@ signals:
   void positionChanged();
 
 private:
-  QMaterial *skeletonMaterial;
-  QParameter *diffuseColorParameter;
-  QParameter *shininessParameter;
+  QMetalRoughMaterial *jugglerMetalRoughMaterial;
+
   Qt3DCore::QTransform *skeletonTransform;
 
   QVector3D eulerAngles;

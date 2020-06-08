@@ -37,7 +37,6 @@ class JugglingBall: public QEntity
 public:
   JugglingBall(QEntity *aRootEntity,
                QSphereMesh *aSphereMesh,
-               QEffect *aEffect,
                QColor &aColor);
 
   QVector3D position() const {return m_position;};
@@ -52,9 +51,8 @@ private:
   void updateTransForm();
 
 private:
-  QMaterial *sphereMaterial;
-  QParameter *diffuseColorParameter;
-  QParameter *shininessParameter;
+  QMetalRoughMaterial *ballMetalRoughMaterial;
+
   Qt3DCore::QTransform *sphereTransform;
 
   QVector3D m_position;

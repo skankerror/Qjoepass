@@ -1,6 +1,7 @@
 # Qjoepass
 
-Qjoepass is a modern rewrite of joepass using c++ and Qt
+Qjoepass is a modern rewrite of joepass using c++ and Qt.
+
 Poject is at an early stage of developpement.
 
 

@@ -19,28 +19,21 @@
 
 JugglingBall::JugglingBall(QEntity *aRootEntity,
                            QSphereMesh *aSphereMesh,
-                           QEffect *aEffect,
                            QColor &aColor)
-  :sphereMaterial(new QMaterial()),
-    diffuseColorParameter(new QParameter()),
-    shininessParameter(new QParameter()),
+  : ballMetalRoughMaterial(new QMetalRoughMaterial()),
     sphereTransform(new Qt3DCore::QTransform()),
     color(aColor)
 {
-    sphereTransform->setScale(BALL_SCALE);
+  sphereTransform->setScale(BALL_SCALE);
 
-    diffuseColorParameter->setName(QLatin1String(DIFFUSE_COLOR));
-    shininessParameter->setName(QLatin1String(SHININESS));
-    sphereMaterial->addParameter(diffuseColorParameter);
-    diffuseColorParameter->setValue(QVariant::fromValue(color));
-    sphereMaterial->addParameter(shininessParameter);
-    shininessParameter->setValue(QVariant::fromValue(BALL_SHININESS));
-    sphereMaterial->setEffect(aEffect);
+  ballMetalRoughMaterial->setBaseColor(color);
+  ballMetalRoughMaterial->setMetalness(BALL_METALNESS);
+  ballMetalRoughMaterial->setRoughness(BALL_ROUGHNESS);
 
-    QEntity::setParent(aRootEntity);
-    addComponent(aSphereMesh);
-    addComponent(sphereMaterial);
-    addComponent(sphereTransform);
+  QEntity::setParent(aRootEntity);
+  addComponent(aSphereMesh);
+  addComponent(ballMetalRoughMaterial);
+  addComponent(sphereTransform);
 
 }
 

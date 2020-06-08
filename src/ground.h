@@ -33,7 +33,6 @@ class Ground: public QEntity
   Q_OBJECT
 public:
   explicit Ground(QEntity *aRootEntity,
-                  QEffect *aEffect,
                   QColor &aColor);
 
   QColor getColor() const {return color;};
@@ -43,15 +42,15 @@ private:
   QPlaneMesh *planeMesh;
   Qt3DCore::QTransform *planeTransform;
 
-  QMaterial *planeMaterial;
-  QParameter *diffuseColorParameter;
-  QParameter *shininessParameter;
-
   QColor color;
   bool enabled = true;
 
-  QTextureMaterial *groundTextureMaterial;
-  QTextureLoader *groundTextureLoader;
+  QMetalRoughMaterial *groundMetalRoughnessMaterial;
+  QTextureLoader *groundBaseColor;
+  QTextureLoader *groundMetalness;
+  QTextureLoader *groundRoughness;
+  QTextureLoader *groundNormal;
+  QTextureLoader *groundAmbientOcclusion;
 };
 
 #endif // GROUND_H
