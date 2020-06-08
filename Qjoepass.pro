@@ -21,10 +21,6 @@ DEFINES -= UNICODE
 
 INCLUDEPATH += \
   src \
-#  src/gui \
-#  src/3d \
-#  src/control \
-  qrc \
   translations
 
 SOURCES += \

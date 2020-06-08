@@ -30,7 +30,7 @@ AnimSimple::AnimSimple(Juggler *aJuggler,
     siteSwap(aSiteSwap),
     siteswapAnimation(new QParallelAnimationGroup())
 {
-  // In case we call this cstr we cat set the anim
+  // In case we call this cstr we can set the anim
   setAnim();
 }
 

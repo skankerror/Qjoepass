@@ -68,10 +68,6 @@ void My3DWindow::createGround()
 
 void My3DWindow::setGlobalObject()
 {
-  // global material
-//  material = new QDiffuseSpecularMaterial(rootEntity);
-//  effect = material->effect();
-
   // create one pointlight for 3 sources
   pointLight->setColor(QColor(QRgb(LIGHT_COLOR)));
   pointLight->setIntensity(LIGHT_INTENSITY);

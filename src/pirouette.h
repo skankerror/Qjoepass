@@ -25,7 +25,6 @@
 
 using namespace Qt3DCore;
 using namespace Qt3DExtras;
-//using namespace Qt3DAnimation;
 using namespace Qt3DRender;
 
 class Pirouette: public QEntity

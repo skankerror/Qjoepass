@@ -29,7 +29,6 @@ class QFileInfo;
 class QTabWidget;
 QT_END_NAMESPACE
 
-//! [0]
 class Preferences: public QDialog
 {
   Q_OBJECT
