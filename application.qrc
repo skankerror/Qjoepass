@@ -7,18 +7,6 @@
         <file>res/images/save.png</file>
     </qresource>
     <qresource prefix="/skybox">
-        <file>res/images/skybox/skybox_posz.tga</file>
-        <file>res/images/skybox/skybox_posy.tga</file>
-        <file>res/images/skybox/skybox_posx.tga</file>
-        <file>res/images/skybox/skybox_negz.tga</file>
-        <file>res/images/skybox/skybox_negy.tga</file>
-        <file>res/images/skybox/skybox_negx.tga</file>
-        <file>res/images/skybox/skybox_posy.jpg</file>
-        <file>res/images/skybox/skybox_negy.jpg</file>
-        <file>res/images/skybox/skybox_posx.jpg</file>
-        <file>res/images/skybox/skybox_negz.jpg</file>
-        <file>res/images/skybox/skybox_negx.jpg</file>
-        <file>res/images/skybox/skybox_posz.jpg</file>
         <file>res/images/skybox/night_posy.jpg</file>
         <file>res/images/skybox/night_posz.jpg</file>
         <file>res/images/skybox/night_negy.jpg</file>
@@ -27,11 +15,6 @@
         <file>res/images/skybox/night_negx.jpg</file>
     </qresource>
     <qresource prefix="/woodfloor">
-        <file>res/images/WoodFloor/WoodFloor_AmbientOcclusion.jpg</file>
-        <file>res/images/WoodFloor/WoodFloor_Roughness.jpg</file>
-        <file>res/images/WoodFloor/WoodFloor_Color.jpg</file>
-        <file>res/images/WoodFloor/WoodFloor_Normal.jpg</file>
-        <file>res/images/WoodFloor/WoodFloor_Displacement.jpg</file>
         <file>res/images/WoodFloor/wooden_planks_01_ambient_occlusion.png</file>
         <file>res/images/WoodFloor/wooden_planks_01_metallic.png</file>
         <file>res/images/WoodFloor/wooden_planks_01_roughness.png</file>

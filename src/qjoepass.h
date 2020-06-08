@@ -57,11 +57,9 @@
 #define GROUND_SHININESS 10
 #define GROUND_AMBIENT_OCCLUSION "qrc:/woodfloor/res/images/WoodFloor/wooden_planks_01_ambient_occlusion.png"
 #define GROUND_ROUGHNESS "qrc:/woodfloor/res/images/WoodFloor/wooden_planks_01_roughness.png"
-//#define GROUND_ROUGHNESS 0.5
 #define GROUND_BASE_COLOR "qrc:/woodfloor/res/images/WoodFloor/wooden_planks_01_basecolor.png"
 #define GROUND_NORMAL "qrc:/woodfloor/res/images/WoodFloor/wooden_planks_01_normal.png"
 #define GROUND_METALNESS "qrc:/woodfloor/res/images/WoodFloor/wooden_planks_01_metallic.png"
-//#define GROUND_METALNESS 0.2
 // Ball
 #define BALL_RINGS 20
 #define BALL_SLICES 20
@@ -78,7 +76,6 @@
 #define RING_SCALE_X 0.8
 #define RING_SCALE_Y 0.8
 #define RING_SCALE_Z 0.1
-//#define RING_SHININESS 50
 #define RING_METALNESS 0.2
 #define RING_ROUGHNESS 0.5
 // Club
