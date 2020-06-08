@@ -21,7 +21,7 @@
 
 My3DWindow::My3DWindow(MySettings *aSettings)
   :rootEntity(new QEntity()),
-//    skybox(new QSkyboxEntity()),
+    skybox(new QSkyboxEntity()),
     pointLight(new QPointLight()),
     pirouetteMesh(new QMesh()),
     sphereMesh(new QSphereMesh()),
@@ -46,7 +46,7 @@ My3DWindow::My3DWindow(MySettings *aSettings)
 /**************************** testing zone ***************************/
 
   // create 1 juggler for testing purpose
-  createJuggler(0, QVector2D(0, 0), QColor(QRgb(0x3C559A)));
+  createJuggler(0, QVector2D(0, 0), QColor(QRgb(0xFF0000)));
 
 }
 
@@ -63,7 +63,7 @@ void My3DWindow::createCam()
 void My3DWindow::createGround()
 {
   QColor colorG = settings->value("world/groundColor").value<QColor>();
-  ground = new Ground(rootEntity, effect, colorG);
+  ground = new Ground(rootEntity, colorG);
 }
 
 void My3DWindow::setGlobalObject()
@@ -108,36 +108,36 @@ void My3DWindow::changeGroundColor(QColor aColor)
 
 void My3DWindow::createJuggler(float aRoty, QVector2D aPosition, QColor aColor)
 {
-  auto juggler = new Juggler(rootEntity, effect, aRoty, aPosition, aColor);
+  auto juggler = new Juggler(rootEntity, aRoty, aPosition, aColor);
   vJuggler.append(juggler);
   emit jugglerCountChanged();
 }
 
 void My3DWindow::createSkybox()
 {
-  skybox = new QSkyboxEntity(rootEntity);
   skybox->setBaseName(QStringLiteral(SKYBOX_BASE_NAME));
   skybox->setExtension(QStringLiteral(SKYBOX_EXTENSION));
 
   Qt3DCore::QTransform * skyTransform = new Qt3DCore::QTransform(skybox);
   skyTransform->setScale3D(QVector3D( SKYBOX_SCALE, SKYBOX_SCALE, SKYBOX_SCALE));
   skybox->addComponent(skyTransform);
+  skybox->setParent(rootEntity);
 
 }
 
 void My3DWindow::createLighting()
 {
-//  QVector3D pos1 = QVector3D(-20, 10, 20);
-//  auto light = new Light(rootEntity, pointLight, pos1);
-//  vLight.append(light);
+  QVector3D pos1 = QVector3D(-20, 10, 20);
+  auto light = new Light(rootEntity, pointLight, pos1);
+  vLight.append(light);
 
-//  QVector3D pos2 = QVector3D(20, 10, 20);
-//  auto light2 = new Light(rootEntity, pointLight, pos2);
-//  vLight.append(light2);
+  QVector3D pos2 = QVector3D(20, 10, 20);
+  auto light2 = new Light(rootEntity, pointLight, pos2);
+  vLight.append(light2);
 
-//  QVector3D pos3 = QVector3D(0, 10, -20);
-//  auto light3 = new Light(rootEntity, pointLight, pos3);
-//  vLight.append(light3);
+  QVector3D pos3 = QVector3D(0, 10, -20);
+  auto light3 = new Light(rootEntity, pointLight, pos3);
+  vLight.append(light3);
 
   envLight = new QEnvironmentLight();
 
@@ -164,7 +164,7 @@ void My3DWindow::createPirouette(QColor aColor)
 
 void My3DWindow::createBall(QColor aColor)
 {
-  auto ball = new JugglingBall(rootEntity, sphereMesh, effect, aColor);
+  auto ball = new JugglingBall(rootEntity, sphereMesh, aColor);
   vBall.append(ball);
 }
 

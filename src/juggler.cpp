@@ -19,26 +19,18 @@
 #include <QDebug>
 
 Juggler::Juggler(QEntity *aRootEntity,
-                 QEffect *aEffect,
                  float &aRoty,
                  QVector2D &aPosition,
                  QColor &aColor)
-  :skeletonMaterial(new QMaterial()),
-    diffuseColorParameter(new QParameter()),
-    shininessParameter(new QParameter()),
+  : jugglerMetalRoughMaterial(new QMetalRoughMaterial()),
     skeletonTransform(new Qt3DCore::QTransform()),
     color(aColor)
 {
+  jugglerMetalRoughMaterial->setBaseColor(color);
+  jugglerMetalRoughMaterial->setMetalness(JUGGLER_METALNESS);
+  jugglerMetalRoughMaterial->setRoughness(JUGGLER_ROUGHNESS);
 
   eulerAngles = QVector3D(JUGGLER_ROT_X, aRoty, JUGGLER_ROT_Z);
-  diffuseColorParameter->setName(QLatin1String(DIFFUSE_COLOR));
-  shininessParameter->setName(QLatin1String(SHININESS));
-  skeletonMaterial->addParameter(diffuseColorParameter);
-  diffuseColorParameter->setValue(QVariant::fromValue(color));
-  skeletonMaterial->addParameter(shininessParameter);
-  shininessParameter->setValue(QVariant::fromValue(JUGGLER_SHININESS));
-  skeletonMaterial->setEffect(aEffect);
-
 
   aHeadEntity = new Qt3DCore::QEntity(this);
   Head = new Qt3DExtras::QSphereMesh();
@@ -53,7 +45,7 @@ Juggler::Juggler(QEntity *aRootEntity,
 
   aHeadEntity->addComponent(Head);
   aHeadEntity->addComponent(headTransform);
-  aHeadEntity->addComponent(skeletonMaterial);
+  aHeadEntity->addComponent(jugglerMetalRoughMaterial);
 
   aShoulderEntity = new Qt3DCore::QEntity(this);
   Shoulders = new Qt3DExtras::QCylinderMesh();
@@ -171,7 +163,7 @@ Juggler::Juggler(QEntity *aRootEntity,
   QEntity::setParent(aRootEntity);
   addComponent(skeletonTransform);
 //  material is not applied on children!
-  addComponent(skeletonMaterial);
+//  addComponent(skeletonMaterial);
   setEnabled(enabled);
 
   // we update hands positions
@@ -320,7 +312,7 @@ void Juggler::makeMember(QCylinderMesh *aMember,
 
 
   aMemberEntity->addComponent(aMemberTransform);
-  aMemberEntity->addComponent(skeletonMaterial);
+  aMemberEntity->addComponent(jugglerMetalRoughMaterial);
 }
 
 void Juggler::makeArticulation(QSphereMesh *aSphere,
@@ -341,5 +333,5 @@ void Juggler::makeArticulation(QSphereMesh *aSphere,
 
   aSphereEntity->addComponent(aSphere);
   aSphereEntity->addComponent(aSphereTransform);
-  aSphereEntity->addComponent(skeletonMaterial);
+  aSphereEntity->addComponent(jugglerMetalRoughMaterial);
 }

@@ -34,7 +34,7 @@
 #define CAM_UP_VECTOR QVector3D(0,1,0)
 #define CAM_ORBIT_VIEW_CENTER QVector3D(0,0,0)
 // SkyBox
-#define SKYBOX_BASE_NAME "qrc:/skybox/res/images/skybox/skybox"
+#define SKYBOX_BASE_NAME "qrc:/skybox/res/images/skybox/night"
 #define SKYBOX_EXTENSION ".jpg"
 #define SKYBOX_SCALE 10.0F
 // Juggler
@@ -42,31 +42,34 @@
 #define JUGGLER_ROT_X 0
 #define JUGGLER_ROT_Z 0
 #define JUGGLER_TRANSLATION_Y -4
-#define JUGGLER_SHININESS 50
 #define HAND_OFFSET_X 0.65
 #define HAND_OFFSET_Y 3.75
 #define HAND_OFFSET_Z 1.3
 #define HAND_OFFSET_EXT 0.65
 #define HAND_OFFSET_INT 0.3
 #define HEAD_POS_Y 5
+#define JUGGLER_METALNESS 0.8
+#define JUGGLER_ROUGHNESS 0.5
 // Ground
 #define GROUND_WIDTH 20
 #define GROUND_HEIGHT 20
 #define GROUND_POSY -4
 #define GROUND_SHININESS 10
-#define AMBIENT_OCCLUSION "qrc:/woodfloor/res/images/WoodFloor/WoodFloor_AmbientOcclusion.jpg"
-//#define ROUGHNESS "qrc:/woodfloor/res/images/WoodFloor/WoodFloor_Roughness.jpg"
-#define ROUGHNESS 0.8
-//#define BASE_COLOR "qrc:/woodfloor/res/images/WoodFloor/WoodFloor_Color.jpg"
-#define NORMAL "qrc:/woodfloor/res/images/WoodFloor/WoodFloor_Normal.jpg"
-//#define DISPLACEMENT "qrc:/woodfloor/res/images/WoodFloor/WoodFloor_Displacement.jpg"
-#define METALNESS 0.2
+#define GROUND_AMBIENT_OCCLUSION "qrc:/woodfloor/res/images/WoodFloor/wooden_planks_01_ambient_occlusion.png"
+#define GROUND_ROUGHNESS "qrc:/woodfloor/res/images/WoodFloor/wooden_planks_01_roughness.png"
+//#define GROUND_ROUGHNESS 0.5
+#define GROUND_BASE_COLOR "qrc:/woodfloor/res/images/WoodFloor/wooden_planks_01_basecolor.png"
+#define GROUND_NORMAL "qrc:/woodfloor/res/images/WoodFloor/wooden_planks_01_normal.png"
+#define GROUND_METALNESS "qrc:/woodfloor/res/images/WoodFloor/wooden_planks_01_metallic.png"
+//#define GROUND_METALNESS 0.2
 // Ball
 #define BALL_RINGS 20
 #define BALL_SLICES 20
 #define BALL_RADIUS 2
 #define BALL_SCALE 0.1f
 #define BALL_SHININESS 50
+#define BALL_METALNESS 0.2
+#define BALL_ROUGHNESS 0.5
 // Ring
 #define RING_RADIUS 1.0f
 #define RING_MINOR_RADIUS 0.114f
@@ -76,13 +79,17 @@
 #define RING_SCALE_Y 0.8
 #define RING_SCALE_Z 0.1
 #define RING_SHININESS 50
+#define RING_METALNESS 0.2
+#define RING_ROUGHNESS 0.5
 // Club
 #define CLUB_SCALE 0.05
 #define CLUB_MESH_SRC "qrc:/mesh/res/mesh/J_club2.obj"
 #define CLUB_SHININESS 50
+#define CLUB_METALNESS 0.2
+#define CLUB_ROUGHNESS 0.5
 // Light
 #define LIGHT_COLOR 0xFFFFFF
-#define LIGHT_INTENSITY 2
+#define LIGHT_INTENSITY 1
 #define IRRADIANCE "qrc:/cubemaps/res/cubemaps/default_irradiance.dds"
 #define SPECULAR "qrc:/cubemaps/res/cubemaps/default_specular.dds"
 // anim
