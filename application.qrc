@@ -45,4 +45,7 @@
     <qresource prefix="/mesh">
         <file>res/mesh/J_club2.obj</file>
     </qresource>
+    <qresource prefix="/qss">
+        <file>res/qss/MyStyleSheet.qss</file>
+    </qresource>
 </RCC>

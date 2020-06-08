@@ -69,8 +69,8 @@ void My3DWindow::createGround()
 void My3DWindow::setGlobalObject()
 {
   // global material
-  material = new QDiffuseSpecularMaterial(rootEntity);
-  effect = material->effect();
+//  material = new QDiffuseSpecularMaterial(rootEntity);
+//  effect = material->effect();
 
   // create one pointlight for 3 sources
   pointLight->setColor(QColor(QRgb(LIGHT_COLOR)));
@@ -158,7 +158,7 @@ void My3DWindow::createLighting()
 
 void My3DWindow::createPirouette(QColor aColor)
 {
-  auto pirouette = new Pirouette(rootEntity, pirouetteMesh, effect, aColor);
+  auto pirouette = new Pirouette(rootEntity, pirouetteMesh, aColor);
   vPirouette.append(pirouette);
 }
 
@@ -170,7 +170,7 @@ void My3DWindow::createBall(QColor aColor)
 
 void My3DWindow::createRing(QColor aColor)
 {
-  auto ring = new JugglingRing(rootEntity, torusMesh, effect, aColor);
+  auto ring = new JugglingRing(rootEntity, torusMesh, aColor);
   vRing.append(ring);
 }
 

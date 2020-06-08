@@ -34,15 +34,13 @@ class Pirouette: public QEntity
 public:
   Pirouette(QEntity *aRootEntity,
             QMesh *aPirouetteMesh,
-            QEffect *aEffect,
             QColor aColor);
 
   void setPosition(QVector3D aPosition);
 
 private:
-  QMaterial *pirouetteMaterial;
-  QParameter *diffuseColorParameter;
-  QParameter *shininessParameter;
+  QMetalRoughMaterial *clubMetalRoughMaterial;
+
   Qt3DCore::QTransform *pirouetteTransform;
 
   QColor color;

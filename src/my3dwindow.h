@@ -80,12 +80,6 @@ private:
   QOrbitCameraController *camOController;
   QVector3D positionCamera;
 
-
-  // Global Material, we create one for the whole scene
-  // and pass effect to each 3d object
-  QDiffuseSpecularMaterial *material;
-  QEffect *effect;
-
   // Skybox
   QSkyboxEntity *skybox;
 

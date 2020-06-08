@@ -24,16 +24,16 @@ JugglingBall::JugglingBall(QEntity *aRootEntity,
     sphereTransform(new Qt3DCore::QTransform()),
     color(aColor)
 {
-    sphereTransform->setScale(BALL_SCALE);
+  sphereTransform->setScale(BALL_SCALE);
 
-    ballMetalRoughMaterial->setBaseColor(color);
-    ballMetalRoughMaterial->setMetalness(BALL_METALNESS);
-    ballMetalRoughMaterial->setRoughness(BALL_ROUGHNESS);
+  ballMetalRoughMaterial->setBaseColor(color);
+  ballMetalRoughMaterial->setMetalness(BALL_METALNESS);
+  ballMetalRoughMaterial->setRoughness(BALL_ROUGHNESS);
 
-    QEntity::setParent(aRootEntity);
-    addComponent(aSphereMesh);
-    addComponent(ballMetalRoughMaterial);
-    addComponent(sphereTransform);
+  QEntity::setParent(aRootEntity);
+  addComponent(aSphereMesh);
+  addComponent(ballMetalRoughMaterial);
+  addComponent(sphereTransform);
 
 }
 

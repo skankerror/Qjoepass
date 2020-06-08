@@ -78,7 +78,7 @@
 #define RING_SCALE_X 0.8
 #define RING_SCALE_Y 0.8
 #define RING_SCALE_Z 0.1
-#define RING_SHININESS 50
+//#define RING_SHININESS 50
 #define RING_METALNESS 0.2
 #define RING_ROUGHNESS 0.5
 // Club

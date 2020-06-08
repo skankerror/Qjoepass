@@ -38,6 +38,12 @@ int main(int argc, char *argv[])
   parser.addPositionalArgument("file", "The file to open.");
   parser.process(app);
 
+  QFile file(":/qss/res/qss/MyStyleSheet.qss");
+      file.open(QFile::ReadOnly);
+      QString styleSheet = QString::fromLatin1(file.readAll());
+
+      app.setStyleSheet(styleSheet);
+
   MyMainWindow mainWin;
 //  if (!parser.positionalArguments().isEmpty())
 //      mainWin.loadFile(parser.positionalArguments().first());
