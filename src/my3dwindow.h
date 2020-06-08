@@ -93,6 +93,7 @@ private:
   Ground *ground;
 
   // light
+  QEnvironmentLight *envLight;
   QPointLight *pointLight;
   QVector<Light *> vLight;
 

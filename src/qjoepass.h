@@ -34,7 +34,7 @@
 #define CAM_UP_VECTOR QVector3D(0,1,0)
 #define CAM_ORBIT_VIEW_CENTER QVector3D(0,0,0)
 // SkyBox
-#define SKYBOX_BASE_NAME "qrc:/skybox/images/skybox/skybox"
+#define SKYBOX_BASE_NAME "qrc:/skybox/res/images/skybox/skybox"
 #define SKYBOX_EXTENSION ".jpg"
 #define SKYBOX_SCALE 10.0F
 // Juggler
@@ -54,6 +54,13 @@
 #define GROUND_HEIGHT 20
 #define GROUND_POSY -4
 #define GROUND_SHININESS 10
+#define AMBIENT_OCCLUSION "qrc:/woodfloor/res/images/WoodFloor/WoodFloor_AmbientOcclusion.jpg"
+//#define ROUGHNESS "qrc:/woodfloor/res/images/WoodFloor/WoodFloor_Roughness.jpg"
+#define ROUGHNESS 0.8
+//#define BASE_COLOR "qrc:/woodfloor/res/images/WoodFloor/WoodFloor_Color.jpg"
+#define NORMAL "qrc:/woodfloor/res/images/WoodFloor/WoodFloor_Normal.jpg"
+//#define DISPLACEMENT "qrc:/woodfloor/res/images/WoodFloor/WoodFloor_Displacement.jpg"
+#define METALNESS 0.2
 // Ball
 #define BALL_RINGS 20
 #define BALL_SLICES 20
@@ -71,11 +78,13 @@
 #define RING_SHININESS 50
 // Club
 #define CLUB_SCALE 0.05
-#define CLUB_MESH_SRC "qrc:/models/J_club2.qgltf"
+#define CLUB_MESH_SRC "qrc:/mesh/res/mesh/J_club2.obj"
 #define CLUB_SHININESS 50
 // Light
 #define LIGHT_COLOR 0xFFFFFF
 #define LIGHT_INTENSITY 2
+#define IRRADIANCE "qrc:/cubemaps/res/cubemaps/default_irradiance.dds"
+#define SPECULAR "qrc:/cubemaps/res/cubemaps/default_specular.dds"
 // anim
 #define GRAVITY QVector3D(0, -9.8, 0)
 #define DELTA_TIME 0.0166667f // in second

@@ -20,12 +20,17 @@
 Ground::Ground(QEntity *aRootEntity, QEffect *aEffect, QColor &aColor)
   :planeMesh(new QPlaneMesh()),
     planeTransform(new Qt3DCore::QTransform()),
-    planeMaterial(new QMaterial()),
-    diffuseColorParameter(new QParameter()),
-    shininessParameter(new QParameter()),
+    //    planeMaterial(new QMaterial()),
+    //    diffuseColorParameter(new QParameter()),
+    //    shininessParameter(new QParameter()),
     color(aColor),
-    groundTextureMaterial(new QTextureMaterial()),
-    groundTextureLoader(new QTextureLoader())
+    //    groundTextureMaterial(new QTextureMaterial()),
+    groundMetalRoughnessMaterial(new QMetalRoughMaterial())
+//    groundBaseColor(new QTextureLoader()),
+//    groundMetalness(new QTextureLoader()),
+//    groundRoughness(new QTextureLoader()),
+//    groundNormal(new QTextureLoader()),
+//    groundAmbientOcclusion(new QTextureLoader())
 {
   // Plane shape data
   planeMesh->setWidth(GROUND_WIDTH);
@@ -34,23 +39,33 @@ Ground::Ground(QEntity *aRootEntity, QEffect *aEffect, QColor &aColor)
   // Plane mesh transform
   planeTransform->setTranslation(QVector3D(0.0f, GROUND_POSY, 0.0f));
   // Plane Material
-  diffuseColorParameter->setName(QLatin1String(DIFFUSE_COLOR));
-  shininessParameter->setName(QLatin1String(SHININESS));
-  planeMaterial->addParameter(diffuseColorParameter);
-  diffuseColorParameter->setValue(QVariant::fromValue(color));
-  planeMaterial->addParameter(shininessParameter);
-  shininessParameter->setValue(QVariant::fromValue(GROUND_SHININESS));
-  planeMaterial->setEffect(aEffect);
+  //  diffuseColorParameter->setName(QLatin1String(DIFFUSE_COLOR));
+  //  shininessParameter->setName(QLatin1String(SHININESS));
+  //  planeMaterial->addParameter(diffuseColorParameter);
+  //  diffuseColorParameter->setValue(QVariant::fromValue(color));
+  //  planeMaterial->addParameter(shininessParameter);
+  //  shininessParameter->setValue(QVariant::fromValue(GROUND_SHININESS));
+  //  planeMaterial->setEffect(aEffect);
 
   // Plane texture
-  groundTextureLoader->setSource(QUrl(QStringLiteral("qrc:/texture/images/texture/parquet.png")));
-  groundTextureLoader->setMirrored(false);
-  groundTextureMaterial->setTexture(groundTextureLoader);
+//  groundBaseColor->setSource(QUrl(QStringLiteral(BASE_COLOR)));
+//  groundBaseColor->setFormat(QAbstractTexture::SRGB8_Alpha8);
+//  groundBaseColor->setGenerateMipMaps(true);
+
+  groundMetalRoughnessMaterial->setBaseColor(QVariant::fromValue(color));
+  groundMetalRoughnessMaterial->setNormal(QUrl(QStringLiteral(NORMAL)));
+//  groundMetalRoughnessMaterial->setMetalness(QUrl(QStringLiteral(DISPLACEMENT)));
+  groundMetalRoughnessMaterial->setMetalness(METALNESS);
+  groundMetalRoughnessMaterial->setRoughness(ROUGHNESS);
+  groundMetalRoughnessMaterial->setAmbientOcclusion(QUrl(QStringLiteral(AMBIENT_OCCLUSION)));
+
+  //  groundTextureMaterial->setTexture(groundTextureLoader);
 
   QEntity::setParent(aRootEntity);
   addComponent(planeMesh);
-//  addComponent(planeMaterial);
-  addComponent(groundTextureMaterial);
+  //  addComponent(planeMaterial);
+  //  addComponent(groundTextureMaterial);
+  addComponent(groundMetalRoughnessMaterial);
   addComponent(planeTransform);
   setEnabled(enabled);
 
@@ -59,6 +74,6 @@ Ground::Ground(QEntity *aRootEntity, QEffect *aEffect, QColor &aColor)
 void Ground::setColor(QColor aColor)
 {
   color = aColor;
-  diffuseColorParameter->setValue(color);
+  //  diffuseColorParameter->setValue(color);
 
 }

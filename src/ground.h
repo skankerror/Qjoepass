@@ -43,15 +43,20 @@ private:
   QPlaneMesh *planeMesh;
   Qt3DCore::QTransform *planeTransform;
 
-  QMaterial *planeMaterial;
-  QParameter *diffuseColorParameter;
-  QParameter *shininessParameter;
+//  QMaterial *planeMaterial;
+//  QParameter *diffuseColorParameter;
+//  QParameter *shininessParameter;
 
   QColor color;
   bool enabled = true;
 
-  QTextureMaterial *groundTextureMaterial;
-  QTextureLoader *groundTextureLoader;
+//  QTextureMaterial *groundTextureMaterial;
+  QMetalRoughMaterial *groundMetalRoughnessMaterial;
+//  QTextureLoader *groundBaseColor;
+//  QTextureLoader *groundMetalness;
+//  QTextureLoader *groundRoughness;
+//  QTextureLoader *groundNormal;
+//  QTextureLoader *groundAmbientOcclusion;
 };
 
 #endif // GROUND_H

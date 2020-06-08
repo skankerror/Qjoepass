@@ -127,17 +127,33 @@ void My3DWindow::createSkybox()
 
 void My3DWindow::createLighting()
 {
-  QVector3D pos1 = QVector3D(-20, 10, 20);
-  auto light = new Light(rootEntity, pointLight, pos1);
-  vLight.append(light);
+//  QVector3D pos1 = QVector3D(-20, 10, 20);
+//  auto light = new Light(rootEntity, pointLight, pos1);
+//  vLight.append(light);
 
-  QVector3D pos2 = QVector3D(20, 10, 20);
-  auto light2 = new Light(rootEntity, pointLight, pos2);
-  vLight.append(light2);
+//  QVector3D pos2 = QVector3D(20, 10, 20);
+//  auto light2 = new Light(rootEntity, pointLight, pos2);
+//  vLight.append(light2);
 
-  QVector3D pos3 = QVector3D(0, 10, -20);
-  auto light3 = new Light(rootEntity, pointLight, pos3);
-  vLight.append(light3);
+//  QVector3D pos3 = QVector3D(0, 10, -20);
+//  auto light3 = new Light(rootEntity, pointLight, pos3);
+//  vLight.append(light3);
+
+  envLight = new QEnvironmentLight();
+
+  auto irradiance = new QTextureLoader();
+  irradiance->setSource(QUrl(QStringLiteral(IRRADIANCE)));
+  irradiance->setWrapMode(QTextureWrapMode());
+  irradiance->setGenerateMipMaps(false);
+  envLight->setIrradiance(irradiance);
+
+  auto specular = new QTextureLoader();
+  specular->setSource(QUrl(QStringLiteral(SPECULAR)));
+  specular->setWrapMode(QTextureWrapMode());
+  specular->setGenerateMipMaps(false);
+  envLight->setSpecular(specular);
+
+  envLight->setParent(rootEntity);
 }
 
 void My3DWindow::createPirouette(QColor aColor)
