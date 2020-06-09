@@ -73,14 +73,14 @@
 #define RING_MINOR_RADIUS 0.114f
 #define RING_RING_NUMBER 100
 #define RING_SLICE_NUMBER 20
-#define RING_SCALE_X 0.8
-#define RING_SCALE_Y 0.8
+#define RING_SCALE_X 0.6
+#define RING_SCALE_Y 0.6
 #define RING_SCALE_Z 0.1
 #define RING_METALNESS 0.2
 #define RING_ROUGHNESS 0.5
 // Club
 #define CLUB_SCALE 0.05
-#define CLUB_MESH_SRC "qrc:/mesh/res/mesh/J_club2.obj"
+#define CLUB_MESH_SRC "qrc:/mesh/res/mesh/J_club3.obj"
 #define CLUB_SHININESS 50
 #define CLUB_METALNESS 0.2
 #define CLUB_ROUGHNESS 0.5

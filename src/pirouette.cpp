@@ -25,6 +25,8 @@ Pirouette::Pirouette(QEntity *aRootEntity,
     color(aColor)
 {
   pirouetteTransform->setScale(CLUB_SCALE);
+  pirouetteTransform->setRotationX(100);
+  pirouetteTransform->setTranslation(QVector3D(0, 0, 4));
 
   clubMetalRoughMaterial->setBaseColor(color);
   clubMetalRoughMaterial->setMetalness(BALL_METALNESS);
@@ -40,10 +42,10 @@ Pirouette::Pirouette(QEntity *aRootEntity,
 
 void Pirouette::setPosition(QVector3D aPosition)
 {
-  if (m_position == aPosition)
+  if (m_position == aPosition + initialPosition)
     return;
 
-  m_position = aPosition;
+  m_position = aPosition + initialPosition;
   emit positionChanged(m_position);
   updateTransForm();
 }

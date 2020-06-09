@@ -50,10 +50,11 @@ private:
 private:
   QMetalRoughMaterial *clubMetalRoughMaterial;
 
+//  Qt3DCore::QTransform *initialTransform;
   Qt3DCore::QTransform *pirouetteTransform;
 
   QColor color;
-
+  QVector3D initialPosition = QVector3D(0, 0, 0.5);// test en attendant
   QVector3D m_position;
 
   bool enabled = true;
