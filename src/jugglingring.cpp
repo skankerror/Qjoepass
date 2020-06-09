@@ -40,3 +40,18 @@ JugglingRing::JugglingRing(QEntity *aRootEntity,
   setEnabled(enabled);
 
 }
+
+void JugglingRing::setPosition(QVector3D position)
+{
+  if (m_position == position)
+    return;
+
+  m_position = position;
+  emit positionChanged(position);
+  updateTransForm();
+}
+
+void JugglingRing::updateTransForm()
+{
+  ringTransform->setTranslation(m_position);
+}

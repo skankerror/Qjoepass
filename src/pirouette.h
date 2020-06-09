@@ -30,12 +30,22 @@ using namespace Qt3DRender;
 class Pirouette: public QEntity
 {
   Q_OBJECT
+  Q_PROPERTY(QVector3D position READ position WRITE setPosition NOTIFY positionChanged)
+
 public:
   Pirouette(QEntity *aRootEntity,
             QMesh *aPirouetteMesh,
             QColor aColor);
+  QVector3D position() const {return m_position;};
 
+public slots:
   void setPosition(QVector3D aPosition);
+
+signals:
+  void positionChanged(QVector3D position);
+
+private:
+  void updateTransForm();
 
 private:
   QMetalRoughMaterial *clubMetalRoughMaterial;
@@ -44,7 +54,7 @@ private:
 
   QColor color;
 
-  QVector3D position;
+  QVector3D m_position;
 
   bool enabled = true;
 };

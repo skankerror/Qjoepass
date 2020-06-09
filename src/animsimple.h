@@ -24,6 +24,8 @@
 #include <QSequentialAnimationGroup>
 #include "juggler.h"
 #include "jugglingball.h"
+#include "jugglingring.h"
+#include "pirouette.h"
 #include "siteswap.h"
 
 class AnimSimple: public QObject
@@ -34,11 +36,22 @@ public:
   AnimSimple(Juggler *aJuggler,
              QVector<JugglingBall *> aVBall,
              SiteSwap *aSiteSwap);
+  AnimSimple(Juggler *aJuggler,
+             QVector<JugglingRing *> aVBall,
+             SiteSwap *aSiteSwap);
+  AnimSimple(Juggler *aJuggler,
+             QVector<Pirouette *> aVClub,
+             SiteSwap *aSiteSwap);
+
 
   void setJuggler(Juggler *aJuggler){ juggler = aJuggler;};
   void setVBall(QVector<JugglingBall *> aVBall) { vBall = aVBall;};
+  void setVRing(QVector<JugglingRing *> aVRing) { vRing = aVRing;};
+  void setVClub(QVector<Pirouette *> aVClub) {vClub = aVClub;};
   void setSiteSwap(SiteSwap *aSiteSwap) {siteSwap = aSiteSwap;};
-  void setAnim();
+  void setAnimBall();
+  void setAnimRing();
+  void setAnimClub();
 
 public slots:
   void startAnimation();
@@ -50,11 +63,25 @@ private:
                                         int launch,
                                         hand aHand);
 
+  QSequentialAnimationGroup* launchRing(Juggler *aJuggler,
+                                        JugglingRing *aRing,
+                                        int launch,
+                                        hand aHand);
+
+  QSequentialAnimationGroup* launchClub(Juggler *aJuggler,
+                                        Pirouette *aClub,
+                                        int launch,
+                                        hand aHand);
+
+
+
   hand changeHand(hand aHand);
 
 private:
   Juggler *juggler;
   QVector<JugglingBall *> vBall;
+  QVector<JugglingRing *> vRing;
+  QVector<Pirouette *> vClub;
   SiteSwap *siteSwap;
   int period;
 

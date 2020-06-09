@@ -216,12 +216,22 @@ void My3DWindow::createSiteSwap(QVector<int> aVecInt, jugglingProp aPropType, bo
     anim->setJuggler(vJuggler.at(0));
     anim->setVBall(vBall);
     anim->setSiteSwap(siteSwap);
-    anim->setAnim();
+    anim->setAnimBall();
     anim->startAnimation();
     break;
   case ring:
+    anim->setJuggler(vJuggler.at(0));
+    anim->setVRing(vRing);
+    anim->setSiteSwap(siteSwap);
+    anim->setAnimRing();
+    anim->startAnimation();
     break;
   case club:
+    anim->setJuggler(vJuggler.at(0));
+    anim->setVClub(vPirouette);
+    anim->setSiteSwap(siteSwap);
+    anim->setAnimClub();
+    anim->startAnimation();
     break;
   default: break;
   }

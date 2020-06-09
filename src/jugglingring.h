@@ -34,14 +34,30 @@ using namespace Qt3DAnimation;
 class JugglingRing: public QEntity
 {
   Q_OBJECT
+  Q_PROPERTY(QVector3D position READ position WRITE setPosition NOTIFY positionChanged)
+
 public:
   JugglingRing(QEntity *aRootEntity,
                QTorusMesh *torusMesh,
                QColor aColor);
 
+  QVector3D position() const {return m_position;};
+
+public slots:
+  void setPosition(QVector3D position);
+
+signals:
+  void positionChanged(QVector3D position);
+
+private:
+  void updateTransForm();
+
+
 private:
   QMetalRoughMaterial *ringMetalRoughMaterial;
   Qt3DCore::QTransform *ringTransform;
+
+  QVector3D m_position;
 
   QColor color;
 

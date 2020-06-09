@@ -40,6 +40,15 @@ Pirouette::Pirouette(QEntity *aRootEntity,
 
 void Pirouette::setPosition(QVector3D aPosition)
 {
-  position = aPosition;
-  pirouetteTransform->setTranslation(position); // A voir...
+  if (m_position == aPosition)
+    return;
+
+  m_position = aPosition;
+  emit positionChanged(m_position);
+  updateTransForm();
+}
+
+void Pirouette::updateTransForm()
+{
+  pirouetteTransform->setTranslation(m_position);
 }
