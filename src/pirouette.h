@@ -31,33 +31,52 @@ class Pirouette: public QEntity
 {
   Q_OBJECT
   Q_PROPERTY(QVector3D position READ position WRITE setPosition NOTIFY positionChanged)
+  Q_PROPERTY(float rotX READ getRotX WRITE setRotX NOTIFY rotXChanged)
+  Q_PROPERTY(float rotY READ getRotY WRITE setRotY NOTIFY rotYChanged)
+  Q_PROPERTY(float rotZ READ getRotZ WRITE setRotZ NOTIFY rotZChanged)
 
 public:
   Pirouette(QEntity *aRootEntity,
             QMesh *aPirouetteMesh,
-            QColor aColor);
+            QColor &aColor);
+
   QVector3D position() const {return m_position;};
+  float getRotX() const {return rotX;};
+  float getRotY() const {return rotY;};
+  float getRotZ() const {return rotZ;};
 
 public slots:
   void setPosition(QVector3D aPosition);
+  void setRotX(float aRot);
+  void setRotY(float aRot);
+  void setRotZ(float aRot);
 
 signals:
   void positionChanged(QVector3D position);
+  void rotXChanged(float aRot);
+  void rotYChanged(float aRot);
+  void rotZChanged(float aRot);
 
 private:
-  void updateTransForm();
+  void updateTranslation();
+  void updateRotX();
+  void updateRotY();
+  void updateRotZ();
 
 private:
   QMetalRoughMaterial *clubMetalRoughMaterial;
 
-//  Qt3DCore::QTransform *initialTransform;
   Qt3DCore::QTransform *pirouetteTransform;
 
   QColor color;
-  QVector3D initialPosition = QVector3D(0, 0, 0.5);// test en attendant
   QVector3D m_position;
 
   bool enabled = true;
+
+  float rotX = 0;
+  float rotY = 0;
+  float rotZ = 0;
+
 };
 
 #endif // PIROUETTE_H

@@ -238,6 +238,7 @@ QSequentialAnimationGroup *AnimSimple::launchProp(Juggler *aJuggler, int indexPr
     break;
   case club:
     aClub = vClub.at(indexProp);
+    aClub->setRotY(juggler->getRotY());
     // loop creates all our animations for launch
     for (int i = 0; i <= frameCount; i++)
     {
