@@ -204,13 +204,23 @@ void Juggler::updateTransform()
   skeletonTransform->setTranslation(m_position);
 }
 
+QMatrix4x4 Juggler::getRotMatrix()
+{
+  QMatrix4x4 rot;
+  rot.setToIdentity();
+  rot.translate(m_position);
+  rot.rotate(eulerAngles.y(), QVector3D(0, 1, 0));
+  rot.translate(-m_position);
+  return rot;
+}
+
 void Juggler::setPositionLHext()
 {
   QVector3D vecOffset(HAND_OFFSET_X + HAND_OFFSET_EXT, HAND_OFFSET_Y, HAND_OFFSET_Z);
   QVector3D vecMain = m_position + vecOffset;
-  QMatrix4x4 rot;
-  rot.setToIdentity();
-  rot.rotate(eulerAngles.y(), QVector3D(0, 1, 0));
+  QMatrix4x4 rot = getRotMatrix();
+//  rot.setToIdentity();
+//  rot.rotate(eulerAngles.y(), QVector3D(0, 1, 0));
   vecMain = rot * vecMain;
   posLHext = vecMain;
 }
@@ -219,9 +229,11 @@ void Juggler::setPositionLHint()
 {
   QVector3D vecOffset(HAND_OFFSET_X - HAND_OFFSET_INT, HAND_OFFSET_Y, HAND_OFFSET_Z);
   QVector3D vecMain = m_position + vecOffset;
-  QMatrix4x4 rot;
-  rot.setToIdentity();
-  rot.rotate(eulerAngles.y(), QVector3D(0, 1, 0));
+  QMatrix4x4 rot = getRotMatrix();
+//  rot.setToIdentity();
+//  rot.translate(m_position);
+//  rot.rotate(eulerAngles.y(), QVector3D(0, 1, 0));
+//  rot.translate(-m_position);
   vecMain = rot * vecMain;
   posLHint = vecMain;
 }
@@ -230,9 +242,9 @@ void Juggler::setPositionLHmed()
 {
   QVector3D vecOffset(HAND_OFFSET_X, HAND_OFFSET_Y, HAND_OFFSET_Z);
   QVector3D vecMain = m_position + vecOffset;
-  QMatrix4x4 rot;
-  rot.setToIdentity();
-  rot.rotate(eulerAngles.y(), QVector3D(0, 1, 0));
+  QMatrix4x4 rot = getRotMatrix();
+//  rot.setToIdentity();
+//  rot.rotate(eulerAngles.y(), QVector3D(0, 1, 0));
   vecMain = rot * vecMain;
   posLHmed = vecMain;
 }
@@ -241,9 +253,9 @@ void Juggler::setPositionRHext()
 {
   QVector3D vecOffset(-HAND_OFFSET_X - HAND_OFFSET_EXT, HAND_OFFSET_Y, HAND_OFFSET_Z);
   QVector3D vecMain = m_position + vecOffset;
-  QMatrix4x4 rot;
-  rot.setToIdentity();
-  rot.rotate(eulerAngles.y(), QVector3D(0, 1, 0));
+  QMatrix4x4 rot = getRotMatrix();
+//  rot.setToIdentity();
+//  rot.rotate(eulerAngles.y(), QVector3D(0, 1, 0));
   vecMain = rot * vecMain;
   posRHext = vecMain;
 }
@@ -252,9 +264,9 @@ void Juggler::setPositionRHint()
 {
   QVector3D vecOffset(-HAND_OFFSET_X + HAND_OFFSET_INT, HAND_OFFSET_Y, HAND_OFFSET_Z);
   QVector3D vecMain = m_position + vecOffset;
-  QMatrix4x4 rot;
-  rot.setToIdentity();
-  rot.rotate(eulerAngles.y(), QVector3D(0, 1, 0));
+  QMatrix4x4 rot = getRotMatrix();
+//  rot.setToIdentity();
+//  rot.rotate(eulerAngles.y(), QVector3D(0, 1, 0));
   vecMain = rot * vecMain;
   posRHint = vecMain;
 }
@@ -263,9 +275,9 @@ void Juggler::setPositionRHmed()
 {
   QVector3D vecOffset(-HAND_OFFSET_X, HAND_OFFSET_Y, HAND_OFFSET_Z);
   QVector3D vecMain = m_position + vecOffset;
-  QMatrix4x4 rot;
-  rot.setToIdentity();
-  rot.rotate(eulerAngles.y(), QVector3D(0, 1, 0));
+  QMatrix4x4 rot = getRotMatrix();
+//  rot.setToIdentity();
+//  rot.rotate(eulerAngles.y(), QVector3D(0, 1, 0));
   vecMain = rot * vecMain;
   posRHmed = vecMain;
 }

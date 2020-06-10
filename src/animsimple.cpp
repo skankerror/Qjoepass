@@ -224,6 +224,7 @@ QSequentialAnimationGroup *AnimSimple::launchProp(Juggler *aJuggler, int indexPr
     break;
   case ring:
     aRing = vRing.at(indexProp);
+    aRing->setRotY(juggler->getRotY());
     // loop creates all our animations for launch
     for (int i = 0; i <= frameCount; i++)
     {

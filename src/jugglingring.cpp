@@ -27,7 +27,7 @@ JugglingRing::JugglingRing(QEntity *aRootEntity,
 
 {
   ringTransform->setScale3D(QVector3D(RING_SCALE_X, RING_SCALE_Y, RING_SCALE_Z));
-  ringTransform->setRotationY(90);
+//  ringTransform->setRotationY(90);
 
   ringMetalRoughMaterial->setBaseColor(color);
   ringMetalRoughMaterial->setMetalness(PROP_METALNESS);
@@ -49,10 +49,55 @@ void JugglingRing::setPosition(QVector3D position)
 
   m_position = position;
   emit positionChanged(position);
-  updateTransForm();
+  updateTranslation();
 }
 
-void JugglingRing::updateTransForm()
+void JugglingRing::setRotX(float aRot)
+{
+  if (rotX == aRot)
+    return;
+
+  rotX = aRot;
+  emit rotXChanged(rotX);
+  updateRotX();
+}
+
+void JugglingRing::setRotY(float aRot)
+{
+  if (rotY == aRot)
+    return;
+
+  rotY = aRot;
+  emit rotYChanged(rotY);
+  updateRotY();
+}
+
+void JugglingRing::setRotZ(float aRot)
+{
+  if (rotZ == aRot)
+    return;
+
+  rotZ = aRot;
+  emit rotZChanged(rotZ);
+  updateRotZ();
+}
+
+void JugglingRing::updateTranslation()
 {
   ringTransform->setTranslation(m_position);
+}
+
+void JugglingRing::updateRotX()
+{
+  ringTransform->setRotationX(rotX);
+}
+
+void JugglingRing::updateRotY()
+{
+  ringTransform->setRotationY(rotY + 90);
+}
+
+void JugglingRing::updateRotZ()
+{
+  ringTransform->setRotationZ(rotZ);
 }
