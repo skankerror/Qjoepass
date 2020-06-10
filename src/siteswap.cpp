@@ -18,11 +18,13 @@
 #include "siteswap.h"
 
 SiteSwap::SiteSwap(QVector<int> &aVInt,
+                   jugglingProp aProp,
                    bool aSynchron,
                    QObject *parent)
   : QObject(parent),
     v_event(aVInt),
-    synchron(aSynchron)
+    synchron(aSynchron),
+    prop(aProp)
 {
   period = v_event.size();
   valid = isValid();
@@ -60,4 +62,9 @@ int SiteSwap::getNumProp() const
   for (int i = 0; i < v_event.size(); i++)
     totalLaunch += v_event.at(i);
   return totalLaunch / period;
+}
+
+void SiteSwap::setPropType(jugglingProp aProp)
+{
+  prop = aProp;
 }

@@ -60,14 +60,14 @@
 #define GROUND_BASE_COLOR "qrc:/woodfloor/res/images/WoodFloor/wooden_planks_01_basecolor.png"
 #define GROUND_NORMAL "qrc:/woodfloor/res/images/WoodFloor/wooden_planks_01_normal.png"
 #define GROUND_METALNESS "qrc:/woodfloor/res/images/WoodFloor/wooden_planks_01_metallic.png"
+// Prop
+#define PROP_METALNESS 0.2
+#define PROP_ROUGHNESS 0.5
 // Ball
 #define BALL_RINGS 20
 #define BALL_SLICES 20
 #define BALL_RADIUS 2
 #define BALL_SCALE 0.1f
-#define BALL_SHININESS 50
-#define BALL_METALNESS 0.2
-#define BALL_ROUGHNESS 0.5
 // Ring
 #define RING_RADIUS 1.0f
 #define RING_MINOR_RADIUS 0.114f
@@ -76,19 +76,18 @@
 #define RING_SCALE_X 0.6
 #define RING_SCALE_Y 0.6
 #define RING_SCALE_Z 0.1
-#define RING_METALNESS 0.2
-#define RING_ROUGHNESS 0.5
 // Club
-#define CLUB_SCALE 0.05
+#define CLUB_SCALE 0.04
 #define CLUB_MESH_SRC "qrc:/mesh/res/mesh/J_club3.obj"
 #define CLUB_SHININESS 50
-#define CLUB_METALNESS 0.2
-#define CLUB_ROUGHNESS 0.5
 // Light
 #define LIGHT_COLOR 0xFFFFFF
 #define LIGHT_INTENSITY 1
 #define IRRADIANCE "qrc:/cubemaps/res/cubemaps/default_irradiance.dds"
 #define SPECULAR "qrc:/cubemaps/res/cubemaps/default_specular.dds"
+
+/******************************** Animation *****************************************/
+
 // anim
 #define GRAVITY QVector3D(0, -9.8, 0)
 #define DELTA_TIME 0.0166667f // in second
@@ -99,5 +98,8 @@
 
 enum hand{leftHand, rightHand};
 enum jugglingProp{ball, ring, club, propNumb};
+enum launchTypeBall{normalBall, bounce};
+enum launchTypeRing{normalRing, panCake};
+enum launchTypeClub{normalClub, flat, helicopter};
 
 #endif // QJOEPASS_H

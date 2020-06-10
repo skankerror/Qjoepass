@@ -47,31 +47,19 @@ public:
   void setVBall(QVector<JugglingBall *> aVBall) { vBall = aVBall;};
   void setVRing(QVector<JugglingRing *> aVRing) { vRing = aVRing;};
   void setVClub(QVector<Pirouette *> aVClub) {vClub = aVClub;};
-  void setSiteSwap(SiteSwap *aSiteSwap) {siteSwap = aSiteSwap;};
-  void setAnimBall();
-  void setAnimRing();
-  void setAnimClub();
+  void setSiteSwap(SiteSwap *aSiteSwap);;
+  void setAnim();
 
 public slots:
   void startAnimation();
   void stopAnimation();
 
 private:
-  QSequentialAnimationGroup* launchBall(Juggler *aJuggler,
-                                        JugglingBall *aBall,
+
+  QSequentialAnimationGroup* launchProp(Juggler *aJuggler,
+                                        int indexProp,
                                         int launch,
                                         hand aHand);
-
-  QSequentialAnimationGroup* launchRing(Juggler *aJuggler,
-                                        JugglingRing *aRing,
-                                        int launch,
-                                        hand aHand);
-
-  QSequentialAnimationGroup* launchClub(Juggler *aJuggler,
-                                        Pirouette *aClub,
-                                        int launch,
-                                        hand aHand);
-
 
 
   hand changeHand(hand aHand);
@@ -82,6 +70,7 @@ private:
   QVector<JugglingRing *> vRing;
   QVector<Pirouette *> vClub;
   SiteSwap *siteSwap;
+  jugglingProp propType;
   int period;
 
   QParallelAnimationGroup *siteswapAnimation; // anim global

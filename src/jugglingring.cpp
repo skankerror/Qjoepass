@@ -30,8 +30,8 @@ JugglingRing::JugglingRing(QEntity *aRootEntity,
   ringTransform->setRotationY(90);
 
   ringMetalRoughMaterial->setBaseColor(color);
-  ringMetalRoughMaterial->setMetalness(RING_METALNESS);
-  ringMetalRoughMaterial->setRoughness(RING_ROUGHNESS);
+  ringMetalRoughMaterial->setMetalness(PROP_METALNESS);
+  ringMetalRoughMaterial->setRoughness(PROP_ROUGHNESS);
 
 
   QEntity::setParent(aRootEntity);

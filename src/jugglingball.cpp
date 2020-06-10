@@ -27,8 +27,8 @@ JugglingBall::JugglingBall(QEntity *aRootEntity,
   sphereTransform->setScale(BALL_SCALE);
 
   ballMetalRoughMaterial->setBaseColor(color);
-  ballMetalRoughMaterial->setMetalness(BALL_METALNESS);
-  ballMetalRoughMaterial->setRoughness(BALL_ROUGHNESS);
+  ballMetalRoughMaterial->setMetalness(PROP_METALNESS);
+  ballMetalRoughMaterial->setRoughness(PROP_ROUGHNESS);
 
   QEntity::setParent(aRootEntity);
   addComponent(aSphereMesh);

@@ -26,11 +26,10 @@ Pirouette::Pirouette(QEntity *aRootEntity,
 {
   pirouetteTransform->setScale(CLUB_SCALE);
   pirouetteTransform->setRotationX(100);
-  pirouetteTransform->setTranslation(QVector3D(0, 0, 4));
 
   clubMetalRoughMaterial->setBaseColor(color);
-  clubMetalRoughMaterial->setMetalness(BALL_METALNESS);
-  clubMetalRoughMaterial->setRoughness(BALL_ROUGHNESS);
+  clubMetalRoughMaterial->setMetalness(PROP_METALNESS);
+  clubMetalRoughMaterial->setRoughness(PROP_ROUGHNESS);
 
 
   QEntity::setParent(aRootEntity);

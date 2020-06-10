@@ -19,12 +19,14 @@
 #define SITESWAP_H
 
 #include <QObject>
+#include "qjoepass.h"
 
 class SiteSwap : public QObject
 {
   Q_OBJECT
 public:
   explicit SiteSwap(QVector<int> &aVInt,
+                    jugglingProp aProp = ball,
                     bool aSynchron = false,
                     QObject *parent = nullptr);
 
@@ -32,6 +34,8 @@ public:
   int getNumProp() const;
   int getPeriod() const {return period;};
   int at(int i) const {return v_event.at(i);};
+  jugglingProp getPropType() const {return prop;};
+  void setPropType(jugglingProp aProp);
 
 signals:
 
@@ -41,6 +45,7 @@ private:
   int period;
   bool valid = false;
   bool synchron = false;
+  jugglingProp prop;
 };
 
 #endif // SITESWAP_H

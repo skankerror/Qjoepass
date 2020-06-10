@@ -46,7 +46,7 @@ My3DWindow::My3DWindow(MySettings *aSettings)
 /**************************** testing zone ***************************/
 
   // create 1 juggler for testing purpose
-  createJuggler(0, QVector2D(0, 0), QColor(QRgb(0xFF0000)));
+  createJuggler(10, QVector2D(0, 0), QColor(QRgb(0xFF0000)));
 
 }
 
@@ -68,6 +68,10 @@ void My3DWindow::createGround()
 
 void My3DWindow::setGlobalObject()
 {
+//  // pbr material
+//  globalMaterial->setParent(rootEntity);
+//  globalMaterial->setEffect(effect);
+
   // create one pointlight for 3 sources
   pointLight->setColor(QColor(QRgb(LIGHT_COLOR)));
   pointLight->setIntensity(LIGHT_INTENSITY);
@@ -172,7 +176,7 @@ void My3DWindow::createRing(QColor aColor)
 
 void My3DWindow::createSiteSwap(QVector<int> aVecInt, jugglingProp aPropType, bool someSynchron)
 {
-  SiteSwap *siteSwap = new SiteSwap(aVecInt, someSynchron, this);
+  SiteSwap *siteSwap = new SiteSwap(aVecInt, aPropType, someSynchron, this);
   if (!(siteSwap->isValid()))
   {
     qDebug() << "siteswap is not valid !";
@@ -210,31 +214,40 @@ void My3DWindow::createSiteSwap(QVector<int> aVecInt, jugglingProp aPropType, bo
     default: break;
     }
   }
-  switch(aPropType)
-  {
-  case ball:
-    anim->setJuggler(vJuggler.at(0));
-    anim->setVBall(vBall);
-    anim->setSiteSwap(siteSwap);
-    anim->setAnimBall();
-    anim->startAnimation();
-    break;
-  case ring:
-    anim->setJuggler(vJuggler.at(0));
-    anim->setVRing(vRing);
-    anim->setSiteSwap(siteSwap);
-    anim->setAnimRing();
-    anim->startAnimation();
-    break;
-  case club:
-    anim->setJuggler(vJuggler.at(0));
-    anim->setVClub(vPirouette);
-    anim->setSiteSwap(siteSwap);
-    anim->setAnimClub();
-    anim->startAnimation();
-    break;
-  default: break;
-  }
+
+  anim->setJuggler(vJuggler.at(0));
+  anim->setVBall(vBall);
+  anim->setVRing(vRing);
+  anim->setVClub(vPirouette);
+  anim->setSiteSwap(siteSwap);
+  anim->setAnim();
+  anim->startAnimation();
+
+//  switch(aPropType)
+//  {
+//  case ball:
+//    anim->setJuggler(vJuggler.at(0));
+//    anim->setVBall(vBall);
+//    anim->setSiteSwap(siteSwap);
+//    anim->setAnimBall();
+//    anim->startAnimation();
+//    break;
+//  case ring:
+//    anim->setJuggler(vJuggler.at(0));
+//    anim->setVRing(vRing);
+//    anim->setSiteSwap(siteSwap);
+//    anim->setAnimRing();
+//    anim->startAnimation();
+//    break;
+//  case club:
+//    anim->setJuggler(vJuggler.at(0));
+//    anim->setVClub(vPirouette);
+//    anim->setSiteSwap(siteSwap);
+//    anim->setAnimClub();
+//    anim->startAnimation();
+//    break;
+//  default: break;
+//  }
 }
 
 void My3DWindow::setCameraToOrbit()
