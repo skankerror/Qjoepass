@@ -30,7 +30,6 @@ JugglingRing::JugglingRing(QEntity *aRootEntity,
 
 {
   ringTransform->setScale3D(QVector3D(RING_SCALE_X, RING_SCALE_Y, RING_SCALE_Z));
-//  ringTransform->setRotationY(90);
 
   ringMetalRoughMaterial->setBaseColor(color);
   ringMetalRoughMaterial->setMetalness(PROP_METALNESS);
@@ -97,7 +96,7 @@ void JugglingRing::updateRotX()
 
 void JugglingRing::updateRotY()
 {
-  ringTransform->setRotationY(rotY + 90);
+  ringTransform->setRotationY(rotY);
 }
 
 void JugglingRing::updateRotZ()

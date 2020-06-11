@@ -28,7 +28,7 @@ Pirouette::Pirouette(QEntity *aRootEntity,
     launchType(aLaunchType)
 {
   pirouetteTransform->setScale(CLUB_SCALE);
-  pirouetteTransform->setRotationX(110);
+//  pirouetteTransform->setRotationX(CLUB_BASIC_ROTX);
 
   clubMetalRoughMaterial->setBaseColor(color);
   clubMetalRoughMaterial->setMetalness(PROP_METALNESS);
@@ -92,7 +92,7 @@ void Pirouette::updateTranslation()
 
 void Pirouette::updateRotX()
 {
-  pirouetteTransform->setRotationX(rotX + 110);
+  pirouetteTransform->setRotationX(rotX);
 }
 
 void Pirouette::updateRotY()

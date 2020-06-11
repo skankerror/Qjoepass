@@ -1,7 +1,5 @@
 voir le frustrum calling
 
-faire une classe mère aux objets
-
-refaire car ça chie si le jongleur se tourne
-
 mettre dans l'équation le poids de l'objet pour que les anneaux aillent plus haut que les massues ?
+
+éloigner pancake et helico... ça se cogne en lair
