@@ -68,13 +68,10 @@ void AnimSimple::setSiteSwap(SiteSwap *aSiteSwap)
 void AnimSimple::setAnim()
 {
   period = siteSwap->getPeriod();
-  //  int numProp = vBall.size();
   int numProp = siteSwap->getNumProp();
 
-  if (!(siteSwap->isValid()) || numProp != siteSwap->getNumProp())
-  {
-    qDebug() << "Siteswap isn't valid or internal problem about number of props";
-  }
+  if (!(siteSwap->isValid()))
+    qDebug() << "Siteswap isn't valid";
 
   for (int i = 0; i < numProp; i++) // for each prop
   {
@@ -204,22 +201,27 @@ QSequentialAnimationGroup *AnimSimple::launchProp(Juggler *aJuggler, int indexPr
   // We create our curve
   QVector<QVector3D> vParabolic = MyCurves::curveParabolic(velBall, posProp, frameCount);
 
+  // declare one object for each prop in case we need it in switch routines
   JugglingBall *aBall;
   JugglingRing *aRing;
   Pirouette *aClub;
+
   // for ring or club rotation we have to create 3 more anims
   QParallelAnimationGroup *animTempGroup = new QParallelAnimationGroup();
   QPropertyAnimation *animRotProp;
   QSequentialAnimationGroup *animTranslationGroup = new QSequentialAnimationGroup();
-//  QSequentialAnimationGroup *animRotationGroup = new QSequentialAnimationGroup();
-  int launchType/* = siteSwap->getLaunchType()*/;
-  int rotCount;
+
+  // declare them in case we need
+  int launchType; // normal, flat, pancake ??
+  int rotCount; // number of rotation
+  float fRotCount; // needed for helicopter
+  float rotY; // to handle different positions between normal, flat, hlicopter
 
   switch(propType)
   {
   case ball:
     aBall = vBall.at(indexProp);
-    // loop creates all our animations for launch
+    // loop creates all our animations for translation
     for (int i = 0; i <= frameCount; i++)
     {
       auto animBall = new QPropertyAnimation(aBall, QByteArrayLiteral("position"));
@@ -232,25 +234,68 @@ QSequentialAnimationGroup *AnimSimple::launchProp(Juggler *aJuggler, int indexPr
     break;
   case ring:
     aRing = vRing.at(indexProp);
-    aRing->setRotY(juggler->getRotY());
-    // loop creates all our animations for launch
-    for (int i = 0; i <= frameCount; i++)
+    // set rotY to align with juggler
+    rotY = juggler->getRotY();
+
+    // switch between types
+    launchType = aRing->getLaunchType();
+    switch (launchType)
     {
-      auto animRing = new QPropertyAnimation(aRing, QByteArrayLiteral("position"));
-      animRing->setDuration((int)(DELTA_TIME * 600)); // sould be at 1000... wtf
-      animRing->setStartValue(vParabolic.at(i));
-      animRing->setEndValue(vParabolic.at(i + 1));
-      animRing->setLoopCount(1);
-      animGroup->addAnimation(animRing);
+    case normalRing:
+      aRing->setRotY(rotY + RING_BASIC_ROTY);
+
+      // loop creates all our animations for translation
+      for (int i = 0; i <= frameCount; i++)
+      {
+        auto animRing = new QPropertyAnimation(aRing, QByteArrayLiteral("position"));
+        animRing->setDuration((int)(DELTA_TIME * 600)); // sould be at 1000... wtf
+        animRing->setStartValue(vParabolic.at(i));
+        animRing->setEndValue(vParabolic.at(i + 1));
+        animRing->setLoopCount(1);
+        animGroup->addAnimation(animRing);
+      }
+      break;
+    case panCake:
+      aRing->setRotY(rotY);
+      aRing->setRotX(RING_PANCAKE_ROTX);
+      for (int i = 0; i <= frameCount; i++)
+      {
+        auto animRing = new QPropertyAnimation(aRing, QByteArrayLiteral("position"));
+        animRing->setDuration((int)(DELTA_TIME * 600)); // sould be at 1000... wtf
+        animRing->setStartValue(vParabolic.at(i));
+        animRing->setEndValue(vParabolic.at(i + 1));
+        animRing->setLoopCount(1);
+        animTranslationGroup->addAnimation(animRing);
+      }
+      rotCount = (int)(launch / 2);
+      if (rotCount)
+      {
+        animRotProp = new QPropertyAnimation(aRing, QByteArrayLiteral("rotX"));
+        animRotProp->setDuration(((int)(DELTA_TIME * 600)) * (frameCount + 1) / rotCount);
+        animRotProp->setStartValue(360 + RING_PANCAKE_ROTX);
+        animRotProp->setEndValue(RING_PANCAKE_ROTX);
+        animRotProp->setLoopCount(rotCount);
+        animTempGroup->addAnimation(animRotProp);
+      }
+      animTempGroup->addAnimation(animTranslationGroup);
+      animTempGroup->setLoopCount(1);
+      animGroup->addAnimation(animTempGroup);
+      break;
     }
     break;
+
   case club:
     aClub = vClub.at(indexProp);
-    aClub->setRotY(juggler->getRotY());
+    // set rotY to align with juggler
+    rotY = juggler->getRotY();
+
+    // switch between types
     launchType = aClub->getLaunchType();
     switch (launchType)
     {
     case normalClub:
+      aClub->setRotX(CLUB_BASIC_ROTX);
+      aClub->setRotY(rotY);
       for (int i = 0; i <= frameCount; i++)
       {
         auto animClub = new QPropertyAnimation(aClub, QByteArrayLiteral("position"));
@@ -261,17 +306,23 @@ QSequentialAnimationGroup *AnimSimple::launchProp(Juggler *aJuggler, int indexPr
         animTranslationGroup->addAnimation(animClub);
       }
       rotCount = (int)(launch / 2);
-      animRotProp = new QPropertyAnimation(aClub, QByteArrayLiteral("rotX"));
-      animRotProp->setDuration(((int)(DELTA_TIME * 600)) * (frameCount + 1) / rotCount);
-      animRotProp->setStartValue(360);
-      animRotProp->setEndValue(0);
-      animRotProp->setLoopCount(rotCount);
-      animTempGroup->addAnimation(animRotProp);
+      if (rotCount)
+      {
+        animRotProp = new QPropertyAnimation(aClub, QByteArrayLiteral("rotX"));
+        animRotProp->setDuration(((int)(DELTA_TIME * 600)) * (frameCount + 1) / rotCount);
+        animRotProp->setStartValue(360 + CLUB_BASIC_ROTX);
+        animRotProp->setEndValue(CLUB_BASIC_ROTX);
+        animRotProp->setLoopCount(rotCount);
+        animTempGroup->addAnimation(animRotProp);
+      }
       animTempGroup->addAnimation(animTranslationGroup);
       animTempGroup->setLoopCount(1);
       animGroup->addAnimation(animTempGroup);
       break;
+
     case flat:
+      aClub->setRotX(CLUB_BASIC_ROTX);
+      aClub->setRotY(rotY);
       for (int i = 0; i <= frameCount; i++)
       {
         auto animClub = new QPropertyAnimation(aClub, QByteArrayLiteral("position"));
@@ -282,7 +333,43 @@ QSequentialAnimationGroup *AnimSimple::launchProp(Juggler *aJuggler, int indexPr
         animGroup->addAnimation(animClub);
       }
       break;
-    case helicopter: break;
+
+    case helicopter:
+      // on oriente la massue suivant la main qui lance
+      aClub->setRotX(CLUB_HELICOPTER_ROTX);
+      if (aHand == leftHand)
+        aClub->setRotY(rotY + 90);
+      else
+        aClub->setRotY(rotY - 90);
+      for (int i = 0; i <= frameCount; i++)
+      {
+        auto animClub = new QPropertyAnimation(aClub, QByteArrayLiteral("position"));
+        animClub->setDuration((int)(DELTA_TIME * 600)); // sould be at 1000... wtf
+        animClub->setStartValue(vParabolic.at(i));
+        animClub->setEndValue(vParabolic.at(i + 1));
+        animClub->setLoopCount(1);
+        animTranslationGroup->addAnimation(animClub);
+      }
+      fRotCount = (float)((float)launch / 2.0f);
+      animRotProp = new QPropertyAnimation(aClub, QByteArrayLiteral("rotY"));
+      animRotProp->setDuration(((int)(DELTA_TIME * 600)) * (frameCount + 1));
+      if (aHand == leftHand)
+      {
+        animRotProp->setStartValue(rotY + 90);
+        animRotProp->setEndValue(rotY + 90 - (fRotCount * 360));
+      }
+      else
+      {
+        animRotProp->setStartValue(rotY - 90);
+        animRotProp->setEndValue(rotY - 90 + (fRotCount * 360));
+      }
+      animRotProp->setLoopCount(1);
+      animTempGroup->addAnimation(animRotProp);
+      animTempGroup->addAnimation(animTranslationGroup);
+      animTempGroup->setLoopCount(1);
+      animGroup->addAnimation(animTempGroup);
+      break;
+
     default: break;
     }
 
@@ -309,7 +396,7 @@ QSequentialAnimationGroup *AnimSimple::launchProp(Juggler *aJuggler, int indexPr
   }
 
   // determine axis for rotation
-  float rotY = juggler->getRotY();
+  rotY = juggler->getRotY(); // pas bon en cas d'helico...
   QVector3D axisCurve = QVector3D(0, 0, 1);
   QMatrix4x4 rotAxis;
   rotAxis.setToIdentity();
@@ -322,15 +409,17 @@ QSequentialAnimationGroup *AnimSimple::launchProp(Juggler *aJuggler, int indexPr
   // determine angles for each delta animation
   float deltaAngles = (float)(180 / frameCount);
 
+  QPropertyAnimation *animProp;
+
   switch (propType)
   {
   case ball:
     // loop creates all our animations for dwell time
     for (int i = 0; i <= frameCount; i++)
     {
-      auto animBall = new QPropertyAnimation(aBall, QByteArrayLiteral("position"));
-      animBall->setDuration((int)(DELTA_TIME * 600)); // sould be at 1000... wtf
-      animBall->setStartValue(posProp);
+      animProp = new QPropertyAnimation(aBall, QByteArrayLiteral("position"));
+      animProp->setDuration((int)(DELTA_TIME * 600)); // sould be at 1000... wtf
+      animProp->setStartValue(posProp);
       // handle rotation stuff
       QMatrix4x4 rot;
       rot.setToIdentity();
@@ -342,9 +431,9 @@ QSequentialAnimationGroup *AnimSimple::launchProp(Juggler *aJuggler, int indexPr
       rot.translate(-centerCurve);
       QVector3D posBall2 = rot * posProp;
 
-      animBall->setEndValue(posBall2);
-      animBall->setLoopCount(1);
-      animGroup->addAnimation(animBall);
+      animProp->setEndValue(posBall2);
+      animProp->setLoopCount(1);
+      animGroup->addAnimation(animProp);
       posProp = posBall2;
     }
     break;
@@ -352,9 +441,9 @@ QSequentialAnimationGroup *AnimSimple::launchProp(Juggler *aJuggler, int indexPr
     // loop creates all our animations for dwell time
     for (int i = 0; i <= frameCount; i++)
     {
-      auto animRing = new QPropertyAnimation(aRing, QByteArrayLiteral("position"));
-      animRing->setDuration((int)(DELTA_TIME * 600)); // sould be at 1000... wtf
-      animRing->setStartValue(posProp);
+      animProp = new QPropertyAnimation(aRing, QByteArrayLiteral("position"));
+      animProp->setDuration((int)(DELTA_TIME * 600)); // sould be at 1000... wtf
+      animProp->setStartValue(posProp);
       // handle rotation stuff
       QMatrix4x4 rot;
       rot.setToIdentity();
@@ -366,9 +455,9 @@ QSequentialAnimationGroup *AnimSimple::launchProp(Juggler *aJuggler, int indexPr
       rot.translate(-centerCurve);
       QVector3D posBall2 = rot * posProp;
 
-      animRing->setEndValue(posBall2);
-      animRing->setLoopCount(1);
-      animGroup->addAnimation(animRing);
+      animProp->setEndValue(posBall2);
+      animProp->setLoopCount(1);
+      animGroup->addAnimation(animProp);
       posProp = posBall2;
     }
     break;
@@ -376,9 +465,9 @@ QSequentialAnimationGroup *AnimSimple::launchProp(Juggler *aJuggler, int indexPr
     // loop creates all our animations for dwell time
     for (int i = 0; i <= frameCount; i++)
     {
-      auto animClub = new QPropertyAnimation(aClub, QByteArrayLiteral("position"));
-      animClub->setDuration((int)(DELTA_TIME * 600)); // sould be at 1000... wtf
-      animClub->setStartValue(posProp);
+      animProp = new QPropertyAnimation(aClub, QByteArrayLiteral("position"));
+      animProp->setDuration((int)(DELTA_TIME * 600)); // sould be at 1000... wtf
+      animProp->setStartValue(posProp);
       // handle rotation stuff
       QMatrix4x4 rot;
       rot.setToIdentity();
@@ -390,9 +479,9 @@ QSequentialAnimationGroup *AnimSimple::launchProp(Juggler *aJuggler, int indexPr
       rot.translate(-centerCurve);
       QVector3D posBall2 = rot * posProp;
 
-      animClub->setEndValue(posBall2);
-      animClub->setLoopCount(1);
-      animGroup->addAnimation(animClub);
+      animProp->setEndValue(posBall2);
+      animProp->setLoopCount(1);
+      animGroup->addAnimation(animProp);
       posProp = posBall2;
     }
     break;
