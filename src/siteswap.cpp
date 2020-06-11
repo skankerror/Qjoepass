@@ -37,7 +37,7 @@ bool SiteSwap::isValid() const
   // let's be optimistic !
   bool ret = true;
 
-  for (int i = 0; i < vTest.size(); i++)
+  for (int i = 0; i < period; i++)
   {
     // we modulo each launch
     int modLaunch = v_event.at(i) % period;
