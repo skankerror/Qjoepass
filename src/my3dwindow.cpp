@@ -46,7 +46,7 @@ My3DWindow::My3DWindow(MySettings *aSettings)
 /**************************** testing zone ***************************/
 
   // create 1 juggler for testing purpose
-  createJuggler(0, QVector2D(0, 0), QColor(QRgb(0xFF0000)));
+  createJuggler(45, QVector2D(-2, -2), QColor(QRgb(0xFF0000)));
 
 }
 
@@ -170,9 +170,9 @@ void My3DWindow::createRing(QColor aColor)
   vRing.append(ring);
 }
 
-void My3DWindow::createSiteSwap(QVector<int> aVecInt, jugglingProp aPropType, bool someSynchron)
+void My3DWindow::createSiteSwap(QVector<int> aVecInt, jugglingProp aPropType, int launchType, bool someSynchron)
 {
-  SiteSwap *siteSwap = new SiteSwap(aVecInt, someSynchron, this);
+  SiteSwap *siteSwap = new SiteSwap(aVecInt, aPropType, someSynchron, this);
   if (!(siteSwap->isValid()))
   {
     qDebug() << "siteswap is not valid !";
@@ -204,27 +204,29 @@ void My3DWindow::createSiteSwap(QVector<int> aVecInt, jugglingProp aPropType, bo
   {
     switch(aPropType)
     {
-    case ball: createBall(QColor(QRgb(0xA3A600))); break;
-    case ring: createRing(QColor(QRgb(0xA3A600))); break;
-    case club: createPirouette(QColor(QRgb(0xA3A600))); break;
+    case ball:
+      createBall(QColor(QRgb(0xA3A600)));
+      vBall.at(i)->setLaunchType((launchTypeBall)(launchType));
+      break;
+    case ring:
+      createRing(QColor(QRgb(0xA3A600)));
+      vRing.at(i)->setLaunchType((launchTypeRing)(launchType));
+      break;
+    case club:
+      createPirouette(QColor(QRgb(0xA3A600)));
+      vPirouette.at(i)->setLaunchType((launchTypeClub)(launchType));
+      break;
     default: break;
     }
   }
-  switch(aPropType)
-  {
-  case ball:
-    anim->setJuggler(vJuggler.at(0));
-    anim->setVBall(vBall);
-    anim->setSiteSwap(siteSwap);
-    anim->setAnim();
-    anim->startAnimation();
-    break;
-  case ring:
-    break;
-  case club:
-    break;
-  default: break;
-  }
+
+  anim->setJuggler(vJuggler.at(0));
+  anim->setVBall(vBall);
+  anim->setVRing(vRing);
+  anim->setVClub(vPirouette);
+  anim->setSiteSwap(siteSwap);
+  anim->setAnim();
+  anim->startAnimation();
 }
 
 void My3DWindow::setCameraToOrbit()

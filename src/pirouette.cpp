@@ -19,16 +19,20 @@
 
 Pirouette::Pirouette(QEntity *aRootEntity,
                      QMesh *aPirouetteMesh,
-                     QColor aColor)
+                     QColor &aColor,
+                     launchTypeClub aLaunchType)
+
   : clubMetalRoughMaterial(new QMetalRoughMaterial()),
     pirouetteTransform(new Qt3DCore::QTransform()),
-    color(aColor)
+    color(aColor),
+    launchType(aLaunchType)
 {
   pirouetteTransform->setScale(CLUB_SCALE);
+  pirouetteTransform->setRotationX(110);
 
   clubMetalRoughMaterial->setBaseColor(color);
-  clubMetalRoughMaterial->setMetalness(BALL_METALNESS);
-  clubMetalRoughMaterial->setRoughness(BALL_ROUGHNESS);
+  clubMetalRoughMaterial->setMetalness(PROP_METALNESS);
+  clubMetalRoughMaterial->setRoughness(PROP_ROUGHNESS);
 
 
   QEntity::setParent(aRootEntity);
@@ -40,6 +44,63 @@ Pirouette::Pirouette(QEntity *aRootEntity,
 
 void Pirouette::setPosition(QVector3D aPosition)
 {
-  position = aPosition;
-  pirouetteTransform->setTranslation(position); // A voir...
+  if (m_position == aPosition)
+    return;
+
+  m_position = aPosition;
+  emit positionChanged(m_position);
+  updateTranslation();
+}
+
+void Pirouette::setRotX(float aRot)
+{
+  if (rotX == aRot)
+    return;
+
+  rotX = aRot;
+  emit rotXChanged(rotX);
+  updateRotX();
+
+}
+
+void Pirouette::setRotY(float aRot)
+{
+  if (rotY == aRot)
+    return;
+
+  rotY = aRot;
+  emit rotYChanged(rotY);
+  updateRotY();
+
+}
+
+void Pirouette::setRotZ(float aRot)
+{
+  if (rotZ == aRot)
+    return;
+
+  rotZ = aRot;
+  emit rotZChanged(rotZ);
+  updateRotZ();
+
+}
+
+void Pirouette::updateTranslation()
+{
+  pirouetteTransform->setTranslation(m_position);
+}
+
+void Pirouette::updateRotX()
+{
+  pirouetteTransform->setRotationX(rotX + 110);
+}
+
+void Pirouette::updateRotY()
+{
+  pirouetteTransform->setRotationY(rotY);
+}
+
+void Pirouette::updateRotZ()
+{
+  pirouetteTransform->setRotationZ(rotZ);
 }

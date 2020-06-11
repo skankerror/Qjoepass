@@ -25,7 +25,6 @@ INCLUDEPATH += \
 
 SOURCES += \
   src/animsimple.cpp \
-  src/camera.cpp \
   src/ground.cpp \
   src/juggler.cpp \
   src/jugglingball.cpp \
@@ -42,7 +41,6 @@ SOURCES += \
 
 HEADERS += \
   src/animsimple.h \
-  src/camera.h \
   src/ground.h \
   src/juggler.h \
   src/jugglingball.h \

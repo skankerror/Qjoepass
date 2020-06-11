@@ -30,23 +30,55 @@ using namespace Qt3DRender;
 class Pirouette: public QEntity
 {
   Q_OBJECT
+  Q_PROPERTY(QVector3D position READ position WRITE setPosition NOTIFY positionChanged)
+  Q_PROPERTY(float rotX READ getRotX WRITE setRotX NOTIFY rotXChanged)
+  Q_PROPERTY(float rotY READ getRotY WRITE setRotY NOTIFY rotYChanged)
+  Q_PROPERTY(float rotZ READ getRotZ WRITE setRotZ NOTIFY rotZChanged)
+
 public:
   Pirouette(QEntity *aRootEntity,
             QMesh *aPirouetteMesh,
-            QColor aColor);
+            QColor &aColor,
+            launchTypeClub aLaunchType = normalClub);
 
+  QVector3D position() const {return m_position;};
+  float getRotX() const {return rotX;};
+  float getRotY() const {return rotY;};
+  float getRotZ() const {return rotZ;};
+  launchTypeClub getLaunchType() const {return launchType;};
+
+
+public slots:
   void setPosition(QVector3D aPosition);
+  void setRotX(float aRot);
+  void setRotY(float aRot);
+  void setRotZ(float aRot);
+  void setLaunchType(launchTypeClub aLaunchType) {launchType = aLaunchType;};
+
+signals:
+  void positionChanged(QVector3D position);
+  void rotXChanged(float aRot);
+  void rotYChanged(float aRot);
+  void rotZChanged(float aRot);
+
+private:
+  void updateTranslation();
+  void updateRotX();
+  void updateRotY();
+  void updateRotZ();
 
 private:
   QMetalRoughMaterial *clubMetalRoughMaterial;
-
   Qt3DCore::QTransform *pirouetteTransform;
-
   QColor color;
-
-  QVector3D position;
-
+  QVector3D m_position;
   bool enabled = true;
+  launchTypeClub launchType;
+
+  float rotX = 0;
+  float rotY = 0;
+  float rotZ = 0;
+
 };
 
 #endif // PIROUETTE_H

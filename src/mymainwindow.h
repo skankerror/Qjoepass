@@ -57,6 +57,7 @@ private slots:
   void periodChanged(int i);
   void updateCameraComboBox();
   void cameraIndexChanged(int index);
+  void propTypeChanged(int index);
 
 private:
   void createMenus();
@@ -95,11 +96,15 @@ private:
   QToolBar *myToolBar;
     QHBoxLayout *toolBarLayout;
     QLabel *propLabel;
-    QComboBox *propTypeComboBox;
+      QComboBox *propTypeComboBox;
+    QLabel *launchPropTypeLabel;
+      QComboBox *launchBallTypeComboBox;
+      QComboBox *launchRingTypeComboBox;
+      QComboBox *launchClubTypeComboBox;
     QLabel *periodLabel;
-    QSpinBox *periodSpinBox;
-      QSpinBox *firstSiteSpinBox;
-      QVector<QSpinBox *> vSpinBox;
+      QSpinBox *periodSpinBox;
+        QSpinBox *firstSiteSpinBox;
+        QVector<QSpinBox *> vSpinBox;
     QPushButton *launchPushButton;
 
     QHBoxLayout *toolBar2Layout;

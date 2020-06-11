@@ -20,17 +20,21 @@
 
 JugglingRing::JugglingRing(QEntity *aRootEntity,
                            QTorusMesh *torusMesh,
-                           QColor aColor)
+                           QColor aColor,
+                           launchTypeRing aLaunchType)
+
   : ringMetalRoughMaterial(new QMetalRoughMaterial()),
     ringTransform(new Qt3DCore::QTransform()),
-    color(aColor)
+    color(aColor),
+    launchType(aLaunchType)
 
 {
   ringTransform->setScale3D(QVector3D(RING_SCALE_X, RING_SCALE_Y, RING_SCALE_Z));
+//  ringTransform->setRotationY(90);
 
   ringMetalRoughMaterial->setBaseColor(color);
-  ringMetalRoughMaterial->setMetalness(RING_METALNESS);
-  ringMetalRoughMaterial->setRoughness(RING_ROUGHNESS);
+  ringMetalRoughMaterial->setMetalness(PROP_METALNESS);
+  ringMetalRoughMaterial->setRoughness(PROP_ROUGHNESS);
 
 
   QEntity::setParent(aRootEntity);
@@ -39,4 +43,64 @@ JugglingRing::JugglingRing(QEntity *aRootEntity,
   addComponent(ringMetalRoughMaterial);
   setEnabled(enabled);
 
+}
+
+void JugglingRing::setPosition(QVector3D position)
+{
+  if (m_position == position)
+    return;
+
+  m_position = position;
+  emit positionChanged(position);
+  updateTranslation();
+}
+
+void JugglingRing::setRotX(float aRot)
+{
+  if (rotX == aRot)
+    return;
+
+  rotX = aRot;
+  emit rotXChanged(rotX);
+  updateRotX();
+}
+
+void JugglingRing::setRotY(float aRot)
+{
+  if (rotY == aRot)
+    return;
+
+  rotY = aRot;
+  emit rotYChanged(rotY);
+  updateRotY();
+}
+
+void JugglingRing::setRotZ(float aRot)
+{
+  if (rotZ == aRot)
+    return;
+
+  rotZ = aRot;
+  emit rotZChanged(rotZ);
+  updateRotZ();
+}
+
+void JugglingRing::updateTranslation()
+{
+  ringTransform->setTranslation(m_position);
+}
+
+void JugglingRing::updateRotX()
+{
+  ringTransform->setRotationX(rotX);
+}
+
+void JugglingRing::updateRotY()
+{
+  ringTransform->setRotationY(rotY + 90);
+}
+
+void JugglingRing::updateRotZ()
+{
+  ringTransform->setRotationZ(rotZ);
 }
