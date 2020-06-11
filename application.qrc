@@ -27,6 +27,7 @@
     </qresource>
     <qresource prefix="/mesh">
         <file>res/mesh/J_club2.obj</file>
+        <file>res/mesh/J_club3.obj</file>
     </qresource>
     <qresource prefix="/qss">
         <file>res/qss/MyStyleSheet.qss</file>

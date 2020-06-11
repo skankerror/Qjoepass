@@ -21,13 +21,11 @@
 #include <Qt3DCore>
 #include <Qt3DExtras>
 #include <Qt3DRender>
-#include <Qt3DAnimation>
 #include "qjoepass.h"
 
 using namespace Qt3DCore;
 using namespace Qt3DExtras;
 using namespace Qt3DRender;
-using namespace Qt3DAnimation;
 
 class JugglingBall: public QEntity
 {
@@ -37,12 +35,15 @@ class JugglingBall: public QEntity
 public:
   JugglingBall(QEntity *aRootEntity,
                QSphereMesh *aSphereMesh,
-               QColor &aColor);
+               QColor &aColor,
+               launchTypeBall aLaunchType = normalBall);
 
   QVector3D position() const {return m_position;};
+  launchTypeBall getLaunchType() const {return launchType;};
 
 public slots:
   void setPosition(QVector3D position);
+  void setLaunchType(launchTypeBall aLaunchType) {launchType = aLaunchType;};
 
 signals:
   void positionChanged(QVector3D position);
@@ -52,14 +53,11 @@ private:
 
 private:
   QMetalRoughMaterial *ballMetalRoughMaterial;
-
   Qt3DCore::QTransform *sphereTransform;
-
   QVector3D m_position;
-
   QColor color;
-
   bool enabled = true;
+  launchTypeBall launchType;
 };
 
 #endif // JUGGLINGBALL_H

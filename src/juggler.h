@@ -73,6 +73,7 @@ public:
 private:
   void updateTransform();
 
+  QMatrix4x4 getRotMatrix();
   // setters for hands pos
   void setPositionLHext();
   void setPositionLHint();

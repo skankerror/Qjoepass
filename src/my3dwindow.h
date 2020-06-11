@@ -67,6 +67,7 @@ public slots:
   void createRing(QColor aColor);
   void createSiteSwap(QVector<int> aVecInt,
                       jugglingProp aPropType = ball,
+                      int launchType = normalBall,
                       bool someSynchron = false);
   void setCameraToOrbit();
   void setCameraToFirstPers(int index);

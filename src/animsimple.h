@@ -15,7 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #ifndef ANIMSIMPLE_H
 #define ANIMSIMPLE_H
 
@@ -24,6 +23,8 @@
 #include <QSequentialAnimationGroup>
 #include "juggler.h"
 #include "jugglingball.h"
+#include "jugglingring.h"
+#include "pirouette.h"
 #include "siteswap.h"
 
 class AnimSimple: public QObject
@@ -34,10 +35,19 @@ public:
   AnimSimple(Juggler *aJuggler,
              QVector<JugglingBall *> aVBall,
              SiteSwap *aSiteSwap);
+  AnimSimple(Juggler *aJuggler,
+             QVector<JugglingRing *> aVBall,
+             SiteSwap *aSiteSwap);
+  AnimSimple(Juggler *aJuggler,
+             QVector<Pirouette *> aVClub,
+             SiteSwap *aSiteSwap);
+
 
   void setJuggler(Juggler *aJuggler){ juggler = aJuggler;};
   void setVBall(QVector<JugglingBall *> aVBall) { vBall = aVBall;};
-  void setSiteSwap(SiteSwap *aSiteSwap) {siteSwap = aSiteSwap;};
+  void setVRing(QVector<JugglingRing *> aVRing) { vRing = aVRing;};
+  void setVClub(QVector<Pirouette *> aVClub) {vClub = aVClub;};
+  void setSiteSwap(SiteSwap *aSiteSwap);;
   void setAnim();
 
 public slots:
@@ -45,8 +55,9 @@ public slots:
   void stopAnimation();
 
 private:
-  QSequentialAnimationGroup* launchBall(Juggler *aJuggler,
-                                        JugglingBall *aBall,
+
+  QSequentialAnimationGroup* launchProp(Juggler *aJuggler,
+                                        int indexProp,
                                         int launch,
                                         hand aHand);
 
@@ -55,7 +66,10 @@ private:
 private:
   Juggler *juggler;
   QVector<JugglingBall *> vBall;
+  QVector<JugglingRing *> vRing;
+  QVector<Pirouette *> vClub;
   SiteSwap *siteSwap;
+  jugglingProp propType;
   int period;
 
   QParallelAnimationGroup *siteswapAnimation; // anim global

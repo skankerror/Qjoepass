@@ -21,31 +21,63 @@
 #include <Qt3DCore>
 #include <Qt3DExtras>
 #include <Qt3DRender>
-#include <Qt3DAnimation>
 #include "qjoepass.h"
 
 using namespace Qt3DCore;
 using namespace Qt3DExtras;
 using namespace Qt3DRender;
-using namespace Qt3DAnimation;
-
-
 
 class JugglingRing: public QEntity
 {
   Q_OBJECT
+  Q_PROPERTY(QVector3D position READ position WRITE setPosition NOTIFY positionChanged)
+  Q_PROPERTY(float rotX READ getRotX WRITE setRotX NOTIFY rotXChanged)
+  Q_PROPERTY(float rotY READ getRotY WRITE setRotY NOTIFY rotYChanged)
+  Q_PROPERTY(float rotZ READ getRotZ WRITE setRotZ NOTIFY rotZChanged)
+
 public:
   JugglingRing(QEntity *aRootEntity,
                QTorusMesh *torusMesh,
-               QColor aColor);
+               QColor aColor,
+               launchTypeRing aLaunchType = normalRing);
+
+  QVector3D position() const {return m_position;};
+  float getRotX() const {return rotX;};
+  float getRotY() const {return rotY;};
+  float getRotZ() const {return rotZ;};
+  launchTypeRing getLaunchType() const {return launchType;};
+
+
+public slots:
+  void setPosition(QVector3D position);
+  void setRotX(float aRot);
+  void setRotY(float aRot);
+  void setRotZ(float aRot);
+  void setLaunchType(launchTypeRing aLaunchType) {launchType = aLaunchType;};
+
+signals:
+  void positionChanged(QVector3D position);
+  void rotXChanged(float aRot);
+  void rotYChanged(float aRot);
+  void rotZChanged(float aRot);
+
+private:
+  void updateTranslation();
+  void updateRotX();
+  void updateRotY();
+  void updateRotZ();
 
 private:
   QMetalRoughMaterial *ringMetalRoughMaterial;
   Qt3DCore::QTransform *ringTransform;
-
+  QVector3D m_position;
   QColor color;
-
   bool enabled = true;
+  launchTypeRing launchType;
+
+  float rotX = 0;
+  float rotY = 0;
+  float rotZ = 0;
 
 };
 
