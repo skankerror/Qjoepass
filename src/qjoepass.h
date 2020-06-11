@@ -75,6 +75,8 @@
 #define RING_SCALE_X 0.6
 #define RING_SCALE_Y 0.6
 #define RING_SCALE_Z 0.1
+#define RING_BASIC_ROTY 90
+#define RING_PANCAKE_ROTX 100
 // Club
 #define CLUB_SCALE 0.04
 #define CLUB_MESH_SRC "qrc:/mesh/res/mesh/J_club3.obj"
