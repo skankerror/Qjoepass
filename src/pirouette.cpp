@@ -19,10 +19,13 @@
 
 Pirouette::Pirouette(QEntity *aRootEntity,
                      QMesh *aPirouetteMesh,
-                     QColor &aColor)
+                     QColor &aColor,
+                     launchTypeClub aLaunchType)
+
   : clubMetalRoughMaterial(new QMetalRoughMaterial()),
     pirouetteTransform(new Qt3DCore::QTransform()),
-    color(aColor)
+    color(aColor),
+    launchType(aLaunchType)
 {
   pirouetteTransform->setScale(CLUB_SCALE);
   pirouetteTransform->setRotationX(110);

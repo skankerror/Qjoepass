@@ -75,6 +75,8 @@ MyMainWindow::MyMainWindow()
 
   connect(my3DWindow, SIGNAL(jugglerCountChanged()), this, SLOT(updateCameraComboBox()));
   connect(cameraComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(cameraIndexChanged(int)));
+
+  connect(propTypeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(propTypeChanged(int)));
 }
 
 void MyMainWindow::createMenus()
@@ -158,6 +160,17 @@ void MyMainWindow::createToolBar()
   propTypeComboBox = new QComboBox(this);
   for (int i = 0; i < propNumb; i++)
     propTypeComboBox->addItem(getPropToString(i));
+  launchPropTypeLabel = new QLabel("type of Launch", this);
+  launchBallTypeComboBox = new QComboBox(this);
+    launchBallTypeComboBox->addItem("normal", normalBall);
+    launchBallTypeComboBox->addItem("bounce", bounce);
+  launchRingTypeComboBox = new QComboBox(this);
+    launchRingTypeComboBox->addItem("normal", normalRing);
+    launchRingTypeComboBox->addItem("pancake", panCake);
+  launchClubTypeComboBox = new QComboBox(this);
+    launchClubTypeComboBox->addItem("normal", normalClub);
+    launchClubTypeComboBox->addItem("flat", flat);
+    launchClubTypeComboBox->addItem("helicopter", helicopter);
   propTypeComboBox->setCurrentIndex(ball);
   periodLabel = new QLabel("period", this);
   periodSpinBox = new QSpinBox(this);
@@ -171,6 +184,12 @@ void MyMainWindow::createToolBar()
   launchPushButton->setToolTipDuration(2000);
   toolBarLayout->addWidget(propLabel);
   toolBarLayout->addWidget(propTypeComboBox);
+  toolBarLayout->addWidget(launchPropTypeLabel);
+  toolBarLayout->addWidget(launchBallTypeComboBox);
+  toolBarLayout->addWidget(launchRingTypeComboBox);
+    launchRingTypeComboBox->hide();
+  toolBarLayout->addWidget(launchClubTypeComboBox);
+    launchClubTypeComboBox->hide();
   toolBarLayout->addWidget(periodLabel);
   toolBarLayout->addWidget(periodSpinBox);
   toolBarLayout->addWidget(firstSiteSpinBox);
@@ -205,7 +224,16 @@ void MyMainWindow::launchSiteSwap()
     vecInt.append(vSpinBox.at(i)->value());
   }
   jugglingProp prop = getPropFromString(propTypeComboBox->currentText());
-  my3DWindow->createSiteSwap(vecInt, prop, false);
+  int launchType = 0; // normalLaunch
+  switch(prop)
+  {
+  case ball: launchType = launchBallTypeComboBox->currentIndex(); break;
+  case ring: launchType = launchRingTypeComboBox->currentIndex(); break;
+  case club: launchType = launchClubTypeComboBox->currentIndex(); break;
+  default: break;
+  }
+
+  my3DWindow->createSiteSwap(vecInt, prop, launchType, false);
 }
 
 void MyMainWindow::periodChanged(int i)
@@ -256,6 +284,20 @@ void MyMainWindow::cameraIndexChanged(int index)
     return;
 
   my3DWindow->setCameraToFirstPers(index - 1);
+}
+
+void MyMainWindow::propTypeChanged(int index)
+{
+  launchBallTypeComboBox->hide();
+  launchRingTypeComboBox->hide();
+  launchClubTypeComboBox->hide();
+  switch(index)
+  {
+  case ball: launchBallTypeComboBox->show(); break;
+  case ring: launchRingTypeComboBox->show(); break;
+  case club: launchClubTypeComboBox->show(); break;
+  default: break;
+  }
 }
 
 void MyMainWindow::newFile()

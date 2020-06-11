@@ -61,7 +61,6 @@ private:
                                         int launch,
                                         hand aHand);
 
-
   hand changeHand(hand aHand);
 
 private:

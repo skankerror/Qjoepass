@@ -38,18 +38,22 @@ class JugglingRing: public QEntity
 public:
   JugglingRing(QEntity *aRootEntity,
                QTorusMesh *torusMesh,
-               QColor aColor);
+               QColor aColor,
+               launchTypeRing aLaunchType = normalRing);
 
   QVector3D position() const {return m_position;};
   float getRotX() const {return rotX;};
   float getRotY() const {return rotY;};
   float getRotZ() const {return rotZ;};
+  launchTypeRing getLaunchType() const {return launchType;};
+
 
 public slots:
   void setPosition(QVector3D position);
   void setRotX(float aRot);
   void setRotY(float aRot);
   void setRotZ(float aRot);
+  void setLaunchType(launchTypeRing aLaunchType) {launchType = aLaunchType;};
 
 signals:
   void positionChanged(QVector3D position);
@@ -66,12 +70,10 @@ private:
 private:
   QMetalRoughMaterial *ringMetalRoughMaterial;
   Qt3DCore::QTransform *ringTransform;
-
   QVector3D m_position;
-
   QColor color;
-
   bool enabled = true;
+  launchTypeRing launchType;
 
   float rotX = 0;
   float rotY = 0;

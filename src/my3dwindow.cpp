@@ -170,7 +170,7 @@ void My3DWindow::createRing(QColor aColor)
   vRing.append(ring);
 }
 
-void My3DWindow::createSiteSwap(QVector<int> aVecInt, jugglingProp aPropType, bool someSynchron)
+void My3DWindow::createSiteSwap(QVector<int> aVecInt, jugglingProp aPropType, int launchType, bool someSynchron)
 {
   SiteSwap *siteSwap = new SiteSwap(aVecInt, aPropType, someSynchron, this);
   if (!(siteSwap->isValid()))
@@ -204,9 +204,18 @@ void My3DWindow::createSiteSwap(QVector<int> aVecInt, jugglingProp aPropType, bo
   {
     switch(aPropType)
     {
-    case ball: createBall(QColor(QRgb(0xA3A600))); break;
-    case ring: createRing(QColor(QRgb(0xA3A600))); break;
-    case club: createPirouette(QColor(QRgb(0xA3A600))); break;
+    case ball:
+      createBall(QColor(QRgb(0xA3A600)));
+      vBall.at(i)->setLaunchType((launchTypeBall)(launchType));
+      break;
+    case ring:
+      createRing(QColor(QRgb(0xA3A600)));
+      vRing.at(i)->setLaunchType((launchTypeRing)(launchType));
+      break;
+    case club:
+      createPirouette(QColor(QRgb(0xA3A600)));
+      vPirouette.at(i)->setLaunchType((launchTypeClub)(launchType));
+      break;
     default: break;
     }
   }

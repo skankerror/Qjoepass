@@ -36,6 +36,8 @@ public:
   int at(int i) const {return v_event.at(i);};
   jugglingProp getPropType() const {return prop;};
   void setPropType(jugglingProp aProp);
+  int getLaunchType() const {return launchType;};
+  void setLaunchType(int aLaunchType) {launchType = aLaunchType;};
 
 signals:
 
@@ -46,6 +48,7 @@ private:
   bool valid = false;
   bool synchron = false;
   jugglingProp prop;
+  int launchType;
 };
 
 #endif // SITESWAP_H

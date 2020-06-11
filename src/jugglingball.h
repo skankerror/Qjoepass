@@ -35,12 +35,15 @@ class JugglingBall: public QEntity
 public:
   JugglingBall(QEntity *aRootEntity,
                QSphereMesh *aSphereMesh,
-               QColor &aColor);
+               QColor &aColor,
+               launchTypeBall aLaunchType = normalBall);
 
   QVector3D position() const {return m_position;};
+  launchTypeBall getLaunchType() const {return launchType;};
 
 public slots:
   void setPosition(QVector3D position);
+  void setLaunchType(launchTypeBall aLaunchType) {launchType = aLaunchType;};
 
 signals:
   void positionChanged(QVector3D position);
@@ -50,14 +53,11 @@ private:
 
 private:
   QMetalRoughMaterial *ballMetalRoughMaterial;
-
   Qt3DCore::QTransform *sphereTransform;
-
   QVector3D m_position;
-
   QColor color;
-
   bool enabled = true;
+  launchTypeBall launchType;
 };
 
 #endif // JUGGLINGBALL_H

@@ -38,18 +38,22 @@ class Pirouette: public QEntity
 public:
   Pirouette(QEntity *aRootEntity,
             QMesh *aPirouetteMesh,
-            QColor &aColor);
+            QColor &aColor,
+            launchTypeClub aLaunchType = normalClub);
 
   QVector3D position() const {return m_position;};
   float getRotX() const {return rotX;};
   float getRotY() const {return rotY;};
   float getRotZ() const {return rotZ;};
+  launchTypeClub getLaunchType() const {return launchType;};
+
 
 public slots:
   void setPosition(QVector3D aPosition);
   void setRotX(float aRot);
   void setRotY(float aRot);
   void setRotZ(float aRot);
+  void setLaunchType(launchTypeClub aLaunchType) {launchType = aLaunchType;};
 
 signals:
   void positionChanged(QVector3D position);
@@ -65,13 +69,11 @@ private:
 
 private:
   QMetalRoughMaterial *clubMetalRoughMaterial;
-
   Qt3DCore::QTransform *pirouetteTransform;
-
   QColor color;
   QVector3D m_position;
-
   bool enabled = true;
+  launchTypeClub launchType;
 
   float rotX = 0;
   float rotY = 0;

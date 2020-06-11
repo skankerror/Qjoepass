@@ -20,10 +20,13 @@
 
 JugglingRing::JugglingRing(QEntity *aRootEntity,
                            QTorusMesh *torusMesh,
-                           QColor aColor)
+                           QColor aColor,
+                           launchTypeRing aLaunchType)
+
   : ringMetalRoughMaterial(new QMetalRoughMaterial()),
     ringTransform(new Qt3DCore::QTransform()),
-    color(aColor)
+    color(aColor),
+    launchType(aLaunchType)
 
 {
   ringTransform->setScale3D(QVector3D(RING_SCALE_X, RING_SCALE_Y, RING_SCALE_Z));

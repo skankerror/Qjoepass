@@ -207,6 +207,14 @@ QSequentialAnimationGroup *AnimSimple::launchProp(Juggler *aJuggler, int indexPr
   JugglingBall *aBall;
   JugglingRing *aRing;
   Pirouette *aClub;
+  // for ring or club rotation we have to create 3 more anims
+  QParallelAnimationGroup *animTempGroup = new QParallelAnimationGroup();
+  QPropertyAnimation *animRotProp;
+  QSequentialAnimationGroup *animTranslationGroup = new QSequentialAnimationGroup();
+//  QSequentialAnimationGroup *animRotationGroup = new QSequentialAnimationGroup();
+  int launchType/* = siteSwap->getLaunchType()*/;
+  int rotCount;
+
   switch(propType)
   {
   case ball:
@@ -239,17 +247,45 @@ QSequentialAnimationGroup *AnimSimple::launchProp(Juggler *aJuggler, int indexPr
   case club:
     aClub = vClub.at(indexProp);
     aClub->setRotY(juggler->getRotY());
-    // loop creates all our animations for launch
-    for (int i = 0; i <= frameCount; i++)
+    launchType = aClub->getLaunchType();
+    switch (launchType)
     {
-      auto animClub = new QPropertyAnimation(aClub, QByteArrayLiteral("position"));
-      animClub->setDuration((int)(DELTA_TIME * 600)); // sould be at 1000... wtf
-      animClub->setStartValue(vParabolic.at(i));
-      animClub->setEndValue(vParabolic.at(i + 1));
-      animClub->setLoopCount(1);
-      animGroup->addAnimation(animClub);
+    case normalClub:
+      for (int i = 0; i <= frameCount; i++)
+      {
+        auto animClub = new QPropertyAnimation(aClub, QByteArrayLiteral("position"));
+        animClub->setDuration((int)(DELTA_TIME * 600)); // sould be at 1000... wtf
+        animClub->setStartValue(vParabolic.at(i));
+        animClub->setEndValue(vParabolic.at(i + 1));
+        animClub->setLoopCount(1);
+        animTranslationGroup->addAnimation(animClub);
+      }
+      rotCount = (int)(launch / 2);
+      animRotProp = new QPropertyAnimation(aClub, QByteArrayLiteral("rotX"));
+      animRotProp->setDuration(((int)(DELTA_TIME * 600)) * (frameCount + 1) / rotCount);
+      animRotProp->setStartValue(360);
+      animRotProp->setEndValue(0);
+      animRotProp->setLoopCount(rotCount);
+      animTempGroup->addAnimation(animRotProp);
+      animTempGroup->addAnimation(animTranslationGroup);
+      animTempGroup->setLoopCount(1);
+      animGroup->addAnimation(animTempGroup);
+      break;
+    case flat:
+      for (int i = 0; i <= frameCount; i++)
+      {
+        auto animClub = new QPropertyAnimation(aClub, QByteArrayLiteral("position"));
+        animClub->setDuration((int)(DELTA_TIME * 600)); // sould be at 1000... wtf
+        animClub->setStartValue(vParabolic.at(i));
+        animClub->setEndValue(vParabolic.at(i + 1));
+        animClub->setLoopCount(1);
+        animGroup->addAnimation(animClub);
+      }
+      break;
+    case helicopter: break;
+    default: break;
     }
-    break;
+
   default: break;
   }
 
