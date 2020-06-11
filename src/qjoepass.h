@@ -54,7 +54,6 @@
 #define GROUND_WIDTH 20
 #define GROUND_HEIGHT 20
 #define GROUND_POSY -4
-#define GROUND_SHININESS 10
 #define GROUND_AMBIENT_OCCLUSION "qrc:/woodfloor/res/images/WoodFloor/wooden_planks_01_ambient_occlusion.png"
 #define GROUND_ROUGHNESS "qrc:/woodfloor/res/images/WoodFloor/wooden_planks_01_roughness.png"
 #define GROUND_BASE_COLOR "qrc:/woodfloor/res/images/WoodFloor/wooden_planks_01_basecolor.png"
@@ -79,7 +78,8 @@
 // Club
 #define CLUB_SCALE 0.04
 #define CLUB_MESH_SRC "qrc:/mesh/res/mesh/J_club3.obj"
-#define CLUB_SHININESS 50
+#define CLUB_BASIC_ROTX 110
+#define CLUB_HELICOPTER_ROTX 90
 // Light
 #define LIGHT_COLOR 0xFFFFFF
 #define LIGHT_INTENSITY 1
