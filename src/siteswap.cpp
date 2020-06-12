@@ -40,7 +40,7 @@ bool SiteSwap::isValid() const
   for (int i = 0; i < period; i++)
   {
     // we modulo each launch
-    int modLaunch = v_event.at(i) % period;
+    int modLaunch = (v_event.at(i) + i) % period;
     // and test to find collision
     if (vTest.indexOf(modLaunch) != -1) // collision
     {

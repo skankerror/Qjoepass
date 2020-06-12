@@ -60,7 +60,6 @@ void Pirouette::setRotX(float aRot)
   rotX = aRot;
   emit rotXChanged(rotX);
   updateRotX();
-
 }
 
 void Pirouette::setRotY(float aRot)
@@ -71,7 +70,6 @@ void Pirouette::setRotY(float aRot)
   rotY = aRot;
   emit rotYChanged(rotY);
   updateRotY();
-
 }
 
 void Pirouette::setRotZ(float aRot)
@@ -82,7 +80,6 @@ void Pirouette::setRotZ(float aRot)
   rotZ = aRot;
   emit rotZChanged(rotZ);
   updateRotZ();
-
 }
 
 void Pirouette::updateTranslation()

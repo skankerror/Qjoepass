@@ -29,6 +29,7 @@ using namespace Qt3DRender;
 class Light: public QEntity
 {
   Q_OBJECT
+
 public:
   explicit Light(QEntity *aRootEntity,
                  QPointLight *aLight,
@@ -36,7 +37,6 @@ public:
 
 private:
   Qt3DCore::QTransform *lightTransform;
-
   QEntity *rootEntity;
   QPointLight *light;
   QVector3D position;

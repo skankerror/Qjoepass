@@ -42,7 +42,6 @@ My3DWindow::My3DWindow(MySettings *aSettings)
   createLighting();
   createSkybox();
 
-
 /**************************** testing zone ***************************/
 
   // create 1 juggler for testing purpose
@@ -118,7 +117,6 @@ void My3DWindow::createSkybox()
   skyTransform->setScale3D(QVector3D( SKYBOX_SCALE, SKYBOX_SCALE, SKYBOX_SCALE));
   skybox->addComponent(skyTransform);
   skybox->setParent(rootEntity);
-
 }
 
 void My3DWindow::createLighting()

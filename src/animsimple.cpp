@@ -70,8 +70,11 @@ void AnimSimple::setAnim()
   period = siteSwap->getPeriod();
   int numProp = siteSwap->getNumProp();
 
-  if (!(siteSwap->isValid()))
+  if (!(siteSwap->isValid())) // ça marche pas...
+  {
     qDebug() << "Siteswap isn't valid";
+    return;
+  }
 
   for (int i = 0; i < numProp; i++) // for each prop
   {
@@ -487,9 +490,7 @@ QSequentialAnimationGroup *AnimSimple::launchProp(Juggler *aJuggler, int indexPr
     break;
   default: break;
   }
-
   return animGroup;
-
 }
 
 hand AnimSimple::changeHand(hand aHand)

@@ -23,7 +23,6 @@ Preferences::Preferences(MySettings *aSettings, QWidget *parent)
   : QDialog(parent),
     settings(aSettings)
 {
-
   tabWidget = new QTabWidget;
 
   worldTab = new QWidget(this);
@@ -76,7 +75,6 @@ Preferences::Preferences(MySettings *aSettings, QWidget *parent)
   setLayout(mainLayout2);
 
   setWindowTitle(tr("Tab Dialog"));
-
 }
 
 void Preferences::backgroundColor()
