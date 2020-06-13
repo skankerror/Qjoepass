@@ -20,11 +20,6 @@
 
 /**************************** 3D definitions ****************************/
 
-// QMaterial shader names
-#define DIFFUSE_COLOR "kd"
-#define AMBIANT_COLOR "ka"
-#define SPECULAR_COLOR "ks"
-#define SHININESS "shininess"
 // camera
 #define CAM_FOV 65.0f
 #define CAM_RATIO 16.0f/9.0f

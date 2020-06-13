@@ -46,6 +46,7 @@ My3DWindow::My3DWindow(MySettings *aSettings)
 
   // create 1 juggler for testing purpose
   createJuggler(45, QVector2D(-2, -2), QColor(QRgb(0xFF0000)));
+//  JugglingState state;
 
 }
 
