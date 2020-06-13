@@ -19,6 +19,7 @@
 #define SITESWAP_H
 
 #include <QObject>
+#include <QBitArray>
 #include "qjoepass.h"
 
 class SiteSwap : public QObject
@@ -38,17 +39,24 @@ public:
   void setPropType(jugglingProp aProp);
   int getLaunchType() const {return launchType;};
   void setLaunchType(int aLaunchType) {launchType = aLaunchType;};
+  QBitArray getState() {return state;};
+
+private:
+  void setState();
 
 signals:
 
 private:
   QVector<int> v_event; // without multiplex
-  QVector<QVector<int>> v_v_Event; // with multiplex
+//  QVector<QVector<int>> v_v_Event; // with multiplex
   int period;
   bool valid = false;
   bool synchron = false;
   jugglingProp prop;
   int launchType;
+  QBitArray state;
+  int propCount;
+
 };
 
 #endif // SITESWAP_H

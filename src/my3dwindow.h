@@ -23,7 +23,6 @@
 #include <Qt3DInput>
 #include <Qt3DLogic>
 #include <Qt3DExtras>
-#include <Qt3DAnimation>
 #include "settings.h"
 #include "juggler.h"
 #include "light.h"

@@ -16,6 +16,7 @@
  */
 
 #include "siteswap.h"
+#include <QDebug>
 
 SiteSwap::SiteSwap(QVector<int> &aVInt,
                    jugglingProp aProp,
@@ -28,6 +29,11 @@ SiteSwap::SiteSwap(QVector<int> &aVInt,
 {
   period = v_event.size();
   valid = isValid();
+  propCount = getNumProp();
+  if (valid)
+  {
+    setState();
+  }
 }
 
 bool SiteSwap::isValid() const
@@ -39,8 +45,8 @@ bool SiteSwap::isValid() const
 
   for (int i = 0; i < period; i++)
   {
-    // we modulo each launch
-    int modLaunch = v_event.at(i) % period;
+    // we modulo each launch in order to find where this launch will be in next loop
+    int modLaunch = (v_event.at(i) + i) % period;
     // and test to find collision
     if (vTest.indexOf(modLaunch) != -1) // collision
     {
@@ -67,4 +73,56 @@ int SiteSwap::getNumProp() const
 void SiteSwap::setPropType(jugglingProp aProp)
 {
   prop = aProp;
+}
+
+void SiteSwap::setState()
+{
+  if (!period) // this shoud not happen
+    return;
+
+  // simple case
+  if (period == 1)
+  {
+    state.resize(propCount);
+    for (int i = 0; i < propCount; i++)
+    {
+      state.setBit(i, true);
+    }
+    qDebug() << state;
+    return;
+  }
+
+  // a bit more complex
+  int propFoundCount = 0; // count of true sites found
+  int index = 0;
+  QVector<int> indexAlreadySet; // store false forward sites
+
+  while (propFoundCount < propCount) // while we haven't found all true sites
+  {
+    // verify if site has not already been set
+    if (indexAlreadySet.indexOf(index) == -1)
+    {
+      if (index + 1 > state.size())
+        state.resize(index + 1); // we must resize
+      int launch = v_event.at(index % period);
+      if (launch) // if launch is not 0
+      {
+        state.setBit(index, true); // it's a true site
+        propFoundCount++; // we found one more
+        if ((index + launch + 1) > state.size())
+          state.resize(index + launch + 1); // we must resize
+        state.setBit(index + launch, false); // it's surely a false
+        indexAlreadySet.append(index + launch); // we declare it as already set
+      }
+    }
+    index++;
+  }
+  // now we truncate finishing 0s
+  bool test = state.testBit(state.size() - 1);
+  while (test == false)
+  {
+    state.resize(state.size() - 1); // erase last bit
+    test = state.testBit(state.size() - 1);
+  }
+  qDebug() << state;
 }

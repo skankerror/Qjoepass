@@ -41,7 +41,6 @@ JugglingRing::JugglingRing(QEntity *aRootEntity,
   addComponent(ringTransform);
   addComponent(ringMetalRoughMaterial);
   setEnabled(enabled);
-
 }
 
 void JugglingRing::setPosition(QVector3D position)

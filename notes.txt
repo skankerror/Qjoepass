@@ -1,5 +1,11 @@
 voir le frustrum calling
 
-mettre dans l'équation le poids de l'objet pour que les anneaux aillent plus haut que les massues ?
+éloigner pancake et helico... ça se cogne en l'air
 
-éloigner pancake et helico... ça se cogne en lair
+décomposer plus setAnim() c'est trop complexe et utiliser mycurves pour le dwel time aussi
+
+Pour baisser la taille de l'exe être moins global dans les include
+
+Faire les rebonds pour les balles...
+
+ça jongle trop vite
