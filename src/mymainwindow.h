@@ -68,7 +68,6 @@ private:
   void setCurrentFile(const QString &fileName);
   QString strippedName(const QString &fullFileName);
 
-
   QString curFile;
 
   QMenu *fileMenu;

@@ -55,7 +55,6 @@ public slots:
   void stopAnimation();
 
 private:
-
   QSequentialAnimationGroup* launchProp(Juggler *aJuggler,
                                         int indexProp,
                                         int launch,

@@ -37,7 +37,6 @@ JugglingBall::JugglingBall(QEntity *aRootEntity,
   addComponent(aSphereMesh);
   addComponent(ballMetalRoughMaterial);
   addComponent(sphereTransform);
-
 }
 
 void JugglingBall::setPosition(QVector3D position)

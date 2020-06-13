@@ -67,79 +67,89 @@ void AnimSimple::setSiteSwap(SiteSwap *aSiteSwap)
 
 void AnimSimple::setAnim()
 {
-  period = siteSwap->getPeriod();
-  int numProp = siteSwap->getNumProp();
-
-  if (!(siteSwap->isValid()))
-    qDebug() << "Siteswap isn't valid";
-
-  for (int i = 0; i < numProp; i++) // for each prop
+  if (!(siteSwap->isValid())) // ça marche pas...
   {
-    int launchPos = i % period;
-    int launch = siteSwap->at(launchPos);
-    hand launchHand;
-    auto propAnim = new QSequentialAnimationGroup(); // will handle the whole moving
-    auto propGlobAnim = new QSequentialAnimationGroup();// needed to add pause at the beginning
+    qDebug() << "Siteswap isn't valid";
+    return;
+  }
 
-    // we had delay for each prop
-    if (i)
-      propGlobAnim->addPause(DELAY_LAUNCH * i);
+  period = siteSwap->getPeriod();
+//  int numProp = siteSwap->getNumProp();
+  QBitArray state = siteSwap->getState();
+  int propNum = 0;
 
-    // handle first move
-    if (i % 2 == 0)
-      launchHand = rightHand;
-    else
-      launchHand = leftHand;
-    auto launchAnim = launchProp(juggler, i, launch, launchHand);
-    launchAnim->setLoopCount(1);
-    propAnim->addAnimation(launchAnim);
-
-    // search for new site
-    int newLaunchPos = (launch + launchPos) % period;
-    // setting the new hand
-    // if launch is odd we change hand
-    hand newLaunchHand;
-    if (launch % 2 == 1)
-      newLaunchHand = changeHand(launchHand);
-    else
-      newLaunchHand = launchHand;
-    // if we're not on the same site, let's keep on animate
-    while (newLaunchPos != launchPos)
+//  for (int i = 0; i < numProp; i++) // for each prop
+  for (int i = 0; i < state.size(); i++)
+  {
+    if (state.testBit(i))
     {
-      int newLaunch = siteSwap->at(newLaunchPos);
-      auto followLaunchAnim = launchProp(juggler, i, newLaunch, newLaunchHand);
-      followLaunchAnim->setLoopCount(1);
-      propAnim->addAnimation(followLaunchAnim);
-      // is it the other hand ?
-      if (newLaunch % 2 == 1)
-        newLaunchHand = changeHand(newLaunchHand);
-      newLaunchPos = (newLaunch + newLaunchPos) % period;
-    }
+      int launchPos = i % period;
+      int launch = siteSwap->at(launchPos);
+      hand launchHand;
+      auto propAnim = new QSequentialAnimationGroup(); // will handle the whole moving
+      auto propGlobAnim = new QSequentialAnimationGroup();// needed to add pause at the beginning
 
-    // now we get back to initial site, if we changed hand, let's do the whole thing again
-    if (newLaunchHand != launchHand)
-    {
-      auto backLaunchAnim = launchProp(juggler, i, launch, newLaunchHand);
-      backLaunchAnim->setLoopCount(1);
-      propAnim->addAnimation(backLaunchAnim);
-      newLaunchPos = (launch + launchPos) % period;
+      // we had delay for each prop
+      if (i)
+        propGlobAnim->addPause(DELAY_LAUNCH * i);
+
+      // handle first move
+      if (i % 2 == 0)
+        launchHand = rightHand;
+      else
+        launchHand = leftHand;
+      auto launchAnim = launchProp(juggler, propNum /*i*/, launch, launchHand);
+      launchAnim->setLoopCount(1);
+      propAnim->addAnimation(launchAnim);
+
+      // search for new site
+      int newLaunchPos = (launch + launchPos) % period;
+      // setting the new hand
+      // if launch is odd we change hand
+      hand newLaunchHand;
       if (launch % 2 == 1)
-        newLaunchHand = changeHand(newLaunchHand);
+        newLaunchHand = changeHand(launchHand);
+      else
+        newLaunchHand = launchHand;
+      // if we're not on the same site, let's keep on animate
       while (newLaunchPos != launchPos)
       {
         int newLaunch = siteSwap->at(newLaunchPos);
-        auto backFollowLaunchAnim = launchProp(juggler, i, newLaunch, newLaunchHand);
-        backFollowLaunchAnim->setLoopCount(1);
-        propAnim->addAnimation(backFollowLaunchAnim);
+        auto followLaunchAnim = launchProp(juggler, propNum /*i*/, newLaunch, newLaunchHand);
+        followLaunchAnim->setLoopCount(1);
+        propAnim->addAnimation(followLaunchAnim);
+        // is it the other hand ?
         if (newLaunch % 2 == 1)
           newLaunchHand = changeHand(newLaunchHand);
         newLaunchPos = (newLaunch + newLaunchPos) % period;
       }
+
+      // now we get back to initial site, if we changed hand, let's do the whole thing again
+      if (newLaunchHand != launchHand)
+      {
+        auto backLaunchAnim = launchProp(juggler, propNum /*i*/, launch, newLaunchHand);
+        backLaunchAnim->setLoopCount(1);
+        propAnim->addAnimation(backLaunchAnim);
+        newLaunchPos = (launch + launchPos) % period;
+        if (launch % 2 == 1)
+          newLaunchHand = changeHand(newLaunchHand);
+        while (newLaunchPos != launchPos)
+        {
+          int newLaunch = siteSwap->at(newLaunchPos);
+          auto backFollowLaunchAnim = launchProp(juggler, propNum /*i*/, newLaunch, newLaunchHand);
+          backFollowLaunchAnim->setLoopCount(1);
+          propAnim->addAnimation(backFollowLaunchAnim);
+          if (newLaunch % 2 == 1)
+            newLaunchHand = changeHand(newLaunchHand);
+          newLaunchPos = (newLaunch + newLaunchPos) % period;
+        }
+      }
+      // we add to the anim containing starting pause
+      propGlobAnim->addAnimation(propAnim);
+      propAnim->setLoopCount(-1);
+      siteswapAnimation->addAnimation(propGlobAnim); // and we add to the global parallel anim
+      propNum++;
     }
-    // we add to the anim containing starting pause
-    propGlobAnim->addAnimation(propAnim);
-    propAnim->setLoopCount(-1);
-    siteswapAnimation->addAnimation(propGlobAnim); // and we add to the global parallel anim
   }
 
 }
@@ -487,9 +497,7 @@ QSequentialAnimationGroup *AnimSimple::launchProp(Juggler *aJuggler, int indexPr
     break;
   default: break;
   }
-
   return animGroup;
-
 }
 
 hand AnimSimple::changeHand(hand aHand)
