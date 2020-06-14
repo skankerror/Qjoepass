@@ -189,7 +189,7 @@ QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
   if (launch == 1) // For launch 1 Shannon doesn't work
   {
     arcTime = LAUNCH1_TIME;
-    qDebug() << "arcTime" << arcTime;
+//    qDebug() << "arcTime" << arcTime;
   }
   else // thanks Claude Shannon
     arcTime = ((HAND_PERIOD) / 2) * (launch - (2 * DWELL_RATIO));
@@ -200,7 +200,7 @@ QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
 
   // By counting frames we add 1 due to float to integer approx.
   int frameCount = (int)((arcTime / (DELTA_TIME)) /*+ 1*/);
-  if (launch == 1) qDebug() << "frameCount" << frameCount;
+//  if (launch == 1) qDebug() << "frameCount" << frameCount;
 
   // We create our curve
   QVector<QVector3D> vParabolic = MyCurves::curveParabolic(velBall, posProp, frameCount);

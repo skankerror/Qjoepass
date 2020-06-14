@@ -87,15 +87,17 @@
 
 // anim
 #define SCALE_FACTOR 5.0f
-#define DELTA_TIME 0.0166667f // in second
+#define DELTA_TIME /*0.0166667f*/ 0.005f// in second
 #define HAND_PERIOD 0.5f // in second
 #define DWELL_RATIO 0.68f
 #define LAUNCH1_TIME 0.05f //50ms
-#define GRAVITY QVector3D(0,-9.8*SCALE_FACTOR,0)
+#define GRAVITY QVector3D(0,-9.8f*SCALE_FACTOR,0)
 #define DWELL_TIME DWELL_RATIO*HAND_PERIOD // 0.34ms
 #define EMPTY_TIME HAND_PERIOD-DWELL_TIME // 0.16ms
-#define DWELL_TIME_LAUNCH1 (HAND_PERIOD/2)-LAUNCH1_TIME // 0.20ms
-#define S_TO_MS 1000
+// this define doesn't work ! WTF
+//#define DWELL_TIME_LAUNCH1 (HAND_PERIOD/2.0f)-LAUNCH1_TIME // 0.20ms
+#define DWELL_TIME_LAUNCH1 0.2f // must be hand_period/2 - launch1_time
+#define S_TO_MS 1000.0f
 
 enum hand{leftHand, rightHand};
 enum jugglingProp{ball, ring, club, propNumb};
