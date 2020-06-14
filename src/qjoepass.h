@@ -86,7 +86,6 @@
 
 /******************************** Animation *****************************************/
 
-// anim
 #define SCALE_FACTOR 5.0f // for gravity
 #define DELTA_TIME 0.005f // in second
 #define HAND_PERIOD 0.5f // in second
@@ -96,6 +95,9 @@
 #define DWELL_TIME DWELL_RATIO*HAND_PERIOD
 #define EMPTY_TIME HAND_PERIOD-DWELL_TIME
 #define S_TO_MS 1000.0f
+const float DWELL_TIME_LAUNCH1 = (HAND_PERIOD / 2.0f) - LAUNCH1_TIME;
+
+/*********************************** Enums *******************************************/
 
 enum hand{leftHand, rightHand};
 enum jugglingProp{ball, ring, club, propNumb};

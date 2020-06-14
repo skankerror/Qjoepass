@@ -19,8 +19,7 @@
 #include "mycurves.h"
 
 MyAnimation::MyAnimation(QObject *parent)
-  : QObject(parent),
-    siteswapAnimation(new QParallelAnimationGroup())
+  : QParallelAnimationGroup(parent)
 {}
 
 void MyAnimation::setSiteSwap(SiteSwap *aSiteSwap)
@@ -31,7 +30,7 @@ void MyAnimation::setSiteSwap(SiteSwap *aSiteSwap)
 
 void MyAnimation::setAnim()
 {
-  if (!(siteSwap->isValid())) // ça marche pas...
+  if (!(siteSwap->isValid()))
   {
     qDebug() << "Siteswap isn't valid";
     return;
@@ -134,21 +133,10 @@ void MyAnimation::setAnim()
       // we add to the anim containing starting pause
       propGlobAnim->addAnimation(propMoveAnim);
       propMoveAnim->setLoopCount(-1);
-      siteswapAnimation->addAnimation(propGlobAnim); // and we add to the global parallel anim
+      addAnimation(propGlobAnim); // and we add to the global parallel anim
       propNum++;
     }
   }
-}
-
-void MyAnimation::startAnimation()
-{
-  siteswapAnimation->start();
-}
-
-void MyAnimation::stopAnimation()
-{
-  siteswapAnimation->stop();
-  siteswapAnimation->clear();
 }
 
 QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
@@ -569,9 +557,4 @@ QSequentialAnimationGroup *MyAnimation::dwellAnim(Juggler *aJuggler,
   if (intDecay)
     returnAnim->addPause(intDecay);
   return returnAnim;
-}
-
-hand MyAnimation::changeHand(hand aHand)
-{
-  return (aHand == leftHand) ? rightHand : leftHand;
 }

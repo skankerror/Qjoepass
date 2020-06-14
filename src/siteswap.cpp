@@ -31,9 +31,7 @@ SiteSwap::SiteSwap(QVector<int> &aVInt,
   valid = isValid();
   propCount = getNumProp();
   if (valid)
-  {
     setState();
-  }
 }
 
 bool SiteSwap::isValid() const

@@ -27,7 +27,7 @@
 #include "pirouette.h"
 #include "siteswap.h"
 
-class MyAnimation : public QObject
+class MyAnimation : public QParallelAnimationGroup
 {
   Q_OBJECT
 public:
@@ -40,12 +40,6 @@ public:
   void setSiteSwap(SiteSwap *aSiteSwap);;
   void setAnim();
 
-signals:
-
-public slots:
-  void startAnimation();
-  void stopAnimation();
-
 private:
   QSequentialAnimationGroup* parabolicAnim(Juggler *aJuggler,
                                            int indexProp,
@@ -57,7 +51,7 @@ private:
                                        int nextLaunch,
                                        hand aHand);
 
-  hand changeHand(hand aHand);
+  hand changeHand(hand aHand){ return (aHand == leftHand) ? rightHand : leftHand; };
 
 private:
   Juggler *juggler;
@@ -68,9 +62,6 @@ private:
   jugglingProp propType;
   int period;
 
-  QParallelAnimationGroup *siteswapAnimation; // anim global
-
-  const float DWELL_TIME_LAUNCH1 = (HAND_PERIOD / 2.0f) - LAUNCH1_TIME;
 };
 
 #endif // MYANIMATION_H

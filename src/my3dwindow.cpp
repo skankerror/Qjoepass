@@ -174,7 +174,8 @@ void My3DWindow::createSiteSwap(QVector<int> aVecInt, jugglingProp aPropType, in
     qDebug() << "siteswap is not valid !";
     return;
   }
-  anim->stopAnimation();
+  anim->stop();
+  anim->clear();
 
   if (vBall.size())
     for (int i = 0; i < vBall.size(); i++)
@@ -224,7 +225,7 @@ void My3DWindow::createSiteSwap(QVector<int> aVecInt, jugglingProp aPropType, in
   anim->setVClub(vPirouette);
   anim->setSiteSwap(siteSwap);
   anim->setAnim();
-  anim->startAnimation();
+  anim->start();
 }
 
 void My3DWindow::setCameraToOrbit()
