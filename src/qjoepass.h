@@ -23,8 +23,8 @@
 #define APP_ICON "://res/images/icone.png"
 #define WINDOW_MINIMUM_W 160
 #define WINDOW_MINIMUM_H 160
-#define WINDOW_W 800
-#define WINDOW_H 600
+#define WINDOW_W 1024
+#define WINDOW_H 768
 #define WIDGET3D_MIN_W 800
 #define WIDGET3D_MIN_H 600
 

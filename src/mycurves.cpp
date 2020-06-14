@@ -19,9 +19,7 @@
 #include "qjoepass.h"
 
 MyCurves::MyCurves()
-{
-
-}
+{}
 
 QVector<QVector3D> MyCurves::curveParabolic(QVector3D &velocity,
                                             QVector3D &startPos,

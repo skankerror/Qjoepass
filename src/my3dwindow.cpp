@@ -19,7 +19,7 @@
 #include <QDebug>
 
 My3DWindow::My3DWindow(MySettings *aSettings)
-  :rootEntity(new QEntity()),
+  : rootEntity(new QEntity()),
     skybox(new QSkyboxEntity()),
     pointLight(new QPointLight()),
     pirouetteMesh(new QMesh()),

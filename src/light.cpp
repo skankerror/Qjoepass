@@ -20,7 +20,7 @@
 Light::Light(QEntity *aRootEntity,
              QPointLight *aLight,
              QVector3D &aPosition)
-  :rootEntity(aRootEntity),
+  : rootEntity(aRootEntity),
     light(aLight),
     position(aPosition)
 {

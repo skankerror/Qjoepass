@@ -18,7 +18,7 @@
 #include "ground.h"
 
 Ground::Ground(QEntity *aRootEntity, QColor &aColor)
-  :planeMesh(new QPlaneMesh()),
+  : planeMesh(new QPlaneMesh()),
     planeTransform(new Qt3DCore::QTransform()),
     color(aColor),
     groundMetalRoughnessMaterial(new QMetalRoughMaterial()),
@@ -47,12 +47,12 @@ Ground::Ground(QEntity *aRootEntity, QColor &aColor)
   groundMetalness->setSource(QUrl(QStringLiteral(GROUND_METALNESS)));
 
   groundMetalRoughnessMaterial->setBaseColor(QVariant::fromValue(groundBaseColor));
-//  groundMetalRoughnessMaterial->setBaseColor(color);
+  //  groundMetalRoughnessMaterial->setBaseColor(color);
   groundMetalRoughnessMaterial->setNormal(QVariant::fromValue(groundNormal));
   groundMetalRoughnessMaterial->setMetalness(QVariant::fromValue(groundMetalness));
-//  groundMetalRoughnessMaterial->setMetalness(GROUND_METALNESS);
+  //  groundMetalRoughnessMaterial->setMetalness(GROUND_METALNESS);
   groundMetalRoughnessMaterial->setRoughness(QVariant::fromValue(groundRoughness));
-//  groundMetalRoughnessMaterial->setRoughness(GROUND_ROUGHNESS);
+  //  groundMetalRoughnessMaterial->setRoughness(GROUND_ROUGHNESS);
   groundMetalRoughnessMaterial->setAmbientOcclusion(QVariant::fromValue(groundAmbientOcclusion));
 
   QEntity::setParent(aRootEntity);
