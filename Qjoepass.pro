@@ -32,6 +32,7 @@ SOURCES += \
   src/light.cpp \
   src/main.cpp \
   src/my3dwindow.cpp \
+  src/myanimation.cpp \
   src/mycurves.cpp \
   src/mymainwindow.cpp \
   src/pirouette.cpp \
@@ -47,6 +48,7 @@ HEADERS += \
   src/jugglingring.h \
   src/light.h \
   src/my3dwindow.h \
+  src/myanimation.h \
   src/mycurves.h \
   src/mymainwindow.h \
   src/pirouette.h \
