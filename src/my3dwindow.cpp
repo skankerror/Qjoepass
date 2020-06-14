@@ -241,9 +241,9 @@ void My3DWindow::setCameraToFirstPers(int index)
   if (index < 0 || index >= vJuggler.size())
     return;
   QVector3D headPos = vJuggler.at(index)->getPositionHead();
-  float rotY = vJuggler.at(index)->getRotY();
   m_camera->setPosition(headPos);
   m_camera->setUpVector(CAM_UP_VECTOR);
-  m_camera->setViewCenter(QVector3D(sinf(rotY) + headPos.x(), HEAD_POS_Y, cosf(rotY) + headPos.z()));
+  QVector3D lookAt = vJuggler.at(index)->getLookAt();
+  m_camera->setViewCenter(lookAt);
   camFPController->setCamera(m_camera);
 }

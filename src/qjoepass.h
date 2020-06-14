@@ -19,7 +19,14 @@
 #define QJOEPASS_H
 
 /**************************** App ***************************************/
+
 #define APP_ICON "://res/images/icone.png"
+#define WINDOW_MINIMUM_W 160
+#define WINDOW_MINIMUM_H 160
+#define WINDOW_W 800
+#define WINDOW_H 600
+#define WIDGET3D_MIN_W 800
+#define WIDGET3D_MIN_H 600
 
 /**************************** 3D definitions ****************************/
 
@@ -46,7 +53,7 @@
 #define HAND_OFFSET_EXT 0.65
 #define HAND_OFFSET_EXT_PLUS 1.5f // helico pancakes
 #define HAND_OFFSET_INT 0.3
-#define HEAD_POS_Y 5
+#define HEAD_POS_Y 1.8f
 #define JUGGLER_METALNESS 0.8
 #define JUGGLER_ROUGHNESS 0.5
 // Ground
@@ -89,9 +96,9 @@
 
 /******************************** Animation *****************************************/
 
-#define SCALE_FACTOR 5.0f // for gravity
-#define DELTA_TIME 0.005f // in second
-#define HAND_PERIOD 0.5f // in second
+#define SCALE_FACTOR 3.28f // for gravity... size of juggler / normal man size (5.9/1.8)
+#define DELTA_TIME 0.015f // in second
+#define HAND_PERIOD 0.7f // in second
 #define DWELL_RATIO 0.68f
 #define LAUNCH1_TIME 0.05f // in second. Must be < HAND_PERIOD/2
 #define GRAVITY QVector3D(0,-9.8f*SCALE_FACTOR,0)

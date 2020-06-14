@@ -44,7 +44,7 @@ MyMainWindow::MyMainWindow()
   my3DWindow = new My3DWindow(settings);
   container = QWidget::createWindowContainer(my3DWindow);
   QSize screenSize = my3DWindow->screen()->size();
-  container->setMinimumSize(QSize(800, 600));
+  container->setMinimumSize(QSize(WIDGET3D_MIN_W, WIDGET3D_MIN_H));
   container->setMaximumSize(screenSize);
 
   QVBoxLayout *layout = new QVBoxLayout;
@@ -62,22 +62,15 @@ MyMainWindow::MyMainWindow()
   statusBar()->showMessage(message);
 
   setWindowTitle(tr("joePass"));
-  setMinimumSize(160, 160);
+  setMinimumSize(WINDOW_MINIMUM_H, WINDOW_MINIMUM_H);
 
-  resize(480, 320);
+  resize(WINDOW_W, WINDOW_H);
 
   pref = new Preferences(settings);
 
   connect(pref, SIGNAL(colorChanged(QColor)), my3DWindow, SLOT(changeBackground(QColor)));
   connect(pref, SIGNAL(groundColorChanged(QColor)), my3DWindow, SLOT(changeGroundColor(QColor)));
 
-  connect(periodSpinBox, SIGNAL(valueChanged(int)), this, SLOT(periodChanged(int)));
-  connect(launchPushButton, SIGNAL(clicked()), this, SLOT(launchSiteSwap()));
-
-  connect(my3DWindow, SIGNAL(jugglerCountChanged()), this, SLOT(updateCameraComboBox()));
-  connect(cameraComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(cameraIndexChanged(int)));
-
-  connect(propTypeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(propTypeChanged(int)));
 }
 
 void MyMainWindow::createMenus()
@@ -108,7 +101,6 @@ void MyMainWindow::createMenus()
   connect(saveAct, &QAction::triggered, this, &MyMainWindow::save);
   fileMenu->addAction(saveAct);
   //    fileToolBar->addAction(saveAct);
-
 
   const QIcon saveAsIcon = QIcon::fromTheme("document-open", QIcon(":/images/saveAs.png"));
   saveAsAct = new QAction(saveAsIcon, tr("&SaveAs..."), this);
@@ -208,6 +200,12 @@ void MyMainWindow::createToolBar()
 
   MyToolBarWidget2->setLayout(toolBar2Layout);
   myToolBar->addWidget(MyToolBarWidget2);
+
+  connect(periodSpinBox, SIGNAL(valueChanged(int)), this, SLOT(periodChanged(int)));
+  connect(launchPushButton, SIGNAL(clicked()), this, SLOT(launchSiteSwap()));
+  connect(my3DWindow, SIGNAL(jugglerCountChanged()), this, SLOT(updateCameraComboBox()));
+  connect(cameraComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(cameraIndexChanged(int)));
+  connect(propTypeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(propTypeChanged(int)));
 
 }
 void MyMainWindow::preferencesDial()

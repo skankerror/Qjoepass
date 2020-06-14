@@ -289,6 +289,11 @@ void Juggler::setPositionRHmed()
 void Juggler::setPosHead()
 {
   posHead = QVector3D(m_position.x(), HEAD_POS_Y, m_position.z());
+
+  QVector3D temp = posHead + QVector3D(0, 0, 5);
+  QMatrix4x4 rot = getRotMatrix();
+  temp = rot * temp;
+  headLookAt = temp;
 }
 
 void Juggler::setPositionHands()

@@ -66,7 +66,9 @@ public:
   QVector3D getPositionRHext() const {return posRHext;};
   QVector3D getPositionRHint() const {return posRHint;};
   QVector3D getPositionRHmed() const {return posRHmed;};
+  // getters for camera position
   QVector3D getPositionHead() const {return posHead;};
+  QVector3D getLookAt() const {return headLookAt;};
 
   float getRotY() const {return eulerAngles.y();};
 
@@ -114,6 +116,7 @@ private:
   QVector3D posRHmed;
   // headPos
   QVector3D posHead;
+  QVector3D headLookAt;
 
   void makeMember(QCylinderMesh *aMember,
                        Qt3DCore::QTransform *aMemberTransform,
