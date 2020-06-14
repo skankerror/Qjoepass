@@ -38,11 +38,9 @@ void MyAnimation::setAnim()
       // we set a delay even for first launch so that we can anim the hand before launch
       float delay = (HAND_PERIOD / 2) * i;
       if (launch == 1) // if launch is 1 time is shorter
-        propGlobAnim->addPause(DWELL_TIME_LAUNCH1 + delay);
+        propGlobAnim->addPause((DWELL_TIME_LAUNCH1 + delay) * S_TO_MS);
       else
-        propGlobAnim->addPause(DWELL_TIME + delay);
-      qDebug() << "delai" << delay + DWELL_TIME;
-
+        propGlobAnim->addPause((DWELL_TIME + delay) * S_TO_MS);
 
       // let's go
       (i % 2 == 0) ? launchHand = rightHand : launchHand = leftHand; // i is odd or even
@@ -181,7 +179,7 @@ QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
     arcTime = LAUNCH1_TIME;
   else // thanks Claude Shannon
     arcTime = ((HAND_PERIOD) / 2) * (launch - (2 * DWELL_RATIO));
-  qDebug() << arcTime;
+
   // we calculate velocity launch
   QVector3D velBall = ((posFinal - posProp) - 0.5 *
                        (GRAVITY * arcTime * arcTime)) / arcTime;
@@ -536,10 +534,5 @@ QSequentialAnimationGroup *MyAnimation::dwellAnim(Juggler *aJuggler,
 
 hand MyAnimation::changeHand(hand aHand)
 {
-  //  if (aHand == leftHand)
-  //    return rightHand;
-  //  else
-  //    return leftHand;
-
   return (aHand == leftHand) ? rightHand : leftHand;
 }

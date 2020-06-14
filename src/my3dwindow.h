@@ -20,8 +20,6 @@
 
 #include <Qt3DCore>
 #include <Qt3DRender>
-#include <Qt3DInput>
-#include <Qt3DLogic>
 #include <Qt3DExtras>
 #include "settings.h"
 #include "juggler.h"
@@ -30,7 +28,6 @@
 #include "pirouette.h"
 #include "jugglingball.h"
 #include "jugglingring.h"
-#include "animsimple.h"
 #include "siteswap.h"
 #include "myanimation.h"
 
