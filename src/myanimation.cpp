@@ -276,7 +276,7 @@ QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
       if (rotCount)
       {
         animRotProp = new QPropertyAnimation(aRing, QByteArrayLiteral("rotX"));
-        animRotProp->setDuration(((int)(DELTA_TIME * S_TO_MS)) * (frameCount + 1) / rotCount);
+        animRotProp->setDuration(((int)(DELTA_TIME * S_TO_MS)) * (frameCount) / rotCount);
         animRotProp->setStartValue(360 + RING_PANCAKE_ROTX);
         animRotProp->setEndValue(RING_PANCAKE_ROTX);
         animRotProp->setLoopCount(rotCount);
@@ -314,7 +314,7 @@ QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
       if (rotCount)
       {
         animRotProp = new QPropertyAnimation(aClub, QByteArrayLiteral("rotX"));
-        animRotProp->setDuration(((int)(DELTA_TIME * S_TO_MS)) * (frameCount + 1) / rotCount);
+        animRotProp->setDuration(((int)(DELTA_TIME * S_TO_MS)) * (frameCount) / rotCount);
         animRotProp->setStartValue(360 + CLUB_BASIC_ROTX);
         animRotProp->setEndValue(CLUB_BASIC_ROTX);
         animRotProp->setLoopCount(rotCount);
@@ -357,7 +357,7 @@ QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
       }
       fRotCount = (float)((float)launch / 2.0f);
       animRotProp = new QPropertyAnimation(aClub, QByteArrayLiteral("rotY"));
-      animRotProp->setDuration(((int)(DELTA_TIME * S_TO_MS)) * (frameCount + 1));
+      animRotProp->setDuration(((int)(DELTA_TIME * S_TO_MS)) * (frameCount));
       if (aHand == leftHand)
       {
         animRotProp->setStartValue(rotY + 90);
