@@ -51,7 +51,7 @@ private:
                                        int nextLaunch,
                                        hand aHand);
 
-  hand changeHand(hand aHand){ return (aHand == leftHand) ? rightHand : leftHand; };
+  hand changeHand(hand aHand){return (aHand == leftHand) ? rightHand : leftHand;};
 
 private:
   Juggler *juggler;

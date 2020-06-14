@@ -20,6 +20,9 @@
 
 MyMainWindow::MyMainWindow()
 {
+  QIcon icon = QIcon(APP_ICON);
+  setWindowIcon(icon);
+
   QStringList cmdline_args = QCoreApplication::arguments();
   //    QFile file(cmdline_args[0]);
   settings = new MySettings() ;

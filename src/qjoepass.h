@@ -18,6 +18,9 @@
 #ifndef QJOEPASS_H
 #define QJOEPASS_H
 
+/**************************** App ***************************************/
+#define APP_ICON "://res/images/icone.png"
+
 /**************************** 3D definitions ****************************/
 
 // camera
