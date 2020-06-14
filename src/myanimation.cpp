@@ -142,21 +142,17 @@ QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
   auto animGroup = new QSequentialAnimationGroup();
   QVector3D posProp; // pos where it starts
   QVector3D posFinal; // pos where it should finish
-  // pas besoin ?
-  hand receiveHand; // recieve hand to calculate curve after catch
 
   // odd launches
   if (aHand == leftHand && launch % 2 != 0)
   {
     posProp = aJuggler->getPositionLHint();
     posFinal = aJuggler->getPositionRHext();
-    receiveHand = rightHand;
   }
   if (aHand == rightHand && launch % 2 != 0)
   {
     posProp = aJuggler->getPositionRHint();
     posFinal = aJuggler->getPositionLHext();
-    receiveHand = leftHand;
   }
 
   // even launches
@@ -164,13 +160,11 @@ QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
   {
     posProp = aJuggler->getPositionLHint();
     posFinal = aJuggler->getPositionLHext();
-    receiveHand = leftHand;
   }
   if (aHand == rightHand && launch % 2 == 0)
   {
     posProp = aJuggler->getPositionRHint();
     posFinal = aJuggler->getPositionRHext();
-    receiveHand = rightHand;
   }
 
   // Shannon theorem
