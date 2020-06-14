@@ -58,9 +58,11 @@ public:
   void setRightForearmPosition(float rot);
 
   // getters for hands positions ext to catch, int to launch, med for siteswap 2
+  QVector3D getPositionLHextPlus() const {return posLHextPlus;}; // helico, pancakes
   QVector3D getPositionLHext() const {return posLHext;};
   QVector3D getPositionLHint() const {return posLHint;};
   QVector3D getPositionLHmed() const {return posLHmed;};
+  QVector3D getPositionRHextPlus() const {return posRHextPlus;}; // helico, pancakes
   QVector3D getPositionRHext() const {return posRHext;};
   QVector3D getPositionRHint() const {return posRHint;};
   QVector3D getPositionRHmed() const {return posRHmed;};
@@ -73,9 +75,11 @@ private:
 
   QMatrix4x4 getRotMatrix();
   // setters for hands pos
+  void setPositionLHextPlus(); // for helico, pancakes
   void setPositionLHext();
   void setPositionLHint();
   void setPositionLHmed();
+  void setPositionRHextPlus(); // for helico, pancakes
   void setPositionRHext();
   void setPositionRHint();
   void setPositionRHmed();
@@ -100,9 +104,11 @@ private:
   bool enabled = true;
 
   // handPos
+  QVector3D posLHextPlus; // helico pancake
   QVector3D posLHext;
   QVector3D posLHint;
   QVector3D posLHmed;
+  QVector3D posRHextPlus; // helico pancake
   QVector3D posRHext;
   QVector3D posRHint;
   QVector3D posRHmed;

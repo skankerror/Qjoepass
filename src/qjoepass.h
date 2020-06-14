@@ -41,6 +41,7 @@
 #define HAND_OFFSET_Y 3.75
 #define HAND_OFFSET_Z 1.3
 #define HAND_OFFSET_EXT 0.65
+#define HAND_OFFSET_EXT_PLUS 1.5f // helico pancakes
 #define HAND_OFFSET_INT 0.3
 #define HEAD_POS_Y 5
 #define JUGGLER_METALNESS 0.8

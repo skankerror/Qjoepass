@@ -1,7 +1,5 @@
 voir le frustrum calling
 
-éloigner pancake et helico... ça se cogne en l'air
-
 Pour baisser la taille de l'exe être moins global dans les include
 
 Faire les rebonds pour les balles...

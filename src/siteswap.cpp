@@ -88,7 +88,6 @@ void SiteSwap::setState()
     {
       state.setBit(i, true);
     }
-    qDebug() << state;
     return;
   }
 
@@ -124,5 +123,4 @@ void SiteSwap::setState()
     state.resize(state.size() - 1); // erase last bit
     test = state.testBit(state.size() - 1);
   }
-  qDebug() << state;
 }

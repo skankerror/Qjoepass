@@ -216,6 +216,8 @@ void My3DWindow::createSiteSwap(QVector<int> aVecInt, jugglingProp aPropType, in
     }
   }
 
+  siteSwap->setLaunchType(launchType); // it simplifies our animation
+
   anim->setJuggler(vJuggler.at(0));
   anim->setVBall(vBall);
   anim->setVRing(vRing);

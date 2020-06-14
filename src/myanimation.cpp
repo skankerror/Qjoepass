@@ -21,9 +21,7 @@
 MyAnimation::MyAnimation(QObject *parent)
   : QObject(parent),
     siteswapAnimation(new QParallelAnimationGroup())
-{
-  qDebug() << "dwell time launch 1" << DWELL_TIME_LAUNCH1;
-}
+{}
 
 void MyAnimation::setSiteSwap(SiteSwap *aSiteSwap)
 {
@@ -162,28 +160,44 @@ QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
   QVector3D posProp; // pos where it starts
   QVector3D posFinal; // pos where it should finish
 
+  // bool to know if we need to enlarge our juggling
+  bool isExtPlusCatch = (propType == ring  && siteSwap->getLaunchType() == panCake) ||
+      (propType == club && siteSwap->getLaunchType() == helicopter);
+
   // odd launches
   if (aHand == leftHand && launch % 2 != 0)
   {
     posProp = aJuggler->getPositionLHint();
-    posFinal = aJuggler->getPositionRHext();
+    if (isExtPlusCatch)
+      posFinal = aJuggler->getPositionRHextPlus();
+    else
+      posFinal = aJuggler->getPositionRHext();
   }
   if (aHand == rightHand && launch % 2 != 0)
   {
     posProp = aJuggler->getPositionRHint();
-    posFinal = aJuggler->getPositionLHext();
+    if (isExtPlusCatch)
+      posFinal = aJuggler->getPositionLHextPlus();
+    else
+      posFinal = aJuggler->getPositionLHext();
   }
 
   // even launches
   if (aHand == leftHand && launch % 2 == 0)
   {
     posProp = aJuggler->getPositionLHint();
-    posFinal = aJuggler->getPositionLHext();
+    if (isExtPlusCatch)
+      posFinal = aJuggler->getPositionLHextPlus();
+    else
+      posFinal = aJuggler->getPositionLHext();
   }
   if (aHand == rightHand && launch % 2 == 0)
   {
     posProp = aJuggler->getPositionRHint();
-    posFinal = aJuggler->getPositionRHext();
+    if (isExtPlusCatch)
+      posFinal = aJuggler->getPositionRHextPlus();
+    else
+      posFinal = aJuggler->getPositionRHext();
   }
 
   // Shannon theorem
@@ -191,11 +205,9 @@ QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
   if (launch == 1) // For launch 1 Shannon doesn't work
   {
     arcTime = LAUNCH1_TIME;
-//    qDebug() << "arcTime" << arcTime;
   }
   else // thanks Claude Shannon
     arcTime = ((HAND_PERIOD) / 2) * (launch - (2 * DWELL_RATIO));
-//    arcTime = (ASYNCHRO_TEMPO * launch) - DWELL_TIME;
 
   // we calculate velocity launch
   QVector3D velBall = ((posFinal - posProp) - 0.5 *
@@ -381,11 +393,8 @@ QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
   default: break;
   }
   // Time adjustment if necessary
-//  qDebug() << "anim duration" << DELTA_TIME * frameCount;
-//  qDebug() << "arcTime" << arcTime;
   float decay = arcTime - (DELTA_TIME * frameCount);
   int intDecay = decay * S_TO_MS;
-//  qDebug() << "decay in ms" << intDecay;
   if (intDecay)
     animGroup->addPause(intDecay);
   return animGroup;
@@ -555,10 +564,8 @@ QSequentialAnimationGroup *MyAnimation::dwellAnim(Juggler *aJuggler,
   }
   // time adjustments
   float duration = DELTA_TIME * frameCount;
-//  qDebug() << "dwel duration" << duration;
   float decay = DWELL_TIME - duration;
   int intDecay = (int)(decay * S_TO_MS);
-//  qDebug() << "dwel decay in ms" << intDecay;
   if (intDecay)
     returnAnim->addPause(intDecay);
   return returnAnim;
