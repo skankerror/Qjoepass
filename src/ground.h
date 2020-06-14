@@ -27,7 +27,6 @@ using namespace Qt3DCore;
 using namespace Qt3DExtras;
 using namespace Qt3DRender;
 
-
 class Ground: public QEntity
 {
   Q_OBJECT

@@ -39,8 +39,6 @@ MyMainWindow::MyMainWindow()
   bottomFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
   my3DWindow = new My3DWindow(settings);
-  // hey hey ! // provide keyframe animation property
-  my3DWindow->registerAspect(new Qt3DAnimation::QAnimationAspect());
   container = QWidget::createWindowContainer(my3DWindow);
   QSize screenSize = my3DWindow->screen()->size();
   container->setMinimumSize(QSize(800, 600));

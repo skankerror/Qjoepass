@@ -2,10 +2,7 @@ voir le frustrum calling
 
 éloigner pancake et helico... ça se cogne en l'air
 
-décomposer plus setAnim() c'est trop complexe et utiliser mycurves pour le dwel time aussi
-
 Pour baisser la taille de l'exe être moins global dans les include
 
 Faire les rebonds pour les balles...
 
-ça jongle trop vite

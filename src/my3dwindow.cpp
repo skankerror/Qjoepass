@@ -16,7 +16,6 @@
  */
 
 #include "my3dwindow.h"
-#include <QPropertyAnimation>
 #include <QDebug>
 
 My3DWindow::My3DWindow(MySettings *aSettings)

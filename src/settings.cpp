@@ -16,8 +16,8 @@
  */
 
 #include "settings.h"
-
 #include <QtWidgets>
+
 MySettings::MySettings(QString fileName, QSettings::Format format)
 {
     if( fileName.isEmpty() )
