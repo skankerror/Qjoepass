@@ -187,7 +187,10 @@ QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
   // Shannon theorem
   float arcTime;
   if (launch == 1) // For launch 1 Shannon doesn't work
+  {
     arcTime = LAUNCH1_TIME;
+//    qDebug() << "arcTime" << arcTime;
+  }
   else // thanks Claude Shannon
     arcTime = ((HAND_PERIOD) / 2) * (launch - (2 * DWELL_RATIO));
 
@@ -196,7 +199,8 @@ QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
                        (GRAVITY * arcTime * arcTime)) / arcTime;
 
   // By counting frames we add 1 due to float to integer approx.
-  int frameCount = (int)((arcTime / (DELTA_TIME)) + 1);
+  int frameCount = (int)((arcTime / (DELTA_TIME)) /*+ 1*/);
+//  if (launch == 1) qDebug() << "frameCount" << frameCount;
 
   // We create our curve
   QVector<QVector3D> vParabolic = MyCurves::curveParabolic(velBall, posProp, frameCount);
@@ -222,7 +226,7 @@ QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
   case ball:
     aBall = vBall.at(indexProp);
     // loop creates all our animations for translation
-    for (int i = 0; i <= frameCount; i++)
+    for (int i = 0; i < frameCount; i++)
     {
       auto animBall = new QPropertyAnimation(aBall, QByteArrayLiteral("position"));
       animBall->setDuration((int)(DELTA_TIME * S_TO_MS));
@@ -245,7 +249,7 @@ QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
       aRing->setRotY(rotY + RING_BASIC_ROTY);
 
       // loop creates all our animations for translation
-      for (int i = 0; i <= frameCount; i++)
+      for (int i = 0; i < frameCount; i++)
       {
         auto animRing = new QPropertyAnimation(aRing, QByteArrayLiteral("position"));
         animRing->setDuration((int)(DELTA_TIME * S_TO_MS));
@@ -258,7 +262,7 @@ QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
     case panCake:
       aRing->setRotY(rotY);
       aRing->setRotX(RING_PANCAKE_ROTX);
-      for (int i = 0; i <= frameCount; i++)
+      for (int i = 0; i < frameCount; i++)
       {
         auto animRing = new QPropertyAnimation(aRing, QByteArrayLiteral("position"));
         animRing->setDuration((int)(DELTA_TIME * S_TO_MS));
@@ -296,7 +300,7 @@ QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
     case normalClub:
       aClub->setRotX(CLUB_BASIC_ROTX);
       aClub->setRotY(rotY);
-      for (int i = 0; i <= frameCount; i++)
+      for (int i = 0; i < frameCount; i++)
       {
         auto animClub = new QPropertyAnimation(aClub, QByteArrayLiteral("position"));
         animClub->setDuration((int)(DELTA_TIME * S_TO_MS));
@@ -323,7 +327,7 @@ QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
     case flat:
       aClub->setRotX(CLUB_BASIC_ROTX);
       aClub->setRotY(rotY);
-      for (int i = 0; i <= frameCount; i++)
+      for (int i = 0; i < frameCount; i++)
       {
         auto animClub = new QPropertyAnimation(aClub, QByteArrayLiteral("position"));
         animClub->setDuration((int)(DELTA_TIME * S_TO_MS));
@@ -335,13 +339,13 @@ QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
       break;
 
     case helicopter:
-      // on oriente la massue suivant la main qui lance
+      // we set rotX depending launching hand
       aClub->setRotX(CLUB_HELICOPTER_ROTX);
       if (aHand == leftHand)
         aClub->setRotY(rotY + 90);
       else
         aClub->setRotY(rotY - 90);
-      for (int i = 0; i <= frameCount; i++)
+      for (int i = 0; i < frameCount; i++)
       {
         auto animClub = new QPropertyAnimation(aClub, QByteArrayLiteral("position"));
         animClub->setDuration((int)(DELTA_TIME * S_TO_MS));
@@ -450,7 +454,7 @@ QSequentialAnimationGroup *MyAnimation::dwellAnim(Juggler *aJuggler,
   }
 
   // determine axis for rotation
-  float rotY = juggler->getRotY(); // pas bon en cas d'helico...
+  float rotY = juggler->getRotY();
   QVector3D axisCurve = QVector3D(0, 0, 1);
   QMatrix4x4 rotAxis;
   rotAxis.setToIdentity();
