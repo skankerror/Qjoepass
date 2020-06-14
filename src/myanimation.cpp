@@ -193,14 +193,13 @@ QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
   }
   else // thanks Claude Shannon
     arcTime = ((HAND_PERIOD) / 2) * (launch - (2 * DWELL_RATIO));
+//    arcTime = (ASYNCHRO_TEMPO * launch) - DWELL_TIME;
 
   // we calculate velocity launch
   QVector3D velBall = ((posFinal - posProp) - 0.5 *
                        (GRAVITY * arcTime * arcTime)) / arcTime;
 
-  // By counting frames we add 1 due to float to integer approx.
-  int frameCount = (int)((arcTime / (DELTA_TIME)) /*+ 1*/);
-//  if (launch == 1) qDebug() << "frameCount" << frameCount;
+  int frameCount = (int)((arcTime / (DELTA_TIME)));
 
   // We create our curve
   QVector<QVector3D> vParabolic = MyCurves::curveParabolic(velBall, posProp, frameCount);
@@ -379,6 +378,14 @@ QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
 
   default: break;
   }
+  // Time adjustment if necessary
+//  qDebug() << "anim duration" << DELTA_TIME * frameCount;
+//  qDebug() << "arcTime" << arcTime;
+  float decay = arcTime - (DELTA_TIME * frameCount);
+  int intDecay = decay * S_TO_MS;
+//  qDebug() << "decay in ms" << intDecay;
+  if (intDecay)
+    animGroup->addPause(intDecay);
   return animGroup;
 }
 
@@ -462,7 +469,7 @@ QSequentialAnimationGroup *MyAnimation::dwellAnim(Juggler *aJuggler,
   axisCurve = rotAxis * axisCurve;
 
   // determine number of frames
-  int frameCount = (int)((DWELL_TIME / DELTA_TIME) + 1);
+  int frameCount = (int)((DWELL_TIME / DELTA_TIME));
   // determine angles for each delta animation
   float deltaAngles = (float)(180 / frameCount);
   switch (propType)
@@ -470,7 +477,7 @@ QSequentialAnimationGroup *MyAnimation::dwellAnim(Juggler *aJuggler,
   case ball:
     aBall = vBall.at(indexProp);
     // loop creates all our animations for dwell time
-    for (int i = 0; i <= frameCount; i++)
+    for (int i = 0; i < frameCount; i++)
     {
       dwellAnimation = new QPropertyAnimation(aBall, QByteArrayLiteral("position"));
       dwellAnimation->setDuration((int)(DELTA_TIME * S_TO_MS));
@@ -495,7 +502,7 @@ QSequentialAnimationGroup *MyAnimation::dwellAnim(Juggler *aJuggler,
   case ring:
     aRing = vRing.at(indexProp);
     // loop creates all our animations for dwell time
-    for (int i = 0; i <= frameCount; i++)
+    for (int i = 0; i < frameCount; i++)
     {
       dwellAnimation = new QPropertyAnimation(aRing, QByteArrayLiteral("position"));
       dwellAnimation->setDuration((int)(DELTA_TIME * S_TO_MS));
@@ -520,7 +527,7 @@ QSequentialAnimationGroup *MyAnimation::dwellAnim(Juggler *aJuggler,
   case club:
     aClub = vClub.at(indexProp);
     // loop creates all our animations for dwell time
-    for (int i = 0; i <= frameCount; i++)
+    for (int i = 0; i < frameCount; i++)
     {
       dwellAnimation = new QPropertyAnimation(aClub, QByteArrayLiteral("position"));
       dwellAnimation->setDuration((int)(DELTA_TIME * S_TO_MS));
@@ -544,6 +551,14 @@ QSequentialAnimationGroup *MyAnimation::dwellAnim(Juggler *aJuggler,
     break;
   default: break;
   }
+  // time adjustments
+  float duration = DELTA_TIME * frameCount;
+//  qDebug() << "dwel duration" << duration;
+  float decay = DWELL_TIME - duration;
+  int intDecay = (int)(decay * S_TO_MS);
+//  qDebug() << "dwel decay in ms" << intDecay;
+  if (intDecay)
+    returnAnim->addPause(intDecay);
   return returnAnim;
 }
 
