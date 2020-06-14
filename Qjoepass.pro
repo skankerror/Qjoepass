@@ -24,7 +24,6 @@ INCLUDEPATH += \
   translations
 
 SOURCES += \
-  src/animsimple.cpp \
   src/ground.cpp \
   src/juggler.cpp \
   src/jugglingball.cpp \
@@ -32,6 +31,7 @@ SOURCES += \
   src/light.cpp \
   src/main.cpp \
   src/my3dwindow.cpp \
+  src/myanimation.cpp \
   src/mycurves.cpp \
   src/mymainwindow.cpp \
   src/pirouette.cpp \
@@ -40,13 +40,13 @@ SOURCES += \
   src/siteswap.cpp
 
 HEADERS += \
-  src/animsimple.h \
   src/ground.h \
   src/juggler.h \
   src/jugglingball.h \
   src/jugglingring.h \
   src/light.h \
   src/my3dwindow.h \
+  src/myanimation.h \
   src/mycurves.h \
   src/mymainwindow.h \
   src/pirouette.h \

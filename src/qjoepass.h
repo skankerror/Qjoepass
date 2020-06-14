@@ -86,12 +86,24 @@
 /******************************** Animation *****************************************/
 
 // anim
-#define GRAVITY QVector3D(0, -9.8, 0)
+#define SCALE_FACTOR 5.0f
+#define GRAVITY QVector3D(0,-9.8*SCALE_FACTOR,0)
 #define DELTA_TIME 0.0166667f // in second
-#define TEMPO 0.5f // time between 2 launchs in sec
+//#define TEMPO 0.5f // time between 2 launchs in sec
 //#define DWELL_TIME 0.16666667f // in second
-#define DWELL_TIME 0.2f // in second
-#define DELAY_LAUNCH 300
+//#define DWELL_TIME 0.2f // in second
+//#define DELAY_LAUNCH 300
+  // refact
+#define HAND_PERIOD 0.5f // en secondes
+#define TEMPO_ASYNCHRON HAND_PERIOD/2
+#define DWELL_RATIO 0.68f
+#define DWELL_TIME DWELL_RATIO*HAND_PERIOD // 0.34
+#define EMPTY_TIME HAND_PERIOD-DWELL_TIME // 0.16
+#define LAUNCH1_TIME 0.05f //50ms
+#define DWELL_TIME_LAUNCH1 (HAND_PERIOD/2)-LAUNCH1_TIME // 0.20
+#define S_TO_MS 1000
+// theoreme de Shannon
+// float arcTime = ((HAND_PERIOD)/2) * (launch - (2*DWELL_RATIO))
 
 enum hand{leftHand, rightHand};
 enum jugglingProp{ball, ring, club, propNumb};
