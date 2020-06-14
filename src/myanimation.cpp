@@ -21,7 +21,9 @@
 MyAnimation::MyAnimation(QObject *parent)
   : QObject(parent),
     siteswapAnimation(new QParallelAnimationGroup())
-{}
+{
+  qDebug() << "dwell time launch 1" << DWELL_TIME_LAUNCH1;
+}
 
 void MyAnimation::setSiteSwap(SiteSwap *aSiteSwap)
 {

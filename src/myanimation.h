@@ -70,7 +70,7 @@ private:
 
   QParallelAnimationGroup *siteswapAnimation; // anim global
 
-
+  const float DWELL_TIME_LAUNCH1 = (HAND_PERIOD / 2.0f) - LAUNCH1_TIME;
 };
 
 #endif // MYANIMATION_H
