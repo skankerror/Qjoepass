@@ -34,12 +34,12 @@ class Juggler: public QEntity
              READ position
              WRITE setPosition
              NOTIFY positionChanged)
-  Q_PROPERTY(float leftForearmPosition
-             READ getLeftForearmPosition
-             WRITE setLeftForearmPosition)
-  Q_PROPERTY(float rightForearmPosition
-             READ getRightForearmPosition
-             WRITE setRightForearmPosition)
+  Q_PROPERTY(QVector2D leftHandPosition
+             READ getLeftHandPosition
+             WRITE setLeftHandPosition)
+  Q_PROPERTY(QVector2D rightHandPosition
+             READ getRightHandPosition
+             WRITE setRightHandPosition)
 
 public:
   explicit Juggler(QEntity *aRootEntity,
@@ -52,10 +52,10 @@ public:
   void setPosition(QVector3D aPosition);
   void setSkeletonTransform(Qt3DCore::QTransform *aTransform) {skeletonTransform = aTransform;};
 
-  float getLeftForearmPosition() {return leftForearmPosition;};
-  void setLeftForearmPosition(float rot);
-  float getRightForearmPosition() {return rightForearmPosition;};
-  void setRightForearmPosition(float rot);
+  QVector2D getLeftHandPosition() {return leftHandPosition;};
+  void setLeftHandPosition(QVector2D rot);
+  QVector2D getRightHandPosition() {return rightHandPosition;};
+  void setRightHandPosition(QVector2D rot);
 
   // getters for hands positions ext to catch, int to launch, med for siteswap 2
   QVector3D getPositionLHextPlus() const {return posLHextPlus;}; // helico, pancakes
@@ -117,6 +117,10 @@ private:
   // headPos
   QVector3D posHead;
   QVector3D headLookAt;
+
+
+  QVector2D leftHandPosition;
+  QVector2D rightHandPosition;
 
   void makeMember(QCylinderMesh *aMember,
                        Qt3DCore::QTransform *aMemberTransform,
@@ -202,8 +206,6 @@ private:
     QCylinderMesh *LeftLeg;
     Qt3DCore::QTransform *leftLegTransform;
 
-    float leftForearmPosition;
-    float rightForearmPosition;
 };
 
 #endif // JUGGLER_H

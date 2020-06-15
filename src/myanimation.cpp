@@ -40,6 +40,19 @@ void MyAnimation::setAnim()
   QBitArray state = siteSwap->getState();
   int propNum = 0;
 
+  auto handPauseAnim = new QSequentialAnimationGroup();
+  QParallelAnimationGroup *animTempGroup = new QParallelAnimationGroup();
+
+  auto rightHandAnimation = handAnim(juggler, propNum, 1, rightHand);
+  rightHandAnimation->setLoopCount(-1);
+  animTempGroup->addAnimation(rightHandAnimation);
+
+  handPauseAnim->addPause((HAND_PERIOD / 2) * S_TO_MS);
+  auto leftHandAnimation = handAnim(juggler, propNum, 1, leftHand);
+  handPauseAnim->addAnimation(leftHandAnimation);
+  leftHandAnimation->setLoopCount(-1);
+  animTempGroup->addAnimation(handPauseAnim);
+
   for (int i = 0; i < state.size(); i++) // for each bit in state
   {
     if (state.testBit(i)) // if it's a site launch
@@ -133,12 +146,67 @@ void MyAnimation::setAnim()
       // we add to the anim containing starting pause
       propGlobAnim->addAnimation(propMoveAnim);
       propMoveAnim->setLoopCount(-1);
-      addAnimation(propGlobAnim); // and we add to the global parallel anim
+      animTempGroup->addAnimation(propGlobAnim); // and we add to the global parallel anim
       propNum++;
     }
   }
+  addAnimation(animTempGroup);
 }
 
+QSequentialAnimationGroup *MyAnimation::handAnim(Juggler *aJuggler,
+                                                  int indexProp,
+                                                  int nextLaunch,
+                                                  hand aHand)
+{
+  // set recieve pos
+  QVector2D pos;
+  // set next launch pos
+  QVector2D pos2;
+  auto animGroup = new QSequentialAnimationGroup();
+
+  auto animLeftHandDwell = new QPropertyAnimation(juggler, QByteArrayLiteral("leftHandPosition"));
+  auto animRightHandDwell = new QPropertyAnimation(juggler, QByteArrayLiteral("rightHandPosition"));
+  auto animLeftHandLaunch = new QPropertyAnimation(juggler, QByteArrayLiteral("leftHandPosition"));
+  auto animRightHandLaunch = new QPropertyAnimation(juggler, QByteArrayLiteral("rightHandPosition"));
+
+  float frameCount =  ((HAND_PERIOD) / 2) * (2 - (2 * DWELL_RATIO));
+
+  pos = QVector2D(270,15);
+  pos2 = QVector2D(90,15);
+  if (aHand == leftHand)
+  {
+    animLeftHandDwell->setDuration((int)(DWELL_TIME * S_TO_MS));
+    animLeftHandDwell->setStartValue(pos);
+    animLeftHandDwell->setEndValue(pos2);
+    animLeftHandDwell->setLoopCount(1);
+    animGroup->addAnimation(animLeftHandDwell);
+
+    qDebug() << "hand dwellTime : " << (int)(DWELL_TIME * S_TO_MS);
+
+    animLeftHandLaunch->setDuration((int)(frameCount * S_TO_MS)+1);
+    animLeftHandLaunch->setStartValue(pos2);
+    animLeftHandLaunch->setEndValue(pos2-QVector2D(180,0));
+    animLeftHandLaunch->setLoopCount(1);
+    animGroup->addAnimation(animLeftHandLaunch);
+
+qDebug() << "hand launchTime : " << (int)(frameCount * S_TO_MS);
+  }
+  else
+  {
+    animRightHandDwell->setDuration((int)(DWELL_TIME * S_TO_MS));
+    animRightHandDwell->setStartValue(pos);
+    animRightHandDwell->setEndValue(pos2);
+    animRightHandDwell->setLoopCount(1);
+    animGroup->addAnimation(animRightHandDwell);
+
+    animRightHandLaunch->setDuration((int)(frameCount * S_TO_MS)+1);
+    animRightHandLaunch->setStartValue(pos2);
+    animRightHandLaunch->setEndValue(pos2-QVector2D(180,0));
+    animRightHandLaunch->setLoopCount(1);
+    animGroup->addAnimation(animRightHandLaunch);
+  }
+ return animGroup;
+}
 QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
                                                       int indexProp,
                                                       int launch,
@@ -222,6 +290,7 @@ QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
   float fRotCount; // needed for helicopter
   float rotY; // to handle different positions between normal, flat, helicopter
 
+  qDebug() << "prop launchTime : " << (int)(frameCount * (int)(DELTA_TIME * S_TO_MS));
   switch(propType)
   {
   case ball:
