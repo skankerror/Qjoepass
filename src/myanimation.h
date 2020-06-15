@@ -50,6 +50,10 @@ private:
                                        int indexProp,
                                        int nextLaunch,
                                        hand aHand);
+  QSequentialAnimationGroup* handAnim(Juggler *aJuggler,
+                                      int indexProp,
+                                      int nextLaunch,
+                                      hand aHand);
 
   hand changeHand(hand aHand){return (aHand == leftHand) ? rightHand : leftHand;};
 
