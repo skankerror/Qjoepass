@@ -59,13 +59,13 @@ Juggler::Juggler(QEntity *aRootEntity,
   LeftShoulder = new Qt3DExtras::QSphereMesh();
   leftShoulderTransform = new Qt3DCore::QTransform();
   makeArticulation(LeftShoulder, leftShoulderTransform, aLeftShoulderEntity,
-             QVector3D (1.0f, 6.3f, 0.0f), aRoty);
+                   QVector3D (1.0f, 6.3f, 0.0f), aRoty);
 
   aRightShoulderEntity = new Qt3DCore::QEntity(this);
   RightShoulder = new Qt3DExtras::QSphereMesh();
   rightShoulderTransform = new Qt3DCore::QTransform();
   makeArticulation(RightShoulder, rightShoulderTransform, aRightShoulderEntity,
-             QVector3D (-1.0f, 6.3f, 0.0f), aRoty);
+                   QVector3D (-1.0f, 6.3f, 0.0f), aRoty);
 
   aLeftArmEntity = new Qt3DCore::QEntity(this);
   LeftArm = new Qt3DExtras::QCylinderMesh();
@@ -73,6 +73,7 @@ Juggler::Juggler(QEntity *aRootEntity,
   makeMember(LeftArm,leftArmTransform, aLeftArmEntity,
              QVector3D(0.0f, 0.0f, 0.0f),
              QVector3D(1.0f, 5.55f, 0.0f), aRoty, 1.5f);
+  leftArmMatrix = leftArmTransform->matrix();
 
   aRightArmEntity = new Qt3DCore::QEntity(this);
   RightArm = new Qt3DExtras::QCylinderMesh();
@@ -80,18 +81,19 @@ Juggler::Juggler(QEntity *aRootEntity,
   makeMember(RightArm, rightArmTransform, aRightArmEntity,
              QVector3D(0.0f, 0.0f, 0.0f),
              QVector3D (-1.0f, 5.55f, 0.0f), aRoty, 1.5f);
+  leftArmMatrix = leftArmTransform->matrix();
 
   aLeftElbowEntity = new Qt3DCore::QEntity(this);
   LeftElbow = new Qt3DExtras::QSphereMesh();
   leftElbowTransform = new Qt3DCore::QTransform();
   makeArticulation(LeftElbow, leftElbowTransform, aLeftElbowEntity,
-             QVector3D (1.0f, 4.8f, 0.0f), aRoty);
+                   QVector3D (1.0f, 4.8f, 0.0f), aRoty);
 
   aRightElbowEntity = new Qt3DCore::QEntity(this);
   RightElbow = new Qt3DExtras::QSphereMesh();
   rightElbowTransform = new Qt3DCore::QTransform();
   makeArticulation(RightElbow, rightElbowTransform, aRightElbowEntity,
-             QVector3D (-1.0f, 4.8f, 0.0f), aRoty);
+                   QVector3D (-1.0f, 4.8f, 0.0f), aRoty);
 
   aLeftForearmEntity = new Qt3DCore::QEntity(this);
   LeftForearm = new Qt3DExtras::QCylinderMesh();
@@ -134,13 +136,13 @@ Juggler::Juggler(QEntity *aRootEntity,
   LeftKnee = new Qt3DExtras::QSphereMesh();
   leftKneeTransform = new Qt3DCore::QTransform();
   makeArticulation(LeftKnee, leftKneeTransform, aLeftKneeEntity,
-             QVector3D (0.5f, 2.0f, 0.0f), aRoty);
+                   QVector3D (0.5f, 2.0f, 0.0f), aRoty);
 
   aRightKneeEntity = new Qt3DCore::QEntity(this);
   RightKnee = new Qt3DExtras::QSphereMesh();
   rightKneeTransform = new Qt3DCore::QTransform();
   makeArticulation(RightKnee, rightKneeTransform, aRightKneeEntity,
-             QVector3D (-0.5f, 2.0f, 0.0f), aRoty);
+                   QVector3D (-0.5f, 2.0f, 0.0f), aRoty);
 
   aLeftLegEntity = new Qt3DCore::QEntity(this);
   LeftLeg = new Qt3DExtras::QCylinderMesh();
@@ -162,8 +164,8 @@ Juggler::Juggler(QEntity *aRootEntity,
 
   QEntity::setParent(aRootEntity);
   addComponent(skeletonTransform);
-//  material is not applied on children!
-//  addComponent(skeletonMaterial);
+  //  material is not applied on children!
+  //  addComponent(skeletonMaterial);
   setEnabled(enabled);
 
   // we update hands positions
@@ -171,27 +173,83 @@ Juggler::Juggler(QEntity *aRootEntity,
 
   connect(this, SIGNAL(positionChanged()), this, SLOT(setPositionHands()));
 }
-void Juggler::setLeftHandPosition(QVector2D rot)
+void Juggler::setHandPosition(QVector3D pos)
 {
-  QMatrix4x4 aMatrix = leftForearmMatrix;
-  aMatrix.translate(0.0f, 0.0f, 0.75f);
-  aMatrix.rotate(rot.x(), QVector3D(0.0f, 1.0f, 1.0f));
+  float rot = pos.x();
+  bool hand = pos.z();
+  QMatrix4x4 aMatrix;
+  QVector3D elbowCurve;
+  if (!hand) {
+    elbowCurve = QVector3D(0, 1, 1);
+    aMatrix = leftForearmMatrix;
+  }
+  else {
+    elbowCurve = QVector3D(0, -1, -1);
+    aMatrix = rightForearmMatrix;
+  }
+  QMatrix4x4 rotAxis;
+  rotAxis.setToIdentity();
+  rotAxis.rotate(45, QVector3D(1, 0, 0));
+  elbowCurve = rotAxis * elbowCurve;
+
+  aMatrix.translate(0.0f, -0.74f, 1.06f);
+  aMatrix.rotate(rot, elbowCurve);
+  aMatrix *= rotAxis;
   aMatrix.translate(0.0f, 0.0f, -0.75f);
   leftForearmTransform->setMatrix(aMatrix);
-//  aMatrix.translate(0.0f, -0.1f, 0.8f);
-//  aMatrix.translate(0.0f, 0.0f, 0.75f);
-//  aMatrix.rotate(-45, QVector3D(0.0f, 0.0f, 0.0f));
-//  aMatrix.translate(0.0f, 0.0f, -0.75f);
-//  leftForearmTransform->setMatrix(aMatrix);
+}
+
+void Juggler::setLeftHandPosition(QVector2D rot)
+{
+
+  QVector3D elbowCurve = QVector3D(0, 1, 1);
+  QMatrix4x4 rotAxis;
+  rotAxis.setToIdentity();
+  rotAxis.rotate(90, QVector3D(1, 0, 0));
+  elbowCurve = rotAxis * elbowCurve;
+
+  QMatrix4x4 aMatrix = leftForearmMatrix;
+  aMatrix.rotate(-45, QVector3D(1, 0, 0));
+  aMatrix.translate(0.0f, -1.28f, 0.23f);
+  aMatrix.rotate(rot.x(), elbowCurve);
+  aMatrix.translate(0.0f, 0.0f, -0.75f);
+
+  leftForearmTransform->setMatrix(aMatrix);
+
+
+//  QVector3D shoulderCurve = QVector3D(0 , 1 , 1);
+//  QMatrix4x4 shoulderAxis;
+//  shoulderAxis.setToIdentity();
+//  shoulderAxis.rotate(250, QVector3D(1, 0, 0));
+//  shoulderCurve = shoulderAxis * shoulderCurve;
+//  QMatrix4x4 armMatrix = leftArmMatrix;
+////  armMatrix.rotate(90,0,0,1);
+//  armMatrix.translate(0.0f, 0.75f, 0.0f);
+////  armMatrix *= shoulderAxis;
+//  armMatrix.rotate(rot.x(), shoulderCurve);
+//  armMatrix.translate(0.0f, -0.75f, 0.0f);
+
+//  leftArmTransform->setMatrix(armMatrix);
 }
 
 void Juggler::setRightHandPosition(QVector2D rot)
 {
+
+  QVector3D elbowCurve = QVector3D(0, -1, -1);
+  QMatrix4x4 rotAxis;
+  rotAxis.setToIdentity();
+  rotAxis.rotate(90, QVector3D(1, 0, 0));
+  elbowCurve = rotAxis * elbowCurve;
+
   QMatrix4x4 aMatrix = rightForearmMatrix;
-  aMatrix.translate(0.0f, 0.0f, 0.75f);
-  aMatrix.rotate(rot.x(), QVector3D(0.0f, -1.0f, -1.0f));
+  aMatrix.rotate(-45, QVector3D(1, 0, 0));
+  aMatrix.translate(0.0f, -1.28f, 0.23f);
+  aMatrix.rotate(rot.x(), elbowCurve);
+//  aMatrix *= rotAxis;
   aMatrix.translate(0.0f, 0.0f, -0.75f);
   rightForearmTransform->setMatrix(aMatrix);
+
+
 
 }
 void Juggler::setPosition(QVector3D aPosition)
@@ -315,12 +373,12 @@ void Juggler::setPositionHands()
 }
 
 void Juggler::makeMember(QCylinderMesh *aMember,
-                Qt3DCore::QTransform *aMemberTransform,
-                QEntity *aMemberEntity,
-                QVector3D aRot,
-                QVector3D aTrans,
-                float globalRotation,
-                float length)
+                         Qt3DCore::QTransform *aMemberTransform,
+                         QEntity *aMemberEntity,
+                         QVector3D aRot,
+                         QVector3D aTrans,
+                         float globalRotation,
+                         float length)
 {
 
   aMemberEntity->addComponent(aMember);
@@ -336,7 +394,7 @@ void Juggler::makeMember(QCylinderMesh *aMember,
   aMatrix.rotate(QQuaternion::fromEulerAngles(aRot));
   aMemberTransform->setMatrix(aMatrix);
 
-//  aMemberTransform->setRotation(QQuaternion::fromEulerAngles(aRot));
+  //  aMemberTransform->setRotation(QQuaternion::fromEulerAngles(aRot));
 
 
   aMemberEntity->addComponent(aMemberTransform);
@@ -344,12 +402,12 @@ void Juggler::makeMember(QCylinderMesh *aMember,
 }
 
 void Juggler::makeArticulation(QSphereMesh *aSphere,
-                   Qt3DCore::QTransform *aSphereTransform,
-                   QEntity *aSphereEntity,
-                   QVector3D aTrans,
-                   float globalRotation)
+                               Qt3DCore::QTransform *aSphereTransform,
+                               QEntity *aSphereEntity,
+                               QVector3D aTrans,
+                               float globalRotation)
 {
-//  aSphereTransform->setScale(JUGGLER_SCALE);
+  //  aSphereTransform->setScale(JUGGLER_SCALE);
   aSphere->setRadius(0.1f);
   aSphere->setRings(8);
   aSphere->setSlices(32);

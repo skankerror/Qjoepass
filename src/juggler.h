@@ -40,7 +40,9 @@ class Juggler: public QEntity
   Q_PROPERTY(QVector2D rightHandPosition
              READ getRightHandPosition
              WRITE setRightHandPosition)
-
+  Q_PROPERTY(QVector3D handPosition
+             READ handPosition
+             WRITE setHandPosition)
 public:
   explicit Juggler(QEntity *aRootEntity,
                    float &aRoty,
@@ -56,6 +58,8 @@ public:
   void setLeftHandPosition(QVector2D rot);
   QVector2D getRightHandPosition() {return rightHandPosition;};
   void setRightHandPosition(QVector2D rot);
+  QVector3D handPosition() {return myHandPosition;};
+  void setHandPosition(QVector3D rot);
 
   // getters for hands positions ext to catch, int to launch, med for siteswap 2
   QVector3D getPositionLHextPlus() const {return posLHextPlus;}; // helico, pancakes
@@ -121,6 +125,7 @@ private:
 
   QVector2D leftHandPosition;
   QVector2D rightHandPosition;
+  QVector3D myHandPosition;
 
   void makeMember(QCylinderMesh *aMember,
                        Qt3DCore::QTransform *aMemberTransform,
@@ -155,10 +160,12 @@ private:
     QEntity *aLeftArmEntity;
     QCylinderMesh *LeftArm;
     Qt3DCore::QTransform *leftArmTransform;
+    QMatrix4x4 leftArmMatrix;
 
     QEntity *aRightArmEntity;
     QCylinderMesh *RightArm;
     Qt3DCore::QTransform *rightArmTransform;
+    QMatrix4x4 rightArmMatrix;
 
     QEntity *aRightElbowEntity;
     QSphereMesh *RightElbow;
