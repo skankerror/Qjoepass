@@ -49,7 +49,7 @@
 #define JUGGLER_TRANSLATION_Y -4
 #define HAND_OFFSET_X 0.65
 #define HAND_OFFSET_Y 3.75
-#define HAND_OFFSET_Z 1.3
+#define HAND_OFFSET_Z 1.15
 #define HAND_OFFSET_EXT 0.65
 #define HAND_OFFSET_EXT_PLUS 1.5f // helico pancakes
 #define HAND_OFFSET_INT 0.3
@@ -99,7 +99,7 @@
 #define SCALE_FACTOR 3.28f // for gravity... size of juggler / normal man size (5.9/1.8)
 #define DELTA_TIME 0.015f // in second
 #define HAND_PERIOD 0.7f // in second
-#define DWELL_RATIO 0.68f
+#define DWELL_RATIO 0.6f
 #define LAUNCH1_TIME 0.05f // in second. Must be < HAND_PERIOD/2
 #define GRAVITY QVector3D(0,-9.8f*SCALE_FACTOR,0)
 #define DWELL_TIME DWELL_RATIO*HAND_PERIOD
