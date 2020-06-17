@@ -96,21 +96,21 @@ void SiteSwap::setState()
 
   while (propFoundCount < propCount) // while we haven't found all true sites
   {
-    // verify if site has not already been set
-    if (indexAlreadySet.indexOf(index) == -1)
+    if (index + 1 > state.size())
+      state.resize(index + 1); // we must resize
+    int launch = v_event.at(index % period);
+    if (launch) // if launch is not 0
     {
-      if (index + 1 > state.size())
-        state.resize(index + 1); // we must resize
-      int launch = v_event.at(index % period);
-      if (launch) // if launch is not 0
+      // verify if site has not already been set
+      if (indexAlreadySet.indexOf(index) == -1)
       {
         state.setBit(index, true); // it's a true site
         propFoundCount++; // we found one more
-        if ((index + launch + 1) > state.size())
-          state.resize(index + launch + 1); // we must resize
-        state.setBit(index + launch, false); // it's surely a false
-        indexAlreadySet.append(index + launch); // we declare it as already set
       }
+      if ((index + launch + 1) > state.size())
+        state.resize(index + launch + 1); // we must resize
+      state.setBit(index + launch, false); // it's surely a false
+      indexAlreadySet.append(index + launch); // we declare it as already set
     }
     index++;
   }

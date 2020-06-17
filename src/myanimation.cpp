@@ -234,6 +234,7 @@ QSequentialAnimationGroup *MyAnimation::handAnim(Juggler *aJuggler,
   }
   return animGroup;
 }
+
 QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
                                                       int indexProp,
                                                       int launch,
