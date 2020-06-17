@@ -168,7 +168,7 @@ Juggler::Juggler(QEntity *aRootEntity,
   //  addComponent(skeletonMaterial);
   setEnabled(enabled);
 
-  // we update hands positions
+  // we update hands positions and head
   setPositionHands();
 
   connect(this, SIGNAL(positionChanged()), this, SLOT(setPositionHands()));
@@ -196,7 +196,10 @@ void Juggler::setHandPosition(QVector3D pos)
   aMatrix.rotate(rot, elbowCurve);
   aMatrix *= rotAxis;
   aMatrix.translate(0.0f, 0.0f, -0.75f);
-  leftForearmTransform->setMatrix(aMatrix);
+
+  hand ?
+        leftForearmTransform->setMatrix(aMatrix):
+        rightForearmTransform->setMatrix(aMatrix);
 }
 
 void Juggler::setLeftHandPosition(QVector2D rot)
@@ -217,19 +220,19 @@ void Juggler::setLeftHandPosition(QVector2D rot)
   leftForearmTransform->setMatrix(aMatrix);
 
 
-//  QVector3D shoulderCurve = QVector3D(0 , 1 , 1);
-//  QMatrix4x4 shoulderAxis;
-//  shoulderAxis.setToIdentity();
-//  shoulderAxis.rotate(250, QVector3D(1, 0, 0));
-//  shoulderCurve = shoulderAxis * shoulderCurve;
-//  QMatrix4x4 armMatrix = leftArmMatrix;
-////  armMatrix.rotate(90,0,0,1);
-//  armMatrix.translate(0.0f, 0.75f, 0.0f);
-////  armMatrix *= shoulderAxis;
-//  armMatrix.rotate(rot.x(), shoulderCurve);
-//  armMatrix.translate(0.0f, -0.75f, 0.0f);
+//    QVector3D shoulderCurve = QVector3D(0 , 1 , 1);
+//    QMatrix4x4 shoulderAxis;
+//    shoulderAxis.setToIdentity();
+//    shoulderAxis.rotate(250, QVector3D(1, 0, 0));
+//    shoulderCurve = shoulderAxis * shoulderCurve;
+//    QMatrix4x4 armMatrix = leftArmMatrix;
+//  //  armMatrix.rotate(90,0,0,1);
+//    armMatrix.translate(0.0f, 0.75f, 0.0f);
+//  //  armMatrix *= shoulderAxis;
+//    armMatrix.rotate(rot.x(), shoulderCurve);
+//    armMatrix.translate(0.0f, -0.75f, 0.0f);
 
-//  leftArmTransform->setMatrix(armMatrix);
+//    leftArmTransform->setMatrix(armMatrix);
 }
 
 void Juggler::setRightHandPosition(QVector2D rot)
@@ -245,7 +248,7 @@ void Juggler::setRightHandPosition(QVector2D rot)
   aMatrix.rotate(-45, QVector3D(1, 0, 0));
   aMatrix.translate(0.0f, -1.28f, 0.23f);
   aMatrix.rotate(rot.x(), elbowCurve);
-//  aMatrix *= rotAxis;
+  //  aMatrix *= rotAxis;
   aMatrix.translate(0.0f, 0.0f, -0.75f);
   rightForearmTransform->setMatrix(aMatrix);
 

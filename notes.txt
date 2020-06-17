@@ -4,3 +4,9 @@ Pour baisser la taille de l'exe être moins global dans les include
 
 Faire les rebonds pour les balles...
 
+recréer le bon ordre de widget dans la toolbar pour qu'on puisse tabber bien.
+là ça fait period, period1, launch, camera, puis les autres périodes,
+il faut recréer tous les widgets dans le bon ordre ou trouver la fn qui va bien ?
+
+faire une classe (ou mettre dans siteswap) pour simplifier anim.
+Qui fasse par exemple le trajet complet d'un objet... partir de jugglerId, hand, launch ;

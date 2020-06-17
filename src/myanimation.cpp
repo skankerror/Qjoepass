@@ -155,50 +155,50 @@ void MyAnimation::setAnim()
 
 QSequentialAnimationGroup *MyAnimation::handAnim(Juggler *aJuggler,
                                                  int indexProp,
-                                                 int nextLaunch,
+                                                 int launch,
                                                  hand aHand)
 {
   // start and end rotation <angle,velocity,hand>
-  //  QVector3D pos = QVector3D(270,15,0);
-  //    QVector3D pos2; QVector3D(90,15,0);
+//    QVector3D pos = QVector3D(270,15,0);
+//    QVector3D pos2 = QVector3D(90,15,0);
 
   QVector2D pos = QVector2D(60,15);
   QVector2D pos2 = QVector2D(-60,15);
   auto animGroup = new QSequentialAnimationGroup();
 
-  auto animLeftHandDwell = new QPropertyAnimation(juggler, QByteArrayLiteral("leftHandPosition"));
-  auto animRightHandDwell = new QPropertyAnimation(juggler, QByteArrayLiteral("rightHandPosition"));
-  auto animLeftHandLaunch = new QPropertyAnimation(juggler, QByteArrayLiteral("leftHandPosition"));
-  auto animRightHandLaunch = new QPropertyAnimation(juggler, QByteArrayLiteral("rightHandPosition"));
+  auto animLeftHandDwell = new QPropertyAnimation(aJuggler, QByteArrayLiteral("leftHandPosition"));
+  auto animRightHandDwell = new QPropertyAnimation(aJuggler, QByteArrayLiteral("rightHandPosition"));
+  auto animLeftHandLaunch = new QPropertyAnimation(aJuggler, QByteArrayLiteral("leftHandPosition"));
+  auto animRightHandLaunch = new QPropertyAnimation(aJuggler, QByteArrayLiteral("rightHandPosition"));
 
   float frameCount =  ((HAND_PERIOD) / 2) * (2 - (2 * DWELL_RATIO));
 
-  //  auto animHandDwell = new QPropertyAnimation(juggler, QByteArrayLiteral("handPosition"));
-  //  auto animHandLaunch = new QPropertyAnimation(juggler, QByteArrayLiteral("handPosition"));
+//    auto animHandDwell = new QPropertyAnimation(aJuggler, QByteArrayLiteral("handPosition"));
+//    auto animHandLaunch = new QPropertyAnimation(aJuggler, QByteArrayLiteral("handPosition"));
 
-  //  if (aHand == rightHand) {
-  //    pos.setZ(1);
-  //    pos2.setZ(1);
-  //  }
-  ////  QVector3D pos2 = pos-QVector3D(180,0,0);
+//    if (aHand == rightHand) {
+//      pos.setZ(1);
+//      pos2.setZ(1);
+//    }
+//    QVector3D pos2 = pos-QVector3D(180,0,0);
 
-  //  animHandDwell->setDuration((int)(DWELL_TIME * S_TO_MS));
-  //  animHandDwell->setStartValue(pos);
-  //  animHandDwell->setEndValue(pos2);
-  //  animHandDwell->setLoopCount(1);
-  //  animGroup->addAnimation(animHandDwell);
+//    animHandDwell->setDuration((int)(DWELL_TIME * S_TO_MS));
+//    animHandDwell->setStartValue(pos);
+//    animHandDwell->setEndValue(pos2);
+//    animHandDwell->setLoopCount(1);
+//    animGroup->addAnimation(animHandDwell);
 
-  //  qDebug() << "hand dwellTime : " << (int)(DWELL_TIME * S_TO_MS);
+//    qDebug() << "hand dwellTime : " << (int)(DWELL_TIME * S_TO_MS);
 
-  //  Zauto animHandLaunch = new QPropertyAnimation(juggler, QByteArrayLiteral("handPosition"));
+//    auto animHandLaunch = new QPropertyAnimation(aJuggler, QByteArrayLiteral("handPosition"));
 
-  //  animHandLaunch->setDuration((int)(frameCount * S_TO_MS)+1);
-  //  animHandLaunch->setStartValue(pos2);
-  //  animHandLaunch->setEndValue(pos2-QVector3D(180,0,0));
-  //  animHandLaunch->setLoopCount(1);
-  //  animGroup->addAnimation(animHandLaunch);
+//    animHandLaunch->setDuration((int)(frameCount * S_TO_MS)+1);
+//    animHandLaunch->setStartValue(pos2);
+//    animHandLaunch->setEndValue(pos2-QVector3D(180,0,0));
+//    animHandLaunch->setLoopCount(1);
+//    animGroup->addAnimation(animHandLaunch);
 
-  //  qDebug() << "hand launchTime : " << (int)(frameCount * S_TO_MS);
+//    qDebug() << "hand launchTime : " << (int)(frameCount * S_TO_MS);
 
   if (aHand == leftHand)
   {
@@ -437,7 +437,7 @@ QSequentialAnimationGroup *MyAnimation::parabolicAnim(Juggler *aJuggler,
       break;
 
     case helicopter:
-      // we set rotX depending launching hand
+      // we set rotY depending launching hand
       aClub->setRotX(CLUB_HELICOPTER_ROTX);
       if (aHand == leftHand)
         aClub->setRotY(rotY + 90);
@@ -496,16 +496,26 @@ QSequentialAnimationGroup *MyAnimation::dwellAnim(Juggler *aJuggler,
   QVector3D pos2;
   // set center curve
   QVector3D centerCurve;
+  // bool to know if we need to enlarge our juggling
+  bool isExtPlusCatch = (propType == ring  && siteSwap->getLaunchType() == panCake) ||
+      (propType == club && siteSwap->getLaunchType() == helicopter);
+
   auto returnAnim = new QSequentialAnimationGroup();
 
   if (aHand == leftHand)
   {
-    pos = aJuggler->getPositionLHext();
+    if (isExtPlusCatch)
+      pos = aJuggler->getPositionLHextPlus();
+    else
+      pos = aJuggler->getPositionLHext();
     pos2 = aJuggler->getPositionLHint();
   }
   else
   {
-    pos = aJuggler->getPositionRHext();
+    if (isExtPlusCatch)
+      pos = aJuggler->getPositionRHextPlus();
+    else
+      pos = aJuggler->getPositionRHext();
     pos2 = aJuggler->getPositionRHint();
   }
   centerCurve = (pos + pos2) / 2;
