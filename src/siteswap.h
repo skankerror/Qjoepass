@@ -21,6 +21,7 @@
 #include <QObject>
 #include <QBitArray>
 #include "qjoepass.h"
+#include "animevent.h"
 
 class SiteSwap : public QObject
 {
@@ -41,8 +42,12 @@ public:
   void setLaunchType(int aLaunchType) {launchType = aLaunchType;};
   QBitArray getState() {return state;};
 
+  // For sending datas to animation
+  QVector<AnimEvent* > getAnimEvents(int launchPos, hand handLaunch, int jugLaunchId);
+
 private:
   void setState();
+  hand changeHand(hand aHand){return (aHand == leftHand) ? rightHand : leftHand;};
 
 signals:
 

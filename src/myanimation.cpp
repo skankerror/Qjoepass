@@ -73,75 +73,22 @@ void MyAnimation::setAnim()
 
       // let's go
       (i % 2 == 0) ? launchHand = rightHand : launchHand = leftHand; // i is odd or even
+      // single juggler
+      int jugId = 0;
 
-      auto launchAnim = parabolicAnim(juggler, propNum, launch, launchHand);
-      launchAnim->setLoopCount(1);
-      propMoveAnim->addAnimation(launchAnim);
+      QVector<AnimEvent*> v_animEvent = siteSwap->getAnimEvents(launchPos, launchHand, jugId);
 
-      // search for new site
-      int newLaunchPos = (launch + launchPos) % period;
-
-      // setting the new hand
-      // if launch is odd we change hand
-      hand newLaunchHand;
-      (launch % 2 == 1) ? newLaunchHand = changeHand(launchHand) : newLaunchHand = launchHand;
-      // get new launch to know if it's a 1
-      int newLaunch = siteSwap->at(newLaunchPos);
-
-      // we set dwell animation
-      auto dwellAnimation = dwellAnim(juggler, propNum, newLaunch, newLaunchHand);
-      dwellAnimation->setLoopCount(1);
-      propMoveAnim->addAnimation(dwellAnimation);
-
-      // if we're not on the same site, let's keep on animate
-      while (newLaunchPos != launchPos)
+      for (int i = 0; i < v_animEvent.size(); i++)
       {
-        auto followLaunchAnim = parabolicAnim(juggler, propNum, newLaunch, newLaunchHand);
-        followLaunchAnim->setLoopCount(1);
-        propMoveAnim->addAnimation(followLaunchAnim);
-
-        // is it the other hand ?
-        if (newLaunch % 2 == 1)
-          newLaunchHand = changeHand(newLaunchHand);
-        newLaunchPos = (newLaunch + newLaunchPos) % period;
-        newLaunch = siteSwap->at(newLaunchPos);
-        // set another dwell animation
-        dwellAnimation = dwellAnim(juggler, propNum, newLaunch, newLaunchHand);
-        dwellAnimation->setLoopCount(1);
-        propMoveAnim->addAnimation(dwellAnimation);
-      }
-
-      // now we get back to initial site, if we changed hand, let's do the whole thing again
-      if (newLaunchHand != launchHand)
-      {
-        auto backLaunchAnim = parabolicAnim(juggler, propNum, launch, newLaunchHand);
-        backLaunchAnim->setLoopCount(1);
-        propMoveAnim->addAnimation(backLaunchAnim);
-
-        newLaunchPos = (launch + launchPos) % period;
-        if (launch % 2 == 1)
-          newLaunchHand = changeHand(newLaunchHand);
-        newLaunch = siteSwap->at(newLaunchPos);
-
-        dwellAnimation = dwellAnim(juggler, propNum, newLaunch, newLaunchHand);
+        auto animEvent = v_animEvent.at(i);
+        auto launchAnim = parabolicAnim(juggler, propNum, animEvent->getLaunch(), animEvent->getHandLaunch());
+        launchAnim->setLoopCount(1);
+        propMoveAnim->addAnimation(launchAnim);
+        // dwell
+        auto dwellAnimation = dwellAnim(juggler, propNum, animEvent->getNewLaunch(), animEvent->getHandRecieve());
         dwellAnimation->setLoopCount(1);
         propMoveAnim->addAnimation(dwellAnimation);
 
-        while (newLaunchPos != launchPos)
-        {
-          auto backFollowLaunchAnim = parabolicAnim(juggler, propNum, newLaunch, newLaunchHand);
-          backFollowLaunchAnim->setLoopCount(1);
-          propMoveAnim->addAnimation(backFollowLaunchAnim);
-
-          if (newLaunch % 2 == 1)
-            newLaunchHand = changeHand(newLaunchHand);
-          newLaunchPos = (newLaunch + newLaunchPos) % period;
-          newLaunch = siteSwap->at(newLaunchPos);
-
-          dwellAnimation = dwellAnim(juggler, propNum, newLaunch, newLaunchHand);
-          dwellAnimation->setLoopCount(1);
-          propMoveAnim->addAnimation(dwellAnimation);
-        }
       }
       // we add to the anim containing starting pause
       propGlobAnim->addAnimation(propMoveAnim);
@@ -152,6 +99,7 @@ void MyAnimation::setAnim()
   }
   addAnimation(animTempGroup);
 }
+
 
 QSequentialAnimationGroup *MyAnimation::handAnim(Juggler *aJuggler,
                                                  int indexProp,
@@ -497,7 +445,7 @@ QSequentialAnimationGroup *MyAnimation::dwellAnim(Juggler *aJuggler,
   // set center curve
   QVector3D centerCurve;
   // bool to know if we need to enlarge our juggling
-  bool isExtPlusCatch = (propType == ring  && siteSwap->getLaunchType() == panCake) ||
+  bool isExtPlusCatch = (propType == ring && siteSwap->getLaunchType() == panCake) ||
       (propType == club && siteSwap->getLaunchType() == helicopter);
 
   auto returnAnim = new QSequentialAnimationGroup();

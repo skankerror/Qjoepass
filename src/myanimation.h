@@ -38,6 +38,7 @@ public:
   void setVRing(QVector<JugglingRing *> aVRing) { vRing = aVRing;};
   void setVClub(QVector<Pirouette *> aVClub) {vClub = aVClub;};
   void setSiteSwap(SiteSwap *aSiteSwap);;
+//  void setAnim2();
   void setAnim();
 
 private:
@@ -56,7 +57,7 @@ private:
                                       int launch,
                                       hand aHand);
 
-  hand changeHand(hand aHand){return (aHand == leftHand) ? rightHand : leftHand;};
+  hand changeHand(hand aHand){return (aHand == leftHand) ? rightHand : leftHand;}; // a virer ?
 
 private:
   Juggler *juggler;

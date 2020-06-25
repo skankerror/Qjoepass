@@ -73,6 +73,97 @@ void SiteSwap::setPropType(jugglingProp aProp)
   prop = aProp;
 }
 
+QVector<AnimEvent *> SiteSwap::getAnimEvents(int launchPos, hand handLaunch, int jugLaunchId)
+{
+  // mettre des do while pour simplifier le code
+
+  hand initialHandLaunch = handLaunch; // to keep it
+  int initialLaunchPos = launchPos; // idem
+
+  int launch = v_event.at(launchPos);
+  hand newLaunchHand;
+  (launch % 2 == 1) ? newLaunchHand = changeHand(handLaunch) : newLaunchHand = handLaunch;
+  int newLaunchPos = (launch + launchPos) % period;
+  int newLaunch = v_event.at(newLaunchPos);
+  int newJugId = jugLaunchId; // for single juggler
+
+  auto animEvent = new AnimEvent();
+  animEvent->setLaunch(launch);
+  animEvent->setHandLaunch(handLaunch);
+  animEvent->setHandRecieve(newLaunchHand);
+  animEvent->setJugLaunchId(jugLaunchId);
+  animEvent->setJugRecieveId(newJugId);
+  animEvent->setNewLaunch(newLaunch);
+
+  QVector<AnimEvent *> returnVec;
+  returnVec.append(animEvent);
+
+  // if we're not on the same site, let's keep on animate
+  while (newLaunchPos != initialLaunchPos)
+  {
+    handLaunch = newLaunchHand;
+    launchPos = newLaunchPos;
+    launch = v_event.at(launchPos);
+    (launch % 2 == 1) ? newLaunchHand = changeHand(handLaunch) : newLaunchHand = handLaunch;
+    newLaunchPos = (launch + launchPos) % period;
+    newLaunch = v_event.at(newLaunchPos);
+    jugLaunchId = newJugId;
+    newJugId = jugLaunchId; // for single juggler
+
+    auto animEvent = new AnimEvent();
+    animEvent->setLaunch(launch);
+    animEvent->setHandLaunch(handLaunch);
+    animEvent->setHandRecieve(newLaunchHand);
+    animEvent->setJugLaunchId(jugLaunchId);
+    animEvent->setJugRecieveId(newJugId);
+    animEvent->setNewLaunch(newLaunch);
+    returnVec.append(animEvent);
+  }
+  // now we get back to initial site, if we changed hand, let's do the whole thing again
+  if (newLaunchHand != initialHandLaunch)
+  {
+    handLaunch = newLaunchHand;
+    launchPos = newLaunchPos;
+    launch = v_event.at(launchPos);
+    (launch % 2 == 1) ? newLaunchHand = changeHand(handLaunch) : newLaunchHand = handLaunch;
+    newLaunchPos = (launch + launchPos) % period;
+    newLaunch = v_event.at(newLaunchPos);
+    jugLaunchId = newJugId;
+    newJugId = jugLaunchId; // for single juggler
+
+    auto animEvent = new AnimEvent();
+    animEvent->setLaunch(launch);
+    animEvent->setHandLaunch(handLaunch);
+    animEvent->setHandRecieve(newLaunchHand);
+    animEvent->setJugLaunchId(jugLaunchId);
+    animEvent->setJugRecieveId(newJugId);
+    animEvent->setNewLaunch(newLaunch);
+    returnVec.append(animEvent);
+
+    while (newLaunchPos != initialLaunchPos)
+    {
+      handLaunch = newLaunchHand;
+      launchPos = newLaunchPos;
+      launch = v_event.at(launchPos);
+      (launch % 2 == 1) ? newLaunchHand = changeHand(handLaunch) : newLaunchHand = handLaunch;
+      newLaunchPos = (launch + launchPos) % period;
+      newLaunch = v_event.at(newLaunchPos);
+      jugLaunchId = newJugId;
+      newJugId = jugLaunchId; // for single juggler
+
+      auto animEvent = new AnimEvent();
+      animEvent->setLaunch(launch);
+      animEvent->setHandLaunch(handLaunch);
+      animEvent->setHandRecieve(newLaunchHand);
+      animEvent->setJugLaunchId(jugLaunchId);
+      animEvent->setJugRecieveId(newJugId);
+      animEvent->setNewLaunch(newLaunch);
+      returnVec.append(animEvent);
+    }
+  }
+  return returnVec;
+}
+
 void SiteSwap::setState()
 {
   if (!period) // this shoud not happen
