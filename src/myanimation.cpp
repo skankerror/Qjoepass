@@ -78,9 +78,9 @@ void MyAnimation::setAnim()
 
       QVector<AnimEvent*> v_animEvent = siteSwap->getAnimEvents(launchPos, launchHand, jugId);
 
-      for (int i = 0; i < v_animEvent.size(); i++)
+      for (int j = 0; j < v_animEvent.size(); j++)
       {
-        auto animEvent = v_animEvent.at(i);
+        auto animEvent = v_animEvent.at(j);
         auto launchAnim = parabolicAnim(juggler, propNum, animEvent->getLaunch(), animEvent->getHandLaunch());
         launchAnim->setLoopCount(1);
         propMoveAnim->addAnimation(launchAnim);
@@ -88,7 +88,6 @@ void MyAnimation::setAnim()
         auto dwellAnimation = dwellAnim(juggler, propNum, animEvent->getNewLaunch(), animEvent->getHandRecieve());
         dwellAnimation->setLoopCount(1);
         propMoveAnim->addAnimation(dwellAnimation);
-
       }
       // we add to the anim containing starting pause
       propGlobAnim->addAnimation(propMoveAnim);
