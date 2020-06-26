@@ -476,39 +476,26 @@ QSequentialAnimationGroup *MyAnimation::dwellAnim(Juggler *aJuggler,
   {
     switch (propType)
     {
-    case ball:
+    default: case ball:
       aBall = vBall.at(indexProp);
       dwellAnimation = new QPropertyAnimation(aBall, QByteArrayLiteral("position"));
-      dwellAnimation->setDuration((int)(DWELL_TIME_LAUNCH1 * S_TO_MS));
-      dwellAnimation->setStartValue(pos);
-      dwellAnimation->setEndValue(pos2);
-      // mettre une easing curve ?
-      dwellAnimation->setLoopCount(1);
-      returnAnim->addAnimation(dwellAnimation);
       break;
     case ring:
       aRing = vRing.at(indexProp);
       dwellAnimation = new QPropertyAnimation(aRing, QByteArrayLiteral("position"));
-      dwellAnimation->setDuration((int)(DWELL_TIME_LAUNCH1 * S_TO_MS));
-      dwellAnimation->setStartValue(pos);
-      dwellAnimation->setEndValue(pos2);
-      // mettre une easing curve ?
-      dwellAnimation->setLoopCount(1);
-      returnAnim->addAnimation(dwellAnimation);
       break;
     case club:
       aClub = vClub.at(indexProp);
       dwellAnimation = new QPropertyAnimation(aClub, QByteArrayLiteral("position"));
-      dwellAnimation->setDuration((int)(DWELL_TIME_LAUNCH1 * S_TO_MS));
-      dwellAnimation->setStartValue(pos);
-      dwellAnimation->setEndValue(pos2);
-      // mettre une easing curve ?
-      dwellAnimation->setLoopCount(1);
-      returnAnim->addAnimation(dwellAnimation);
-      break;
-    default:
       break;
     }
+    dwellAnimation->setDuration((int)(DWELL_TIME_LAUNCH1 * S_TO_MS));
+    dwellAnimation->setStartValue(pos);
+    dwellAnimation->setEndValue(pos2);
+    // mettre une easing curve ?
+    dwellAnimation->setLoopCount(1);
+    returnAnim->addAnimation(dwellAnimation);
+
     return returnAnim;
   }
 
@@ -526,83 +513,50 @@ QSequentialAnimationGroup *MyAnimation::dwellAnim(Juggler *aJuggler,
   float deltaAngles = (float)(180 / frameCount);
   switch (propType)
   {
-  case ball:
+  default: case ball:
     aBall = vBall.at(indexProp);
-    // loop creates all our animations for dwell time
-    for (int i = 0; i < frameCount; i++)
-    {
-      dwellAnimation = new QPropertyAnimation(aBall, QByteArrayLiteral("position"));
-      dwellAnimation->setDuration((int)(DELTA_TIME * S_TO_MS));
-      dwellAnimation->setStartValue(pos);
-      // handle rotation stuff
-      QMatrix4x4 rot;
-      rot.setToIdentity();
-      rot.translate(centerCurve);
-      if (aHand == leftHand)
-        rot.rotate(-deltaAngles, axisCurve);
-      else
-        rot.rotate(deltaAngles, axisCurve);
-      rot.translate(-centerCurve);
-      QVector3D posBall2 = rot * pos;
-
-      dwellAnimation->setEndValue(posBall2);
-      dwellAnimation->setLoopCount(1);
-      returnAnim->addAnimation(dwellAnimation);
-      pos = posBall2;
-    }
     break;
   case ring:
     aRing = vRing.at(indexProp);
-    // loop creates all our animations for dwell time
-    for (int i = 0; i < frameCount; i++)
-    {
-      dwellAnimation = new QPropertyAnimation(aRing, QByteArrayLiteral("position"));
-      dwellAnimation->setDuration((int)(DELTA_TIME * S_TO_MS));
-      dwellAnimation->setStartValue(pos);
-      // handle rotation stuff
-      QMatrix4x4 rot;
-      rot.setToIdentity();
-      rot.translate(centerCurve);
-      if (aHand == leftHand)
-        rot.rotate(-deltaAngles, axisCurve);
-      else
-        rot.rotate(deltaAngles, axisCurve);
-      rot.translate(-centerCurve);
-      QVector3D posBall2 = rot * pos;
-
-      dwellAnimation->setEndValue(posBall2);
-      dwellAnimation->setLoopCount(1);
-      returnAnim->addAnimation(dwellAnimation);
-      pos = posBall2;
-    }
     break;
   case club:
     aClub = vClub.at(indexProp);
-    // loop creates all our animations for dwell time
-    for (int i = 0; i < frameCount; i++)
-    {
-      dwellAnimation = new QPropertyAnimation(aClub, QByteArrayLiteral("position"));
-      dwellAnimation->setDuration((int)(DELTA_TIME * S_TO_MS));
-      dwellAnimation->setStartValue(pos);
-      // handle rotation stuff
-      QMatrix4x4 rot;
-      rot.setToIdentity();
-      rot.translate(centerCurve);
-      if (aHand == leftHand)
-        rot.rotate(-deltaAngles, axisCurve);
-      else
-        rot.rotate(deltaAngles, axisCurve);
-      rot.translate(-centerCurve);
-      QVector3D posBall2 = rot * pos;
-
-      dwellAnimation->setEndValue(posBall2);
-      dwellAnimation->setLoopCount(1);
-      returnAnim->addAnimation(dwellAnimation);
-      pos = posBall2;
-    }
     break;
-  default: break;
   }
+  // loop creates all our animations for dwell time
+  for (int i = 0; i < frameCount; i++)
+  {
+    switch (propType)
+    {
+    default: case ball:
+      dwellAnimation = new QPropertyAnimation(aBall, QByteArrayLiteral("position"));
+      break;
+    case ring:
+      dwellAnimation = new QPropertyAnimation(aRing, QByteArrayLiteral("position"));
+      break;
+    case club:
+      dwellAnimation = new QPropertyAnimation(aClub, QByteArrayLiteral("position"));
+      break;
+    }
+    dwellAnimation->setDuration((int)(DELTA_TIME * S_TO_MS));
+    dwellAnimation->setStartValue(pos);
+    // handle rotation stuff
+    QMatrix4x4 rot;
+    rot.setToIdentity();
+    rot.translate(centerCurve);
+    if (aHand == leftHand)
+      rot.rotate(-deltaAngles, axisCurve);
+    else
+      rot.rotate(deltaAngles, axisCurve);
+    rot.translate(-centerCurve);
+    QVector3D posBall2 = rot * pos;
+
+    dwellAnimation->setEndValue(posBall2);
+    dwellAnimation->setLoopCount(1);
+    returnAnim->addAnimation(dwellAnimation);
+    pos = posBall2;
+  }
+
   // time adjustments
   float duration = DELTA_TIME * frameCount;
   float decay = DWELL_TIME - duration;
