@@ -99,7 +99,6 @@ void MyAnimation::setAnim()
   addAnimation(animTempGroup);
 }
 
-
 QSequentialAnimationGroup *MyAnimation::handAnim(Juggler *aJuggler,
                                                  int indexProp,
                                                  int launch,

@@ -43,7 +43,7 @@ public:
   QBitArray getState() {return state;};
 
   // For sending datas to animation
-  QVector<AnimEvent* > getAnimEvents(int launchPos, hand handLaunch, int jugLaunchId);
+  QVector<AnimEvent*> getAnimEvents(int launchPos, hand handLaunch, int jugLaunchId);
 
 private:
   void setState();
