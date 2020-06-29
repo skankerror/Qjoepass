@@ -167,14 +167,14 @@ void MyMainWindow::createToolBar()
   propTypeComboBox->setCurrentIndex(ball);
   periodLabel = new QLabel("period", this);
   periodSpinBox = new QSpinBox(this);
-  periodSpinBox->setMinimum(1);
-  periodSpinBox->setValue(1);
+    periodSpinBox->setMinimum(1);
+    periodSpinBox->setValue(1);
   firstSiteSpinBox = new QSpinBox(this);
-  firstSiteSpinBox->setMinimum(1);
-  firstSiteSpinBox->setValue(3);
+    firstSiteSpinBox->setMinimum(1);
+    firstSiteSpinBox->setValue(3);
   launchPushButton = new QPushButton("launch !", this);
-  launchPushButton->setToolTip("Start animation");
-  launchPushButton->setToolTipDuration(2000);
+    launchPushButton->setToolTip("Start animation");
+    launchPushButton->setToolTipDuration(2000);
   toolBarLayout->addWidget(propLabel);
   toolBarLayout->addWidget(propTypeComboBox);
   toolBarLayout->addWidget(launchPropTypeLabel);
@@ -216,11 +216,17 @@ void MyMainWindow::preferencesDial()
 
 void MyMainWindow::launchSiteSwap()
 {
-  QVector<int> vecInt;
-  vecInt.append(firstSiteSpinBox->value());
+  QVector<SiteswapEvent*> vecEvent;
+  int launch = firstSiteSpinBox->value();
+  auto event = new SiteswapEvent(launch);
+  // paramétrer les autres arguments ici
+  vecEvent.append(event);
   for (int i = 0; i < vSpinBox.size(); i++)
   {
-    vecInt.append(vSpinBox.at(i)->value());
+    launch = vSpinBox.at(i)->value();
+    auto newEvent = new SiteswapEvent(launch);
+    // pareil
+    vecEvent.append(newEvent);
   }
   jugglingProp prop = getPropFromString(propTypeComboBox->currentText());
   int launchType = 0; // normalLaunch
@@ -232,7 +238,7 @@ void MyMainWindow::launchSiteSwap()
   default: break;
   }
 
-  my3DWindow->createSiteSwap(vecInt, prop, launchType, false);
+  my3DWindow->createSiteSwap(vecEvent, prop, launchType, false);
 }
 
 void MyMainWindow::periodChanged(int i)

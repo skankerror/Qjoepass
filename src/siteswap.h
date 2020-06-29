@@ -22,12 +22,14 @@
 #include <QBitArray>
 #include "qjoepass.h"
 #include "animevent.h"
+#include "siteswapevent.h"
 
 class SiteSwap : public QObject
 {
   Q_OBJECT
+
 public:
-  explicit SiteSwap(QVector<int> &aVInt,
+  explicit SiteSwap(QVector<SiteswapEvent *> &aVInt,
                     jugglingProp aProp = ball,
                     bool aSynchron = false,
                     QObject *parent = nullptr);
@@ -35,7 +37,8 @@ public:
   bool isValid() const;
   int getNumProp() const;
   int getPeriod() const {return period;};
-  int at(int i) const {return v_event.at(i);};
+//  int at(int i) const {return v_event.at(i);};
+  int at(int i) const { return v_event.at(i)->getLaunch(); }
   jugglingProp getPropType() const {return prop;};
   void setPropType(jugglingProp aProp);
   int getLaunchType() const {return launchType;};
@@ -52,8 +55,9 @@ private:
 signals:
 
 private:
-  QVector<int> v_event; // without multiplex
+//  QVector<int> v_event; // without multiplex
 //  QVector<QVector<int>> v_v_Event; // with multiplex
+  QVector<SiteswapEvent*> v_event;
   int period;
   bool valid = false;
   bool synchron = false;

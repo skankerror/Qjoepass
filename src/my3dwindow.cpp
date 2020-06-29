@@ -167,9 +167,9 @@ void My3DWindow::createRing(QColor aColor)
   vRing.append(ring);
 }
 
-void My3DWindow::createSiteSwap(QVector<int> aVecInt, jugglingProp aPropType, int launchType, bool someSynchron)
+void My3DWindow::createSiteSwap(QVector<SiteswapEvent*> aVecEvent, jugglingProp aPropType, int launchType, bool someSynchron)
 {
-  SiteSwap *siteSwap = new SiteSwap(aVecInt, aPropType, someSynchron, this);
+  SiteSwap *siteSwap = new SiteSwap(aVecEvent, aPropType, someSynchron, this);
   if (!(siteSwap->isValid()))
   {
     qDebug() << "siteswap is not valid !";

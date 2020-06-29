@@ -38,7 +38,8 @@ SOURCES += \
   src/pirouette.cpp \
   src/preferences.cpp \
   src/settings.cpp \
-  src/siteswap.cpp
+  src/siteswap.cpp \
+  src/siteswapevent.cpp
 
 HEADERS += \
   src/animevent.h \
@@ -55,7 +56,8 @@ HEADERS += \
   src/preferences.h \
   src/qjoepass.h \
   src/settings.h \
-  src/siteswap.h
+  src/siteswap.h \
+  src/siteswapevent.h
 
 TRANSLATIONS += \
     Qjoepass_fr_FR.ts

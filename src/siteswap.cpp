@@ -18,7 +18,7 @@
 #include "siteswap.h"
 #include <QDebug>
 
-SiteSwap::SiteSwap(QVector<int> &aVInt,
+SiteSwap::SiteSwap(QVector<SiteswapEvent*> &aVInt,
                    jugglingProp aProp,
                    bool aSynchron,
                    QObject *parent)
@@ -44,7 +44,7 @@ bool SiteSwap::isValid() const
   for (int i = 0; i < period; i++)
   {
     // we modulo each launch in order to find where this launch will be in next loop
-    int modLaunch = (v_event.at(i) + i) % period;
+    int modLaunch = (at(i) + i) % period;
     // and test to find collision
     if (vTest.indexOf(modLaunch) != -1) // collision
     {
@@ -64,7 +64,7 @@ int SiteSwap::getNumProp() const
 
   int totalLaunch = 0;
   for (int i = 0; i < v_event.size(); i++)
-    totalLaunch += v_event.at(i);
+    totalLaunch += at(i);
   return totalLaunch / period;
 }
 
@@ -80,11 +80,11 @@ QVector<AnimEvent*> SiteSwap::getAnimEvents(int launchPos, hand handLaunch, int 
   hand initialHandLaunch = handLaunch; // to keep it
   int initialLaunchPos = launchPos; // idem
 
-  int launch = v_event.at(launchPos);
+  int launch = at(launchPos);
   hand newLaunchHand;
   (launch % 2 == 1) ? newLaunchHand = changeHand(handLaunch) : newLaunchHand = handLaunch;
   int newLaunchPos = (launch + launchPos) % period;
-  int newLaunch = v_event.at(newLaunchPos);
+  int newLaunch = at(newLaunchPos);
   int newJugId = jugLaunchId; // for single juggler
 
   auto animEvent = new AnimEvent();
@@ -100,10 +100,10 @@ QVector<AnimEvent*> SiteSwap::getAnimEvents(int launchPos, hand handLaunch, int 
   {
     handLaunch = newLaunchHand;
     launchPos = newLaunchPos;
-    launch = v_event.at(launchPos);
+    launch = at(launchPos);
     (launch % 2 == 1) ? newLaunchHand = changeHand(handLaunch) : newLaunchHand = handLaunch;
     newLaunchPos = (launch + launchPos) % period;
-    newLaunch = v_event.at(newLaunchPos);
+    newLaunch = at(newLaunchPos);
     jugLaunchId = newJugId;
     newJugId = jugLaunchId; // for single juggler
 
@@ -144,7 +144,7 @@ void SiteSwap::setState()
   {
     if (index + 1 > state.size())
       state.resize(index + 1); // we must resize
-    int launch = v_event.at(index % period);
+    int launch = at(index % period);
     if (launch) // if launch is not 0
     {
       // verify if site has not already been set
