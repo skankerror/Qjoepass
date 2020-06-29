@@ -61,6 +61,7 @@ public slots:
   void createBall(QColor aColor);
   void createRing(QColor aColor);
   void createSiteSwap(QVector<SiteswapEvent*> aVecEvent,
+                      int aJugCount,
                       jugglingProp aPropType = ball,
                       int launchType = normalBall,
                       bool someSynchron = false);
@@ -104,7 +105,6 @@ private:
 
   MySettings *settings;
 
-//  AnimSimple *anim;
   MyAnimation *anim;
 };
 

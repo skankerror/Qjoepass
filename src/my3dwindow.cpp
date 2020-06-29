@@ -17,6 +17,7 @@
 
 #include "my3dwindow.h"
 #include <QDebug>
+//#include "site
 
 My3DWindow::My3DWindow(MySettings *aSettings)
   : rootEntity(new QEntity()),
@@ -44,7 +45,22 @@ My3DWindow::My3DWindow(MySettings *aSettings)
 /**************************** testing zone ***************************/
 
   // create 1 juggler for testing purpose
-  createJuggler(45, QVector2D(-2, -2), QColor(QRgb(0xFF0000)));
+//  createJuggler(45, QVector2D(-2, -2), QColor(QRgb(0xFF0000)));
+
+  // create 2 jugllers for passing testing
+  createJuggler(90, QVector2D(-7, 0), QColor(QRgb(0xFF0000)));
+  createJuggler(-90, QVector2D(7, 0), QColor(QRgb(0x00FF00)));
+  // create simple passing siteswap
+  QVector<SiteswapEvent*> vecEvent;
+  auto launch1 = new SiteswapEvent(3, 0, 1);
+  auto launch2 = new SiteswapEvent(3, 0, 0);
+  auto launch3 = new SiteswapEvent(3, 0, 0);
+  auto launch4 = new SiteswapEvent(3, 0, 0);
+  vecEvent.append(launch1);
+  vecEvent.append(launch2);
+  vecEvent.append(launch3);
+  vecEvent.append(launch4);
+//  createSiteSwap(vecEvent, 2);
 
 }
 
@@ -167,9 +183,9 @@ void My3DWindow::createRing(QColor aColor)
   vRing.append(ring);
 }
 
-void My3DWindow::createSiteSwap(QVector<SiteswapEvent*> aVecEvent, jugglingProp aPropType, int launchType, bool someSynchron)
+void My3DWindow::createSiteSwap(QVector<SiteswapEvent*> aVecEvent, int aJugCount, jugglingProp aPropType, int launchType, bool someSynchron)
 {
-  SiteSwap *siteSwap = new SiteSwap(aVecEvent, aPropType, someSynchron, this);
+  SiteSwap *siteSwap = new SiteSwap(aVecEvent, aJugCount, aPropType, someSynchron, this);
   if (!(siteSwap->isValid()))
   {
     qDebug() << "siteswap is not valid !";

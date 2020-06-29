@@ -19,13 +19,15 @@
 #include <QDebug>
 
 SiteSwap::SiteSwap(QVector<SiteswapEvent*> &aVInt,
+                   int aJugCount,
                    jugglingProp aProp,
                    bool aSynchron,
                    QObject *parent)
   : QObject(parent),
     v_event(aVInt),
     synchron(aSynchron),
-    prop(aProp)
+    prop(aProp),
+    jugglerCount(aJugCount)
 {
   period = v_event.size();
   valid = isValid();
@@ -79,14 +81,16 @@ QVector<AnimEvent*> SiteSwap::getAnimEvents(int launchPos, hand handLaunch, int 
 
   hand initialHandLaunch = handLaunch; // to keep it
   int initialLaunchPos = launchPos; // idem
+  int initialJugLaunchId = jugLaunchId;
 
   int launch = at(launchPos);
   hand newLaunchHand;
   (launch % 2 == 1) ? newLaunchHand = changeHand(handLaunch) : newLaunchHand = handLaunch;
   int newLaunchPos = (launch + launchPos) % period;
   int newLaunch = at(newLaunchPos);
-  int newJugId = jugLaunchId; // for single juggler
-
+  int newJugId
+      //      = jugLaunchId; // for single juggler
+      = v_event.at(launchPos)->getReceiveJugId();
   auto animEvent = new AnimEvent();
   animEvent->setLaunch(launch);
   animEvent->setHandLaunch(handLaunch);
@@ -96,7 +100,7 @@ QVector<AnimEvent*> SiteSwap::getAnimEvents(int launchPos, hand handLaunch, int 
   animEvent->setNewLaunch(newLaunch);
   returnVec.append(animEvent);
 
-  while (newLaunchPos != initialLaunchPos || newLaunchHand != initialHandLaunch)
+  while (newLaunchPos != initialLaunchPos || newLaunchHand != initialHandLaunch || jugLaunchId != initialJugLaunchId)
   {
     handLaunch = newLaunchHand;
     launchPos = newLaunchPos;
@@ -104,8 +108,15 @@ QVector<AnimEvent*> SiteSwap::getAnimEvents(int launchPos, hand handLaunch, int 
     (launch % 2 == 1) ? newLaunchHand = changeHand(handLaunch) : newLaunchHand = handLaunch;
     newLaunchPos = (launch + launchPos) % period;
     newLaunch = at(newLaunchPos);
-    jugLaunchId = newJugId;
-    newJugId = jugLaunchId; // for single juggler
+    if (jugLaunchId != initialJugLaunchId && newJugId == jugLaunchId)
+      jugLaunchId = 1; // pas beau !
+    else
+      jugLaunchId = newJugId;
+    //    newJugId = jugLaunchId; // for single juggler
+    if (jugLaunchId != initialJugLaunchId) // si c'est l'autre juggler
+      newJugId = 0; // on revient au 1er
+    else
+      newJugId = v_event.at(launchPos)->getReceiveJugId();
 
     auto animEvent = new AnimEvent();
     animEvent->setLaunch(launch);

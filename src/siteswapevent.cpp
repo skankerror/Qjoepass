@@ -18,17 +18,19 @@
 #include "siteswapevent.h"
 
 SiteswapEvent::SiteswapEvent(int aLaunch,
-                             bool multi,
-                             bool pass,
                              int id1,
                              int id2,
+                             bool multi,
                              QObject *parent)
   : QObject(parent),
     launch(aLaunch),
     multiplex(multi),
-    passing(pass),
+//    passing(pass),
     passJugId(id1),
     receiveiJugId(id2)
 {
-
+  if (passJugId != receiveiJugId)
+    setPassing(true);
+  else
+    setPassing(false);
 }

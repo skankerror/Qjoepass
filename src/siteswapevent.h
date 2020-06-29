@@ -26,10 +26,10 @@ class SiteswapEvent : public QObject
 
 public:
   explicit SiteswapEvent(int aLaunch = 0,
-                         bool multi = false,
-                         bool pass = false,
+//                         bool pass = false,
                          int id1 = 0,
                          int id2 = 0,
+                         bool multi = false,
                          QObject *parent = nullptr);
 
 

@@ -238,7 +238,9 @@ void MyMainWindow::launchSiteSwap()
   default: break;
   }
 
-  my3DWindow->createSiteSwap(vecEvent, prop, launchType, false);
+  // en attendant mieux
+  int jugglerCount = 1;
+  my3DWindow->createSiteSwap(vecEvent, jugglerCount, prop, launchType, false);
 }
 
 void MyMainWindow::periodChanged(int i)

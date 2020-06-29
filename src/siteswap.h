@@ -30,6 +30,7 @@ class SiteSwap : public QObject
 
 public:
   explicit SiteSwap(QVector<SiteswapEvent *> &aVInt,
+                    int aJugCount,
                     jugglingProp aProp = ball,
                     bool aSynchron = false,
                     QObject *parent = nullptr);
@@ -55,8 +56,6 @@ private:
 signals:
 
 private:
-//  QVector<int> v_event; // without multiplex
-//  QVector<QVector<int>> v_v_Event; // with multiplex
   QVector<SiteswapEvent*> v_event;
   int period;
   bool valid = false;
@@ -65,6 +64,7 @@ private:
   int launchType;
   QBitArray state;
   int propCount;
+  int jugglerCount;
 
 };
 
