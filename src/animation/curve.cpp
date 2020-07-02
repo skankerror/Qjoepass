@@ -15,13 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "mycurves.h"
+#include "curve.h"
 #include "qjoepass.h"
 
-MyCurves::MyCurves()
+Curves::Curves()
 {}
 
-QVector<QVector3D> MyCurves::curveParabolic(QVector3D &velocity,
+QVector<QVector3D> Curves::curveParabolic(QVector3D &velocity,
                                             QVector3D &startPos,
                                             int &frameCount)
 {

@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MYANIMATION_H
-#define MYANIMATION_H
+#ifndef ANIMATION_H
+#define ANIMATION_H
 
 #include <QObject>
 #include <QPropertyAnimation>
@@ -27,13 +27,13 @@
 #include "pirouette.h"
 #include "siteswap.h"
 
-class MyAnimation : public QParallelAnimationGroup
+class Animation : public QParallelAnimationGroup
 {
   Q_OBJECT
 public:
-  explicit MyAnimation(QObject *parent = nullptr);
+  explicit Animation(QObject *parent = nullptr);
 
-  void setJuggler(Juggler *aJuggler){ juggler = aJuggler;};
+  void setVJuggler(QVector<Juggler*> aVJuggler) { vJuggler = aVJuggler; };
   void setVBall(QVector<JugglingBall *> aVBall) { vBall = aVBall;};
   void setVRing(QVector<JugglingRing *> aVRing) { vRing = aVRing;};
   void setVClub(QVector<Pirouette *> aVClub) {vClub = aVClub;};
@@ -57,7 +57,7 @@ private:
                                       hand aHand);
 
 private:
-  Juggler *juggler;
+  QVector<Juggler*> vJuggler;
   QVector<JugglingBall *> vBall;
   QVector<JugglingRing *> vRing;
   QVector<Pirouette *> vClub;
@@ -67,4 +67,4 @@ private:
 
 };
 
-#endif // MYANIMATION_H
+#endif // ANIMATION_H

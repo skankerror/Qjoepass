@@ -16,9 +16,9 @@
  */
 
 #include <QtWidgets>
-#include "mymainwindow.h"
+#include "mainwindow.h"
 
-MyMainWindow::MyMainWindow()
+MainWindow::MainWindow()
 {
   QIcon icon = QIcon(APP_ICON);
   setWindowIcon(icon);
@@ -73,7 +73,7 @@ MyMainWindow::MyMainWindow()
 
 }
 
-void MyMainWindow::createMenus()
+void MainWindow::createMenus()
 {
   fileMenu = menuBar()->addMenu(tr("&File"));
 
@@ -82,7 +82,7 @@ void MyMainWindow::createMenus()
   newAct = new QAction(newIcon, tr("&New"), this);
   newAct->setShortcuts(QKeySequence::New);
   newAct->setStatusTip(tr("Create a new file"));
-  connect(newAct, &QAction::triggered, this, &MyMainWindow::newFile);
+  connect(newAct, &QAction::triggered, this, &MainWindow::newFile);
   fileMenu->addAction(newAct);
   //    fileToolBar->addAction(newAct);
 
@@ -90,7 +90,7 @@ void MyMainWindow::createMenus()
   openAct = new QAction(openIcon, tr("&Open..."), this);
   openAct->setShortcuts(QKeySequence::Open);
   openAct->setStatusTip(tr("Open an existing file"));
-  connect(openAct, &QAction::triggered, this, &MyMainWindow::open);
+  connect(openAct, &QAction::triggered, this, &MainWindow::open);
   fileMenu->addAction(openAct);
   //    fileToolBar->addAction(openAct);
 
@@ -98,7 +98,7 @@ void MyMainWindow::createMenus()
   saveAct = new QAction(saveIcon, tr("&Save..."), this);
   saveAct->setShortcuts(QKeySequence::Save);
   saveAct->setStatusTip(tr("Save to a file"));
-  connect(saveAct, &QAction::triggered, this, &MyMainWindow::save);
+  connect(saveAct, &QAction::triggered, this, &MainWindow::save);
   fileMenu->addAction(saveAct);
   //    fileToolBar->addAction(saveAct);
 
@@ -106,7 +106,7 @@ void MyMainWindow::createMenus()
   saveAsAct = new QAction(saveAsIcon, tr("&SaveAs..."), this);
   saveAsAct->setShortcuts(QKeySequence::SaveAs);
   saveAsAct->setStatusTip(tr("Save as a new file"));
-  connect(saveAsAct, &QAction::triggered, this, &MyMainWindow::saveAs);
+  connect(saveAsAct, &QAction::triggered, this, &MainWindow::saveAs);
   fileMenu->addAction(saveAsAct);
   //    fileToolBar->addAction(saveAsAct);
 
@@ -127,15 +127,15 @@ void MyMainWindow::createMenus()
   prefShortcut << QKeySequence("Ctrl+P");
   prefAct->setShortcuts(prefShortcut);
   prefAct->setStatusTip(tr("Open preferences dialog"));
-  connect(prefAct, &QAction::triggered, this, &MyMainWindow::preferencesDial);
+  connect(prefAct, &QAction::triggered, this, &MainWindow::preferencesDial);
   editMenu->addAction(prefAct);
 
   helpMenu = menuBar()->addMenu(tr("&Help"));
 
   const QIcon aboutIcon = QIcon::fromTheme("help-about", QIcon(":/images/about.png"));
-  aboutAct = helpMenu->addAction(aboutIcon, tr("&About..."), this,  &MyMainWindow::about);
+  aboutAct = helpMenu->addAction(aboutIcon, tr("&About..."), this,  &MainWindow::about);
   aboutAct->setStatusTip(tr("Show the QjoePass's About box"));
-  connect(aboutAct, &QAction::triggered, this, &MyMainWindow::about);
+  connect(aboutAct, &QAction::triggered, this, &MainWindow::about);
   helpMenu->addAction(aboutAct);
 
   const QIcon aboutQtIcon = QIcon::fromTheme("help-about", QIcon(":/images/about.png"));
@@ -143,7 +143,7 @@ void MyMainWindow::createMenus()
   aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
 }
 
-void MyMainWindow::createToolBar()
+void MainWindow::createToolBar()
 {
   myToolBar = addToolBar("siteswap bar");
 
@@ -208,13 +208,13 @@ void MyMainWindow::createToolBar()
   connect(propTypeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(propTypeChanged(int)));
 
 }
-void MyMainWindow::preferencesDial()
+void MainWindow::preferencesDial()
 {
   pref->setWindowTitle("Preferences");
   pref->show();
 }
 
-void MyMainWindow::launchSiteSwap()
+void MainWindow::launchSiteSwap()
 {
   QVector<SiteswapEvent*> vecEvent;
   int launch = firstSiteSpinBox->value();
@@ -243,7 +243,7 @@ void MyMainWindow::launchSiteSwap()
   my3DWindow->createSiteSwap(vecEvent, jugglerCount, prop, launchType, false);
 }
 
-void MyMainWindow::periodChanged(int i)
+void MainWindow::periodChanged(int i)
 {
   int numSpinBox = vSpinBox.size();
   if (numSpinBox)
@@ -271,7 +271,7 @@ void MyMainWindow::periodChanged(int i)
   }
 }
 
-void MyMainWindow::updateCameraComboBox()
+void MainWindow::updateCameraComboBox()
 {
   cameraComboBox->clear();
   cameraComboBox->addItem("Orbit Camera");
@@ -279,7 +279,7 @@ void MyMainWindow::updateCameraComboBox()
     cameraComboBox->addItem(QString("Juggler %1 view").arg(i + 1));
 }
 
-void MyMainWindow::cameraIndexChanged(int index)
+void MainWindow::cameraIndexChanged(int index)
 {
   if (index == 0)
   {
@@ -293,7 +293,7 @@ void MyMainWindow::cameraIndexChanged(int index)
   my3DWindow->setCameraToFirstPers(index - 1);
 }
 
-void MyMainWindow::propTypeChanged(int index)
+void MainWindow::propTypeChanged(int index)
 {
   launchBallTypeComboBox->hide();
   launchRingTypeComboBox->hide();
@@ -307,14 +307,14 @@ void MyMainWindow::propTypeChanged(int index)
   }
 }
 
-void MyMainWindow::newFile()
+void MainWindow::newFile()
 {
   if (maybeSave()) {
     setCurrentFile(QString());
   }
 }
 
-void MyMainWindow::open()
+void MainWindow::open()
 {
   if (maybeSave()) {
     QString fileName = QFileDialog::getOpenFileName(this);
@@ -323,7 +323,7 @@ void MyMainWindow::open()
   }
 }
 
-bool MyMainWindow::save()
+bool MainWindow::save()
 {
   if (curFile.isEmpty()) {
     return saveAs();
@@ -332,7 +332,7 @@ bool MyMainWindow::save()
   }
 }
 
-bool MyMainWindow::saveAs()
+bool MainWindow::saveAs()
 {
   QFileDialog dialog(this);
   dialog.setWindowModality(Qt::WindowModal);
@@ -342,7 +342,7 @@ bool MyMainWindow::saveAs()
   return saveFile(dialog.selectedFiles().first());
 }
 
-void MyMainWindow::about()
+void MainWindow::about()
 {
   QMessageBox::about(this, tr("About Application"),
                      tr("The <b>Application</b> example demonstrates how to "
@@ -350,7 +350,7 @@ void MyMainWindow::about()
                         "toolbars, and a status bar."));
 }
 
-void MyMainWindow::loadFile(const QString &fileName)
+void MainWindow::loadFile(const QString &fileName)
 {
   QFile file(fileName);
   if (!file.open(QFile::ReadOnly | QFile::Text)) {
@@ -373,7 +373,7 @@ void MyMainWindow::loadFile(const QString &fileName)
   statusBar()->showMessage(tr("File loaded"), 2000);
 }
 
-QString MyMainWindow::getPropToString(const int prop)
+QString MainWindow::getPropToString(const int prop)
 {
   switch (prop)
   {
@@ -384,7 +384,7 @@ QString MyMainWindow::getPropToString(const int prop)
   }
 }
 
-jugglingProp MyMainWindow::getPropFromString(const QString &value)
+jugglingProp MainWindow::getPropFromString(const QString &value)
 {
   if (value == "Ball") return ball;
   else if (value == "Ring") return ring;
@@ -392,7 +392,7 @@ jugglingProp MyMainWindow::getPropFromString(const QString &value)
   else return ball;
 }
 
-bool MyMainWindow::saveFile(const QString &fileName)
+bool MainWindow::saveFile(const QString &fileName)
 {
   QString errorMessage;
 
@@ -421,7 +421,7 @@ bool MyMainWindow::saveFile(const QString &fileName)
   return true;
 }
 
-void MyMainWindow::setCurrentFile(const QString &fileName)
+void MainWindow::setCurrentFile(const QString &fileName)
 {
   curFile = fileName;
   //    textEdit->document()->setModified(false);
@@ -433,12 +433,12 @@ void MyMainWindow::setCurrentFile(const QString &fileName)
   setWindowFilePath(shownName);
 }
 
-void MyMainWindow::documentWasModified()
+void MainWindow::documentWasModified()
 {
   //    setWindowModified(textEdit->document()->isModified());
 }
 
-void MyMainWindow::closeEvent(QCloseEvent *event)
+void MainWindow::closeEvent(QCloseEvent *event)
 {
   if (maybeSave()) {
     //        writeSettings();
@@ -448,7 +448,7 @@ void MyMainWindow::closeEvent(QCloseEvent *event)
   }
 }
 
-bool MyMainWindow::maybeSave()
+bool MainWindow::maybeSave()
 {
   //    if (!textEdit->document()->isModified())
   //        return true;

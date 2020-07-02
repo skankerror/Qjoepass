@@ -29,7 +29,7 @@
 #include "jugglingball.h"
 #include "jugglingring.h"
 #include "siteswap.h"
-#include "myanimation.h"
+#include "animation.h"
 
 using namespace Qt3DCore;
 using namespace Qt3DRender;
@@ -105,7 +105,7 @@ private:
 
   MySettings *settings;
 
-  MyAnimation *anim;
+  Animation *anim;
 };
 
 #endif // MY3DWINDOW_H

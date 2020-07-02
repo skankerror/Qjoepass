@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "mymainwindow.h"
+#include "mainwindow.h"
 
 #include <QApplication>
 #include <QCommandLineParser>
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
 
       app.setStyleSheet(styleSheet);
 
-  MyMainWindow mainWin;
+  MainWindow mainWin;
 //  if (!parser.positionalArguments().isEmpty())
 //      mainWin.loadFile(parser.positionalArguments().first());
   mainWin.show();

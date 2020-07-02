@@ -15,16 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MYCURVES_H
-#define MYCURVES_H
+#ifndef CURVES_H
+#define CURVES_H
 
 #include <QVector>
 #include <QVector3D>
 
-class MyCurves
+class Curves
 {
 public:
-  MyCurves();
+  Curves();
 
   static QVector<QVector3D> curveParabolic(QVector3D &velocity,
                                            QVector3D &startPos,
@@ -32,4 +32,4 @@ public:
 
 };
 
-#endif // MYCURVES_H
+#endif // CURVES_H

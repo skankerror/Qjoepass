@@ -35,19 +35,24 @@ public:
                     bool aSynchron = false,
                     QObject *parent = nullptr);
 
+  //  int at(int i) const {return v_event.at(i);};
+  int at(int i) const { return v_event.at(i)->getLaunch(); }
+
+  // getters
   bool isValid() const;
   int getNumProp() const;
   int getPeriod() const {return period;};
-//  int at(int i) const {return v_event.at(i);};
-  int at(int i) const { return v_event.at(i)->getLaunch(); }
   jugglingProp getPropType() const {return prop;};
-  void setPropType(jugglingProp aProp);
   int getLaunchType() const {return launchType;};
-  void setLaunchType(int aLaunchType) {launchType = aLaunchType;};
   QBitArray getState() {return state;};
-
+  int getJugglerCount() const { return jugglerCount; };
   // For sending datas to animation
   QVector<AnimEvent*> getAnimEvents(int launchPos, hand handLaunch, int jugLaunchId);
+
+  // setters
+  void setPropType(jugglingProp aProp);
+  void setLaunchType(int aLaunchType) {launchType = aLaunchType;};
+
 
 private:
   void setState();

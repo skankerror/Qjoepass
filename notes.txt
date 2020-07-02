@@ -8,5 +8,9 @@ recréer le bon ordre de widget dans la toolbar pour qu'on puisse tabber bien.
 là ça fait period, period1, launch, camera, puis les autres périodes,
 il faut recréer tous les widgets dans le bon ordre ou trouver la fn qui va bien ?
 
-faire une classe (ou mettre dans siteswap) pour simplifier anim.
-Qui fasse par exemple le trajet complet d'un objet... partir de jugglerId, hand, launch ;
+gérer le retard lié au state dans animevent ?
+
+Faire une classe propAnim, qui hérite de QSequentialAnimGroup qui gère tout le trajet
+propAnim contient un delay, puis une anim sequential qui tourne en boucle
+donc on doit lui envoyer vjug, vprop...
+Et dans siteswap remplacer getAnimEvent par cet objet. dans un vec pour chaque balle ?

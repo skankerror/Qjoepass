@@ -68,6 +68,7 @@ int SiteSwap::getNumProp() const
   for (int i = 0; i < v_event.size(); i++)
     totalLaunch += at(i);
   return totalLaunch / period;
+  // faut le multiplier par le nombre de jongleurs
 }
 
 void SiteSwap::setPropType(jugglingProp aProp)

@@ -21,43 +21,47 @@ DEFINES -= UNICODE
 
 INCLUDEPATH += \
   src \
+  src/3d \
+  src/animation \
+  src/gui \
+  src/siteswap \
   translations
 
 SOURCES += \
-  src/animevent.cpp \
-  src/ground.cpp \
-  src/juggler.cpp \
-  src/jugglingball.cpp \
-  src/jugglingring.cpp \
-  src/light.cpp \
+  src/3d/3dwindow.cpp \
+  src/animation/animation.cpp \
+  src/animation/animevent.cpp \
+  src/animation/curve.cpp \
+  src/3d/ground.cpp \
+  src/3d/juggler.cpp \
+  src/3d/jugglingball.cpp \
+  src/3d/jugglingring.cpp \
+  src/3d/light.cpp \
   src/main.cpp \
-  src/my3dwindow.cpp \
-  src/myanimation.cpp \
-  src/mycurves.cpp \
-  src/mymainwindow.cpp \
-  src/pirouette.cpp \
-  src/preferences.cpp \
-  src/settings.cpp \
-  src/siteswap.cpp \
-  src/siteswapevent.cpp
+  src/gui/mainwindow.cpp \
+  src/3d/pirouette.cpp \
+  src/gui/preferences.cpp \
+  src/gui/settings.cpp \
+  src/siteswap/siteswap.cpp \
+  src/siteswap/siteswapevent.cpp
 
 HEADERS += \
-  src/animevent.h \
-  src/ground.h \
-  src/juggler.h \
-  src/jugglingball.h \
-  src/jugglingring.h \
-  src/light.h \
-  src/my3dwindow.h \
-  src/myanimation.h \
-  src/mycurves.h \
-  src/mymainwindow.h \
-  src/pirouette.h \
-  src/preferences.h \
+  src/3d/3dwindow.h \
+  src/animation/animation.h \
+  src/animation/animevent.h \
+  src/animation/curve.h \
+  src/3d/ground.h \
+  src/3d/juggler.h \
+  src/3d/jugglingball.h \
+  src/3d/jugglingring.h \
+  src/3d/light.h \
+  src/gui/mainwindow.h \
+  src/3d/pirouette.h \
+  src/gui/preferences.h \
   src/qjoepass.h \
-  src/settings.h \
-  src/siteswap.h \
-  src/siteswapevent.h
+  src/gui/settings.h \
+  src/siteswap/siteswap.h \
+  src/siteswap/siteswapevent.h
 
 TRANSLATIONS += \
     Qjoepass_fr_FR.ts

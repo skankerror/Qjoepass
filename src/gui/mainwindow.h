@@ -15,14 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MYMAINWINDOW_H
-#define MYMAINWINDOW_H
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
 #include <QMainWindow>
 #include <QtWidgets>
 #include "settings.h"
 #include "preferences.h"
-#include "my3dwindow.h"
+#include "3dwindow.h"
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -31,12 +31,12 @@ class QLabel;
 class QMenu;
 QT_END_NAMESPACE
 
-class MyMainWindow : public QMainWindow
+class MainWindow : public QMainWindow
 {
   Q_OBJECT
 
 public:
-  MyMainWindow();
+  MainWindow();
   void loadFile(const QString &fileName);
 
   static QString getPropToString(const int prop);
@@ -111,4 +111,4 @@ private:
     QComboBox *cameraComboBox;
 
 };
-#endif // MYMAINWINDOW_H
+#endif // MAINWINDOW_H

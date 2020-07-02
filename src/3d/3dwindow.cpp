@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "my3dwindow.h"
+#include "3dwindow.h"
 #include <QDebug>
 //#include "site
 
@@ -27,7 +27,7 @@ My3DWindow::My3DWindow(MySettings *aSettings)
     sphereMesh(new QSphereMesh()),
     torusMesh(new QTorusMesh()),
     settings(aSettings),
-    anim(new MyAnimation())
+    anim(new Animation())
 {
   // Root entity, root object of the scene
   setRootEntity(rootEntity);
@@ -51,15 +51,15 @@ My3DWindow::My3DWindow(MySettings *aSettings)
   createJuggler(90, QVector2D(-7, 0), QColor(QRgb(0xFF0000)));
   createJuggler(-90, QVector2D(7, 0), QColor(QRgb(0x00FF00)));
   // create simple passing siteswap
-  QVector<SiteswapEvent*> vecEvent;
-  auto launch1 = new SiteswapEvent(3, 0, 1);
-  auto launch2 = new SiteswapEvent(3, 0, 0);
-  auto launch3 = new SiteswapEvent(3, 0, 0);
-  auto launch4 = new SiteswapEvent(3, 0, 0);
-  vecEvent.append(launch1);
-  vecEvent.append(launch2);
-  vecEvent.append(launch3);
-  vecEvent.append(launch4);
+//  QVector<SiteswapEvent*> vecEvent;
+//  auto launch1 = new SiteswapEvent(3, 0, 1);
+//  auto launch2 = new SiteswapEvent(3, 0, 0);
+//  auto launch3 = new SiteswapEvent(3, 0, 0);
+//  auto launch4 = new SiteswapEvent(3, 0, 0);
+//  vecEvent.append(launch1);
+//  vecEvent.append(launch2);
+//  vecEvent.append(launch3);
+//  vecEvent.append(launch4);
 //  createSiteSwap(vecEvent, 2);
 
 }
@@ -236,7 +236,7 @@ void My3DWindow::createSiteSwap(QVector<SiteswapEvent*> aVecEvent, int aJugCount
 
   siteSwap->setLaunchType(launchType); // it simplifies our animation
 
-  anim->setJuggler(vJuggler.at(0));
+  anim->setVJuggler(vJuggler);
   anim->setVBall(vBall);
   anim->setVRing(vRing);
   anim->setVClub(vPirouette);
