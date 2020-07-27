@@ -57,6 +57,7 @@ private:
                                       hand aHand);
 
 private:
+  QPropertyAnimation* handPropAnim(Juggler *aJuggler, hand aHand, bool motion);
   QVector<Juggler*> vJuggler;
   QVector<JugglingBall *> vBall;
   QVector<JugglingRing *> vRing;
@@ -64,7 +65,6 @@ private:
   SiteSwap *siteSwap;
   jugglingProp propType;
   int period;
-
 };
 
 #endif // ANIMATION_H

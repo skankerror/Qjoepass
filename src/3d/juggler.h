@@ -34,15 +34,12 @@ class Juggler: public QEntity
              READ position
              WRITE setPosition
              NOTIFY positionChanged)
-  Q_PROPERTY(QVector2D leftHandPosition
+  Q_PROPERTY(QVector3D leftHandPosition
              READ getLeftHandPosition
              WRITE setLeftHandPosition)
-  Q_PROPERTY(QVector2D rightHandPosition
+  Q_PROPERTY(QVector3D rightHandPosition
              READ getRightHandPosition
              WRITE setRightHandPosition)
-  Q_PROPERTY(QVector3D handPosition
-             READ handPosition
-             WRITE setHandPosition)
 public:
   explicit Juggler(QEntity *aRootEntity,
                    float &aRoty,
@@ -54,10 +51,10 @@ public:
   void setPosition(QVector3D aPosition);
   void setSkeletonTransform(Qt3DCore::QTransform *aTransform) {skeletonTransform = aTransform;};
 
-  QVector2D getLeftHandPosition() {return leftHandPosition;};
-  void setLeftHandPosition(QVector2D rot);
-  QVector2D getRightHandPosition() {return rightHandPosition;};
-  void setRightHandPosition(QVector2D rot);
+  QVector3D getLeftHandPosition() {return leftHandPosition;};
+  void setLeftHandPosition(QVector3D pos);
+  QVector3D getRightHandPosition() {return rightHandPosition;};
+  void setRightHandPosition(QVector3D pos);
   QVector3D handPosition() {return myHandPosition;};
   void setHandPosition(QVector3D rot);
 
@@ -123,8 +120,8 @@ private:
   QVector3D headLookAt;
 
 
-  QVector2D leftHandPosition;
-  QVector2D rightHandPosition;
+  QVector3D leftHandPosition;
+  QVector3D rightHandPosition;
   QVector3D myHandPosition;
 
   void makeMember(QCylinderMesh *aMember,
