@@ -21,6 +21,7 @@
 #include <Qt3DCore>
 #include <Qt3DRender>
 #include <Qt3DExtras>
+#include <Qt3DAnimation> // for skeleton test
 #include "settings.h"
 #include "juggler.h"
 #include "light.h"
@@ -30,10 +31,13 @@
 #include "jugglingring.h"
 #include "siteswap.h"
 #include "animation.h"
+#include "skeleton.h"
 
 using namespace Qt3DCore;
 using namespace Qt3DRender;
 using namespace Qt3DExtras;
+using namespace Qt3DAnimation; // for skeleton test
+
 
 class My3DWindow: public Qt3DWindow
 {
@@ -90,6 +94,9 @@ private:
 
   // juggler
   QVector<Juggler *> vJuggler;
+
+  // skeleton test
+//  Skeleton *mySkeleton;
 
   // club
   QMesh *pirouetteMesh;

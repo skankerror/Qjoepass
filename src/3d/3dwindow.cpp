@@ -17,10 +17,10 @@
 
 #include "3dwindow.h"
 #include <QDebug>
-//#include "site
 
 My3DWindow::My3DWindow(MySettings *aSettings)
-  : rootEntity(new QEntity()),
+  : Qt3DWindow(nullptr, Qt3DRender::API::RHI),
+    rootEntity(new QEntity()),
     skybox(new QSkyboxEntity()),
     pointLight(new QPointLight()),
     pirouetteMesh(new QMesh()),
@@ -31,6 +31,10 @@ My3DWindow::My3DWindow(MySettings *aSettings)
 {
   // Root entity, root object of the scene
   setRootEntity(rootEntity);
+
+  registerAspect(new QAnimationAspect());
+
+
 
   //background
   QColor colorBG = settings->value("world/colorbg").value<QColor>();
@@ -50,18 +54,40 @@ My3DWindow::My3DWindow(MySettings *aSettings)
   // create 2 jugllers for passing testing
   createJuggler(90, QVector2D(-7, 0), QColor(QRgb(0xFF0000)));
   createJuggler(-90, QVector2D(7, 0), QColor(QRgb(0x00FF00)));
-  // create simple passing siteswap
-//  QVector<SiteswapEvent*> vecEvent;
-//  auto launch1 = new SiteswapEvent(3, 0, 1);
-//  auto launch2 = new SiteswapEvent(3, 0, 0);
-//  auto launch3 = new SiteswapEvent(3, 0, 0);
-//  auto launch4 = new SiteswapEvent(3, 0, 0);
-//  vecEvent.append(launch1);
-//  vecEvent.append(launch2);
-//  vecEvent.append(launch3);
-//  vecEvent.append(launch4);
-//  createSiteSwap(vecEvent, 2);
 
+/************************ skeleton test ******************************/
+//  auto aSkeleton = new QSkeleton(rootEntity);
+//  mySkeleton = new Skeleton();
+//  mySkeleton->setSource(QUrl(QStringLiteral("qrc:mesh/res/mesh/Robot/robot.gltf")));
+//  mySkeleton->QNode::setParent(rootEntity);
+//  mySkeleton = new Skeleton();
+//  mySkeleton->setSource(QUrl(QStringLiteral("qrc://mesh/res/mesh/out.gltfcacaboudin")));
+
+//  mySkeleton->setEnabled(true);
+//  mySkeleton->setCreateJointsEnabled(true);
+////  auto rootJoint = mySkeleton->rootJoint();
+//  qDebug() << mySkeleton->source();
+//  qDebug() << mySkeleton->status();
+//  qDebug() << mySkeleton->isCreateJointsEnabled();
+//  qDebug() << rootJoint;
+//  qDebug() << rootJoint->childJoints();
+
+//  auto myJuggler = vJuggler.at(0);
+
+ // essayer tout ça dans juggler...
+//  auto aSkeleton = new QSkeleton();
+
+//  auto anArmature = new QArmature();
+//  auto rootJoint = new QJoint();
+//  aSkeleton->setRootJoint(rootJoint);
+//  anArmature->setSkeleton(aSkeleton);
+//  auto aJoint = new QJoint();
+//  rootJoint->addChildJoint(aJoint);
+//  myJuggler->addComponent(anArmature);
+//  anArmature->setEnabled(true);
+//  qDebug() << aSkeleton->jointCount();
+//  qDebug() << anArmature->childNodes();
+//  qDebug() << rootJoint->childJoints();
 }
 
 void My3DWindow::createCam()

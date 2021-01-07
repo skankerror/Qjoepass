@@ -29,6 +29,7 @@ INCLUDEPATH += \
 
 SOURCES += \
   src/3d/3dwindow.cpp \
+  src/3d/skeleton.cpp \
   src/animation/animation.cpp \
   src/animation/animevent.cpp \
   src/animation/curve.cpp \
@@ -47,6 +48,7 @@ SOURCES += \
 
 HEADERS += \
   src/3d/3dwindow.h \
+  src/3d/skeleton.h \
   src/animation/animation.h \
   src/animation/animevent.h \
   src/animation/curve.h \

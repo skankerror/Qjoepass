@@ -41,7 +41,7 @@ void Animation::setAnim()
   int propNum = 0;
 
   auto handPauseAnim = new QSequentialAnimationGroup();
-  QParallelAnimationGroup *animTempGroup = new QParallelAnimationGroup();
+  auto animTempGroup = new QParallelAnimationGroup();
 
   auto rightHandAnimation = handAnim(vJuggler.at(0), propNum, 1, rightHand);
   rightHandAnimation->setLoopCount(-1);
@@ -165,6 +165,8 @@ QSequentialAnimationGroup *Animation::handAnim(Juggler *aJuggler,
   // start and end rotation <angle,velocity,hand>
 //    QVector3D pos = QVector3D(270,15,0);
 //    QVector3D pos2 = QVector3D(90,15,0);
+  Q_UNUSED(indexProp)
+  Q_UNUSED(launch)
 
   QVector2D pos = QVector2D(60,15);
   QVector2D pos2 = QVector2D(-60,15);
@@ -312,9 +314,9 @@ QSequentialAnimationGroup *Animation::parabolicAnim(Juggler *aJuggler, // mettre
   Pirouette *aClub;
 
   // for ring or club rotation we have to create 3 more anims
-  QParallelAnimationGroup *animTempGroup = new QParallelAnimationGroup();
+  auto animTempGroup = new QParallelAnimationGroup();
   QPropertyAnimation *animRotProp;
-  QSequentialAnimationGroup *animTranslationGroup = new QSequentialAnimationGroup();
+  auto animTranslationGroup = new QSequentialAnimationGroup();
 
   // declare them in case we need
   int launchType; // normal, flat, pancake ??

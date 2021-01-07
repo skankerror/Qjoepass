@@ -47,6 +47,8 @@ public:
   QBitArray getState() {return state;};
   int getJugglerCount() const { return jugglerCount; };
   // For sending datas to animation
+  // ici faire getPropAnim avec tout le trajet de toutes les balles
+  // un QVector<QSequentialAnimationGroup*> suffira
   QVector<AnimEvent*> getAnimEvents(int launchPos, hand handLaunch, int jugLaunchId);
 
   // setters
