@@ -31,7 +31,6 @@
 #include "jugglingring.h"
 #include "siteswap.h"
 #include "animation.h"
-#include "skeleton.h"
 
 using namespace Qt3DCore;
 using namespace Qt3DRender;

@@ -99,8 +99,8 @@
 #define SCALE_FACTOR 3.28f // for gravity... size of juggler / normal man size (5.9/1.8)
 #define DELTA_TIME 0.015f // in second
 #define HAND_PERIOD 0.7f // in second
-#define DWELL_RATIO 0.6f
-#define LAUNCH1_TIME 0.05f // in second. Must be < HAND_PERIOD/2
+#define DWELL_RATIO 0.6f // seems to be dwell average of a good juggler
+#define LAUNCH1_TIME 0.05f // in second. First launch. Must be < HAND_PERIOD/2
 #define GRAVITY QVector3D(0,-9.8f*SCALE_FACTOR,0)
 #define DWELL_TIME DWELL_RATIO*HAND_PERIOD
 #define EMPTY_TIME HAND_PERIOD-DWELL_TIME

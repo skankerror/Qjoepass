@@ -126,7 +126,6 @@ void Juggler::createHead()
   //skeleton test
   headJoint = new QJoint(aHeadEntity);
   headJoint->setEnabled(true);
-//  headJoint->setParent(rootJoint);
   headJoint->setName("head_joint");
   headJoint->setInverseBindMatrix(headMatrix);
   rootJoint->addChildJoint(headJoint);
@@ -463,7 +462,6 @@ void Juggler::makeMember(QCylinderMesh *aMember,
   aMemberTransform->setMatrix(aMatrix);
 
   //  aMemberTransform->setRotation(QQuaternion::fromEulerAngles(aRot));
-
 
   aMemberEntity->addComponent(aMemberTransform);
   aMemberEntity->addComponent(jugglerMetalRoughMaterial);

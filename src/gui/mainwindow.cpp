@@ -27,10 +27,10 @@ MainWindow::MainWindow()
   //    QFile file(cmdline_args[0]);
   settings = new MySettings() ;
 
-  QWidget *widget = new QWidget;
+  auto widget = new QWidget;
   setCentralWidget(widget);
 
-  QWidget *topFiller = new QWidget;
+  auto topFiller = new QWidget;
   topFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
   infoLabel = new QLabel(tr("<i>Choose a menu option, or right-click to "
@@ -38,7 +38,7 @@ MainWindow::MainWindow()
   infoLabel->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
   infoLabel->setAlignment(Qt::AlignCenter);
 
-  QWidget *bottomFiller = new QWidget;
+  auto bottomFiller = new QWidget;
   bottomFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
   my3DWindow = new My3DWindow(settings);
@@ -47,7 +47,7 @@ MainWindow::MainWindow()
   container->setMinimumSize(QSize(WIDGET3D_MIN_W, WIDGET3D_MIN_H));
   container->setMaximumSize(screenSize);
 
-  QVBoxLayout *layout = new QVBoxLayout;
+  auto layout = new QVBoxLayout;
   //  layout->setContentsMargins(1, 1, 1, 1);
   //  layout->addWidget(topFiller);
   //  layout->addWidget(infoLabel);

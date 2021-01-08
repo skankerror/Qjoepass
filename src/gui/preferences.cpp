@@ -29,15 +29,15 @@ Preferences::Preferences(MySettings *aSettings, QWidget *parent)
 
   QVBoxLayout *mainLayout = new QVBoxLayout;
 
-  QLabel *colorLabel = new QLabel(tr("Background:"));
-  QPushButton *colorButton = new QPushButton("Change Color...", this);
+  auto colorLabel = new QLabel(tr("Background:"));
+  auto colorButton = new QPushButton("Change Color...", this);
   connect(colorButton, SIGNAL (released()), this, SLOT (backgroundColor()));
   mainLayout->addWidget(colorLabel);
   mainLayout->addWidget(colorButton);
   //    mainLayout->addWidget(pathLabel);
 
-  QLabel *groundColorLabel = new QLabel(tr("Ground:"));
-  QPushButton *groundColorButton = new QPushButton("Change Color...", this);
+  auto groundColorLabel = new QLabel(tr("Ground:"));
+  auto groundColorButton = new QPushButton("Change Color...", this);
   connect(groundColorButton, SIGNAL (released()), this, SLOT (groundColor()));
 
   mainLayout->addWidget(groundColorLabel);
@@ -48,13 +48,13 @@ Preferences::Preferences(MySettings *aSettings, QWidget *parent)
   casualTab = new QWidget(this);
 
   soundTab = new QWidget(this);
-  QLabel *topLabel = new QLabel(tr("Open with:"));
-  QListWidget *applicationsListBox = new QListWidget;
+  auto topLabel = new QLabel(tr("Open with:"));
+  auto applicationsListBox = new QListWidget;
   QStringList applications;
   for (int i = 1; i <= 30; ++i)
     applications.append(tr("Application %1").arg(i));
   applicationsListBox->insertItems(0, applications);
-  QVBoxLayout *layout = new QVBoxLayout;
+  auto layout = new QVBoxLayout;
   layout->addWidget(topLabel);
   layout->addWidget(applicationsListBox);
   soundTab->setLayout(layout);
@@ -69,7 +69,7 @@ Preferences::Preferences(MySettings *aSettings, QWidget *parent)
   connect(buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
   connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
 
-  QVBoxLayout *mainLayout2 = new QVBoxLayout;
+  auto mainLayout2 = new QVBoxLayout;
   mainLayout2->addWidget(tabWidget);
   mainLayout2->addWidget(buttonBox);
   setLayout(mainLayout2);
