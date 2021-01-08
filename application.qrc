@@ -29,9 +29,6 @@
     <qresource prefix="/mesh">
         <file>res/mesh/J_club2.obj</file>
         <file>res/mesh/J_club3.obj</file>
-        <file>res/mesh/out.json</file>
-        <file>res/mesh/out.gltf</file>
-        <file>res/mesh/out.bin</file>
     </qresource>
     <qresource prefix="/qss">
         <file>res/qss/MyStyleSheet.qss</file>
