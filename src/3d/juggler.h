@@ -36,13 +36,16 @@ class Juggler: public QEntity
              NOTIFY positionChanged)
   Q_PROPERTY(QVector2D leftHandPosition
              READ getLeftHandPosition
-             WRITE setLeftHandPosition)
+             WRITE setLeftHandPosition
+             NOTIFY leftHandPositionChanged)
   Q_PROPERTY(QVector2D rightHandPosition
              READ getRightHandPosition
-             WRITE setRightHandPosition)
+             WRITE setRightHandPosition
+             NOTIFY rightHandPositionChanged)
   Q_PROPERTY(QVector3D handPosition
              READ handPosition
-             WRITE setHandPosition)
+             WRITE setHandPosition
+             NOTIFY handPositionChanged)
 public:
 
   explicit Juggler(QEntity *aRootEntity,
@@ -126,6 +129,9 @@ signals:
 
   void skeletonTransformChanged();
   void positionChanged();
+  void leftHandPositionChanged();
+  void rightHandPositionChanged();
+  void handPositionChanged();
 
 private:
 

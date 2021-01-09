@@ -61,7 +61,7 @@ MainWindow::MainWindow()
   QString message = tr("A context menu is available by right-clicking");
   statusBar()->showMessage(message);
 
-  setWindowTitle(tr("joePass"));
+  setWindowTitle(tr("QjoePass"));
   setMinimumSize(WINDOW_MINIMUM_H, WINDOW_MINIMUM_H);
 
   resize(WINDOW_W, WINDOW_H);
@@ -139,7 +139,7 @@ void MainWindow::createMenus()
   helpMenu->addAction(aboutAct);
 
   const QIcon aboutQtIcon = QIcon::fromTheme("help-about", QIcon(":/images/about.png"));
-  aboutQtAct = helpMenu->addAction(aboutIcon, tr("About &Qt"), qApp, &QApplication::aboutQt);
+  aboutQtAct = helpMenu->addAction(aboutQtIcon, tr("About &Qt"), qApp, &QApplication::aboutQt);
   aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
 }
 

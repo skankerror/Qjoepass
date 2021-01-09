@@ -1,6 +1,6 @@
 # Qjoepass
 
-Qjoepass is a modern rewrite of joepass using c++ and Qt.
+Qjoepass is a modern rewrite of joepass using c++, Qt, Qt3D.
 
 Poject is at an early stage of developpement.
 
@@ -15,7 +15,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-You need qt >= 5.14;
+You need qt >= 5.14 and Qt3D;
 See [this link](https://www.qt.io/download) for more info
 
 ### Installing
@@ -41,7 +41,7 @@ $ ./Qjoepass
 ```
 
 Have fun (or not)
-This is a very alpha version.
+This is alpha version.
 You're warned.
 
 ## Built With

@@ -94,9 +94,6 @@ private:
   // juggler
   QVector<Juggler *> vJuggler;
 
-  // skeleton test
-//  Skeleton *mySkeleton;
-
   // club
   QMesh *pirouetteMesh;
   QVector<Pirouette *> vPirouette;
