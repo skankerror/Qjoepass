@@ -552,30 +552,22 @@ QSequentialAnimationGroup *Animation::dwellAnim(Juggler *t_juggler,
   int frameCount = (int)((DWELL_TIME / DELTA_TIME));
   // determine angles for each delta animation
   float deltaAngles = (float)(180 / frameCount);
-  switch (m_propType)
-  {
-  default: case ball:
-    aBall = m_v_ball.at(t_indexProp);
-    break;
-  case ring:
-    aRing = m_v_ring.at(t_indexProp);
-    break;
-  case club:
-    aClub = m_v_club.at(t_indexProp);
-    break;
-  }
+
   // loop creates all our animations for dwell time
   for (int i = 0; i < frameCount; i++)
   {
     switch (m_propType)
     {
     default: case ball:
+      aBall = m_v_ball.at(t_indexProp);
       dwellAnimation = new QPropertyAnimation(aBall, QByteArrayLiteral("m_position"));
       break;
     case ring:
+      aRing = m_v_ring.at(t_indexProp);
       dwellAnimation = new QPropertyAnimation(aRing, QByteArrayLiteral("m_position"));
       break;
     case club:
+      aClub = m_v_club.at(t_indexProp);
       dwellAnimation = new QPropertyAnimation(aClub, QByteArrayLiteral("m_position"));
       break;
     }
