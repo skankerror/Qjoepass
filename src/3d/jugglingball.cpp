@@ -17,39 +17,39 @@
 
 #include "jugglingball.h"
 
-JugglingBall::JugglingBall(QEntity *aRootEntity,
-                           QSphereMesh *aSphereMesh,
-                           QColor &aColor,
-                           launchTypeBall aLaunchType)
+JugglingBall::JugglingBall(QEntity *t_rootEntity,
+                           QSphereMesh *t_sphereMesh,
+                           QColor &t_color,
+                           launchTypeBall t_launchType)
 
-  : ballMetalRoughMaterial(new QMetalRoughMaterial()),
-    sphereTransform(new Qt3DCore::QTransform()),
-    color(aColor),
-    launchType(aLaunchType)
+  : m_ballMetalRoughMaterial(new QMetalRoughMaterial()),
+    m_sphereTransform(new Qt3DCore::QTransform()),
+    m_color(t_color),
+    m_launchType(t_launchType)
 {
-  sphereTransform->setScale(BALL_SCALE);
+  m_sphereTransform->setScale(BALL_SCALE);
 
-  ballMetalRoughMaterial->setBaseColor(color);
-  ballMetalRoughMaterial->setMetalness(PROP_METALNESS);
-  ballMetalRoughMaterial->setRoughness(PROP_ROUGHNESS);
+  m_ballMetalRoughMaterial->setBaseColor(m_color);
+  m_ballMetalRoughMaterial->setMetalness(PROP_METALNESS);
+  m_ballMetalRoughMaterial->setRoughness(PROP_ROUGHNESS);
 
-  QEntity::setParent(aRootEntity);
-  addComponent(aSphereMesh);
-  addComponent(ballMetalRoughMaterial);
-  addComponent(sphereTransform);
+  QEntity::setParent(t_rootEntity);
+  addComponent(t_sphereMesh);
+  addComponent(m_ballMetalRoughMaterial);
+  addComponent(m_sphereTransform);
 }
 
-void JugglingBall::setPosition(QVector3D position)
+void JugglingBall::setPosition(QVector3D t_position)
 {
-  if (m_position == position)
+  if (m_position == t_position)
     return;
 
-  m_position = position;
-  emit positionChanged(position);
+  m_position = t_position;
+  emit positionChanged(t_position);
   updateTransForm();
 }
 
 void JugglingBall::updateTransForm()
 {
-  sphereTransform->setTranslation(m_position);
+  m_sphereTransform->setTranslation(m_position);
 }

@@ -21,7 +21,6 @@
 #include <Qt3DCore>
 #include <Qt3DRender>
 #include <Qt3DExtras>
-#include <Qt3DAnimation> // for skeleton test
 #include "settings.h"
 #include "juggler.h"
 #include "light.h"
@@ -35,80 +34,88 @@
 using namespace Qt3DCore;
 using namespace Qt3DRender;
 using namespace Qt3DExtras;
-using namespace Qt3DAnimation; // for skeleton test
-
 
 class My3DWindow: public Qt3DWindow
 {
+
   Q_OBJECT
+
 public:
-  My3DWindow(MySettings *aSettings);
+
+  My3DWindow(MySettings *t_settings);
 
   int getJugglerCount() const;
 
 private:
+
   void createCam();
   void createGround();
+  void createSkybox();
+  void createLighting();
   void setGlobalObject();
 
 signals:
+
   void jugglerCountChanged();
 
 public slots:
-  void changeBackground(QColor aColor);
-  void changeGroundColor(QColor aColor);
-  void createJuggler(float aRoty, QVector2D aPosition, QColor aColor);
-  void createSkybox();
-  void createLighting();
-  void createPirouette(QColor aColor);
-  void createBall(QColor aColor);
-  void createRing(QColor aColor);
-  void createSiteSwap(QVector<SiteswapEvent*> aVecEvent,
-                      int aJugCount,
-                      jugglingProp aPropType = ball,
-                      int launchType = normalBall,
-                      bool someSynchron = false);
+
+  void changeBackground(QColor t_color);
+  void changeGroundColor(QColor t_color);
+  void createJuggler(float t_rotY, QVector2D t_position, QColor t_color);
+  void createPirouette(QColor t_color);
+  void createBall(QColor t_color);
+  void createRing(QColor t_color);
+  void createSiteSwap(QVector<SiteswapEvent*> t_v_Event,
+                      int t_jugCount,
+                      jugglingProp t_propType = ball,
+                      int t_launchType = normalBall,
+                      bool t_synchron = false);
   void setCameraToOrbit();
-  void setCameraToFirstPers(int index);
+  void setCameraToFirstPers(int t_index);
 
 private:
-  QEntity *rootEntity;
+
+  // root entity of 3D scene
+  QEntity *m_rootEntity;
 
   // Camera
   QCamera *m_camera;
-  QFirstPersonCameraController *camFPController;
-  QOrbitCameraController *camOController;
-  QVector3D positionCamera;
+  QFirstPersonCameraController *m_camFPController;
+  QOrbitCameraController *m_camOController;
+  QVector3D m_positionCamera;
 
   // Skybox
-  QSkyboxEntity *skybox;
+  QSkyboxEntity *m_skybox;
 
   // Ground
-  Ground *ground;
+  Ground *m_ground;
 
   // light
-  QEnvironmentLight *envLight;
-  QPointLight *pointLight;
-  QVector<Light *> vLight;
+  QEnvironmentLight *m_envLight;
+  QPointLight *m_pointLight;
+  QVector<Light *> m_v_light;
 
   // juggler
-  QVector<Juggler *> vJuggler;
+  QVector<Juggler *> m_v_juggler;
 
   // club
-  QMesh *pirouetteMesh;
-  QVector<Pirouette *> vPirouette;
+  QMesh *m_pirouetteMesh;
+  QVector<Pirouette *> m_v_pirouette;
 
   // ball
-  QSphereMesh *sphereMesh;
-  QVector<JugglingBall *> vBall;
+  QSphereMesh *m_sphereMesh;
+  QVector<JugglingBall *> m_v_ball;
 
   // ring
-  QTorusMesh *torusMesh;
-  QVector<JugglingRing *> vRing;
+  QTorusMesh *m_torusMesh;
+  QVector<JugglingRing *> m_v_ring;
 
-  MySettings *settings;
+  // global app settings
+  MySettings *m_settings;
 
-  Animation *anim;
+  // animation
+  Animation *m_anim;
 };
 
 #endif // MY3DWINDOW_H

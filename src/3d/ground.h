@@ -31,11 +31,11 @@ class Ground: public QEntity
 {
   Q_OBJECT
 public:
-  explicit Ground(QEntity *aRootEntity,
-                  QColor &aColor);
+  explicit Ground(QEntity *t_rootEntity,
+                  QColor &t_color);
 
   QColor getColor() const {return color;};
-  void setColor(QColor aColor);
+  void setColor(QColor t_color);
 
 private:
   QPlaneMesh *planeMesh;

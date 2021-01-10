@@ -1,0 +1,40 @@
+Contribute to Qjoepass
+======================
+
+Build software and the translations
+----------------------------------------
+See INSTALL.
+
+Coding style
+------------
+* indent with 2 spaces
+* opening curly braces on a new line (except for simple getters and setters implemented in the header file.
+* function and method names camelCase, with lowercase first letter
+* class names CamelCase
+* name private data members with an 'm_' as a prefix: m_likeThis
+* name method and constructor parameters with a 't_' prefix: t_likeThis
+* container var begins with initial + underscore: QVector v_likeThis
+* constants are all upper case: const double PI=3.14159265358979323;
+* file names all lowercase
+* always add spaces between operators such as +, -, /, * casts, etc. (except pointers and references)
+
+Files
+-----
+* HACKING: What to know to contribute to the project.
+* INSTALL.md: Instructions to build and install the software.
+* README.md: The short documentation at the root of the project
+* TODO: You can put things to do there, or use https://github.com/skankerror/Qjoepass
+
+Code management with Git
+------------------------
+* We develop in the develop branch. The master branch is only for the latest tag.
+* Create a branch for each new features. Merge it to develop.
+* If possible, avoid merges, and use git rebase instead. (like in the GNOME projects)
+
+Qt resources system
+-------------------
+* The Qjoepass.pro file is where the packaging is done
+* The application.qrc file is where we specify which resources are packaged with the app.
+* Images are set there. They are then available as a path-like alias such as ":/fullscreen"
+* See http://doc.qt.io/qt-5/resources.html
+

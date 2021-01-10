@@ -28,8 +28,8 @@ int main(int argc, char *argv[])
   Q_INIT_RESOURCE(application);
 
   QApplication app(argc, argv);
-  QCoreApplication::setOrganizationName("QtProject");
-  QCoreApplication::setApplicationName("QjoePass");
+  QCoreApplication::setOrganizationName("Anonymous_jugglers");
+  QCoreApplication::setApplicationName("Qjoepass");
   QCoreApplication::setApplicationVersion(QT_VERSION_STR);
 
   QCommandLineParser parser;

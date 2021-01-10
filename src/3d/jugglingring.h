@@ -29,55 +29,76 @@ using namespace Qt3DRender;
 
 class JugglingRing: public QEntity
 {
+
   Q_OBJECT
-  Q_PROPERTY(QVector3D position READ position WRITE setPosition NOTIFY positionChanged)
-  Q_PROPERTY(float rotX READ getRotX WRITE setRotX NOTIFY rotXChanged)
-  Q_PROPERTY(float rotY READ getRotY WRITE setRotY NOTIFY rotYChanged)
-  Q_PROPERTY(float rotZ READ getRotZ WRITE setRotZ NOTIFY rotZChanged)
+
+  Q_PROPERTY(QVector3D m_position
+             READ getPosition
+             WRITE setPosition
+             NOTIFY positionChanged)
+
+  Q_PROPERTY(float m_rotX
+             READ getRotX
+             WRITE setRotX
+             NOTIFY rotXChanged)
+
+  Q_PROPERTY(float m_rotY
+             READ getRotY
+             WRITE setRotY
+             NOTIFY rotYChanged)
+
+  Q_PROPERTY(float m_rotZ
+             READ getRotZ
+             WRITE setRotZ
+             NOTIFY rotZChanged)
 
 public:
-  JugglingRing(QEntity *aRootEntity,
-               QTorusMesh *torusMesh,
-               QColor aColor,
-               launchTypeRing aLaunchType = normalRing);
 
-  QVector3D position() const {return m_position;};
-  float getRotX() const {return rotX;};
-  float getRotY() const {return rotY;};
-  float getRotZ() const {return rotZ;};
-  launchTypeRing getLaunchType() const {return launchType;};
+  JugglingRing(QEntity *t_rootEntity,
+               QTorusMesh *t_torusMesh,
+               QColor t_color,
+               launchTypeRing t_launchType = normalRing);
 
-
-public slots:
-  void setPosition(QVector3D position);
-  void setRotX(float aRot);
-  void setRotY(float aRot);
-  void setRotZ(float aRot);
-  void setLaunchType(launchTypeRing aLaunchType) {launchType = aLaunchType;};
-
-signals:
-  void positionChanged(QVector3D position);
-  void rotXChanged(float aRot);
-  void rotYChanged(float aRot);
-  void rotZChanged(float aRot);
+  QVector3D getPosition() const { return m_position; };
+  float getRotX() const { return m_rotX; };
+  float getRotY() const { return m_rotY; };
+  float getRotZ() const { return m_rotZ; };
+  launchTypeRing getLaunchType() const { return m_launchType; };
 
 private:
+
   void updateTranslation();
   void updateRotX();
   void updateRotY();
   void updateRotZ();
 
-private:
-  QMetalRoughMaterial *ringMetalRoughMaterial;
-  Qt3DCore::QTransform *ringTransform;
-  QVector3D m_position;
-  QColor color;
-  bool enabled = true;
-  launchTypeRing launchType;
+public slots:
 
-  float rotX = 0;
-  float rotY = 0;
-  float rotZ = 0;
+  void setPosition(QVector3D t_position);
+  void setRotX(float t_rotX);
+  void setRotY(float t_rotY);
+  void setRotZ(float t_rotZ);
+  void setLaunchType(launchTypeRing t_launchType) { m_launchType = t_launchType; };
+
+signals:
+
+  void positionChanged(QVector3D t_position);
+  void rotXChanged(float t_rotX);
+  void rotYChanged(float t_rotY);
+  void rotZChanged(float t_rotZ);
+
+private:
+
+  QMetalRoughMaterial *m_ringMetalRoughMaterial;
+  Qt3DCore::QTransform *m_ringTransform;
+  QVector3D m_position;
+  QColor m_color;
+  bool m_enabled = true;
+  launchTypeRing m_launchType;
+
+  float m_rotX = 0;
+  float m_rotY = 0;
+  float m_rotZ = 0;
 
 };
 

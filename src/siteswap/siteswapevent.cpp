@@ -17,20 +17,22 @@
 
 #include "siteswapevent.h"
 
-SiteswapEvent::SiteswapEvent(int aLaunch,
-                             int id1,
-                             int id2,
-                             bool multi,
+SiteswapEvent::SiteswapEvent(int t_launch,
+                             int t_id1,
+                             int t_id2,
+                             bool t_multi,
                              QObject *parent)
   : QObject(parent),
-    launch(aLaunch),
-    multiplex(multi),
-//    passing(pass),
-    passJugId(id1),
-    receiveiJugId(id2)
+    m_launch(t_launch),
+    m_multiplex(t_multi),
+//    m_passing(pass),
+    m_passJugId(t_id1),
+    m_receiveiJugId(t_id2)
 {
-  if (passJugId != receiveiJugId)
-    setPassing(true);
-  else
-    setPassing(false);
+//  if (m_passJugId != m_receiveiJugId)
+//    setPassing(true);
+//  else
+//    setPassing(false);
+
+  (m_passJugId != m_receiveiJugId) ? setPassing(true) : setPassing(false);
 }

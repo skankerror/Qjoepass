@@ -17,86 +17,86 @@
 
 #include "pirouette.h"
 
-Pirouette::Pirouette(QEntity *aRootEntity,
-                     QMesh *aPirouetteMesh,
-                     QColor &aColor,
-                     launchTypeClub aLaunchType)
+Pirouette::Pirouette(QEntity *t_rootEntity,
+                     QMesh *t_pirouetteMesh,
+                     QColor &t_color,
+                     launchTypeClub t_launchType)
 
-  : clubMetalRoughMaterial(new QMetalRoughMaterial()),
-    pirouetteTransform(new Qt3DCore::QTransform()),
-    color(aColor),
-    launchType(aLaunchType)
+  : m_clubMetalRoughMaterial(new QMetalRoughMaterial()),
+    m_pirouetteTransform(new Qt3DCore::QTransform()),
+    m_color(t_color),
+    m_launchType(t_launchType)
 {
-  pirouetteTransform->setScale(CLUB_SCALE);
+  m_pirouetteTransform->setScale(CLUB_SCALE);
 
-  clubMetalRoughMaterial->setBaseColor(color);
-  clubMetalRoughMaterial->setMetalness(PROP_METALNESS);
-  clubMetalRoughMaterial->setRoughness(PROP_ROUGHNESS);
+  m_clubMetalRoughMaterial->setBaseColor(m_color);
+  m_clubMetalRoughMaterial->setMetalness(PROP_METALNESS);
+  m_clubMetalRoughMaterial->setRoughness(PROP_ROUGHNESS);
 
 
-  QEntity::setParent(aRootEntity);
-  addComponent(pirouetteTransform);
-  addComponent(aPirouetteMesh);
-  addComponent(clubMetalRoughMaterial);
-  setEnabled(enabled);
+  QEntity::setParent(t_rootEntity);
+  addComponent(m_pirouetteTransform);
+  addComponent(t_pirouetteMesh);
+  addComponent(m_clubMetalRoughMaterial);
+  setEnabled(m_enabled);
 }
 
-void Pirouette::setPosition(QVector3D aPosition)
+void Pirouette::setPosition(QVector3D t_position)
 {
-  if (m_position == aPosition)
+  if (m_position == t_position)
     return;
 
-  m_position = aPosition;
+  m_position = t_position;
   emit positionChanged(m_position);
   updateTranslation();
 }
 
-void Pirouette::setRotX(float aRot)
+void Pirouette::setRotX(float t_rotX)
 {
-  if (rotX == aRot)
+  if (m_rotX == t_rotX)
     return;
 
-  rotX = aRot;
-  emit rotXChanged(rotX);
+  m_rotX = t_rotX;
+  emit rotXChanged(m_rotX);
   updateRotX();
 }
 
-void Pirouette::setRotY(float aRot)
+void Pirouette::setRotY(float t_rotY)
 {
-  if (rotY == aRot)
+  if (m_rotY == t_rotY)
     return;
 
-  rotY = aRot;
-  emit rotYChanged(rotY);
+  m_rotY = t_rotY;
+  emit rotYChanged(m_rotY);
   updateRotY();
 }
 
-void Pirouette::setRotZ(float aRot)
+void Pirouette::setRotZ(float t_rotZ)
 {
-  if (rotZ == aRot)
+  if (m_rotZ == t_rotZ)
     return;
 
-  rotZ = aRot;
-  emit rotZChanged(rotZ);
+  m_rotZ = t_rotZ;
+  emit rotZChanged(m_rotZ);
   updateRotZ();
 }
 
 void Pirouette::updateTranslation()
 {
-  pirouetteTransform->setTranslation(m_position);
+  m_pirouetteTransform->setTranslation(m_position);
 }
 
 void Pirouette::updateRotX()
 {
-  pirouetteTransform->setRotationX(rotX);
+  m_pirouetteTransform->setRotationX(m_rotX);
 }
 
 void Pirouette::updateRotY()
 {
-  pirouetteTransform->setRotationY(rotY);
+  m_pirouetteTransform->setRotationY(m_rotY);
 }
 
 void Pirouette::updateRotZ()
 {
-  pirouetteTransform->setRotationZ(rotZ);
+  m_pirouetteTransform->setRotationZ(m_rotZ);
 }

@@ -17,14 +17,14 @@
 
 #include "light.h"
 
-Light::Light(QEntity *aRootEntity,
+Light::Light(QEntity *t_rootEntity,
              QPointLight *aLight,
-             QVector3D &aPosition)
-  : rootEntity(aRootEntity),
+             QVector3D &t_position)
+  : m_rootEntity(t_rootEntity),
     light(aLight),
-    position(aPosition)
+    position(t_position)
 {
-  QEntity::setParent(rootEntity);
+  QEntity::setParent(m_rootEntity);
   addComponent(light);
   lightTransform = new Qt3DCore::QTransform(this);
   lightTransform->setTranslation(position);

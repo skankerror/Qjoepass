@@ -18,87 +18,87 @@
 #include "jugglingring.h"
 
 
-JugglingRing::JugglingRing(QEntity *aRootEntity,
-                           QTorusMesh *torusMesh,
-                           QColor aColor,
-                           launchTypeRing aLaunchType)
+JugglingRing::JugglingRing(QEntity *t_rootEntity,
+                           QTorusMesh *t_torusMesh,
+                           QColor t_color,
+                           launchTypeRing t_launchType)
 
-  : ringMetalRoughMaterial(new QMetalRoughMaterial()),
-    ringTransform(new Qt3DCore::QTransform()),
-    color(aColor),
-    launchType(aLaunchType)
+  : m_ringMetalRoughMaterial(new QMetalRoughMaterial()),
+    m_ringTransform(new Qt3DCore::QTransform()),
+    m_color(t_color),
+    m_launchType(t_launchType)
 
 {
-  ringTransform->setScale3D(QVector3D(RING_SCALE_X, RING_SCALE_Y, RING_SCALE_Z));
+  m_ringTransform->setScale3D(QVector3D(RING_SCALE_X, RING_SCALE_Y, RING_SCALE_Z));
 
-  ringMetalRoughMaterial->setBaseColor(color);
-  ringMetalRoughMaterial->setMetalness(PROP_METALNESS);
-  ringMetalRoughMaterial->setRoughness(PROP_ROUGHNESS);
+  m_ringMetalRoughMaterial->setBaseColor(m_color);
+  m_ringMetalRoughMaterial->setMetalness(PROP_METALNESS);
+  m_ringMetalRoughMaterial->setRoughness(PROP_ROUGHNESS);
 
 
-  QEntity::setParent(aRootEntity);
-  addComponent(torusMesh);
-  addComponent(ringTransform);
-  addComponent(ringMetalRoughMaterial);
-  setEnabled(enabled);
+  QEntity::setParent(t_rootEntity);
+  addComponent(t_torusMesh);
+  addComponent(m_ringTransform);
+  addComponent(m_ringMetalRoughMaterial);
+  setEnabled(m_enabled);
 }
 
-void JugglingRing::setPosition(QVector3D position)
+void JugglingRing::setPosition(QVector3D t_position)
 {
-  if (m_position == position)
+  if (m_position == t_position)
     return;
 
-  m_position = position;
-  emit positionChanged(position);
+  m_position = t_position;
+  emit positionChanged(t_position);
   updateTranslation();
 }
 
-void JugglingRing::setRotX(float aRot)
+void JugglingRing::setRotX(float t_rotX)
 {
-  if (rotX == aRot)
+  if (m_rotX == t_rotX)
     return;
 
-  rotX = aRot;
-  emit rotXChanged(rotX);
+  m_rotX = t_rotX;
+  emit rotXChanged(m_rotX);
   updateRotX();
 }
 
-void JugglingRing::setRotY(float aRot)
+void JugglingRing::setRotY(float t_rotY)
 {
-  if (rotY == aRot)
+  if (m_rotY == t_rotY)
     return;
 
-  rotY = aRot;
-  emit rotYChanged(rotY);
+  m_rotY = t_rotY;
+  emit rotYChanged(m_rotY);
   updateRotY();
 }
 
-void JugglingRing::setRotZ(float aRot)
+void JugglingRing::setRotZ(float t_rotZ)
 {
-  if (rotZ == aRot)
+  if (m_rotZ == t_rotZ)
     return;
 
-  rotZ = aRot;
-  emit rotZChanged(rotZ);
+  m_rotZ = t_rotZ;
+  emit rotZChanged(m_rotZ);
   updateRotZ();
 }
 
 void JugglingRing::updateTranslation()
 {
-  ringTransform->setTranslation(m_position);
+  m_ringTransform->setTranslation(m_position);
 }
 
 void JugglingRing::updateRotX()
 {
-  ringTransform->setRotationX(rotX);
+  m_ringTransform->setRotationX(m_rotX);
 }
 
 void JugglingRing::updateRotY()
 {
-  ringTransform->setRotationY(rotY);
+  m_ringTransform->setRotationY(m_rotY);
 }
 
 void JugglingRing::updateRotZ()
 {
-  ringTransform->setRotationZ(rotZ);
+  m_ringTransform->setRotationZ(m_rotZ);
 }

@@ -18,62 +18,62 @@
 #include "siteswap.h"
 #include <QDebug>
 
-SiteSwap::SiteSwap(QVector<SiteswapEvent*> &aVInt,
-                   int aJugCount,
-                   jugglingProp aProp,
-                   bool aSynchron,
+SiteSwap::SiteSwap(QVector<SiteswapEvent*> &t_v_Int,
+                   int t_jugCount,
+                   jugglingProp t_prop,
+                   bool t_synchron,
                    QObject *parent)
   : QObject(parent),
-    v_event(aVInt),
-    synchron(aSynchron),
-    prop(aProp),
-    jugglerCount(aJugCount)
+    m_v_event(t_v_Int),
+    m_synchron(t_synchron),
+    m_prop(t_prop),
+    m_jugglerCount(t_jugCount)
 {
-  period = v_event.size();
-  valid = isValid();
-  propCount = getNumProp();
-  if (valid)
+  m_period = m_v_event.size();
+  m_valid = isValid();
+  m_propCount = getNumProp();
+  if (m_valid)
     setState();
 }
 
 bool SiteSwap::isValid() const
 {
   // create a vector to test our values
-  QVector<int> vTest;
+  QVector<int> v_test;
   // let's be optimistic !
   bool ret = true;
 
-  for (int i = 0; i < period; i++)
+  for (int i = 0; i < m_period; i++)
   {
     // we modulo each launch in order to find where this launch will be in next loop
-    int modLaunch = (at(i) + i) % period;
+    int modLaunch = (at(i) + i) % m_period;
     // and test to find collision
-    if (vTest.indexOf(modLaunch) != -1) // collision
+    if (v_test.indexOf(modLaunch) != -1) // collision
     {
       ret = false; // bad news
       break;
     }
     // this seems good, we're adding to our vector for next tests
-    vTest.append(modLaunch);
+    v_test.append(modLaunch);
   }
   return ret;
 }
 
 int SiteSwap::getNumProp() const
 {
-  if(!valid)
+  if(!m_valid)
     return 0;
 
   int totalLaunch = 0;
-  for (int i = 0; i < v_event.size(); i++)
+  for (int i = 0; i < m_v_event.size(); i++)
     totalLaunch += at(i);
-  return totalLaunch / period;
-  // faut le multiplier par le nombre de jongleurs
+  return totalLaunch / m_period;
+  // TODO: multiply by numbers of jugglers
 }
 
-void SiteSwap::setPropType(jugglingProp aProp)
+void SiteSwap::setPropType(jugglingProp t_prop)
 {
-  prop = aProp;
+  m_prop = t_prop;
 }
 
 QVector<AnimEvent*> SiteSwap::getAnimEvents(int launchPos, hand handLaunch, int jugLaunchId)
@@ -87,11 +87,9 @@ QVector<AnimEvent*> SiteSwap::getAnimEvents(int launchPos, hand handLaunch, int 
   int launch = at(launchPos);
   hand newLaunchHand;
   (launch % 2 == 1) ? newLaunchHand = changeHand(handLaunch) : newLaunchHand = handLaunch;
-  int newLaunchPos = (launch + launchPos) % period;
+  int newLaunchPos = (launch + launchPos) % m_period;
   int newLaunch = at(newLaunchPos);
-  int newJugId
-      //      = jugLaunchId; // for single juggler
-      = v_event.at(launchPos)->getReceiveJugId();
+  int newJugId = m_v_event.at(launchPos)->getReceiveJugId();
   auto animEvent = new AnimEvent();
   animEvent->setLaunch(launch);
   animEvent->setHandLaunch(handLaunch);
@@ -107,17 +105,16 @@ QVector<AnimEvent*> SiteSwap::getAnimEvents(int launchPos, hand handLaunch, int 
     launchPos = newLaunchPos;
     launch = at(launchPos);
     (launch % 2 == 1) ? newLaunchHand = changeHand(handLaunch) : newLaunchHand = handLaunch;
-    newLaunchPos = (launch + launchPos) % period;
+    newLaunchPos = (launch + launchPos) % m_period;
     newLaunch = at(newLaunchPos);
     if (jugLaunchId != initialJugLaunchId && newJugId == jugLaunchId)
-      jugLaunchId = 1; // pas beau !
+      jugLaunchId = 1; // FIXME: Ugly !
     else
       jugLaunchId = newJugId;
-    //    newJugId = jugLaunchId; // for single juggler
-    if (jugLaunchId != initialJugLaunchId) // si c'est l'autre juggler
-      newJugId = 0; // on revient au 1er
+    if (jugLaunchId != initialJugLaunchId) // if it's the other juggler
+      newJugId = 0; // get back to first
     else
-      newJugId = v_event.at(launchPos)->getReceiveJugId();
+      newJugId = m_v_event.at(launchPos)->getReceiveJugId();
 
     auto animEvent = new AnimEvent();
     animEvent->setLaunch(launch);
@@ -133,16 +130,16 @@ QVector<AnimEvent*> SiteSwap::getAnimEvents(int launchPos, hand handLaunch, int 
 
 void SiteSwap::setState()
 {
-  if (!period) // this shoud not happen
+  if (!m_period) // this shoud not happen
     return;
 
   // simple case
-  if (period == 1)
+  if (m_period == 1)
   {
-    state.resize(propCount);
-    for (int i = 0; i < propCount; i++)
+    m_state.resize(m_propCount);
+    for (int i = 0; i < m_propCount; i++)
     {
-      state.setBit(i, true);
+      m_state.setBit(i, true);
     }
     return;
   }
@@ -152,31 +149,31 @@ void SiteSwap::setState()
   int index = 0;
   QVector<int> indexAlreadySet; // store false forward sites
 
-  while (propFoundCount < propCount) // while we haven't found all true sites
+  while (propFoundCount < m_propCount) // while we haven't found all true sites
   {
-    if (index + 1 > state.size())
-      state.resize(index + 1); // we must resize
-    int launch = at(index % period);
+    if (index + 1 > m_state.size())
+      m_state.resize(index + 1); // we must resize
+    int launch = at(index % m_period);
     if (launch) // if launch is not 0
     {
       // verify if site has not already been set
       if (indexAlreadySet.indexOf(index) == -1)
       {
-        state.setBit(index, true); // it's a true site
+        m_state.setBit(index, true); // it's a true site
         propFoundCount++; // we found one more
       }
-      if ((index + launch + 1) > state.size())
-        state.resize(index + launch + 1); // we must resize
-      state.setBit(index + launch, false); // it's surely a false
+      if ((index + launch + 1) > m_state.size())
+        m_state.resize(index + launch + 1); // we must resize
+      m_state.setBit(index + launch, false); // it's surely a false
       indexAlreadySet.append(index + launch); // we declare it as already set
     }
     index++;
   }
   // now we truncate finishing 0s
-  bool test = state.testBit(state.size() - 1);
+  bool test = m_state.testBit(m_state.size() - 1);
   while (test == false)
   {
-    state.resize(state.size() - 1); // erase last bit
-    test = state.testBit(state.size() - 1);
+    m_state.resize(m_state.size() - 1); // erase last bit
+    test = m_state.testBit(m_state.size() - 1);
   }
 }

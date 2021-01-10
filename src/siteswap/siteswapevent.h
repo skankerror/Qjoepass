@@ -20,41 +20,44 @@
 
 #include <QObject>
 
+// TODO: no need to be a QObject ?
+
 class SiteswapEvent : public QObject
 {
+
   Q_OBJECT
 
 public:
-  explicit SiteswapEvent(int aLaunch = 0,
-//                         bool pass = false,
-                         int id1 = 0,
-                         int id2 = 0,
-                         bool multi = false,
+
+  explicit SiteswapEvent(int t_launch = 0,
+//                         bool t_pass = false,
+                         int t_id1 = 0,
+                         int t_id2 = 0,
+                         bool t_multi = false,
                          QObject *parent = nullptr);
 
 
   // getters
-  int getLaunch() const { return launch; };
-  bool isMultiplex() const {return multiplex; };
-  bool isPassing() const { return passing; };
-  int getPassJugId() const { return passJugId; };
-  int getReceiveJugId() const { return receiveiJugId; };
+  int getLaunch() const { return m_launch; };
+  bool isMultiplex() const {return m_multiplex; };
+  bool isPassing() const { return m_passing; };
+  int getPassJugId() const { return m_passJugId; };
+  int getReceiveJugId() const { return m_receiveiJugId; };
 
   // setters
-  void setLaunch(const int aLaunch) { launch = aLaunch; };
-  void setMultiplex(const bool aBool) { multiplex = aBool; };
-  void setPassing(const bool aBool) { passing = aBool; };
-  void setPassJugId(const int id) { passJugId = id; };
-  void setReceiveJugId(const int id) { receiveiJugId = id; };
-
-signals:
+  void setLaunch(const int t_launch) { m_launch = t_launch; };
+  void setMultiplex(const bool t_bool) { m_multiplex = t_bool; };
+  void setPassing(const bool t_bool) { m_passing = t_bool; };
+  void setPassJugId(const int t_id) { m_passJugId = t_id; };
+  void setReceiveJugId(const int t_id) { m_receiveiJugId = t_id; };
 
 private:
-  int launch;
-  bool multiplex = false; // if it's true, group with the next one
-  bool passing = false;
-  int passJugId;
-  int receiveiJugId;
+
+  int m_launch;
+  bool m_multiplex = false; // if it's true, group with the next one
+  bool m_passing = false;
+  int m_passJugId;
+  int m_receiveiJugId;
 
 };
 

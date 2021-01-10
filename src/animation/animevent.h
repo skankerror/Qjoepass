@@ -15,18 +15,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// class wich stores datas for each launch
-
 #ifndef ANIMEVENT_H
 #define ANIMEVENT_H
 
 #include <QObject>
 #include "qjoepass.h"
 
+// class wich stores datas for each launch
+// TODO: make a struct instead ?
+
 class AnimEvent : public QObject
 {
   Q_OBJECT
+
 public:
+
   explicit AnimEvent(QObject *parent = nullptr);
 
   // getters
@@ -45,9 +48,8 @@ public:
   void setHandRecieve(hand aHand) { handRecieve = aHand; };
   void setNewLaunch(int aLaunch) { newLaunch = aLaunch; };
 
-signals:
-
 private:
+
   int jugLaunchId;
   hand handLaunch;
   int launch;

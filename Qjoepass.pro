@@ -77,7 +77,9 @@ RESOURCES += \
   application.qrc \
 
 DISTFILES += \
+  HACKING \
+  INSTALL.md \
   LICENCE.md \
   README.md \
-  notes.txt
+  TODO
 

@@ -31,13 +31,13 @@ class Light: public QEntity
   Q_OBJECT
 
 public:
-  explicit Light(QEntity *aRootEntity,
+  explicit Light(QEntity *t_rootEntity,
                  QPointLight *aLight,
-                 QVector3D &aPosition);
+                 QVector3D &t_position);
 
 private:
   Qt3DCore::QTransform *lightTransform;
-  QEntity *rootEntity;
+  QEntity *m_rootEntity;
   QPointLight *light;
   QVector3D position;
 

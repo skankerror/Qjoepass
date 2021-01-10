@@ -26,36 +26,36 @@ MySettings::MySettings(QString fileName, QSettings::Format format)
         fileName = path + "/Settings.ini";
     }
 //    qDebug() << "Standard path : " << QStandardPaths::ConfigLocation;
-    settings = new QSettings(fileName, format);
+    m_settings = new QSettings(fileName, format);
 }
 
 MySettings::~MySettings()
 {
-    delete settings;
+    delete m_settings;
 }
 
 bool MySettings::isValue(const QString &key)
 {
-   return settings->contains(key);
+   return m_settings->contains(key);
 }
 
 void MySettings::setValue(const QString &key, const QVariant &value)
 {
-    settings->setValue(key, value);
+    m_settings->setValue(key, value);
 }
 
 QVariant MySettings::value(const QString &key, const QVariant &defaultValue)
 {
-    return settings->value(key, defaultValue);
+    return m_settings->value(key, defaultValue);
 }
 
 void MySettings::beginGroup(const QString &prefix)
 {
-    settings->beginGroup(prefix);
+    m_settings->beginGroup(prefix);
 }
 
 void MySettings::endGroup()
 {
-    settings->endGroup();
+    m_settings->endGroup();
 }
 

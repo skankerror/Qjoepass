@@ -25,7 +25,7 @@ MainWindow::MainWindow()
 
   QStringList cmdline_args = QCoreApplication::arguments();
   //    QFile file(cmdline_args[0]);
-  settings = new MySettings() ;
+  m_settings = new MySettings() ;
 
   auto widget = new QWidget;
   setCentralWidget(widget);
@@ -33,25 +33,25 @@ MainWindow::MainWindow()
   auto topFiller = new QWidget;
   topFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-  infoLabel = new QLabel(tr("<i>Choose a menu option, or right-click to "
+  m_infoLabel = new QLabel(tr("<i>Choose a menu option, or right-click to "
                             "invoke a context menu</i>"));
-  infoLabel->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
-  infoLabel->setAlignment(Qt::AlignCenter);
+  m_infoLabel->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
+  m_infoLabel->setAlignment(Qt::AlignCenter);
 
   auto bottomFiller = new QWidget;
   bottomFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-  my3DWindow = new My3DWindow(settings);
-  container = QWidget::createWindowContainer(my3DWindow);
-  QSize screenSize = my3DWindow->screen()->size();
-  container->setMinimumSize(QSize(WIDGET3D_MIN_W, WIDGET3D_MIN_H));
-  container->setMaximumSize(screenSize);
+  m_my3DWindow = new My3DWindow(m_settings);
+  m_container = QWidget::createWindowContainer(m_my3DWindow);
+  QSize screenSize = m_my3DWindow->screen()->size();
+  m_container->setMinimumSize(QSize(WIDGET3D_MIN_W, WIDGET3D_MIN_H));
+  m_container->setMaximumSize(screenSize);
 
   auto layout = new QVBoxLayout;
   //  layout->setContentsMargins(1, 1, 1, 1);
   //  layout->addWidget(topFiller);
   //  layout->addWidget(infoLabel);
-  layout->addWidget(container);
+  layout->addWidget(m_container);
   //  layout->addWidget(bottomFiller);
   widget->setLayout(layout);
 
@@ -61,248 +61,248 @@ MainWindow::MainWindow()
   QString message = tr("A context menu is available by right-clicking");
   statusBar()->showMessage(message);
 
-  setWindowTitle(tr("QjoePass"));
+  setWindowTitle(tr("Qjoepass"));
   setMinimumSize(WINDOW_MINIMUM_H, WINDOW_MINIMUM_H);
 
   resize(WINDOW_W, WINDOW_H);
 
-  pref = new Preferences(settings);
+  m_pref = new Preferences(m_settings);
 
-  connect(pref, SIGNAL(colorChanged(QColor)), my3DWindow, SLOT(changeBackground(QColor)));
-  connect(pref, SIGNAL(groundColorChanged(QColor)), my3DWindow, SLOT(changeGroundColor(QColor)));
+  connect(m_pref, SIGNAL(colorChanged(QColor)), m_my3DWindow, SLOT(changeBackground(QColor)));
+  connect(m_pref, SIGNAL(groundColorChanged(QColor)), m_my3DWindow, SLOT(changeGroundColor(QColor)));
 
 }
 
 void MainWindow::createMenus()
 {
-  fileMenu = menuBar()->addMenu(tr("&File"));
+  m_fileMenu = menuBar()->addMenu(tr("&File"));
 
   //    QToolBar *fileToolBar = addToolBar(tr("File"));
   const QIcon newIcon = QIcon::fromTheme("document-new", QIcon(":/images/new.png"));
-  newAct = new QAction(newIcon, tr("&New"), this);
-  newAct->setShortcuts(QKeySequence::New);
-  newAct->setStatusTip(tr("Create a new file"));
-  connect(newAct, &QAction::triggered, this, &MainWindow::newFile);
-  fileMenu->addAction(newAct);
+  m_newAct = new QAction(newIcon, tr("&New"), this);
+  m_newAct->setShortcuts(QKeySequence::New);
+  m_newAct->setStatusTip(tr("Create a new file"));
+  connect(m_newAct, &QAction::triggered, this, &MainWindow::newFile);
+  m_fileMenu->addAction(m_newAct);
   //    fileToolBar->addAction(newAct);
 
   const QIcon openIcon = QIcon::fromTheme("document-open", QIcon(":/images/open.png"));
-  openAct = new QAction(openIcon, tr("&Open..."), this);
-  openAct->setShortcuts(QKeySequence::Open);
-  openAct->setStatusTip(tr("Open an existing file"));
-  connect(openAct, &QAction::triggered, this, &MainWindow::open);
-  fileMenu->addAction(openAct);
+  m_openAct = new QAction(openIcon, tr("&Open..."), this);
+  m_openAct->setShortcuts(QKeySequence::Open);
+  m_openAct->setStatusTip(tr("Open an existing file"));
+  connect(m_openAct, &QAction::triggered, this, &MainWindow::open);
+  m_fileMenu->addAction(m_openAct);
   //    fileToolBar->addAction(openAct);
 
   const QIcon saveIcon = QIcon::fromTheme("document-open", QIcon(":/images/save.png"));
-  saveAct = new QAction(saveIcon, tr("&Save..."), this);
-  saveAct->setShortcuts(QKeySequence::Save);
-  saveAct->setStatusTip(tr("Save to a file"));
-  connect(saveAct, &QAction::triggered, this, &MainWindow::save);
-  fileMenu->addAction(saveAct);
+  m_saveAct = new QAction(saveIcon, tr("&Save..."), this);
+  m_saveAct->setShortcuts(QKeySequence::Save);
+  m_saveAct->setStatusTip(tr("Save to a file"));
+  connect(m_saveAct, &QAction::triggered, this, &MainWindow::save);
+  m_fileMenu->addAction(m_saveAct);
   //    fileToolBar->addAction(saveAct);
 
   const QIcon saveAsIcon = QIcon::fromTheme("document-open", QIcon(":/images/saveAs.png"));
-  saveAsAct = new QAction(saveAsIcon, tr("&SaveAs..."), this);
-  saveAsAct->setShortcuts(QKeySequence::SaveAs);
-  saveAsAct->setStatusTip(tr("Save as a new file"));
-  connect(saveAsAct, &QAction::triggered, this, &MainWindow::saveAs);
-  fileMenu->addAction(saveAsAct);
+  m_saveAsAct = new QAction(saveAsIcon, tr("&SaveAs..."), this);
+  m_saveAsAct->setShortcuts(QKeySequence::SaveAs);
+  m_saveAsAct->setStatusTip(tr("Save as a new file"));
+  connect(m_saveAsAct, &QAction::triggered, this, &MainWindow::saveAs);
+  m_fileMenu->addAction(m_saveAsAct);
   //    fileToolBar->addAction(saveAsAct);
 
   //    const QIcon exitIcon = QIcon::fromTheme("exit", QIcon(":/images/exit.png"));
-  exitAct = new QAction(tr("&Quit..."), this);
-  exitAct->setShortcuts(QKeySequence::Quit);
-  exitAct->setStatusTip(tr("Quit joePass"));
-  connect(exitAct, &QAction::triggered, this, &QWidget::close);
-  fileMenu->addAction(exitAct);
+  m_exitAct = new QAction(tr("&Quit..."), this);
+  m_exitAct->setShortcuts(QKeySequence::Quit);
+  m_exitAct->setStatusTip(tr("Quit joePass"));
+  connect(m_exitAct, &QAction::triggered, this, &QWidget::close);
+  m_fileMenu->addAction(m_exitAct);
   //    fileToolBar->addAction(saveAsAct);
 
 
-  editMenu = menuBar()->addMenu(tr("&Edit"));
+  m_editMenu = menuBar()->addMenu(tr("&Edit"));
   //    QToolBar *editToolBar = addToolBar(tr("Edit"));
 
-  prefAct = new QAction( tr("&Preferences..."), this);
+  m_prefAct = new QAction( tr("&Preferences..."), this);
 
-  prefShortcut << QKeySequence("Ctrl+P");
-  prefAct->setShortcuts(prefShortcut);
-  prefAct->setStatusTip(tr("Open preferences dialog"));
-  connect(prefAct, &QAction::triggered, this, &MainWindow::preferencesDial);
-  editMenu->addAction(prefAct);
+  m_l_prefShortcut << QKeySequence("Ctrl+P");
+  m_prefAct->setShortcuts(m_l_prefShortcut);
+  m_prefAct->setStatusTip(tr("Open preferences dialog"));
+  connect(m_prefAct, &QAction::triggered, this, &MainWindow::preferencesDial);
+  m_editMenu->addAction(m_prefAct);
 
-  helpMenu = menuBar()->addMenu(tr("&Help"));
+  m_helpMenu = menuBar()->addMenu(tr("&Help"));
 
   const QIcon aboutIcon = QIcon::fromTheme("help-about", QIcon(":/images/about.png"));
-  aboutAct = helpMenu->addAction(aboutIcon, tr("&About..."), this,  &MainWindow::about);
-  aboutAct->setStatusTip(tr("Show the QjoePass's About box"));
-  connect(aboutAct, &QAction::triggered, this, &MainWindow::about);
-  helpMenu->addAction(aboutAct);
+  m_aboutAct = m_helpMenu->addAction(aboutIcon, tr("&About..."), this,  &MainWindow::about);
+  m_aboutAct->setStatusTip(tr("Show the QjoePass's About box"));
+  connect(m_aboutAct, &QAction::triggered, this, &MainWindow::about);
+  m_helpMenu->addAction(m_aboutAct);
 
   const QIcon aboutQtIcon = QIcon::fromTheme("help-about", QIcon(":/images/about.png"));
-  aboutQtAct = helpMenu->addAction(aboutQtIcon, tr("About &Qt"), qApp, &QApplication::aboutQt);
-  aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
+  m_aboutQtAct = m_helpMenu->addAction(aboutQtIcon, tr("About &Qt"), qApp, &QApplication::aboutQt);
+  m_aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
 }
 
 void MainWindow::createToolBar()
 {
-  myToolBar = addToolBar("siteswap bar");
+  m_myToolBar = addToolBar("siteswap bar");
 
   auto myToolBarWidget = new QWidget(this);
-  toolBarLayout = new QHBoxLayout();
-  propLabel = new QLabel("type of prop", this);
-  propTypeComboBox = new QComboBox(this);
+  m_toolBarLayout = new QHBoxLayout();
+  m_propLabel = new QLabel("type of prop", this);
+  m_propTypeComboBox = new QComboBox(this);
   for (int i = 0; i < propNumb; i++)
-    propTypeComboBox->addItem(getPropToString(i));
-  launchPropTypeLabel = new QLabel("type of Launch", this);
-  launchBallTypeComboBox = new QComboBox(this);
-    launchBallTypeComboBox->addItem("normal", normalBall);
-    launchBallTypeComboBox->addItem("bounce", bounce);
-  launchRingTypeComboBox = new QComboBox(this);
-    launchRingTypeComboBox->addItem("normal", normalRing);
-    launchRingTypeComboBox->addItem("pancake", panCake);
-  launchClubTypeComboBox = new QComboBox(this);
-    launchClubTypeComboBox->addItem("normal", normalClub);
-    launchClubTypeComboBox->addItem("flat", flat);
-    launchClubTypeComboBox->addItem("helicopter", helicopter);
-  propTypeComboBox->setCurrentIndex(ball);
-  periodLabel = new QLabel("period", this);
-  periodSpinBox = new QSpinBox(this);
-    periodSpinBox->setMinimum(1);
-    periodSpinBox->setValue(1);
-  firstSiteSpinBox = new QSpinBox(this);
-    firstSiteSpinBox->setMinimum(1);
-    firstSiteSpinBox->setValue(3);
-  launchPushButton = new QPushButton("launch !", this);
-    launchPushButton->setToolTip("Start animation");
-    launchPushButton->setToolTipDuration(2000);
-  toolBarLayout->addWidget(propLabel);
-  toolBarLayout->addWidget(propTypeComboBox);
-  toolBarLayout->addWidget(launchPropTypeLabel);
-  toolBarLayout->addWidget(launchBallTypeComboBox);
-  toolBarLayout->addWidget(launchRingTypeComboBox);
-    launchRingTypeComboBox->hide();
-  toolBarLayout->addWidget(launchClubTypeComboBox);
-    launchClubTypeComboBox->hide();
-  toolBarLayout->addWidget(periodLabel);
-  toolBarLayout->addWidget(periodSpinBox);
-  toolBarLayout->addWidget(firstSiteSpinBox);
-  toolBarLayout->addWidget(launchPushButton, 0, Qt::AlignRight);
-  myToolBarWidget->setLayout(toolBarLayout);
-  myToolBar->addWidget(myToolBarWidget);
+    m_propTypeComboBox->addItem(getPropToString(i));
+  m_launchPropTypeLabel = new QLabel("type of Launch", this);
+  m_launchBallTypeComboBox = new QComboBox(this);
+    m_launchBallTypeComboBox->addItem("normal", normalBall);
+    m_launchBallTypeComboBox->addItem("bounce", bounce);
+  m_launchRingTypeComboBox = new QComboBox(this);
+    m_launchRingTypeComboBox->addItem("normal", normalRing);
+    m_launchRingTypeComboBox->addItem("pancake", panCake);
+  m_launchClubTypeComboBox = new QComboBox(this);
+    m_launchClubTypeComboBox->addItem("normal", normalClub);
+    m_launchClubTypeComboBox->addItem("flat", flat);
+    m_launchClubTypeComboBox->addItem("helicopter", helicopter);
+  m_propTypeComboBox->setCurrentIndex(ball);
+  m_periodLabel = new QLabel("period", this);
+  m_periodSpinBox = new QSpinBox(this);
+    m_periodSpinBox->setMinimum(1);
+    m_periodSpinBox->setValue(1);
+  m_firstSiteSpinBox = new QSpinBox(this);
+    m_firstSiteSpinBox->setMinimum(1);
+    m_firstSiteSpinBox->setValue(3);
+  m_launchPushButton = new QPushButton("launch !", this);
+    m_launchPushButton->setToolTip("Start animation");
+    m_launchPushButton->setToolTipDuration(2000);
+  m_toolBarLayout->addWidget(m_propLabel);
+  m_toolBarLayout->addWidget(m_propTypeComboBox);
+  m_toolBarLayout->addWidget(m_launchPropTypeLabel);
+  m_toolBarLayout->addWidget(m_launchBallTypeComboBox);
+  m_toolBarLayout->addWidget(m_launchRingTypeComboBox);
+    m_launchRingTypeComboBox->hide();
+  m_toolBarLayout->addWidget(m_launchClubTypeComboBox);
+    m_launchClubTypeComboBox->hide();
+  m_toolBarLayout->addWidget(m_periodLabel);
+  m_toolBarLayout->addWidget(m_periodSpinBox);
+  m_toolBarLayout->addWidget(m_firstSiteSpinBox);
+  m_toolBarLayout->addWidget(m_launchPushButton, 0, Qt::AlignRight);
+  myToolBarWidget->setLayout(m_toolBarLayout);
+  m_myToolBar->addWidget(myToolBarWidget);
 
   auto MyToolBarWidget2 = new QWidget(this);
-  toolBar2Layout = new QHBoxLayout();
-  cameraLabel = new QLabel("change Camera", this);
-  cameraComboBox = new QComboBox(this);
+  m_toolBar2Layout = new QHBoxLayout();
+  m_cameraLabel = new QLabel("change Camera", this);
+  m_cameraComboBox = new QComboBox(this);
   updateCameraComboBox();
-  toolBar2Layout->addWidget(cameraLabel);
-  toolBar2Layout->addWidget(cameraComboBox);
+  m_toolBar2Layout->addWidget(m_cameraLabel);
+  m_toolBar2Layout->addWidget(m_cameraComboBox);
 
-  MyToolBarWidget2->setLayout(toolBar2Layout);
-  myToolBar->addWidget(MyToolBarWidget2);
+  MyToolBarWidget2->setLayout(m_toolBar2Layout);
+  m_myToolBar->addWidget(MyToolBarWidget2);
 
-  connect(periodSpinBox, SIGNAL(valueChanged(int)), this, SLOT(periodChanged(int)));
-  connect(launchPushButton, SIGNAL(clicked()), this, SLOT(launchSiteSwap()));
-  connect(my3DWindow, SIGNAL(jugglerCountChanged()), this, SLOT(updateCameraComboBox()));
-  connect(cameraComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(cameraIndexChanged(int)));
-  connect(propTypeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(propTypeChanged(int)));
+  connect(m_periodSpinBox, SIGNAL(valueChanged(int)), this, SLOT(periodChanged(int)));
+  connect(m_launchPushButton, SIGNAL(clicked()), this, SLOT(launchSiteSwap()));
+  connect(m_my3DWindow, SIGNAL(jugglerCountChanged()), this, SLOT(updateCameraComboBox()));
+  connect(m_cameraComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(cameraIndexChanged(int)));
+  connect(m_propTypeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(propTypeChanged(int)));
 
 }
 void MainWindow::preferencesDial()
 {
-  pref->setWindowTitle("Preferences");
-  pref->show();
+  m_pref->setWindowTitle("Preferences");
+  m_pref->show();
 }
 
 void MainWindow::launchSiteSwap()
 {
-  QVector<SiteswapEvent*> vecEvent;
-  int launch = firstSiteSpinBox->value();
+  QVector<SiteswapEvent*> v_event;
+  int launch = m_firstSiteSpinBox->value();
   auto event = new SiteswapEvent(launch);
   // paramétrer les autres arguments ici
-  vecEvent.append(event);
-  for (int i = 0; i < vSpinBox.size(); i++)
+  v_event.append(event);
+  for (int i = 0; i < m_v_spinBox.size(); i++)
   {
-    launch = vSpinBox.at(i)->value();
+    launch = m_v_spinBox.at(i)->value();
     auto newEvent = new SiteswapEvent(launch);
     // pareil
-    vecEvent.append(newEvent);
+    v_event.append(newEvent);
   }
-  jugglingProp prop = getPropFromString(propTypeComboBox->currentText());
+  jugglingProp prop = getPropFromString(m_propTypeComboBox->currentText());
   int launchType = 0; // normalLaunch
   switch(prop)
   {
-  case ball: launchType = launchBallTypeComboBox->currentIndex(); break;
-  case ring: launchType = launchRingTypeComboBox->currentIndex(); break;
-  case club: launchType = launchClubTypeComboBox->currentIndex(); break;
+  case ball: launchType = m_launchBallTypeComboBox->currentIndex(); break;
+  case ring: launchType = m_launchRingTypeComboBox->currentIndex(); break;
+  case club: launchType = m_launchClubTypeComboBox->currentIndex(); break;
   default: break;
   }
 
   // en attendant mieux
   int jugglerCount = 1;
-  my3DWindow->createSiteSwap(vecEvent, jugglerCount, prop, launchType, false);
+  m_my3DWindow->createSiteSwap(v_event, jugglerCount, prop, launchType, false);
 }
 
-void MainWindow::periodChanged(int i)
+void MainWindow::periodChanged(int t_index)
 {
-  int numSpinBox = vSpinBox.size();
+  int numSpinBox = m_v_spinBox.size();
   if (numSpinBox)
   {
     for (int j = 0; j < numSpinBox; j++)
     {
-      auto spinBox = vSpinBox.at(j);
+      auto spinBox = m_v_spinBox.at(j);
       spinBox->hide();
-      toolBarLayout->removeWidget(spinBox);
+      m_toolBarLayout->removeWidget(spinBox);
     }
-    vSpinBox.clear();
-    vSpinBox.squeeze();
+    m_v_spinBox.clear();
+    m_v_spinBox.squeeze();
   }
-  if (i > 1)
+  if (t_index > 1)
   {
-    toolBarLayout->removeWidget(launchPushButton);
-    for (int k = 1; k < i; k++)
+    m_toolBarLayout->removeWidget(m_launchPushButton);
+    for (int k = 1; k < t_index; k++)
     {
       auto newSpinBox = new QSpinBox(this);
       newSpinBox->setMinimum(0);
-      vSpinBox.append(newSpinBox);
-      toolBarLayout->addWidget(newSpinBox);
+      m_v_spinBox.append(newSpinBox);
+      m_toolBarLayout->addWidget(newSpinBox);
     }
-    toolBarLayout->addWidget(launchPushButton);
+    m_toolBarLayout->addWidget(m_launchPushButton);
   }
 }
 
 void MainWindow::updateCameraComboBox()
 {
-  cameraComboBox->clear();
-  cameraComboBox->addItem("Orbit Camera");
-  for (int i = 0; i < my3DWindow->getJugglerCount(); i++)
-    cameraComboBox->addItem(QString("Juggler %1 view").arg(i + 1));
+  m_cameraComboBox->clear();
+  m_cameraComboBox->addItem("Orbit Camera");
+  for (int i = 0; i < m_my3DWindow->getJugglerCount(); i++)
+    m_cameraComboBox->addItem(QString("Juggler %1 view").arg(i + 1));
 }
 
-void MainWindow::cameraIndexChanged(int index)
+void MainWindow::cameraIndexChanged(int t_index)
 {
-  if (index == 0)
+  if (t_index == 0)
   {
-    my3DWindow->setCameraToOrbit();
+    m_my3DWindow->setCameraToOrbit();
     return;
   }
 
-  if (index < 0)
+  if (t_index < 0)
     return;
 
-  my3DWindow->setCameraToFirstPers(index - 1);
+  m_my3DWindow->setCameraToFirstPers(t_index - 1);
 }
 
-void MainWindow::propTypeChanged(int index)
+void MainWindow::propTypeChanged(int t_index)
 {
-  launchBallTypeComboBox->hide();
-  launchRingTypeComboBox->hide();
-  launchClubTypeComboBox->hide();
-  switch(index)
+  m_launchBallTypeComboBox->hide();
+  m_launchRingTypeComboBox->hide();
+  m_launchClubTypeComboBox->hide();
+  switch(t_index)
   {
-  case ball: launchBallTypeComboBox->show(); break;
-  case ring: launchRingTypeComboBox->show(); break;
-  case club: launchClubTypeComboBox->show(); break;
+  case ball: m_launchBallTypeComboBox->show(); break;
+  case ring: m_launchRingTypeComboBox->show(); break;
+  case club: m_launchClubTypeComboBox->show(); break;
   default: break;
   }
 }
@@ -325,10 +325,13 @@ void MainWindow::open()
 
 bool MainWindow::save()
 {
-  if (curFile.isEmpty()) {
+  if (m_curFile.isEmpty())
+  {
     return saveAs();
-  } else {
-    return saveFile(curFile);
+  }
+  else
+  {
+    return saveFile(m_curFile);
   }
 }
 
@@ -350,13 +353,13 @@ void MainWindow::about()
                         "toolbars, and a status bar."));
 }
 
-void MainWindow::loadFile(const QString &fileName)
+void MainWindow::loadFile(const QString &t_fileName)
 {
-  QFile file(fileName);
+  QFile file(t_fileName);
   if (!file.open(QFile::ReadOnly | QFile::Text)) {
     QMessageBox::warning(this, tr("Application"),
                          tr("Cannot read file %1:\n%2.")
-                         .arg(QDir::toNativeSeparators(fileName), file.errorString()));
+                         .arg(QDir::toNativeSeparators(t_fileName), file.errorString()));
     return;
   }
 
@@ -369,13 +372,13 @@ void MainWindow::loadFile(const QString &fileName)
   QGuiApplication::restoreOverrideCursor();
 #endif
 
-  setCurrentFile(fileName);
+  setCurrentFile(t_fileName);
   statusBar()->showMessage(tr("File loaded"), 2000);
 }
 
-QString MainWindow::getPropToString(const int prop)
+QString MainWindow::getPropToString(const int t_prop)
 {
-  switch (prop)
+  switch (t_prop)
   {
   case ball: return QString("Ball"); break;
   case ring: return QString("Ring"); break;
@@ -384,30 +387,30 @@ QString MainWindow::getPropToString(const int prop)
   }
 }
 
-jugglingProp MainWindow::getPropFromString(const QString &value)
+jugglingProp MainWindow::getPropFromString(const QString &t_value)
 {
-  if (value == "Ball") return ball;
-  else if (value == "Ring") return ring;
-  else if (value == "Club") return club;
+  if (t_value == "Ball") return ball;
+  else if (t_value == "Ring") return ring;
+  else if (t_value == "Club") return club;
   else return ball;
 }
 
-bool MainWindow::saveFile(const QString &fileName)
+bool MainWindow::saveFile(const QString &t_fileName)
 {
   QString errorMessage;
 
   QGuiApplication::setOverrideCursor(Qt::WaitCursor);
-  QSaveFile file(fileName);
+  QSaveFile file(t_fileName);
   if (file.open(QFile::WriteOnly | QFile::Text)) {
     QTextStream out(&file);
     //        out << textEdit->toPlainText();
     if (!file.commit()) {
       errorMessage = tr("Cannot write file %1:\n%2.")
-          .arg(QDir::toNativeSeparators(fileName), file.errorString());
+          .arg(QDir::toNativeSeparators(t_fileName), file.errorString());
     }
   } else {
     errorMessage = tr("Cannot open file %1 for writing:\n%2.")
-        .arg(QDir::toNativeSeparators(fileName), file.errorString());
+        .arg(QDir::toNativeSeparators(t_fileName), file.errorString());
   }
   QGuiApplication::restoreOverrideCursor();
 
@@ -416,19 +419,19 @@ bool MainWindow::saveFile(const QString &fileName)
     return false;
   }
 
-  setCurrentFile(fileName);
+  setCurrentFile(t_fileName);
   statusBar()->showMessage(tr("File saved"), 2000);
   return true;
 }
 
-void MainWindow::setCurrentFile(const QString &fileName)
+void MainWindow::setCurrentFile(const QString &t_fileName)
 {
-  curFile = fileName;
+  m_curFile = t_fileName;
   //    textEdit->document()->setModified(false);
   setWindowModified(false);
 
-  QString shownName = curFile;
-  if (curFile.isEmpty())
+  QString shownName = m_curFile;
+  if (m_curFile.isEmpty())
     shownName = "untitled.txt";
   setWindowFilePath(shownName);
 }

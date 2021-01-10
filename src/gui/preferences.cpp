@@ -19,9 +19,9 @@
 #include <QtWidgets>
 #include "preferences.h"
 
-Preferences::Preferences(MySettings *aSettings, QWidget *parent)
+Preferences::Preferences(MySettings *t_settings, QWidget *parent)
   : QDialog(parent),
-    settings(aSettings)
+    m_settings(t_settings)
 {
   tabWidget = new QTabWidget;
 
@@ -79,23 +79,23 @@ Preferences::Preferences(MySettings *aSettings, QWidget *parent)
 
 void Preferences::backgroundColor()
 {
-  QColor colorBG = settings->value("world/colorbg").value<QColor>();
+  QColor colorBG = m_settings->value("world/colorbg").value<QColor>();
   QColor color = QColorDialog::getColor(colorBG, this, "Choose background color", QColorDialog::DontUseNativeDialog);
   if( color.isValid() )
   {
-    settings->setValue("world/colorbg",color);
+    m_settings->setValue("world/colorbg",color);
     emit colorChanged(color);
   }
 }
 
 void Preferences::groundColor()
 {
-  QColor groundColor = settings->value("world/groundColor").value<QColor>();
+  QColor groundColor = m_settings->value("world/groundColor").value<QColor>();
   QColor color = QColorDialog::getColor(groundColor, this, "Choose ground color", QColorDialog::DontUseNativeDialog);
   if( color.isValid() )
   {
     qDebug() << "Ground Color Choosen : " << color.name();
-    settings->setValue("world/groundColor",color);
+    m_settings->setValue("world/groundColor",color);
     emit groundColorChanged(color);
   }
 }

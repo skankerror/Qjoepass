@@ -29,56 +29,61 @@ using namespace Qt3DRender;
 
 class Juggler: public QEntity
 {
+
   Q_OBJECT
-  Q_PROPERTY(QVector3D position
-             READ position
+
+  Q_PROPERTY(QVector3D m_position
+             READ getPosition
              WRITE setPosition
              NOTIFY positionChanged)
-  Q_PROPERTY(QVector2D leftHandPosition
+
+  Q_PROPERTY(QVector2D m_leftHandPosition
              READ getLeftHandPosition
              WRITE setLeftHandPosition
              NOTIFY leftHandPositionChanged)
-  Q_PROPERTY(QVector2D rightHandPosition
+
+  Q_PROPERTY(QVector2D m_rightHandPosition
              READ getRightHandPosition
              WRITE setRightHandPosition
              NOTIFY rightHandPositionChanged)
-  Q_PROPERTY(QVector3D handPosition
+  Q_PROPERTY(QVector3D m_handPosition
              READ handPosition
              WRITE setHandPosition
              NOTIFY handPositionChanged)
+
 public:
 
-  explicit Juggler(QEntity *aRootEntity,
-                   float &aRoty,
-                   QVector2D &aPosition,
-                   QColor &aColor);
+  explicit Juggler(QEntity *t_rootEntity,
+                   float &t_rotY,
+                   QVector2D &t_position,
+                   QColor &t_color);
 
-  QVector3D position() const {return m_position;}
-  Qt3DCore::QTransform * getSkeletonTransform() const {return skeletonTransform;};
-  void setPosition(QVector3D aPosition);
-  void setSkeletonTransform(Qt3DCore::QTransform *aTransform) {skeletonTransform = aTransform;};
+  QVector3D getPosition() const { return m_position; }
+  Qt3DCore::QTransform * getSkeletonTransform() const { return m_skeletonTransform; };
+  void setPosition(QVector3D t_position);
+  void setSkeletonTransform(Qt3DCore::QTransform *t_transform) { m_skeletonTransform = t_transform; };
 
-  QVector2D getLeftHandPosition() {return leftHandPosition;};
-  void setLeftHandPosition(QVector2D rot);
-  QVector2D getRightHandPosition() {return rightHandPosition;};
-  void setRightHandPosition(QVector2D rot);
-  QVector3D handPosition() {return myHandPosition;};
-  void setHandPosition(QVector3D rot);
+  QVector2D getLeftHandPosition() { return m_leftHandPosition; };
+  void setLeftHandPosition(QVector2D t_rot);
+  QVector2D getRightHandPosition() { return m_rightHandPosition; };
+  void setRightHandPosition(QVector2D t_rot);
+  QVector3D handPosition() { return m_myHandPosition; };
+  void setHandPosition(QVector3D t_rot);
 
   // getters for hands positions ext to catch, int to launch, med for siteswap 2
-  QVector3D getPositionLHextPlus() const {return posLHextPlus;}; // helico, pancakes
-  QVector3D getPositionLHext() const {return posLHext;};
-  QVector3D getPositionLHint() const {return posLHint;};
-  QVector3D getPositionLHmed() const {return posLHmed;};
-  QVector3D getPositionRHextPlus() const {return posRHextPlus;}; // helico, pancakes
-  QVector3D getPositionRHext() const {return posRHext;};
-  QVector3D getPositionRHint() const {return posRHint;};
-  QVector3D getPositionRHmed() const {return posRHmed;};
+  QVector3D getPositionLHextPlus() const { return m_posLHextPlus; }; // helico, pancakes
+  QVector3D getPositionLHext() const { return m_posLHext; };
+  QVector3D getPositionLHint() const { return m_posLHint; };
+  QVector3D getPositionLHmed() const { return m_posLHmed; };
+  QVector3D getPositionRHextPlus() const { return m_posRHextPlus; }; // helico, pancakes
+  QVector3D getPositionRHext() const { return m_posRHext; };
+  QVector3D getPositionRHint() const { return m_posRHint; };
+  QVector3D getPositionRHmed() const { return m_posRHmed; };
   // getters for camera position
-  QVector3D getPositionHead() const {return posHead;};
-  QVector3D getLookAt() const {return headLookAt;};
+  QVector3D getPositionHead() const { return m_posHead; };
+  QVector3D getLookAt() const { return m_headLookAt; };
 
-  float getRotY() const {return eulerAngles.y();};
+  float getRotY() const { return m_eulerAngles.y(); };
 
 private:
 
@@ -95,6 +100,7 @@ private:
   void updateTransform();
 
   QMatrix4x4 getRotMatrix();
+
   // setters for hands pos
   void setPositionLHextPlus(); // for helico, pancakes
   void setPositionLHext();
@@ -106,19 +112,19 @@ private:
   void setPositionRHmed();
   void setPosHead();
 
-  void makeMember(QCylinderMesh *aMember,
-                  Qt3DCore::QTransform *aMemberTransform,
-                  QEntity *aMemberEntity,
-                  QVector3D aRot,
-                  QVector3D aTrans,
-                  float globalRotation,
-                  float length);
+  void makeMember(QCylinderMesh *t_member,
+                  Qt3DCore::QTransform *t_memberTransform,
+                  QEntity *t_memberEntity,
+                  QVector3D t_rot,
+                  QVector3D t_trans,
+                  float t_globalRotation,
+                  float t_length);
 
-  void makeArticulation(QSphereMesh *aSphere,
-                        Qt3DCore::QTransform *aSphereTransform,
-                        QEntity *aSphereEntity,
-                        QVector3D aTrans,
-                        float globalRotation);
+  void makeArticulation(QSphereMesh *t_phere,
+                        Qt3DCore::QTransform *t_sphereTransform,
+                        QEntity *t_sphereEntity,
+                        QVector3D t_trans,
+                        float t_globalRotation);
 
 
 private slots:
@@ -135,112 +141,120 @@ signals:
 
 private:
 
-  QMetalRoughMaterial *jugglerMetalRoughMaterial;
+  // global members
+  QMetalRoughMaterial *m_jugglerMetalRoughMaterial;
 
-  Qt3DCore::QTransform *skeletonTransform;
+  Qt3DCore::QTransform *m_skeletonTransform;
+  QSkeleton *m_mySkeleton;
+  QArmature *m_myArmature;
+  QJoint *m_rootJoint;
 
-  QVector3D eulerAngles;
+  QVector3D m_eulerAngles;
   QVector3D m_position;
-  QColor color;
-  float rotY;
+  QColor m_color;
+  float m_rotY;
 
-  bool enabled = true;
+  bool m_enabled = true;
 
-  // handPos
-  QVector3D posLHextPlus; // helico pancake
-  QVector3D posLHext;
-  QVector3D posLHint;
-  QVector3D posLHmed;
-  QVector3D posRHextPlus; // helico pancake
-  QVector3D posRHext;
-  QVector3D posRHint;
-  QVector3D posRHmed;
-  // headPos
-  QVector3D posHead;
-  QVector3D headLookAt;
+  // hands positions
+  QVector2D m_leftHandPosition;
+  QVector2D m_rightHandPosition;
+  QVector3D m_myHandPosition;
 
+  QVector3D m_posLHextPlus; // helico pancake
+  QVector3D m_posLHext;
+  QVector3D m_posLHint;
+  QVector3D m_posLHmed;
+  QVector3D m_posRHextPlus; // helico pancake
+  QVector3D m_posRHext;
+  QVector3D m_posRHint;
+  QVector3D m_posRHmed;
 
-  QVector2D leftHandPosition;
-  QVector2D rightHandPosition;
-  QVector3D myHandPosition;
+  // head position
+  QVector3D m_posHead;
+  QVector3D m_headLookAt;
 
+  // head
+  QEntity *m_headEntity;
+  QSphereMesh *m_head;
+  Qt3DCore::QTransform *m_headTransform;
+  QJoint *m_headJoint;
 
-  QSkeleton *mySkeleton;
-  QArmature *myArmature;
-  QJoint *rootJoint;
+  // shoulders
+  QEntity *m_shoulderEntity;
+  QCylinderMesh *m_shoulders;
+  Qt3DCore::QTransform *m_shouldersTransform;
 
-  QEntity *aHeadEntity;
-  QSphereMesh *Head;
-  Qt3DCore::QTransform *headTransform;
-  QJoint *headJoint;
+  QEntity *m_rightShoulderEntity;
+  QSphereMesh *m_rightShoulder;
+  Qt3DCore::QTransform *m_rightShoulderTransform;
 
-  QEntity *aShoulderEntity;
-  QCylinderMesh *Shoulders;
-  Qt3DCore::QTransform *shouldersTransform;
+  QEntity *m_leftShoulderEntity;
+  QSphereMesh *m_leftShoulder;
+  Qt3DCore::QTransform *m_leftShoulderTransform;
 
-  QEntity *aRightShoulderEntity;
-  QSphereMesh *RightShoulder;
-  Qt3DCore::QTransform *rightShoulderTransform;
+  // arms
+  QEntity *m_leftArmEntity;
+  QCylinderMesh *m_leftArm;
+  Qt3DCore::QTransform *m_leftArmTransform;
+  QMatrix4x4 m_leftArmMatrix;
 
-  QEntity *aLeftShoulderEntity;
-  QSphereMesh *LeftShoulder;
-  Qt3DCore::QTransform *leftShoulderTransform;
+  QEntity *m_rightArmEntity;
+  QCylinderMesh *m_rightArm;
+  Qt3DCore::QTransform *m_rightArmTransform;
+  QMatrix4x4 m_rightArmMatrix;
 
-  QEntity *aLeftArmEntity;
-  QCylinderMesh *LeftArm;
-  Qt3DCore::QTransform *leftArmTransform;
-  QMatrix4x4 leftArmMatrix;
+  // elbows
+  QEntity *m_rightElbowEntity;
+  QSphereMesh *m_rightElbow;
+  Qt3DCore::QTransform *m_rightElbowTransform;
 
-  QEntity *aRightArmEntity;
-  QCylinderMesh *RightArm;
-  Qt3DCore::QTransform *rightArmTransform;
-  QMatrix4x4 rightArmMatrix;
+  QEntity *m_leftElbowEntity;
+  QSphereMesh *m_leftElbow;
+  Qt3DCore::QTransform *m_leftElbowTransform;
 
-  QEntity *aRightElbowEntity;
-  QSphereMesh *RightElbow;
-  Qt3DCore::QTransform *rightElbowTransform;
+  // forearms
+  QEntity *m_leftForearmEntity;
+  QCylinderMesh *m_leftForearm;
+  Qt3DCore::QTransform *m_leftForearmTransform;
+  QMatrix4x4 m_leftForearmMatrix;
 
-  QEntity *aLeftElbowEntity;
-  QSphereMesh *LeftElbow;
-  Qt3DCore::QTransform *leftElbowTransform;
+  QEntity *m_rightForearmEntity;
+  QCylinderMesh *m_rightForearm;
+  Qt3DCore::QTransform *m_rightForearmTransform;
+  QMatrix4x4 m_rightForearmMatrix;
 
-  QEntity *aLeftForearmEntity;
-  QCylinderMesh *LeftForearm;
-  Qt3DCore::QTransform *leftForearmTransform;
-  QMatrix4x4 leftForearmMatrix;
+  // trunk
+  QEntity *m_trunkEntity;
+  QCylinderMesh *m_trunk;
+  Qt3DCore::QTransform *m_trunkTransform;
 
-  QEntity *aRightForearmEntity;
-  QCylinderMesh *RightForearm;
-  Qt3DCore::QTransform *rightForearmTransform;
-  QMatrix4x4 rightForearmMatrix;
+  // thighs
+  QEntity *m_leftThighEntity;
+  QCylinderMesh *m_leftThigh;
+  Qt3DCore::QTransform *m_leftThighTransform;
 
-  QEntity *aTrunkEntity;
-  QCylinderMesh *Trunk;
-  Qt3DCore::QTransform *trunkTransform;
+  QEntity *m_rightThighEntity;
+  QCylinderMesh *m_rightThigh;
+  Qt3DCore::QTransform *m_rightThighTransform;
 
-  QEntity *aLeftThighEntity;
-  QCylinderMesh *LeftThigh;
-  Qt3DCore::QTransform *leftThighTransform;
+  // knees
+  QEntity *m_rightKneeEntity;
+  QSphereMesh *m_rightKnee;
+  Qt3DCore::QTransform *m_rightKneeTransform;
 
-  QEntity *aRightThighEntity;
-  QCylinderMesh *RightThigh;
-  Qt3DCore::QTransform *rightThighTransform;
+  QEntity *m_leftKneeEntity;
+  QSphereMesh *m_leftKnee;
+  Qt3DCore::QTransform *m_leftKneeTransform;
 
-  QEntity *aRightKneeEntity;
-  QSphereMesh *RightKnee;
-  Qt3DCore::QTransform *rightKneeTransform;
+  // legs
+  QEntity *m_rightLegEntity;
+  QCylinderMesh *m_rightLeg;
+  Qt3DCore::QTransform *m_rightLegTransform;
 
-  QEntity *aLeftKneeEntity;
-  QSphereMesh *LeftKnee;
-  Qt3DCore::QTransform *leftKneeTransform;
-
-  QEntity *aRightLegEntity;
-  QCylinderMesh *RightLeg;
-  Qt3DCore::QTransform *rightLegTransform;
-
-  QEntity *aLeftLegEntity;
-  QCylinderMesh *LeftLeg;
-  Qt3DCore::QTransform *leftLegTransform;
+  QEntity *m_leftLegEntity;
+  QCylinderMesh *m_leftLeg;
+  Qt3DCore::QTransform *m_leftLegTransform;
 
 };
 

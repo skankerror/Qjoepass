@@ -29,41 +29,46 @@
 
 class Animation : public QParallelAnimationGroup
 {
+
   Q_OBJECT
+
 public:
+
   explicit Animation(QObject *parent = nullptr);
 
-  void setVJuggler(QVector<Juggler*> aVJuggler) { vJuggler = aVJuggler; };
-  void setVBall(QVector<JugglingBall *> aVBall) { vBall = aVBall;};
-  void setVRing(QVector<JugglingRing *> aVRing) { vRing = aVRing;};
-  void setVClub(QVector<Pirouette *> aVClub) {vClub = aVClub;};
-  void setSiteSwap(SiteSwap *aSiteSwap);;
+  void setVJuggler(QVector<Juggler*> t_v_juggler) { m_v_juggler = t_v_juggler; };
+  void setVBall(QVector<JugglingBall *> t_v_ball) { m_v_ball = t_v_ball; };
+  void setVRing(QVector<JugglingRing *> t_v_ring) { m_v_ring = t_v_ring; };
+  void setVClub(QVector<Pirouette *> t_v_club) { m_v_club = t_v_club; };
+  void setSiteSwap(SiteSwap *t_siteSwap);
   void setAnim();
 
 private:
-  QSequentialAnimationGroup* parabolicAnim(Juggler *aJuggler,
-                                           int indexProp,
-                                           int launch,
-                                           hand aHand);
 
-  QSequentialAnimationGroup* dwellAnim(Juggler *aJuggler,
-                                       int indexProp,
-                                       int nextLaunch,
-                                       hand aHand);
+  QSequentialAnimationGroup* parabolicAnim(Juggler *t_juggler,
+                                           int t_indexProp,
+                                           int t_launch,
+                                           hand t_hand);
 
-  QSequentialAnimationGroup* handAnim(Juggler *aJuggler,
-                                      int indexProp,
-                                      int launch,
-                                      hand aHand);
+  QSequentialAnimationGroup* dwellAnim(Juggler *t_juggler,
+                                       int t_indexProp,
+                                       int t_nextLaunch,
+                                       hand t_hand);
+
+  QSequentialAnimationGroup* handAnim(Juggler *t_juggler,
+                                      int t_indexProp,
+                                      int t_launch,
+                                      hand t_hand);
 
 private:
-  QVector<Juggler*> vJuggler;
-  QVector<JugglingBall *> vBall;
-  QVector<JugglingRing *> vRing;
-  QVector<Pirouette *> vClub;
-  SiteSwap *siteSwap;
-  jugglingProp propType;
-  int period;
+
+  QVector<Juggler*> m_v_juggler;
+  QVector<JugglingBall *> m_v_ball;
+  QVector<JugglingRing *> m_v_ring;
+  QVector<Pirouette *> m_v_club;
+  SiteSwap *m_siteSwap;
+  jugglingProp m_propType;
+  int m_period;
 
 };
 
