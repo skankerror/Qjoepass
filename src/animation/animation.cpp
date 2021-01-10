@@ -88,18 +88,18 @@ void Animation::setAnim()
       // single juggler
       int jugId = 0;
 
-      QVector<AnimEvent*> v_animEvent = m_siteSwap->getAnimEvents(launchPos, launchHand, jugId);
+      QVector<animEvent*> v_animEvent = m_siteSwap->getAnimEvents(launchPos, launchHand, jugId);
 
       auto juggler = m_v_juggler.at(0); // pas beau
 
       for (int j = 0; j < v_animEvent.size(); j++)
       {
-        auto animEvent = v_animEvent.at(j);
-        auto launchAnim = parabolicAnim(juggler, propNum, animEvent->getLaunch(), animEvent->getHandLaunch());
+        auto myAnimEvent = v_animEvent.at(j);
+        auto launchAnim = parabolicAnim(juggler, propNum, myAnimEvent->launch, myAnimEvent->handLaunch);
         launchAnim->setLoopCount(1);
         propMoveAnim->addAnimation(launchAnim);
         // dwell
-        auto dwellAnimation = dwellAnim(juggler, propNum, animEvent->getNewLaunch(), animEvent->getHandRecieve());
+        auto dwellAnimation = dwellAnim(juggler, propNum, myAnimEvent->newLaunch, myAnimEvent->handRecieve);
         dwellAnimation->setLoopCount(1);
         propMoveAnim->addAnimation(dwellAnimation);
       }
@@ -129,19 +129,19 @@ void Animation::setAnim()
         // single juggler
         int jugId = 0;
 
-        QVector<AnimEvent*> v_animEvent = m_siteSwap->getAnimEvents(launchPos, launchHand, jugId);
+        QVector<animEvent*> v_animEvent = m_siteSwap->getAnimEvents(launchPos, launchHand, jugId);
 
-        juggler = m_v_juggler.at(1); // WARNING: ugly !
+//        juggler = m_v_juggler.at(1); // WARNING: ugly !
         for (int j = 0; j < v_animEvent.size(); j++)
         {
           // WARNING: juggler may change
 
-          auto animEvent = v_animEvent.at(j);
-          auto launchAnim = parabolicAnim(m_v_juggler.at(animEvent->getJugLaunchId()), propNum, animEvent->getLaunch(), animEvent->getHandLaunch());
+          auto myAnimEvent = v_animEvent.at(j);
+          auto launchAnim = parabolicAnim(m_v_juggler.at(myAnimEvent->jugLaunchId), propNum, myAnimEvent->launch, myAnimEvent->handLaunch);
           launchAnim->setLoopCount(1);
           propMoveAnim->addAnimation(launchAnim);
           // dwell
-          auto dwellAnimation = dwellAnim(m_v_juggler.at(animEvent->getJugLaunchId()), propNum, animEvent->getNewLaunch(), animEvent->getHandRecieve());
+          auto dwellAnimation = dwellAnim(m_v_juggler.at(myAnimEvent->jugLaunchId), propNum, myAnimEvent->newLaunch, myAnimEvent->handRecieve);
           dwellAnimation->setLoopCount(1);
           propMoveAnim->addAnimation(dwellAnimation);
         }

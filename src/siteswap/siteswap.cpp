@@ -76,56 +76,59 @@ void SiteSwap::setPropType(jugglingProp t_prop)
   m_prop = t_prop;
 }
 
-QVector<AnimEvent*> SiteSwap::getAnimEvents(int launchPos, hand handLaunch, int jugLaunchId)
+// TODO: check all that stuff with the new struct
+QVector<animEvent*> SiteSwap::getAnimEvents(int t_launchPos, hand t_handLaunch, int t_jugLaunchId)
 {
-  QVector<AnimEvent*> returnVec;
+  QVector<animEvent*> v_returnVec;
 
-  hand initialHandLaunch = handLaunch; // to keep it
-  int initialLaunchPos = launchPos; // idem
-  int initialJugLaunchId = jugLaunchId;
+  hand initialHandLaunch = t_handLaunch; // to keep it
+  int initialLaunchPos = t_launchPos; // idem
+  int initialJugLaunchId = t_jugLaunchId;
 
-  int launch = at(launchPos);
+  int myLaunch = at(t_launchPos);
   hand newLaunchHand;
-  (launch % 2 == 1) ? newLaunchHand = changeHand(handLaunch) : newLaunchHand = handLaunch;
-  int newLaunchPos = (launch + launchPos) % m_period;
-  int newLaunch = at(newLaunchPos);
-  int newJugId = m_v_event.at(launchPos)->getReceiveJugId();
-  auto animEvent = new AnimEvent();
-  animEvent->setLaunch(launch);
-  animEvent->setHandLaunch(handLaunch);
-  animEvent->setHandRecieve(newLaunchHand);
-  animEvent->setJugLaunchId(jugLaunchId);
-  animEvent->setJugRecieveId(newJugId);
-  animEvent->setNewLaunch(newLaunch);
-  returnVec.append(animEvent);
+  (myLaunch % 2 == 1) ? newLaunchHand = changeHand(t_handLaunch) : newLaunchHand = t_handLaunch;
+  int newLaunchPos = (myLaunch + t_launchPos) % m_period;
+  int myNewLaunch = at(newLaunchPos);
+  int newJugId = m_v_event.at(t_launchPos)->getReceiveJugId();
+//  auto animEvent = new AnimEvent();
+  struct animEvent *myAnimEvent = new struct animEvent; // TODO: vérifier le delete
+  myAnimEvent->launch = myLaunch;
+  myAnimEvent->handLaunch = t_handLaunch;
+  myAnimEvent->handRecieve = newLaunchHand;
+  myAnimEvent->jugLaunchId = t_jugLaunchId;
+  myAnimEvent->jugRecieveId = newJugId;
+  myAnimEvent->newLaunch = myNewLaunch;
+  v_returnVec.append(myAnimEvent);
 
-  while (newLaunchPos != initialLaunchPos || newLaunchHand != initialHandLaunch || jugLaunchId != initialJugLaunchId)
+  while (newLaunchPos != initialLaunchPos || newLaunchHand != initialHandLaunch || t_jugLaunchId != initialJugLaunchId)
   {
-    handLaunch = newLaunchHand;
-    launchPos = newLaunchPos;
-    launch = at(launchPos);
-    (launch % 2 == 1) ? newLaunchHand = changeHand(handLaunch) : newLaunchHand = handLaunch;
-    newLaunchPos = (launch + launchPos) % m_period;
-    newLaunch = at(newLaunchPos);
-    if (jugLaunchId != initialJugLaunchId && newJugId == jugLaunchId)
-      jugLaunchId = 1; // FIXME: Ugly !
+    t_handLaunch = newLaunchHand;
+    t_launchPos = newLaunchPos;
+    myLaunch = at(t_launchPos);
+    (myLaunch % 2 == 1) ? newLaunchHand = changeHand(t_handLaunch) : newLaunchHand = t_handLaunch;
+    newLaunchPos = (myNewLaunch + t_launchPos) % m_period;
+    myNewLaunch = at(newLaunchPos);
+    if (t_jugLaunchId != initialJugLaunchId && newJugId == t_jugLaunchId)
+      t_jugLaunchId = 1; // FIXME: Ugly !
     else
-      jugLaunchId = newJugId;
-    if (jugLaunchId != initialJugLaunchId) // if it's the other juggler
+      t_jugLaunchId = newJugId;
+    if (t_jugLaunchId != initialJugLaunchId) // if it's the other juggler
       newJugId = 0; // get back to first
     else
-      newJugId = m_v_event.at(launchPos)->getReceiveJugId();
+      newJugId = m_v_event.at(t_launchPos)->getReceiveJugId();
 
-    auto animEvent = new AnimEvent();
-    animEvent->setLaunch(launch);
-    animEvent->setHandLaunch(handLaunch);
-    animEvent->setHandRecieve(newLaunchHand);
-    animEvent->setJugLaunchId(jugLaunchId);
-    animEvent->setJugRecieveId(newJugId);
-    animEvent->setNewLaunch(newLaunch);
-    returnVec.append(animEvent);
+//    auto animEvent = new AnimEvent();
+    struct animEvent *newAnimEvent = new struct animEvent;
+    newAnimEvent->launch = myLaunch;
+    newAnimEvent->handLaunch = t_handLaunch;
+    newAnimEvent->handRecieve = newLaunchHand;
+    newAnimEvent->jugLaunchId = t_jugLaunchId;
+    newAnimEvent->jugRecieveId = newJugId;
+    newAnimEvent->newLaunch = myNewLaunch;
+    v_returnVec.append(newAnimEvent);
   }
-  return returnVec;
+  return v_returnVec;
 }
 
 void SiteSwap::setState()

@@ -30,7 +30,6 @@ INCLUDEPATH += \
 SOURCES += \
   src/3d/3dwindow.cpp \
   src/animation/animation.cpp \
-  src/animation/animevent.cpp \
   src/animation/curve.cpp \
   src/3d/ground.cpp \
   src/3d/juggler.cpp \
@@ -48,7 +47,6 @@ SOURCES += \
 HEADERS += \
   src/3d/3dwindow.h \
   src/animation/animation.h \
-  src/animation/animevent.h \
   src/animation/curve.h \
   src/3d/ground.h \
   src/3d/juggler.h \

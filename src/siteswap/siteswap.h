@@ -21,10 +21,20 @@
 #include <QObject>
 #include <QBitArray>
 #include "qjoepass.h"
-#include "animevent.h"
 #include "siteswapevent.h"
 
 // TODO: no need to be a QObject ?
+
+struct animEvent
+{
+  int jugLaunchId;
+  hand handLaunch;
+  int launch;
+  int jugRecieveId;
+  hand handRecieve;
+  int newLaunch;
+  // int launchType;
+};
 
 class SiteSwap : public QObject
 {
@@ -50,7 +60,7 @@ public:
   QBitArray getState() const { return m_state; };
   int getJugglerCount() const { return m_jugglerCount; };
   // For sending datas to animation
-  QVector<AnimEvent*> getAnimEvents(int t_launchPos, hand t_handLaunch, int t_jugLaunchId);
+  QVector<animEvent*> getAnimEvents(int t_launchPos, hand t_handLaunch, int t_jugLaunchId);
 
   // setters
   void setPropType(jugglingProp t_prop);
