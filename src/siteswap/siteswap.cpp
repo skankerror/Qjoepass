@@ -110,7 +110,7 @@ QVector<animEvent*> SiteSwap::getAnimEvents(int t_launchPos, hand t_handLaunch, 
     newLaunchPos = (myNewLaunch + t_launchPos) % m_period;
     myNewLaunch = at(newLaunchPos);
     if (t_jugLaunchId != initialJugLaunchId && newJugId == t_jugLaunchId)
-      t_jugLaunchId = 1; // FIXME: Ugly !
+      t_jugLaunchId = 1; // TODO: Ugly !
     else
       t_jugLaunchId = newJugId;
     if (t_jugLaunchId != initialJugLaunchId) // if it's the other juggler

@@ -53,7 +53,7 @@ void Animation::setAnim()
   leftHandAnimation->setLoopCount(-1);
   animTempGroup->addAnimation(handPauseAnim);
 
-  // pas beau
+  // TODO: ugly
   auto rightHandAnimation2 = handAnim(m_v_juggler.at(1), propNum, 1, rightHand);
   rightHandAnimation2->setLoopCount(-1);
   animTempGroup->addAnimation(rightHandAnimation2);
@@ -131,10 +131,9 @@ void Animation::setAnim()
 
         QVector<animEvent*> v_animEvent = m_siteSwap->getAnimEvents(launchPos, launchHand, jugId);
 
-//        juggler = m_v_juggler.at(1); // WARNING: ugly !
         for (int j = 0; j < v_animEvent.size(); j++)
         {
-          // WARNING: juggler may change
+          // TODO: juggler may change
 
           auto myAnimEvent = v_animEvent.at(j);
           auto launchAnim = parabolicAnim(m_v_juggler.at(myAnimEvent->jugLaunchId), propNum, myAnimEvent->launch, myAnimEvent->handLaunch);
@@ -162,9 +161,7 @@ QSequentialAnimationGroup *Animation::handAnim(Juggler *t_juggler,
                                                  int t_launch,
                                                  hand t_hand)
 {
-  // start and end rotation <angle,velocity,hand>
-//    QVector3D pos = QVector3D(270,15,0);
-//    QVector3D pos2 = QVector3D(90,15,0);
+
   Q_UNUSED(t_indexProp)
   Q_UNUSED(t_launch)
 
@@ -172,43 +169,18 @@ QSequentialAnimationGroup *Animation::handAnim(Juggler *t_juggler,
   QVector2D pos2 = QVector2D(-60,15);
   auto animGroup = new QSequentialAnimationGroup();
 
-  auto animLeftHandDwell = new QPropertyAnimation(t_juggler, QByteArrayLiteral("m_leftHandPosition"));
-  auto animRightHandDwell = new QPropertyAnimation(t_juggler, QByteArrayLiteral("m_rightHandPosition"));
-  auto animLeftHandLaunch = new QPropertyAnimation(t_juggler, QByteArrayLiteral("m_leftHandPosition"));
-  auto animRightHandLaunch = new QPropertyAnimation(t_juggler, QByteArrayLiteral("m_rightHandPosition"));
+  QPropertyAnimation *animLeftHandDwell = nullptr;
+  QPropertyAnimation *animRightHandDwell = nullptr;
+  QPropertyAnimation *animLeftHandLaunch = nullptr;
+  QPropertyAnimation *animRightHandLaunch = nullptr;
+
 
   float frameCount =  ((HAND_PERIOD) / 2) * (2 - (2 * DWELL_RATIO));
 
-//    auto animHandDwell = new QPropertyAnimation(aJuggler, QByteArrayLiteral("m_handPosition"));
-//    auto animHandLaunch = new QPropertyAnimation(aJuggler, QByteArrayLiteral("m_handPosition"));
-
-//    if (aHand == rightHand) {
-//      pos.setZ(1);
-//      pos2.setZ(1);
-//    }
-//    QVector3D pos2 = pos-QVector3D(180,0,0);
-
-//    animHandDwell->setDuration((int)(DWELL_TIME * S_TO_MS));
-//    animHandDwell->setStartValue(pos);
-//    animHandDwell->setEndValue(pos2);
-//    animHandDwell->setLoopCount(1);
-//    animGroup->addAnimation(animHandDwell);
-
-//    qDebug() << "hand dwellTime : " << (int)(DWELL_TIME * S_TO_MS);
-
-//    auto animHandLaunch = new QPropertyAnimation(aJuggler, QByteArrayLiteral("handPosition"));
-
-//    animHandLaunch->setDuration((int)(frameCount * S_TO_MS)+1);
-//    animHandLaunch->setStartValue(pos2);
-//    animHandLaunch->setEndValue(pos2-QVector3D(180,0,0));
-//    animHandLaunch->setLoopCount(1);
-//    animGroup->addAnimation(animHandLaunch);
-
-//    qDebug() << "hand launchTime : " << (int)(frameCount * S_TO_MS);
-
   if (t_hand == leftHand)
   {
-    animLeftHandDwell->setDuration((int)(DWELL_TIME * S_TO_MS)); // WARNING: possible leak of memory ?
+    animLeftHandDwell = new QPropertyAnimation(t_juggler, QByteArrayLiteral("m_leftHandPosition"));
+    animLeftHandDwell->setDuration((int)(DWELL_TIME * S_TO_MS));
     animLeftHandDwell->setStartValue(pos);
     animLeftHandDwell->setEndValue(pos2);
     animLeftHandDwell->setLoopCount(1);
@@ -216,6 +188,7 @@ QSequentialAnimationGroup *Animation::handAnim(Juggler *t_juggler,
 
     qDebug() << "hand dwellTime : " << (int)(DWELL_TIME * S_TO_MS);
 
+    animLeftHandLaunch = new QPropertyAnimation(t_juggler, QByteArrayLiteral("m_leftHandPosition"));
     animLeftHandLaunch->setDuration((int)(frameCount * S_TO_MS)+1);
     animLeftHandLaunch->setStartValue(pos2);
     animLeftHandLaunch->setEndValue(pos2-QVector2D(240,0));
@@ -226,12 +199,14 @@ QSequentialAnimationGroup *Animation::handAnim(Juggler *t_juggler,
   }
   else
   {
-    animRightHandDwell->setDuration((int)(DWELL_TIME * S_TO_MS)); // WARNING: possible leak of memory ?
+    animRightHandDwell = new QPropertyAnimation(t_juggler, QByteArrayLiteral("m_rightHandPosition"));
+    animRightHandDwell->setDuration((int)(DWELL_TIME * S_TO_MS));
     animRightHandDwell->setStartValue(pos);
     animRightHandDwell->setEndValue(pos2);
     animRightHandDwell->setLoopCount(1);
     animGroup->addAnimation(animRightHandDwell);
 
+    animRightHandLaunch = new QPropertyAnimation(t_juggler, QByteArrayLiteral("m_rightHandPosition"));
     animRightHandLaunch->setDuration((int)(frameCount * S_TO_MS)+1);
     animRightHandLaunch->setStartValue(pos2);
     animRightHandLaunch->setEndValue(pos2-QVector2D(240,0));
@@ -309,14 +284,14 @@ QSequentialAnimationGroup *Animation::parabolicAnim(Juggler *t_juggler, // TODO:
   QVector<QVector3D> vParabolic = Curves::curveParabolic(velBall, posProp, frameCount);
 
   // declare one object for each prop in case we need it in switch routines
-  JugglingBall *aBall;
-  JugglingRing *aRing;
-  Pirouette *aClub;
+  JugglingBall *aBall = nullptr;
+  JugglingRing *aRing = nullptr;
+  Pirouette *aClub = nullptr;
 
   // for ring or club rotation we have to create 3 more anims
-  auto animTempGroup = new QParallelAnimationGroup();
+  QParallelAnimationGroup *animTempGroup = nullptr;
   QPropertyAnimation *animRotProp;
-  auto animTranslationGroup = new QSequentialAnimationGroup();
+  QSequentialAnimationGroup *animTranslationGroup = nullptr;
 
   // declare them in case we need
   int launchType; // normal, flat, pancake ??
@@ -328,7 +303,7 @@ QSequentialAnimationGroup *Animation::parabolicAnim(Juggler *t_juggler, // TODO:
   switch(m_propType)
   {
   case ball:
-    aBall = m_v_ball.at(t_indexProp); // WARNING: possible leak of memory ?
+    aBall = m_v_ball.at(t_indexProp);
     // loop creates all our animations for translation
     for (int i = 0; i < frameCount; i++)
     {
@@ -366,6 +341,7 @@ QSequentialAnimationGroup *Animation::parabolicAnim(Juggler *t_juggler, // TODO:
     case panCake:
       aRing->setRotY(rotY);
       aRing->setRotX(RING_PANCAKE_ROTX);
+      animTranslationGroup = new QSequentialAnimationGroup();
       for (int i = 0; i < frameCount; i++)
       {
         auto animRing = new QPropertyAnimation(aRing, QByteArrayLiteral("m_position"));
@@ -383,6 +359,7 @@ QSequentialAnimationGroup *Animation::parabolicAnim(Juggler *t_juggler, // TODO:
         animRotProp->setStartValue(360 + RING_PANCAKE_ROTX);
         animRotProp->setEndValue(RING_PANCAKE_ROTX);
         animRotProp->setLoopCount(rotCount);
+        animTempGroup = new QParallelAnimationGroup();
         animTempGroup->addAnimation(animRotProp);
       }
       animTempGroup->addAnimation(animTranslationGroup);
@@ -404,6 +381,7 @@ QSequentialAnimationGroup *Animation::parabolicAnim(Juggler *t_juggler, // TODO:
     case normalClub:
       aClub->setRotX(CLUB_BASIC_ROTX);
       aClub->setRotY(rotY);
+      animTranslationGroup = new QSequentialAnimationGroup();
       for (int i = 0; i < frameCount; i++)
       {
         auto animClub = new QPropertyAnimation(aClub, QByteArrayLiteral("m_position"));
@@ -421,6 +399,7 @@ QSequentialAnimationGroup *Animation::parabolicAnim(Juggler *t_juggler, // TODO:
         animRotProp->setStartValue(360 + CLUB_BASIC_ROTX);
         animRotProp->setEndValue(CLUB_BASIC_ROTX);
         animRotProp->setLoopCount(rotCount);
+        animTempGroup = new QParallelAnimationGroup();
         animTempGroup->addAnimation(animRotProp);
       }
       animTempGroup->addAnimation(animTranslationGroup);
@@ -449,6 +428,7 @@ QSequentialAnimationGroup *Animation::parabolicAnim(Juggler *t_juggler, // TODO:
         aClub->setRotY(rotY + 90);
       else
         aClub->setRotY(rotY - 90);
+      animTranslationGroup = new QSequentialAnimationGroup();
       for (int i = 0; i < frameCount; i++)
       {
         auto animClub = new QPropertyAnimation(aClub, QByteArrayLiteral("m_position"));
@@ -472,6 +452,7 @@ QSequentialAnimationGroup *Animation::parabolicAnim(Juggler *t_juggler, // TODO:
         animRotProp->setEndValue(rotY - 90 + (fRotCount * 360));
       }
       animRotProp->setLoopCount(1);
+      animTempGroup = new QParallelAnimationGroup();
       animTempGroup->addAnimation(animRotProp);
       animTempGroup->addAnimation(animTranslationGroup);
       animTempGroup->setLoopCount(1);
