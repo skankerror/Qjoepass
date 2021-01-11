@@ -60,9 +60,11 @@ private:
                                       int t_launch,
                                       hand t_hand);
 
+  //  QPropertyAnimation* handPropAnim(Juggler *t_juggler, hand t_hand, bool motion);
+
 private:
 
-  QVector<Juggler*> m_v_juggler;
+  QVector<Juggler *> m_v_juggler;
   QVector<JugglingBall *> m_v_ball;
   QVector<JugglingRing *> m_v_ring;
   QVector<Pirouette *> m_v_club;

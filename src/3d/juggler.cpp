@@ -33,18 +33,6 @@ Juggler::Juggler(QEntity *t_rootEntity,
 
   m_eulerAngles = QVector3D(JUGGLER_ROT_X, m_rotY, JUGGLER_ROT_Z);
 
-  // QSkeleton test... dosen't work
-  m_mySkeleton = new QSkeleton();
-  m_mySkeleton->setEnabled(true);
-  m_rootJoint = new QJoint(this);
-  m_rootJoint->setEnabled(true);
-  m_mySkeleton->setRootJoint(m_rootJoint);
-  m_rootJoint->setName("root_joint");
-  m_myArmature = new QArmature();
-  m_myArmature->setSkeleton(m_mySkeleton);
-  m_myArmature->setEnabled(true);
-
-
   createHead();
   createShoulders();
   createArms();
@@ -64,48 +52,39 @@ Juggler::Juggler(QEntity *t_rootEntity,
   //  material is not applied on children!
   //  addComponent(skeletonMaterial);
 
-  // skeleton test
-  addComponent(m_myArmature);
-  setEnabled(m_enabled);
-
-//  qDebug() << m_myArmature->childNodes();
-//  qDebug() << m_mySkeleton->jointCount();
-//  qDebug() << m_rootJoint->name();
-//  qDebug() << m_headJoint->name();
-
   // we update hands positions and head
   setPositionHands();
 
   connect(this, SIGNAL(positionChanged()), this, SLOT(setPositionHands()));
 }
-void Juggler::setHandPosition(QVector3D t_rot)
-{
-  float rot = t_rot.x();
-  bool hand = t_rot.z();
-  QMatrix4x4 aMatrix;
-  QVector3D elbowCurve;
-  if (!hand) {
-    elbowCurve = QVector3D(0, 1, 1);
-    aMatrix = m_leftForearmMatrix;
-  }
-  else {
-    elbowCurve = QVector3D(0, -1, -1);
-    aMatrix = m_rightForearmMatrix;
-  }
-  QMatrix4x4 rotAxis;
-  rotAxis.setToIdentity();
-  rotAxis.rotate(45, QVector3D(1, 0, 0));
-  elbowCurve = rotAxis * elbowCurve;
+//void Juggler::setHandPosition(QVector3D t_rot)
+//{
+//  float rot = t_rot.x();
+//  bool hand = t_rot.z();
+//  QMatrix4x4 aMatrix;
+//  QVector3D elbowCurve;
+//  if (!hand) {
+//    elbowCurve = QVector3D(0, 1, 1);
+//    aMatrix = m_leftForearmMatrix;
+//  }
+//  else {
+//    elbowCurve = QVector3D(0, -1, -1);
+//    aMatrix = m_rightForearmMatrix;
+//  }
+//  QMatrix4x4 rotAxis;
+//  rotAxis.setToIdentity();
+//  rotAxis.rotate(45, QVector3D(1, 0, 0));
+//  elbowCurve = rotAxis * elbowCurve;
 
-  aMatrix.translate(0.0f, -0.74f, 1.06f);
-  aMatrix.rotate(rot, elbowCurve);
-  aMatrix *= rotAxis;
-  aMatrix.translate(0.0f, 0.0f, -0.75f);
+//  aMatrix.translate(0.0f, -0.74f, 1.06f);
+//  aMatrix.rotate(rot, elbowCurve);
+//  aMatrix *= rotAxis;
+//  aMatrix.translate(0.0f, 0.0f, -0.75f);
 
-  hand ?
-        m_leftForearmTransform->setMatrix(aMatrix):
-        m_rightForearmTransform->setMatrix(aMatrix);
-}
+//  hand ?
+//        m_leftForearmTransform->setMatrix(aMatrix):
+//        m_rightForearmTransform->setMatrix(aMatrix);
+//}
 
 void Juggler::createHead()
 {
@@ -124,12 +103,6 @@ void Juggler::createHead()
   m_headEntity->addComponent(m_headTransform);
   m_headEntity->addComponent(m_jugglerMetalRoughMaterial);
 
-  //skeleton test
-  m_headJoint = new QJoint(m_headEntity);
-  m_headJoint->setEnabled(true);
-  m_headJoint->setName("head_joint");
-  m_headJoint->setInverseBindMatrix(headMatrix);
-  m_rootJoint->addChildJoint(m_headJoint);
 }
 
 void Juggler::createShoulders()
@@ -267,59 +240,45 @@ void Juggler::createLegs()
              QVector3D (-0.75f, 1.0f, 0.0f), m_rotY, 2.0f);
 }
 
-void Juggler::setLeftHandPosition(QVector2D t_rot)
+void Juggler::setLeftHandPosition(QVector3D t_pos)
 {
 
-  QVector3D elbowCurve = QVector3D(0, 1, 1);
-  QMatrix4x4 rotAxis;
-  rotAxis.setToIdentity();
-  rotAxis.rotate(90, QVector3D(1, 0, 0));
-  elbowCurve = rotAxis * elbowCurve;
-
+  QVector3D medPos = getPositionLHmed();
   QMatrix4x4 aMatrix = m_leftForearmMatrix;
-  aMatrix.rotate(-45, QVector3D(1, 0, 0));
-  aMatrix.translate(0.0f, -1.28f, 0.23f);
-  aMatrix.rotate(t_rot.x(), elbowCurve);
-  aMatrix.translate(0.0f, 0.0f, -0.75f);
 
+  aMatrix.rotate(QQuaternion::fromEulerAngles(90.0f, 0.0f, 0.0));
+  QMatrix4x4 rot = getRotMatrix();
+  float angle = qRadiansToDegrees(qAtan(t_pos.y() / t_pos.z()));
+
+  medPos = rot * medPos;
+  //  pos = medPos - pos;
+  //  pos = rot * pos;
+  //  qDebug() << " angle  " << angle;
+  //  aMatrix.translate (medPos);
+  aMatrix.translate (QVector3D(0.75,0.0,1.5));
+  aMatrix.rotate (-angle,QVector3D(1,0,1));
+  aMatrix.translate (QVector3D(-0.75,0.75,-0.75));
+  //  aMatrix.translate (pos);
   m_leftForearmTransform->setMatrix(aMatrix);
-
-
-//    QVector3D shoulderCurve = QVector3D(0 , 1 , 1);
-//    QMatrix4x4 shoulderAxis;
-//    shoulderAxis.setToIdentity();
-//    shoulderAxis.rotate(250, QVector3D(1, 0, 0));
-//    shoulderCurve = shoulderAxis * shoulderCurve;
-//    QMatrix4x4 armMatrix = leftArmMatrix;
-//  //  armMatrix.rotate(90,0,0,1);
-//    armMatrix.translate(0.0f, 0.75f, 0.0f);
-//  //  armMatrix *= shoulderAxis;
-//    armMatrix.rotate(rot.x(), shoulderCurve);
-//    armMatrix.translate(0.0f, -0.75f, 0.0f);
-
-//    leftArmTransform->setMatrix(armMatrix);
 }
 
-void Juggler::setRightHandPosition(QVector2D t_rot)
+void Juggler::setRightHandPosition(QVector3D t_pos)
 {
-
-  QVector3D elbowCurve = QVector3D(0, -1, -1);
-  QMatrix4x4 rotAxis;
-  rotAxis.setToIdentity();
-  rotAxis.rotate(90, QVector3D(1, 0, 0));
-  elbowCurve = rotAxis * elbowCurve;
-
+  QVector3D medPos = getPositionRHmed();
   QMatrix4x4 aMatrix = m_rightForearmMatrix;
-  aMatrix.rotate(-45, QVector3D(1, 0, 0));
-  aMatrix.translate(0.0f, -1.28f, 0.23f);
-  aMatrix.rotate(t_rot.x(), elbowCurve);
-  //  aMatrix *= rotAxis;
-  aMatrix.translate(0.0f, 0.0f, -0.75f);
+  aMatrix.rotate(QQuaternion::fromEulerAngles(90.0f, 0.0f, 0.0));
+  QMatrix4x4 rot = getRotMatrix();
+  float angle = qRadiansToDegrees(qAtan(t_pos.y() / t_pos.z()));
+  medPos = rot * medPos;
+  t_pos = rot * t_pos;
+  t_pos = medPos - t_pos;
+//  aMatrix.translate(pos);
+  aMatrix.translate (QVector3D(0.75,0.0,1.5));
+  aMatrix.rotate (-angle,QVector3D(1,0,1));
+  aMatrix.translate (QVector3D(-0.75,0.75,-0.75));
   m_rightForearmTransform->setMatrix(aMatrix);
-
-
-
 }
+
 void Juggler::setPosition(QVector3D t_position)
 {
   if (m_position == t_position)

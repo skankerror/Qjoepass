@@ -76,7 +76,6 @@ void SiteSwap::setPropType(jugglingProp t_prop)
   m_prop = t_prop;
 }
 
-// TODO: check all that stuff with the new struct
 QVector<animEvent*> SiteSwap::getAnimEvents(int t_launchPos, hand t_handLaunch, int t_jugLaunchId)
 {
   QVector<animEvent*> v_returnVec;

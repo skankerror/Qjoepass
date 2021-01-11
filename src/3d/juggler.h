@@ -37,20 +37,15 @@ class Juggler: public QEntity
              WRITE setPosition
              NOTIFY positionChanged)
 
-  Q_PROPERTY(QVector2D m_leftHandPosition
+  Q_PROPERTY(QVector3D m_leftHandPosition
              READ getLeftHandPosition
              WRITE setLeftHandPosition
              NOTIFY leftHandPositionChanged)
 
-  Q_PROPERTY(QVector2D m_rightHandPosition
+  Q_PROPERTY(QVector3D m_rightHandPosition
              READ getRightHandPosition
              WRITE setRightHandPosition
              NOTIFY rightHandPositionChanged)
-
-  Q_PROPERTY(QVector3D m_handPosition
-             READ handPosition
-             WRITE setHandPosition
-             NOTIFY handPositionChanged)
 
 public:
 
@@ -64,12 +59,12 @@ public:
   void setPosition(QVector3D t_position);
   void setSkeletonTransform(Qt3DCore::QTransform *t_transform) { m_skeletonTransform = t_transform; };
 
-  QVector2D getLeftHandPosition() { return m_leftHandPosition; };
-  void setLeftHandPosition(QVector2D t_rot);
-  QVector2D getRightHandPosition() { return m_rightHandPosition; };
-  void setRightHandPosition(QVector2D t_rot);
-  QVector3D handPosition() { return m_myHandPosition; };
-  void setHandPosition(QVector3D t_rot);
+  QVector3D getLeftHandPosition() { return m_leftHandPosition; };
+  void setLeftHandPosition(QVector3D t_pos);
+  QVector3D getRightHandPosition() { return m_rightHandPosition; };
+  void setRightHandPosition(QVector3D t_pos);
+//  QVector3D handPosition() { return m_myHandPosition; };
+//  void setHandPosition(QVector3D t_rot);
 
   // getters for hands positions ext to catch, int to launch, med for siteswap 2
   QVector3D getPositionLHextPlus() const { return m_posLHextPlus; }; // helico, pancakes
@@ -111,6 +106,7 @@ private:
   void setPositionRHext();
   void setPositionRHint();
   void setPositionRHmed();
+
   void setPosHead();
 
   void makeMember(QCylinderMesh *t_member,
@@ -146,9 +142,6 @@ private:
   QMetalRoughMaterial *m_jugglerMetalRoughMaterial;
 
   Qt3DCore::QTransform *m_skeletonTransform;
-  QSkeleton *m_mySkeleton;
-  QArmature *m_myArmature;
-  QJoint *m_rootJoint;
 
   QVector3D m_eulerAngles;
   QVector3D m_position;
@@ -158,8 +151,8 @@ private:
   bool m_enabled = true;
 
   // hands positions
-  QVector2D m_leftHandPosition;
-  QVector2D m_rightHandPosition;
+  QVector3D m_leftHandPosition;
+  QVector3D m_rightHandPosition;
   QVector3D m_myHandPosition;
 
   QVector3D m_posLHextPlus; // helico pancake
@@ -179,7 +172,6 @@ private:
   QEntity *m_headEntity;
   QSphereMesh *m_head;
   Qt3DCore::QTransform *m_headTransform;
-  QJoint *m_headJoint;
 
   // shoulders
   QEntity *m_shoulderEntity;
