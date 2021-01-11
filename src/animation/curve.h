@@ -23,7 +23,9 @@
 
 class Curves
 {
+
 public:
+
   Curves();
 
   static QVector<QVector3D> curveParabolic(QVector3D &velocity,

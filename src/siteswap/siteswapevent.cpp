@@ -29,10 +29,5 @@ SiteswapEvent::SiteswapEvent(int t_launch,
     m_passJugId(t_id1),
     m_receiveiJugId(t_id2)
 {
-//  if (m_passJugId != m_receiveiJugId)
-//    setPassing(true);
-//  else
-//    setPassing(false);
-
   (m_passJugId != m_receiveiJugId) ? setPassing(true) : setPassing(false);
 }

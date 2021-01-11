@@ -178,9 +178,9 @@ void My3DWindow::createSiteSwap(QVector<SiteswapEvent*> t_v_Event,
                                 bool t_synchron)
 {
   // create siteswap with values
-  SiteSwap *siteSwap = new SiteSwap(t_v_Event, t_jugCount, t_propType, t_synchron, this);
+  auto siteswap = new SiteSwap(t_v_Event, t_jugCount, t_propType, t_synchron, this);
   // test if it's valid
-  if (!(siteSwap->isValid()))
+  if (!(siteswap->isValid()))
   {
     qDebug() << "siteswap is not valid !";
     return;
@@ -213,7 +213,7 @@ void My3DWindow::createSiteSwap(QVector<SiteswapEvent*> t_v_Event,
   //NOTE: what about jugglers ?
 
   // create props
-  int numProp = siteSwap->getNumProp();
+  int numProp = siteswap->getNumProp();
   for (int i = 0; i < numProp; i++)
   {
     switch(t_propType)
@@ -234,14 +234,14 @@ void My3DWindow::createSiteSwap(QVector<SiteswapEvent*> t_v_Event,
     }
   }
 
-  siteSwap->setLaunchType(t_launchType); // it simplifies our animation
+  siteswap->setLaunchType(t_launchType);
 
   // pass all the jobs to anim
   m_anim->setVJuggler(m_v_juggler);
   m_anim->setVBall(m_v_ball);
   m_anim->setVRing(m_v_ring);
   m_anim->setVClub(m_v_pirouette);
-  m_anim->setSiteSwap(siteSwap);
+  m_anim->setSiteSwap(siteswap);
   m_anim->setAnim();
   m_anim->start();
 }

@@ -36,6 +36,7 @@ SiteSwap::SiteSwap(QVector<SiteswapEvent*> &t_v_Int,
     setState();
 }
 
+
 bool SiteSwap::isValid() const
 {
   // create a vector to test our values
@@ -90,7 +91,6 @@ QVector<animEvent*> SiteSwap::getAnimEvents(int t_launchPos, hand t_handLaunch, 
   int newLaunchPos = (myLaunch + t_launchPos) % m_period;
   int myNewLaunch = at(newLaunchPos);
   int newJugId = m_v_event.at(t_launchPos)->getReceiveJugId();
-//  auto animEvent = new AnimEvent();
   struct animEvent *myAnimEvent = new struct animEvent; // TODO: vérifier le delete
   myAnimEvent->launch = myLaunch;
   myAnimEvent->handLaunch = t_handLaunch;
@@ -117,7 +117,6 @@ QVector<animEvent*> SiteSwap::getAnimEvents(int t_launchPos, hand t_handLaunch, 
     else
       newJugId = m_v_event.at(t_launchPos)->getReceiveJugId();
 
-//    auto animEvent = new AnimEvent();
     struct animEvent *newAnimEvent = new struct animEvent;
     newAnimEvent->launch = myLaunch;
     newAnimEvent->handLaunch = t_handLaunch;

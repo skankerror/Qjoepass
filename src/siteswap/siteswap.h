@@ -19,11 +19,10 @@
 #define SITESWAP_H
 
 #include <QObject>
+#include <QVector>
 #include <QBitArray>
 #include "qjoepass.h"
 #include "siteswapevent.h"
-
-// TODO: no need to be a QObject ?
 
 struct animEvent
 {
@@ -60,7 +59,9 @@ public:
   QBitArray getState() const { return m_state; };
   int getJugglerCount() const { return m_jugglerCount; };
   // For sending datas to animation
-  QVector<animEvent*> getAnimEvents(int t_launchPos, hand t_handLaunch, int t_jugLaunchId);
+  QVector<animEvent*> getAnimEvents(int t_launchPos,
+                                    hand t_handLaunch,
+                                    int t_jugLaunchId);
 
   // setters
   void setPropType(jugglingProp t_prop);
@@ -74,7 +75,7 @@ private:
 
 private:
 
-  QVector<SiteswapEvent*> m_v_event;
+  QVector<SiteswapEvent *> m_v_event;
   int m_period;
   bool m_valid = false;
   bool m_synchron = false;

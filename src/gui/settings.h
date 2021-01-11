@@ -25,17 +25,21 @@
 class MySettings
 {
 public:
-    MySettings(QString fileName = "", QSettings::Format format = QSettings::IniFormat);
+
+    MySettings(QString t_fileName = "",
+               QSettings::Format t_format = QSettings::IniFormat);
     ~MySettings();
-//protected:
-    bool isValue(const QString &key);
-    void setValue(const QString &key, const QVariant &value);
-    void beginGroup(const QString &prefix);
+
+    bool isValue(const QString &t_key);
+    void setValue(const QString &t_key, const QVariant &t_value);
+    void beginGroup(const QString &t_prefix);
     void endGroup();
 
-    QVariant value(const QString &key, const QVariant &defaultValue = QVariant());
+    QVariant value(const QString &t_key,
+                   const QVariant &t_defaultValue = QVariant());
 
 private:
+
     QSettings *m_settings;
 
 };

@@ -23,9 +23,9 @@ Preferences::Preferences(MySettings *t_settings, QWidget *parent)
   : QDialog(parent),
     m_settings(t_settings)
 {
-  tabWidget = new QTabWidget;
+  m_tabWidget = new QTabWidget;
 
-  worldTab = new QWidget(this);
+  m_worldTab = new QWidget(this);
 
   QVBoxLayout *mainLayout = new QVBoxLayout;
 
@@ -43,11 +43,11 @@ Preferences::Preferences(MySettings *t_settings, QWidget *parent)
   mainLayout->addWidget(groundColorLabel);
   mainLayout->addWidget(groundColorButton);
   mainLayout->addStretch(1);
-  worldTab->setLayout(mainLayout);
+  m_worldTab->setLayout(mainLayout);
 
-  casualTab = new QWidget(this);
+  m_casualTab = new QWidget(this);
 
-  soundTab = new QWidget(this);
+  m_soundTab = new QWidget(this);
   auto topLabel = new QLabel(tr("Open with:"));
   auto applicationsListBox = new QListWidget;
   QStringList applications;
@@ -57,21 +57,21 @@ Preferences::Preferences(MySettings *t_settings, QWidget *parent)
   auto layout = new QVBoxLayout;
   layout->addWidget(topLabel);
   layout->addWidget(applicationsListBox);
-  soundTab->setLayout(layout);
+  m_soundTab->setLayout(layout);
 
-  tabWidget->addTab(worldTab, "World");
-  tabWidget->addTab(casualTab, "Causal editor");
-  tabWidget->addTab(soundTab, "Sound");
+  m_tabWidget->addTab(m_worldTab, "World");
+  m_tabWidget->addTab(m_casualTab, "Causal editor");
+  m_tabWidget->addTab(m_soundTab, "Sound");
 
-  buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok
+  m_buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok
                                    | QDialogButtonBox::Cancel);
 
-  connect(buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
-  connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+  connect(m_buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
+  connect(m_buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
 
   auto mainLayout2 = new QVBoxLayout;
-  mainLayout2->addWidget(tabWidget);
-  mainLayout2->addWidget(buttonBox);
+  mainLayout2->addWidget(m_tabWidget);
+  mainLayout2->addWidget(m_buttonBox);
   setLayout(mainLayout2);
 
   setWindowTitle(tr("Tab Dialog"));

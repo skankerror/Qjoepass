@@ -49,42 +49,12 @@ Juggler::Juggler(QEntity *t_rootEntity,
 
   QEntity::setParent(t_rootEntity);
   addComponent(m_skeletonTransform);
-  //  material is not applied on children!
-  //  addComponent(skeletonMaterial);
 
   // we update hands positions and head
   setPositionHands();
 
   connect(this, SIGNAL(positionChanged()), this, SLOT(setPositionHands()));
 }
-//void Juggler::setHandPosition(QVector3D t_rot)
-//{
-//  float rot = t_rot.x();
-//  bool hand = t_rot.z();
-//  QMatrix4x4 aMatrix;
-//  QVector3D elbowCurve;
-//  if (!hand) {
-//    elbowCurve = QVector3D(0, 1, 1);
-//    aMatrix = m_leftForearmMatrix;
-//  }
-//  else {
-//    elbowCurve = QVector3D(0, -1, -1);
-//    aMatrix = m_rightForearmMatrix;
-//  }
-//  QMatrix4x4 rotAxis;
-//  rotAxis.setToIdentity();
-//  rotAxis.rotate(45, QVector3D(1, 0, 0));
-//  elbowCurve = rotAxis * elbowCurve;
-
-//  aMatrix.translate(0.0f, -0.74f, 1.06f);
-//  aMatrix.rotate(rot, elbowCurve);
-//  aMatrix *= rotAxis;
-//  aMatrix.translate(0.0f, 0.0f, -0.75f);
-
-//  hand ?
-//        m_leftForearmTransform->setMatrix(aMatrix):
-//        m_rightForearmTransform->setMatrix(aMatrix);
-//}
 
 void Juggler::createHead()
 {
@@ -251,14 +221,9 @@ void Juggler::setLeftHandPosition(QVector3D t_pos)
   float angle = qRadiansToDegrees(qAtan(t_pos.y() / t_pos.z()));
 
   medPos = rot * medPos;
-  //  pos = medPos - pos;
-  //  pos = rot * pos;
-  //  qDebug() << " angle  " << angle;
-  //  aMatrix.translate (medPos);
   aMatrix.translate (QVector3D(0.75,0.0,1.5));
   aMatrix.rotate (-angle,QVector3D(1,0,1));
   aMatrix.translate (QVector3D(-0.75,0.75,-0.75));
-  //  aMatrix.translate (pos);
   m_leftForearmTransform->setMatrix(aMatrix);
 }
 
@@ -272,7 +237,6 @@ void Juggler::setRightHandPosition(QVector3D t_pos)
   medPos = rot * medPos;
   t_pos = rot * t_pos;
   t_pos = medPos - t_pos;
-//  aMatrix.translate(pos);
   aMatrix.translate (QVector3D(0.75,0.0,1.5));
   aMatrix.rotate (-angle,QVector3D(1,0,1));
   aMatrix.translate (QVector3D(-0.75,0.75,-0.75));
@@ -420,9 +384,6 @@ void Juggler::makeMember(QCylinderMesh *t_member,
   aMatrix.translate(t_trans);
   aMatrix.rotate(QQuaternion::fromEulerAngles(t_rot));
   t_memberTransform->setMatrix(aMatrix);
-
-  //  aMemberTransform->setRotation(QQuaternion::fromEulerAngles(aRot));
-
   t_memberEntity->addComponent(t_memberTransform);
   t_memberEntity->addComponent(m_jugglerMetalRoughMaterial);
 }
@@ -433,7 +394,6 @@ void Juggler::makeArticulation(QSphereMesh *t_phere,
                                QVector3D t_trans,
                                float t_globalRotation)
 {
-  //  aSphereTransform->setScale(JUGGLER_SCALE);
   t_phere->setRadius(0.1f);
   t_phere->setRings(8);
   t_phere->setSlices(32);

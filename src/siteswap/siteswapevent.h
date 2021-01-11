@@ -20,8 +20,6 @@
 
 #include <QObject>
 
-// TODO: no need to be a QObject ?
-
 class SiteswapEvent : public QObject
 {
 

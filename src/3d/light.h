@@ -28,14 +28,17 @@ using namespace Qt3DRender;
 
 class Light: public QEntity
 {
+
   Q_OBJECT
 
 public:
+
   explicit Light(QEntity *t_rootEntity,
                  QPointLight *aLight,
                  QVector3D &t_position);
 
 private:
+
   Qt3DCore::QTransform *lightTransform;
   QEntity *m_rootEntity;
   QPointLight *light;

@@ -29,8 +29,11 @@ using namespace Qt3DRender;
 
 class Ground: public QEntity
 {
+
   Q_OBJECT
+
 public:
+
   explicit Ground(QEntity *t_rootEntity,
                   QColor &t_color);
 
@@ -38,6 +41,7 @@ public:
   void setColor(QColor t_color);
 
 private:
+
   QPlaneMesh *planeMesh;
   Qt3DCore::QTransform *planeTransform;
 

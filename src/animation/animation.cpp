@@ -58,17 +58,6 @@ void Animation::setAnim()
 
   // TODO: we must have any number of jugglers
 
-  //  auto rightHandAnimation2 = handAnim(m_v_juggler.at(1), propNum, 1, rightHand);
-  //  rightHandAnimation2->setLoopCount(-1);
-  //  animTempGroup->addAnimation(rightHandAnimation2);
-
-  //  handPauseAnim->addPause((HAND_PERIOD / 2) * S_TO_MS);
-  //  auto leftHandAnimation2 = handAnim(m_v_juggler.at(1), propNum, 1, leftHand);
-  //  handPauseAnim->addAnimation(leftHandAnimation2);
-  //  leftHandAnimation2->setLoopCount(-1);
-  //  animTempGroup->addAnimation(handPauseAnim);
-
-
   for (int i = 0; i < state.size(); i++) // for each bit in state
   {
     if (state.testBit(i)) // if it's a site launch
@@ -160,15 +149,6 @@ void Animation::setAnim()
   addAnimation(animTempGroup);
 }
 
-//QPropertyAnimation handPropAnim(Juggler *aJuggler, hand aHand, bool motion)
-//{
-//  QByteArray  hand;
-//  if (aHand == leftHand) hand =  QByteArrayLiteral("leftHandPosition");
-//  else hand =  QByteArrayLiteral("RightHandPosition");
-//  auto  animHandDwell = new QPropertyAnimation(aJuggler, hand);
-//  return animHandDwell;
-//}
-
 QSequentialAnimationGroup *Animation::handAnim(Juggler *t_juggler,
                                                int t_indexProp,
                                                int t_launch,
@@ -178,55 +158,6 @@ QSequentialAnimationGroup *Animation::handAnim(Juggler *t_juggler,
   Q_UNUSED(t_indexProp)
   Q_UNUSED(t_launch)
 
-  //  QVector2D pos = QVector2D(60,15);
-  //  QVector2D pos2 = QVector2D(-60,15);
-  //  auto animGroup = new QSequentialAnimationGroup();
-
-  //  QPropertyAnimation *animLeftHandDwell = nullptr;
-  //  QPropertyAnimation *animRightHandDwell = nullptr;
-  //  QPropertyAnimation *animLeftHandLaunch = nullptr;
-  //  QPropertyAnimation *animRightHandLaunch = nullptr;
-
-
-  //  float frameCount =  ((HAND_PERIOD) / 2) * (2 - (2 * DWELL_RATIO));
-
-  //  if (t_hand == leftHand)
-  //  {
-  //    animLeftHandDwell = new QPropertyAnimation(t_juggler, QByteArrayLiteral("m_leftHandPosition"));
-  //    animLeftHandDwell->setDuration((int)(DWELL_TIME * S_TO_MS));
-  //    animLeftHandDwell->setStartValue(pos);
-  //    animLeftHandDwell->setEndValue(pos2);
-  //    animLeftHandDwell->setLoopCount(1);
-  //    animGroup->addAnimation(animLeftHandDwell);
-
-  //    qDebug() << "hand dwellTime : " << (int)(DWELL_TIME * S_TO_MS);
-
-  //    animLeftHandLaunch = new QPropertyAnimation(t_juggler, QByteArrayLiteral("m_leftHandPosition"));
-  //    animLeftHandLaunch->setDuration((int)(frameCount * S_TO_MS)+1);
-  //    animLeftHandLaunch->setStartValue(pos2);
-  //    animLeftHandLaunch->setEndValue(pos2-QVector2D(240,0));
-  //    animLeftHandLaunch->setLoopCount(1);
-  //    animGroup->addAnimation(animLeftHandLaunch);
-
-  //    qDebug() << "hand launchTime : " << (int)(frameCount * S_TO_MS);
-  //  }
-  //  else
-  //  {
-  //    animRightHandDwell = new QPropertyAnimation(t_juggler, QByteArrayLiteral("m_rightHandPosition"));
-  //    animRightHandDwell->setDuration((int)(DWELL_TIME * S_TO_MS));
-  //    animRightHandDwell->setStartValue(pos);
-  //    animRightHandDwell->setEndValue(pos2);
-  //    animRightHandDwell->setLoopCount(1);
-  //    animGroup->addAnimation(animRightHandDwell);
-
-  //    animRightHandLaunch = new QPropertyAnimation(t_juggler, QByteArrayLiteral("m_rightHandPosition"));
-  //    animRightHandLaunch->setDuration((int)(frameCount * S_TO_MS)+1);
-  //    animRightHandLaunch->setStartValue(pos2);
-  //    animRightHandLaunch->setEndValue(pos2-QVector2D(240,0));
-  //    animRightHandLaunch->setLoopCount(1);
-  //    animGroup->addAnimation(animRightHandLaunch);
-  //  }
-  //  return animGroup;
 
   //define animations for one hand
   QPropertyAnimation *dwellAnimation;
@@ -295,9 +226,6 @@ QSequentialAnimationGroup *Animation::handAnim(Juggler *t_juggler,
     dwellAnimation->setEndValue(posBall2);
     dwellAnimation->setLoopCount(1);
     animGroup->addAnimation(dwellAnimation);
-    //    qDebug() << "hand : " << aHand;
-    //    qDebug() << "handPos : " << aJuggler->getPositionLHmed();
-    //    qDebug() << "handPos : " << aJuggler->getPositionRHmed();
     posBall1 = posBall2;
   }
 

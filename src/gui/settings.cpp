@@ -18,15 +18,15 @@
 #include "settings.h"
 #include <QtWidgets>
 
-MySettings::MySettings(QString fileName, QSettings::Format format)
+MySettings::MySettings(QString t_fileName, QSettings::Format t_format)
 {
-    if( fileName.isEmpty() )
+    if( t_fileName.isEmpty() )
     {
         QString path = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
-        fileName = path + "/Settings.ini";
+        t_fileName = path + "/Settings.ini";
     }
 //    qDebug() << "Standard path : " << QStandardPaths::ConfigLocation;
-    m_settings = new QSettings(fileName, format);
+    m_settings = new QSettings(t_fileName, t_format);
 }
 
 MySettings::~MySettings()
@@ -34,24 +34,24 @@ MySettings::~MySettings()
     delete m_settings;
 }
 
-bool MySettings::isValue(const QString &key)
+bool MySettings::isValue(const QString &t_key)
 {
-   return m_settings->contains(key);
+   return m_settings->contains(t_key);
 }
 
-void MySettings::setValue(const QString &key, const QVariant &value)
+void MySettings::setValue(const QString &t_key, const QVariant &t_value)
 {
-    m_settings->setValue(key, value);
+    m_settings->setValue(t_key, t_value);
 }
 
-QVariant MySettings::value(const QString &key, const QVariant &defaultValue)
+QVariant MySettings::value(const QString &t_key, const QVariant &t_defaultValue)
 {
-    return m_settings->value(key, defaultValue);
+    return m_settings->value(t_key, t_defaultValue);
 }
 
-void MySettings::beginGroup(const QString &prefix)
+void MySettings::beginGroup(const QString &t_prefix)
 {
-    m_settings->beginGroup(prefix);
+    m_settings->beginGroup(t_prefix);
 }
 
 void MySettings::endGroup()

@@ -63,8 +63,6 @@ public:
   void setLeftHandPosition(QVector3D t_pos);
   QVector3D getRightHandPosition() { return m_rightHandPosition; };
   void setRightHandPosition(QVector3D t_pos);
-//  QVector3D handPosition() { return m_myHandPosition; };
-//  void setHandPosition(QVector3D t_rot);
 
   // getters for hands positions ext to catch, int to launch, med for siteswap 2
   QVector3D getPositionLHextPlus() const { return m_posLHextPlus; }; // helico, pancakes

@@ -31,28 +31,34 @@ QT_END_NAMESPACE
 
 class Preferences: public QDialog
 {
+
   Q_OBJECT
+
 public:
-  explicit Preferences(MySettings *t_settings,QWidget *parent = nullptr);
+
+  explicit Preferences(MySettings *t_settings, QWidget *parent = nullptr);
 
 private slots:
+
   void backgroundColor();
   void groundColor();
 
 signals:
+
   void colorChanged(QColor);
   void groundColorChanged(QColor);
 
 private:
-  QTabWidget *tabWidget;
 
-  QWidget *worldTab;
+  QTabWidget *m_tabWidget;
 
-  QDialogButtonBox *buttonBox;
+  QWidget *m_worldTab;
+
+  QDialogButtonBox *m_buttonBox;
   MySettings *m_settings;
 
-  QWidget *casualTab;
-  QWidget *soundTab;
+  QWidget *m_casualTab;
+  QWidget *m_soundTab;
 };
 
 #endif // PREFERENCES_H
