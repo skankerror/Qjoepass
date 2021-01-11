@@ -48,11 +48,7 @@ MainWindow::MainWindow()
   m_container->setMaximumSize(screenSize);
 
   auto layout = new QVBoxLayout;
-  //  layout->setContentsMargins(1, 1, 1, 1);
-  //  layout->addWidget(topFiller);
-  //  layout->addWidget(infoLabel);
   layout->addWidget(m_container);
-  //  layout->addWidget(bottomFiller);
   widget->setLayout(layout);
 
   createMenus();
@@ -149,6 +145,7 @@ void MainWindow::createToolBar()
 
   auto myToolBarWidget = new QWidget(this);
   m_toolBarLayout = new QHBoxLayout();
+
   m_propLabel = new QLabel("type of prop", this);
   m_propTypeComboBox = new QComboBox(this);
   for (int i = 0; i < propNumb; i++)
@@ -165,16 +162,26 @@ void MainWindow::createToolBar()
     m_launchClubTypeComboBox->addItem("flat", flat);
     m_launchClubTypeComboBox->addItem("helicopter", helicopter);
   m_propTypeComboBox->setCurrentIndex(ball);
+
   m_periodLabel = new QLabel("period", this);
   m_periodSpinBox = new QSpinBox(this);
     m_periodSpinBox->setMinimum(1);
     m_periodSpinBox->setValue(1);
+
   m_firstSiteSpinBox = new QSpinBox(this);
+
+
+  m_spinBoxContainer = new QWidget(this);
+  m_spinBoxLayout = new QHBoxLayout();
     m_firstSiteSpinBox->setMinimum(1);
     m_firstSiteSpinBox->setValue(3);
+//  m_spinBoxLayout->addWidget(m_firstSiteSpinBox);
+  m_spinBoxContainer->setLayout(m_spinBoxLayout);
+
   m_launchPushButton = new QPushButton("launch !", this);
     m_launchPushButton->setToolTip("Start animation");
     m_launchPushButton->setToolTipDuration(2000);
+
   m_toolBarLayout->addWidget(m_propLabel);
   m_toolBarLayout->addWidget(m_propTypeComboBox);
   m_toolBarLayout->addWidget(m_launchPropTypeLabel);
@@ -186,6 +193,7 @@ void MainWindow::createToolBar()
   m_toolBarLayout->addWidget(m_periodLabel);
   m_toolBarLayout->addWidget(m_periodSpinBox);
   m_toolBarLayout->addWidget(m_firstSiteSpinBox);
+  m_toolBarLayout->addWidget(m_spinBoxContainer);
   m_toolBarLayout->addWidget(m_launchPushButton, 0, Qt::AlignRight);
   myToolBarWidget->setLayout(m_toolBarLayout);
   m_myToolBar->addWidget(myToolBarWidget);
@@ -200,6 +208,9 @@ void MainWindow::createToolBar()
 
   MyToolBarWidget2->setLayout(m_toolBar2Layout);
   m_myToolBar->addWidget(MyToolBarWidget2);
+
+  // NOTE: tabbing order is bad and that doesn't fix it
+  m_myToolBar->setTabOrder(m_firstSiteSpinBox, m_spinBoxContainer);
 
   connect(m_periodSpinBox, SIGNAL(valueChanged(int)), this, SLOT(periodChanged(int)));
   connect(m_launchPushButton, SIGNAL(clicked()), this, SLOT(launchSiteSwap()));
@@ -240,6 +251,7 @@ void MainWindow::launchSiteSwap()
 
   // en attendant mieux
   int jugglerCount = 1;
+  // on ne gère pas encore le multiplex
   m_my3DWindow->createSiteSwap(v_event, jugglerCount, prop, launchType, false);
 }
 
@@ -252,23 +264,26 @@ void MainWindow::periodChanged(int t_index)
     {
       auto spinBox = m_v_spinBox.at(j);
       spinBox->hide();
-      m_toolBarLayout->removeWidget(spinBox);
+//      m_toolBarLayout->removeWidget(spinBox);
+      m_spinBoxLayout->removeWidget(spinBox);
     }
     m_v_spinBox.clear();
     m_v_spinBox.squeeze();
   }
   if (t_index > 1)
   {
-    m_toolBarLayout->removeWidget(m_launchPushButton);
+//    m_toolBarLayout->removeWidget(m_launchPushButton);
     for (int k = 1; k < t_index; k++)
     {
       auto newSpinBox = new QSpinBox(this);
       newSpinBox->setMinimum(0);
       m_v_spinBox.append(newSpinBox);
-      m_toolBarLayout->addWidget(newSpinBox);
+//      m_toolBarLayout->addWidget(newSpinBox);
+      m_spinBoxLayout->addWidget(newSpinBox);
     }
-    m_toolBarLayout->addWidget(m_launchPushButton);
+//    m_toolBarLayout->addWidget(m_launchPushButton);
   }
+  m_myToolBar->setTabOrder(m_firstSiteSpinBox, m_spinBoxContainer);
 }
 
 void MainWindow::updateCameraComboBox()

@@ -26,17 +26,20 @@ void Animation::setSiteSwap(SiteSwap *t_siteSwap)
 {
   m_siteSwap = t_siteSwap;
   m_propType = m_siteSwap->getPropType();
+  m_period = m_siteSwap->getPeriod();
 }
 
 void Animation::setAnim()
 {
+  // Normally it's already tested but to be sure we test
   if (!(m_siteSwap->isValid()))
   {
     qDebug() << "Siteswap isn't valid";
     return;
   }
 
-  m_period = m_siteSwap->getPeriod();
+  // we calculate state.
+  // TODO: what about passing siteswap ?
   QBitArray state = m_siteSwap->getState();
   int propNum = 0;
 
@@ -53,7 +56,7 @@ void Animation::setAnim()
   leftHandAnimation->setLoopCount(-1);
   animTempGroup->addAnimation(handPauseAnim);
 
-  // TODO: ugly
+  // TODO: ugly, we must have any number of jugglers
   auto rightHandAnimation2 = handAnim(m_v_juggler.at(1), propNum, 1, rightHand);
   rightHandAnimation2->setLoopCount(-1);
   animTempGroup->addAnimation(rightHandAnimation2);
@@ -352,6 +355,7 @@ QSequentialAnimationGroup *Animation::parabolicAnim(Juggler *t_juggler, // TODO:
         animTranslationGroup->addAnimation(animRing);
       }
       rotCount = (int)(t_launch / 2);
+      animTempGroup = new QParallelAnimationGroup();
       if (rotCount)
       {
         animRotProp = new QPropertyAnimation(aRing, QByteArrayLiteral("m_rotX"));
@@ -359,7 +363,6 @@ QSequentialAnimationGroup *Animation::parabolicAnim(Juggler *t_juggler, // TODO:
         animRotProp->setStartValue(360 + RING_PANCAKE_ROTX);
         animRotProp->setEndValue(RING_PANCAKE_ROTX);
         animRotProp->setLoopCount(rotCount);
-        animTempGroup = new QParallelAnimationGroup();
         animTempGroup->addAnimation(animRotProp);
       }
       animTempGroup->addAnimation(animTranslationGroup);
@@ -392,6 +395,7 @@ QSequentialAnimationGroup *Animation::parabolicAnim(Juggler *t_juggler, // TODO:
         animTranslationGroup->addAnimation(animClub);
       }
       rotCount = (int)(t_launch / 2);
+      animTempGroup = new QParallelAnimationGroup();
       if (rotCount)
       {
         animRotProp = new QPropertyAnimation(aClub, QByteArrayLiteral("m_rotX"));
@@ -399,7 +403,6 @@ QSequentialAnimationGroup *Animation::parabolicAnim(Juggler *t_juggler, // TODO:
         animRotProp->setStartValue(360 + CLUB_BASIC_ROTX);
         animRotProp->setEndValue(CLUB_BASIC_ROTX);
         animRotProp->setLoopCount(rotCount);
-        animTempGroup = new QParallelAnimationGroup();
         animTempGroup->addAnimation(animRotProp);
       }
       animTempGroup->addAnimation(animTranslationGroup);

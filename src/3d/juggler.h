@@ -46,6 +46,7 @@ class Juggler: public QEntity
              READ getRightHandPosition
              WRITE setRightHandPosition
              NOTIFY rightHandPositionChanged)
+
   Q_PROPERTY(QVector3D m_handPosition
              READ handPosition
              WRITE setHandPosition

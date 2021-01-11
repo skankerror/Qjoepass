@@ -101,14 +101,20 @@ private:
 
   QToolBar *m_myToolBar;
     QHBoxLayout *m_toolBarLayout;
+
     QLabel *m_propLabel;
       QComboBox *m_propTypeComboBox;
+
     QLabel *m_launchPropTypeLabel;
       QComboBox *m_launchBallTypeComboBox;
       QComboBox *m_launchRingTypeComboBox;
       QComboBox *m_launchClubTypeComboBox;
+
     QLabel *m_periodLabel;
       QSpinBox *m_periodSpinBox;
+        QWidget *m_spinBoxContainer; // Try to fix tabbing order
+        QHBoxLayout *m_spinBoxLayout; // id
+        // trouver un vrai moyen de séparer les spinbox du reste
         QSpinBox *m_firstSiteSpinBox;
         QVector<QSpinBox *> m_v_spinBox;
     QPushButton *m_launchPushButton;
