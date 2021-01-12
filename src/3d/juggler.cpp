@@ -231,9 +231,11 @@ void Juggler::setRightHandPosition(QVector3D t_pos)
 {
   QVector3D medPos = getPositionRHmed();
   QMatrix4x4 aMatrix = m_rightForearmMatrix;
+
   aMatrix.rotate(QQuaternion::fromEulerAngles(90.0f, 0.0f, 0.0));
   QMatrix4x4 rot = getRotMatrix();
   float angle = qRadiansToDegrees(qAtan(t_pos.y() / t_pos.z()));
+
   medPos = rot * medPos;
   t_pos = rot * t_pos;
   t_pos = medPos - t_pos;
