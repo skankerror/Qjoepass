@@ -20,6 +20,9 @@
 
 #include <QVector>
 #include <QVector3D>
+#include <QMatrix4x4>
+#include "qjoepass.h"
+
 
 class Curves
 {
@@ -27,10 +30,17 @@ class Curves
 public:
 
   Curves();
+  ~Curves();
 
-  static QVector<QVector3D> curveParabolic(QVector3D &velocity,
-                                           QVector3D &startPos,
-                                           int &frameCount);
+  static QVector<QVector3D> curveParabolic(QVector3D &t_velocity,
+                                           QVector3D &t_startPos,
+                                           int &t_frameCount);
+
+  static QVector<QVector3D> curveSemiCircular(QVector3D &t_startPos,
+                                              QVector3D &t_endPos,
+                                              float &t_rotY, // juggler pos
+                                              hand &t_hand,
+                                              int &t_frameCount);
 
 };
 

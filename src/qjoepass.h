@@ -106,6 +106,9 @@
 #define EMPTY_TIME HAND_PERIOD-DWELL_TIME
 #define S_TO_MS 1000.0f
 const float DWELL_TIME_LAUNCH1 = (HAND_PERIOD / 2.0f) - LAUNCH1_TIME;
+// for QAbstractAnimation::setLoopCount(int)
+#define INFINITE_LOOP -1
+#define ONE_LOOP 1
 
 /*********************************** Enums *******************************************/
 

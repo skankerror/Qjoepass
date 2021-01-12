@@ -26,6 +26,7 @@
 #include "jugglingring.h"
 #include "pirouette.h"
 #include "siteswap.h"
+#include "qjoepass.h"
 
 class Animation : public QParallelAnimationGroup
 {

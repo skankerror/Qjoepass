@@ -249,7 +249,8 @@ void MainWindow::launchSiteSwap()
   default: break;
   }
 
-  // en attendant mieux
+  // TODO: set several jugglers capabilities
+  // waiting for better things...
   int jugglerCount = 1;
   // on ne gère pas encore le multiplex
   m_my3DWindow->createSiteSwap(v_event, jugglerCount, prop, launchType, false);

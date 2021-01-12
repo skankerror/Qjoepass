@@ -1,15 +1,15 @@
 BUG: launch 97531, then switch to juggler 2 view. Only 3 props left...
 
-voir le frustrum calling
+- see if we can spare resources with frustrum calling
 
-Pour baisser la taille de l'exe être moins global dans les include
+- be more precise in include to reduce binary size
 
-Faire les rebonds pour les balles...
+- implement ball rebounds
 
 recréer le bon ordre de widget dans la toolbar pour qu'on puisse tabber bien.
 là ça fait period, period1, launch, camera, puis les autres périodes,
 il faut recréer tous les widgets dans le bon ordre ou trouver la fn qui va bien ?
-TODO: create a containing widget
+
 
 gérer le retard lié au state dans animevent ?
 
