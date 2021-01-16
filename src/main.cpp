@@ -28,21 +28,23 @@ int main(int argc, char *argv[])
   Q_INIT_RESOURCE(application);
 
   QApplication app(argc, argv);
+  // needed for QSettings
   QCoreApplication::setOrganizationName("Anonymous_jugglers");
   QCoreApplication::setApplicationName("Qjoepass");
   QCoreApplication::setApplicationVersion(QT_VERSION_STR);
 
-  QCommandLineParser parser;
-  parser.setApplicationDescription(QCoreApplication::applicationName());
-  parser.addHelpOption();
-  parser.addVersionOption();
-  parser.addPositionalArgument("file", "The file to open.");
-  parser.process(app);
+  // uncomment when we will be at this point of development
+//  QCommandLineParser parser;
+//  parser.setApplicationDescription(QCoreApplication::applicationName());
+//  parser.addHelpOption();
+//  parser.addVersionOption();
+//  parser.addPositionalArgument("file", "The file to open.");
+//  parser.process(app);
 
+  // qss
   QFile file(":/qss/res/qss/MyStyleSheet.qss");
       file.open(QFile::ReadOnly);
       QString styleSheet = QString::fromLatin1(file.readAll());
-
       app.setStyleSheet(styleSheet);
 
   MainWindow mainWin;

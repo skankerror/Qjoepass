@@ -1,4 +1,4 @@
-/*
+﻿/*
  * (c) 2020 Pat Co / M. C.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -46,7 +46,7 @@
 #define JUGGLER_SCALE 0.8f
 #define JUGGLER_ROT_X 0
 #define JUGGLER_ROT_Z 0
-#define JUGGLER_TRANSLATION_Y -4
+#define JUGGLER_TRANSLATION_Y -4 // Because ground is set at -4
 #define HAND_OFFSET_X 0.65
 #define HAND_OFFSET_Y 3.75
 #define HAND_OFFSET_Z 1.15
@@ -56,6 +56,57 @@
 #define HEAD_POS_Y 1.8f
 #define JUGGLER_METALNESS 0.8
 #define JUGGLER_ROUGHNESS 0.5
+  // Head
+  #define HEAD_RADIUS 0.5f
+  #define HEAD_RINGS 32
+  #define HEAD_SLICES 32
+  #define HEAD_TRANSLATE QVector3D(0.0f,7.0f,0.0f)
+  // Shoulders
+  #define SHOULDERS_ROTATION QVector3D(0.0f,0.0f,90.0f)
+  #define SHOULDERS_TRANSLATION QVector3D(0.0f,6.3f,0.0f)
+  #define SHOULDERS_LENGHT 2.0f
+  #define LEFT_SHOULDER_TRANSLATION QVector3D(1.0f,6.3f,0.0f)
+  #define RIGHT_SHOULDER_TRANSLATION QVector3D(-1.0f,6.3f,0.0f)
+  // Arms
+  #define ARM_ROTATION QVector3D(0.0f,0.0f,0.0f)
+  #define LEFT_ARM_TRANSLATION QVector3D(1.0f,5.55f,0.0f)
+  #define RIGHT_ARM_TRANSLATION QVector3D(-1.0f,5.55f,0.0f)
+  #define ARM_LENGHT 1.5f
+  // Elbows
+  #define LEFT_ELBOW_TRANSLATION QVector3D(1.0f,4.8f,0.0f)
+  #define RIGHT_ELBOW_TRANSLATION QVector3D(-1.0f,4.8f,0.0f)
+  // Forearms
+  #define FOREARM_ROTATION QVector3D(90.0f,0.0f,0.0f)
+  #define LEFT_FOREARM_TRANSLATION QVector3D(1.0f,4.8f,0.75f)
+  #define RIGHT_FOREARM_TRANSLATION QVector3D(-1.0f,4.8f,0.75f)
+  #define FOREARM_LENGHT 1.5f
+  // Trunk
+  #define TRUNK_ROTATION QVector3D(0.0f,0.0f,0.0f)
+  #define TRUNK_TRANLATION QVector3D(0.0f,5.3f,0.0f)
+  #define TRUNK_LENGHT 2.5f
+  // Thighs
+  #define LEFT_THIGH_ROTATION QVector3D(0.0f,0.0f,13.5f)
+  #define LEFT_THIGH_TRANSLATION QVector3D(0.25f,3.05f,0.0f)
+  #define RIGHT_THIGH_ROTATION QVector3D(0.0f,0.0f,-13.5f)
+  #define RIGHT_THIGH_TRANLATION QVector3D (-0.25f,3.05f,0.0f)
+  #define THIGH_LENGHT 2.2f
+  // Knees
+  #define LEFT_KNEE_TRANLATION QVector3D(0.5f,2.0f,0.0f)
+  #define RIGHT_KNEE_TRANLATION QVector3D(-0.5f,2.0f,0.0f)
+  // Legs
+  #define LEFT_LEG_ROTATION QVector3D(0.0f,0.0f,13.5f)
+  #define LEFT_LEG_TRANSLATION QVector3D(0.75f,1.0f,0.0f)
+  #define RIGHT_LEG_ROTATION QVector3D(0.0f,0.0f,-13.5f)
+  #define RIGHT_LEG_TRANSLATION QVector3D (-0.75f,1.0f,0.0f)
+  #define LEG_LENGHT 2.0f
+  // Members
+  #define MEMBERS_RADIUS 0.1f
+  #define MEMBERS_RINGS 8
+  #define MEMBERS_SLICES 32
+  // Articulations
+  #define ARTICULATION_RADIUS 0.1f
+  #define ARTICULATION_RINGS 8
+  #define ARTICULATION_SLICES 32
 // Ground
 #define GROUND_WIDTH 20
 #define GROUND_HEIGHT 20

@@ -17,3 +17,14 @@ Faire une classe propAnim, qui hérite de QSequentialAnimGroup qui gère tout le
 propAnim contient un delay, puis une anim sequential qui tourne en boucle
 donc on doit lui envoyer vjug, vprop...
 Et dans siteswap remplacer getAnimEvent par cet objet. dans un vec pour chaque balle ?
+
+QSettings
+Il n'est pas nécessaire de définir une instance statique ou partagée de l'objet QSettings
+car à chaque instanciation c'est le même fichier de réglages qui est lu ou écrit et Qt
+sait où il se trouve.
+
+
+Pour la rotation des avants-bras rotate de base (comme un helico)
+puis translate pour raccorder
+puis rotate de base comme une rotation normal puis translate pour rattraper.
+sinon regarder de près getRotMatrix() ?
