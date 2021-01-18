@@ -45,11 +45,11 @@ My3DWindow::My3DWindow(MySettings *t_settings)
 /**************************** testing zone ***************************/
 
   // create 1 juggler for testing purpose
-//  createJuggler(45, QVector2D(-2, -2), QColor(QRgb(0xFF0000)));
+//  createJuggler(0, QVector2D(0, 0), QColor(QRgb(0xFF0000)));
 
   // create 2 jugllers for passing testing
   createJuggler(90, QVector2D(-7, 0), QColor(QRgb(0xFF0000)));
-  createJuggler(-90, QVector2D(7, 0), QColor(QRgb(0x00FF00)));
+//  createJuggler(-90, QVector2D(7, 0), QColor(QRgb(0x00FF00)));
 }
 
 void My3DWindow::createCam()

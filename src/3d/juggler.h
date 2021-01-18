@@ -107,19 +107,24 @@ private:
 
   void setPosHead();
 
+  // needed to find angle to animate
+  QVector3D getAbsoluteLeftShoulderPosition() const;
+  QVector3D getAbsoluteLeftElbowPosition() const;
+  QVector3D getAbsoluteRightShoulderPosition() const;
+  QVector3D getAbsoluteRightElbowPosition() const;
+
+
   void makeMember(QCylinderMesh *t_member,
                   Qt3DCore::QTransform *t_memberTransform,
                   QEntity *t_memberEntity,
                   QVector3D t_rot,
                   QVector3D t_trans,
-                  float t_globalRotation,
                   float t_length);
 
   void makeArticulation(QSphereMesh *t_phere,
                         Qt3DCore::QTransform *t_sphereTransform,
                         QEntity *t_sphereEntity,
-                        QVector3D t_trans,
-                        float t_globalRotation);
+                        QVector3D t_trans);
 
 
 private slots:
@@ -188,12 +193,10 @@ private:
   QEntity *m_leftArmEntity;
   QCylinderMesh *m_leftArm;
   Qt3DCore::QTransform *m_leftArmTransform;
-  QMatrix4x4 m_leftArmMatrix;
 
   QEntity *m_rightArmEntity;
   QCylinderMesh *m_rightArm;
   Qt3DCore::QTransform *m_rightArmTransform;
-  QMatrix4x4 m_rightArmMatrix;
 
   // elbows
   QEntity *m_rightElbowEntity;
@@ -208,12 +211,10 @@ private:
   QEntity *m_leftForearmEntity;
   QCylinderMesh *m_leftForearm;
   Qt3DCore::QTransform *m_leftForearmTransform;
-  QMatrix4x4 m_leftForearmMatrix;
 
   QEntity *m_rightForearmEntity;
   QCylinderMesh *m_rightForearm;
   Qt3DCore::QTransform *m_rightForearmTransform;
-  QMatrix4x4 m_rightForearmMatrix;
 
   // trunk
   QEntity *m_trunkEntity;

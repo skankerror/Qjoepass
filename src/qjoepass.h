@@ -77,6 +77,7 @@
   #define RIGHT_ELBOW_TRANSLATION QVector3D(-1.0f,4.8f,0.0f)
   // Forearms
   #define FOREARM_ROTATION QVector3D(90.0f,0.0f,0.0f)
+  #define FOREARM_EULER_ROTATION QQuaternion::fromEulerAngles(90.0f,0.0f,0.0f)
   #define LEFT_FOREARM_TRANSLATION QVector3D(1.0f,4.8f,0.75f)
   #define RIGHT_FOREARM_TRANSLATION QVector3D(-1.0f,4.8f,0.75f)
   #define FOREARM_LENGHT 1.5f
@@ -88,7 +89,7 @@
   #define LEFT_THIGH_ROTATION QVector3D(0.0f,0.0f,13.5f)
   #define LEFT_THIGH_TRANSLATION QVector3D(0.25f,3.05f,0.0f)
   #define RIGHT_THIGH_ROTATION QVector3D(0.0f,0.0f,-13.5f)
-  #define RIGHT_THIGH_TRANLATION QVector3D (-0.25f,3.05f,0.0f)
+  #define RIGHT_THIGH_TRANLATION QVector3D(-0.25f,3.05f,0.0f)
   #define THIGH_LENGHT 2.2f
   // Knees
   #define LEFT_KNEE_TRANLATION QVector3D(0.5f,2.0f,0.0f)
@@ -97,7 +98,7 @@
   #define LEFT_LEG_ROTATION QVector3D(0.0f,0.0f,13.5f)
   #define LEFT_LEG_TRANSLATION QVector3D(0.75f,1.0f,0.0f)
   #define RIGHT_LEG_ROTATION QVector3D(0.0f,0.0f,-13.5f)
-  #define RIGHT_LEG_TRANSLATION QVector3D (-0.75f,1.0f,0.0f)
+  #define RIGHT_LEG_TRANSLATION QVector3D(-0.75f,1.0f,0.0f)
   #define LEG_LENGHT 2.0f
   // Members
   #define MEMBERS_RADIUS 0.1f
