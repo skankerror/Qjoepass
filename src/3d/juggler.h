@@ -77,7 +77,7 @@ public:
   QVector3D getPositionHead() const { return m_posHead; };
   QVector3D getLookAt() const { return m_headLookAt; };
 
-  float getRotY() const { return m_eulerAngles.y(); };
+  float getRotY() const { return m_rotY; };
 
 private:
 
@@ -146,7 +146,6 @@ private:
 
   Qt3DCore::QTransform *m_skeletonTransform;
 
-  QVector3D m_eulerAngles;
   QVector3D m_position;
   QColor m_color;
   float m_rotY;

@@ -45,7 +45,7 @@ My3DWindow::My3DWindow(MySettings *t_settings)
 /**************************** testing zone ***************************/
 
   // create 1 juggler for testing purpose
-//  createJuggler(0, QVector2D(0, 0), QColor(QRgb(0xFF0000)));
+  createJuggler(0, QVector2D(0, 0), QColor(QRgb(0xFF0000)));
 
   // create 2 jugllers for passing testing
   createJuggler(90, QVector2D(-7, 0), QColor(QRgb(0xFF0000)));
@@ -124,15 +124,15 @@ void My3DWindow::createSkybox()
 
 void My3DWindow::createLighting()
 {
-  QVector3D pos1 = QVector3D(-20, 10, 20);
+  QVector3D pos1 = LIGHT1_POS;
   auto light = new Light(m_rootEntity, m_pointLight, pos1);
   m_v_light.append(light);
 
-  QVector3D pos2 = QVector3D(20, 10, 20);
+  QVector3D pos2 = LIGHT2_POS;
   auto light2 = new Light(m_rootEntity, m_pointLight, pos2);
   m_v_light.append(light2);
 
-  QVector3D pos3 = QVector3D(0, 10, -20);
+  QVector3D pos3 = LIGHT3_POS;
   auto light3 = new Light(m_rootEntity, m_pointLight, pos3);
   m_v_light.append(light3);
 

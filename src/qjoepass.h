@@ -35,25 +35,25 @@
 #define CAM_RATIO 16.0f/9.0f
 #define CAM_NEARPLANE 0.1f
 #define CAM_FARPLANE 1000.0f
-#define CAM_INITIAL_POSITION QVector3D(0,10,15)
+#define CAM_INITIAL_POSITION QVector3D(0,15,15)
 #define CAM_UP_VECTOR QVector3D(0,1,0)
-#define CAM_ORBIT_VIEW_CENTER QVector3D(0,0,0)
+#define CAM_ORBIT_VIEW_CENTER QVector3D(0,4,0)
 // SkyBox
 #define SKYBOX_BASE_NAME "qrc:/skybox/res/images/skybox/night"
 #define SKYBOX_EXTENSION ".jpg"
 #define SKYBOX_SCALE 10.0F
 // Juggler
-#define JUGGLER_SCALE 0.8f
-#define JUGGLER_ROT_X 0
-#define JUGGLER_ROT_Z 0
-#define JUGGLER_TRANSLATION_Y -4 // Because ground is set at -4
-#define HAND_OFFSET_X 0.65
-#define HAND_OFFSET_Y 3.75
-#define HAND_OFFSET_Z 1.15
-#define HAND_OFFSET_EXT 0.65
+#define JUGGLER_SCALE /*0.8f*/ 1.0f
+//#define JUGGLER_ROT_X 0
+//#define JUGGLER_ROT_Z 0
+#define JUGGLER_TRANSLATION_Y /*-4*/ 0
+#define HAND_OFFSET_X /*0.65*/ 1
+#define HAND_OFFSET_Y /*3.75*/ 4.8
+#define HAND_OFFSET_Z /*1.15*/ 1.5
+#define HAND_OFFSET_EXT 0.8
 #define HAND_OFFSET_EXT_PLUS 1.5f // helico pancakes
-#define HAND_OFFSET_INT 0.3
-#define HEAD_POS_Y 1.8f
+#define HAND_OFFSET_INT 0.5
+#define HEAD_POS_Y /*1.8f*/ 7
 #define JUGGLER_METALNESS 0.8
 #define JUGGLER_ROUGHNESS 0.5
   // Head
@@ -65,8 +65,12 @@
   #define SHOULDERS_ROTATION QVector3D(0.0f,0.0f,90.0f)
   #define SHOULDERS_TRANSLATION QVector3D(0.0f,6.3f,0.0f)
   #define SHOULDERS_LENGHT 2.0f
-  #define LEFT_SHOULDER_TRANSLATION QVector3D(1.0f,6.3f,0.0f)
-  #define RIGHT_SHOULDER_TRANSLATION QVector3D(-1.0f,6.3f,0.0f)
+  #define LEFT_SHOULDER_X 1.0f
+  #define RIGHT_SHOULDER_X -1.0f
+  #define SHOULDER_Y 6.3f
+  #define SHOULDER_Z 0.0f
+  #define LEFT_SHOULDER_TRANSLATION QVector3D(LEFT_SHOULDER_X,SHOULDER_Y,SHOULDER_Z)
+  #define RIGHT_SHOULDER_TRANSLATION QVector3D(RIGHT_SHOULDER_X,SHOULDER_Y,SHOULDER_Z)
   // Arms
   #define ARM_ROTATION QVector3D(0.0f,0.0f,0.0f)
   #define LEFT_ARM_TRANSLATION QVector3D(1.0f,5.55f,0.0f)
@@ -76,8 +80,7 @@
   #define LEFT_ELBOW_TRANSLATION QVector3D(1.0f,4.8f,0.0f)
   #define RIGHT_ELBOW_TRANSLATION QVector3D(-1.0f,4.8f,0.0f)
   // Forearms
-  #define FOREARM_ROTATION QVector3D(90.0f,0.0f,0.0f)
-  #define FOREARM_EULER_ROTATION QQuaternion::fromEulerAngles(90.0f,0.0f,0.0f)
+  #define FOREARM_ROTATION QVector3D(-90.0f,0.0f,0.0f)
   #define LEFT_FOREARM_TRANSLATION QVector3D(1.0f,4.8f,0.75f)
   #define RIGHT_FOREARM_TRANSLATION QVector3D(-1.0f,4.8f,0.75f)
   #define FOREARM_LENGHT 1.5f
@@ -111,7 +114,7 @@
 // Ground
 #define GROUND_WIDTH 20
 #define GROUND_HEIGHT 20
-#define GROUND_POSY -4
+#define GROUND_POSY /*-4*/ 0
 #define GROUND_AMBIENT_OCCLUSION "qrc:/woodfloor/res/images/WoodFloor/wooden_planks_01_ambient_occlusion.png"
 #define GROUND_ROUGHNESS "qrc:/woodfloor/res/images/WoodFloor/wooden_planks_01_roughness.png"
 #define GROUND_BASE_COLOR "qrc:/woodfloor/res/images/WoodFloor/wooden_planks_01_basecolor.png"
@@ -143,16 +146,19 @@
 // Light
 #define LIGHT_COLOR 0xFFFFFF
 #define LIGHT_INTENSITY 1
+#define LIGHT1_POS QVector3D(-20,15,20)
+#define LIGHT2_POS QVector3D(20,15,20)
+#define LIGHT3_POS QVector3D(0,15,-20)
 #define IRRADIANCE "qrc:/cubemaps/res/cubemaps/default_irradiance.dds"
 #define SPECULAR "qrc:/cubemaps/res/cubemaps/default_specular.dds"
 
 /******************************** Animation *****************************************/
 
-#define SCALE_FACTOR 3.28f // for gravity... size of juggler / normal man size (5.9/1.8)
+#define SCALE_FACTOR 4.03f // for gravity... size of juggler / normal man size (7.25/1.8)
 #define DELTA_TIME 0.015f // in second
 #define HAND_PERIOD 0.7f // in second
 #define DWELL_RATIO 0.6f // seems to be dwell average of a good juggler
-#define LAUNCH1_TIME 0.05f // in second. First launch. Must be < HAND_PERIOD/2
+#define LAUNCH1_TIME 0.05f // in second. launch siteswap 1. Must be < HAND_PERIOD/2
 #define GRAVITY QVector3D(0,-9.8f*SCALE_FACTOR,0)
 #define DWELL_TIME DWELL_RATIO*HAND_PERIOD
 #define EMPTY_TIME HAND_PERIOD-DWELL_TIME
