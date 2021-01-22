@@ -46,14 +46,14 @@
 #define JUGGLER_SCALE /*0.8f*/ 1.0f
 //#define JUGGLER_ROT_X 0
 //#define JUGGLER_ROT_Z 0
-#define JUGGLER_TRANSLATION_Y /*-4*/ 0
-#define HAND_OFFSET_X /*0.65*/ 1
-#define HAND_OFFSET_Y /*3.75*/ 4.8
-#define HAND_OFFSET_Z /*1.15*/ 1.5
-#define HAND_OFFSET_EXT 0.8
+#define JUGGLER_TRANSLATION_Y 0
+#define HAND_OFFSET_X  1
+#define HAND_OFFSET_Y  4.8
+#define HAND_OFFSET_Z  1.5
+#define HAND_OFFSET_EXT 1
 #define HAND_OFFSET_EXT_PLUS 1.5f // helico pancakes
 #define HAND_OFFSET_INT 0.5
-#define HEAD_POS_Y /*1.8f*/ 7
+#define HEAD_POS_Y 7
 #define JUGGLER_METALNESS 0.8
 #define JUGGLER_ROUGHNESS 0.5
   // Head

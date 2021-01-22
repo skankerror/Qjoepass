@@ -1,4 +1,4 @@
-﻿/*
+/*
  * (c) 2020 Pat Co / M. C.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -259,79 +259,52 @@ void Juggler::createLegs()
 
 void Juggler::setLeftHandPosition(QVector3D t_pos)
 {
-  // get relative coordonate of our position
-  QVector3D relativePos(t_pos.x() - m_position.x(), t_pos.y(), t_pos.z() - m_position.z());
-  QMatrix4x4 rot;
-  rot.setToIdentity();
-  rot.rotate(-m_rotY, QVector3D(0, 1, 0));
-  relativePos = rot * relativePos;
-
-  // Get angle on (y) for arm and forearm
-  float angleY = qRadiansToDegrees(qAtan2(relativePos.x() - HAND_OFFSET_X, relativePos.z()));
-
-  // find global Angle between z axis and [shoulder, prop's position]
-  float globalAngle1 = qRadiansToDegrees(qAtan2(SHOULDER_Y - relativePos.y(), relativePos.z()));
-
-  // get distance between shoulder and position
-  float dist = qSqrt(
-        qPow(LEFT_SHOULDER_X - relativePos.x(), 2) +
-        qPow(SHOULDER_Y - relativePos.y(), 2) +
-        qPow(SHOULDER_Z - relativePos.z(), 2));
-
-  // find angle between arm and [shoulder, position]
-  // NOTE: simple because arm and forearm have same lenght
-  float globalAngle2 = qRadiansToDegrees(qAcos(dist / (2 * FOREARM_LENGHT)));
-
-  // find arm angle (on (x))
-  float armAngle = - (90 - globalAngle1 - globalAngle2);
-
-  // find forearm angle
-  float forearmAngle = 90 - globalAngle1 + globalAngle2;
-
-  // let's move forearm
-  // create new matrix
-  QMatrix4x4 armMatrix;
-  // translate as in creation
-  armMatrix.translate(LEFT_ARM_TRANSLATION);
-  // rotate as in creation (currently useless as arm doesn't have initial rotation)
-  armMatrix.rotate(QQuaternion::fromEulerAngles(ARM_ROTATION));
-  // then rotate from shoulder
-  armMatrix.translate(QVector3D(0, ARM_LENGHT / 2, 0));
-  armMatrix.rotate(QQuaternion::fromEulerAngles(QVector3D(armAngle, angleY, 0)));
-  armMatrix.translate(QVector3D(0, - ARM_LENGHT / 2, 0));
-  m_leftArmTransform->setMatrix(armMatrix);
-
-  // translate elbow position
-  // create matrix
-  QMatrix4x4 elbowMatrix;
-  // translate as in creation
-  elbowMatrix.translate(LEFT_ELBOW_TRANSLATION);
-  // rotate from shoulder
-  elbowMatrix.translate(QVector3D(0, ARM_LENGHT, 0));
-  elbowMatrix.rotate(QQuaternion::fromEulerAngles(QVector3D(armAngle, angleY, 0)));
-  elbowMatrix.translate(QVector3D(0, - ARM_LENGHT, 0));
-  m_leftElbowTransform->setMatrix(elbowMatrix);
-
-  // let's move arm
-  // create a vec3 to follow elbow
-  QVector3D translateToElbow = m_leftElbowTransform->translation() - LEFT_ELBOW_TRANSLATION;
-  // create Matrix
-  QMatrix4x4 forearmMatrix;
-  // translate as in creation + follow elbow
-  forearmMatrix.translate(LEFT_FOREARM_TRANSLATION + translateToElbow);
-  // rotate as in creation
-  forearmMatrix.rotate(QQuaternion::fromEulerAngles(FOREARM_ROTATION));
-
-  // rotate from elbow
-  forearmMatrix.translate(QVector3D(0, FOREARM_LENGHT / 2, 0));
-  forearmMatrix.rotate(QQuaternion::fromEulerAngles(QVector3D(90 - forearmAngle, - angleY, 0)));
-  forearmMatrix.translate(QVector3D(0, - FOREARM_LENGHT / 2, 0));
-
-  m_leftForearmTransform->setMatrix(forearmMatrix);
+  hand aHand = leftHand;
+  setHandPosition(t_pos, aHand);
 }
 
 void Juggler::setRightHandPosition(QVector3D t_pos)
 {
+  hand aHand = rightHand;
+  setHandPosition(t_pos, aHand);
+}
+
+void Juggler::setHandPosition(QVector3D t_pos, hand t_hand)
+{
+  // declare variables differently defined between left and hand
+  float hand_offset_x;
+  float shoulder_x;
+  QVector3D arm_translation;
+  QVector3D elbow_translation;
+  QVector3D forearm_translation;
+  Qt3DCore::QTransform *armTransform;
+  Qt3DCore::QTransform *elbowTransform;
+  Qt3DCore::QTransform *forearmTransform;
+
+  // set variables depending on witch hand
+  if (t_hand == leftHand)
+  {
+    hand_offset_x = - HAND_OFFSET_X;
+    shoulder_x = LEFT_SHOULDER_X;
+    arm_translation = LEFT_ARM_TRANSLATION;
+    elbow_translation = LEFT_ELBOW_TRANSLATION;
+    forearm_translation = LEFT_FOREARM_TRANSLATION;
+    armTransform = m_leftArmTransform;
+    elbowTransform = m_leftElbowTransform;
+    forearmTransform = m_leftForearmTransform;
+  }
+  else
+  {
+    hand_offset_x = HAND_OFFSET_X;
+    shoulder_x = RIGHT_SHOULDER_X;
+    arm_translation = RIGHT_ARM_TRANSLATION;
+    elbow_translation = RIGHT_ELBOW_TRANSLATION;
+    forearm_translation = RIGHT_FOREARM_TRANSLATION;
+    armTransform = m_rightArmTransform;
+    elbowTransform = m_rightElbowTransform;
+    forearmTransform = m_rightForearmTransform;
+  }
+
   // get relative coordonate of our position
   QVector3D relativePos(t_pos.x() - m_position.x(), t_pos.y(), t_pos.z() - m_position.z());
   QMatrix4x4 rot;
@@ -340,15 +313,14 @@ void Juggler::setRightHandPosition(QVector3D t_pos)
   relativePos = rot * relativePos;
 
   // Get angle on (y) for arm and forearm
-  float angleY = qRadiansToDegrees(qAtan2(relativePos.x() + HAND_OFFSET_X, relativePos.z()));
+  float angleY = qRadiansToDegrees(qAtan2(relativePos.x() + hand_offset_x, relativePos.z()));
 
   // find global Angle between z axis and [shoulder, prop's position]
   float globalAngle1 = qRadiansToDegrees(qAtan2(SHOULDER_Y - relativePos.y(), relativePos.z()));
-//  float globalAngle1 = qRadiansToDegrees(qAtan2(relativePos.z(), SHOULDER_Y - relativePos.y()));
 
   // get distance between shoulder and position
   float dist = qSqrt(
-        qPow(RIGHT_SHOULDER_X - relativePos.x(), 2) +
+        qPow(shoulder_x - relativePos.x(), 2) +
         qPow(SHOULDER_Y - relativePos.y(), 2) +
         qPow(SHOULDER_Z - relativePos.z(), 2));
 
@@ -362,47 +334,44 @@ void Juggler::setRightHandPosition(QVector3D t_pos)
   // find forearm angle
   float forearmAngle = 90 - globalAngle1 + globalAngle2;
 
-  // let's move forearm
+  // let's move arm
   // create new matrix
   QMatrix4x4 armMatrix;
   // translate as in creation
-  armMatrix.translate(RIGHT_ARM_TRANSLATION);
+  armMatrix.translate(arm_translation);
   // rotate as in creation (currently useless as arm doesn't have initial rotation)
   armMatrix.rotate(QQuaternion::fromEulerAngles(ARM_ROTATION));
   // then rotate from shoulder
   armMatrix.translate(QVector3D(0, ARM_LENGHT / 2, 0));
   armMatrix.rotate(QQuaternion::fromEulerAngles(QVector3D(armAngle, angleY, 0)));
   armMatrix.translate(QVector3D(0, - ARM_LENGHT / 2, 0));
-  m_rightArmTransform->setMatrix(armMatrix);
+  armTransform->setMatrix(armMatrix);
 
   // translate elbow position
   // create matrix
   QMatrix4x4 elbowMatrix;
   // translate as in creation
-  elbowMatrix.translate(RIGHT_ELBOW_TRANSLATION);
+  elbowMatrix.translate(elbow_translation);
   // rotate from shoulder
   elbowMatrix.translate(QVector3D(0, ARM_LENGHT, 0));
   elbowMatrix.rotate(QQuaternion::fromEulerAngles(QVector3D(armAngle, angleY, 0)));
   elbowMatrix.translate(QVector3D(0, - ARM_LENGHT, 0));
-  m_rightElbowTransform->setMatrix(elbowMatrix);
+  elbowTransform->setMatrix(elbowMatrix);
 
-  // let's move arm
+  // let's move forearm
   // create a vec3 to follow elbow
-  QVector3D translateToElbow = m_rightElbowTransform->translation() - RIGHT_ELBOW_TRANSLATION;
+  QVector3D translateToElbow = elbowTransform->translation() - elbow_translation;
   // create Matrix
   QMatrix4x4 forearmMatrix;
   // translate as in creation + follow elbow
-  forearmMatrix.translate(RIGHT_FOREARM_TRANSLATION + translateToElbow);
+  forearmMatrix.translate(forearm_translation + translateToElbow);
   // rotate as in creation
   forearmMatrix.rotate(QQuaternion::fromEulerAngles(FOREARM_ROTATION));
-
   // rotate from elbow
   forearmMatrix.translate(QVector3D(0, FOREARM_LENGHT / 2, 0));
-  forearmMatrix.rotate(QQuaternion::fromEulerAngles(QVector3D(90 - forearmAngle, - angleY, 0)));
+  forearmMatrix.rotate(QQuaternion::fromEulerAngles(QVector3D(90 - forearmAngle, -  angleY, 0)));
   forearmMatrix.translate(QVector3D(0, - FOREARM_LENGHT / 2, 0));
-
-  m_rightForearmTransform->setMatrix(forearmMatrix);
-
+  forearmTransform->setMatrix(forearmMatrix);
 }
 
 void Juggler::setPosition(QVector3D t_position)
