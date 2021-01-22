@@ -59,10 +59,8 @@ Juggler::Juggler(QEntity *t_rootEntity,
 
   /************************* testing zone ********************************/
 
-  setLeftHandPosition(m_posLHint);
-  setRightHandPosition(m_posRHint);
-//  setLeftHandPosition(QVector3D(1.65, 0.8, 2));
-//  setLeftHandPosition(QVector3D(1.65, 2.3, 1.5));
+  setHandPosition(m_posLHextPlus, hand(leftHand));
+  setHandPosition(m_posRHextPlus, hand(rightHand));
 
 }
 
@@ -314,6 +312,7 @@ void Juggler::setHandPosition(QVector3D t_pos, hand t_hand)
 
   // Get angle on (y) for arm and forearm
   float angleY = qRadiansToDegrees(qAtan2(relativePos.x() + hand_offset_x, relativePos.z()));
+  qDebug() << "angleY" << angleY;
 
   // find global Angle between z axis and [shoulder, prop's position]
   float globalAngle1 = qRadiansToDegrees(qAtan2(SHOULDER_Y - relativePos.y(), relativePos.z()));
@@ -365,11 +364,11 @@ void Juggler::setHandPosition(QVector3D t_pos, hand t_hand)
   QMatrix4x4 forearmMatrix;
   // translate as in creation + follow elbow
   forearmMatrix.translate(forearm_translation + translateToElbow);
-  // rotate as in creation
+//  // rotate as in creation
   forearmMatrix.rotate(QQuaternion::fromEulerAngles(FOREARM_ROTATION));
   // rotate from elbow
   forearmMatrix.translate(QVector3D(0, FOREARM_LENGHT / 2, 0));
-  forearmMatrix.rotate(QQuaternion::fromEulerAngles(QVector3D(90 - forearmAngle, -  angleY, 0)));
+  forearmMatrix.rotate(QQuaternion::fromEulerAngles(QVector3D(90 - forearmAngle, 0, angleY)));
   forearmMatrix.translate(QVector3D(0, - FOREARM_LENGHT / 2, 0));
   forearmTransform->setMatrix(forearmMatrix);
 }
