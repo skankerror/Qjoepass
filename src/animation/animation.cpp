@@ -129,8 +129,6 @@ QSequentialAnimationGroup *Animation::handAnim(Juggler *t_juggler,
   QVector3D pos;
   // set next launch pos
   QVector3D pos2;
-  // set center curve
-//  QVector3D centerCurve;
   // bool to know if we need to enlarge our juggling
   bool isExtPlusCatch = (m_propType == ring && m_siteSwap->getLaunchType() == panCake) ||
       (m_propType == club && m_siteSwap->getLaunchType() == helicopter);
@@ -217,7 +215,6 @@ QSequentialAnimationGroup *Animation::handAnim(Juggler *t_juggler,
     }
     dwellAnimation->setDuration((int)(DELTA_TIME * S_TO_MS));
     dwellAnimation->setStartValue(v_semiCircular.at(i));
-    qDebug() << v_semiCircular.at(i);
     dwellAnimation->setEndValue(v_semiCircular.at(i + 1));
     dwellAnimation->setLoopCount(ONE_LOOP);
     animGroup->addAnimation(dwellAnimation);
@@ -239,14 +236,15 @@ QSequentialAnimationGroup *Animation::handAnim(Juggler *t_juggler,
     emptyHandAnimation = new QPropertyAnimation(t_juggler, QByteArrayLiteral("m_rightHandPosition"));
   }
   // calculate empty hand time
-  int emptyHandTime = (HAND_PERIOD - DWELL_TIME) * S_TO_MS;
-  qDebug() << emptyHandTime;
+  int emptyHandTime = (HAND_PERIOD - DWELL_TIME) * S_TO_MS + 1; // without 1 there's a decay...
   emptyHandAnimation->setDuration(emptyHandTime);
   emptyHandAnimation->setStartValue(pos2);
   emptyHandAnimation->setEndValue(pos);
   // NOTE: make an easing curve ?
   emptyHandAnimation->setLoopCount(ONE_LOOP);
   animGroup->addAnimation(emptyHandAnimation);
+
+  // time adjustments ?
 
   return animGroup;
 }
@@ -605,7 +603,6 @@ QSequentialAnimationGroup *Animation::dwellAnim(Juggler *t_juggler,
     }
     dwellAnimation->setDuration((int)(DELTA_TIME * S_TO_MS));
     dwellAnimation->setStartValue(v_semiCircular.at(i));
-    qDebug() << v_semiCircular.at(i);
     dwellAnimation->setEndValue(v_semiCircular.at(i + 1));
     dwellAnimation->setLoopCount(ONE_LOOP);
     returnAnim->addAnimation(dwellAnimation);

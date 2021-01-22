@@ -56,12 +56,6 @@ Juggler::Juggler(QEntity *t_rootEntity,
   setPositionHands();
 
   connect(this, SIGNAL(positionChanged()), this, SLOT(setPositionHands()));
-
-  /************************* testing zone ********************************/
-
-  setHandPosition(m_posLHextPlus, hand(leftHand));
-  setHandPosition(m_posRHextPlus, hand(rightHand));
-
 }
 
 void Juggler::createHead()
@@ -257,14 +251,14 @@ void Juggler::createLegs()
 
 void Juggler::setLeftHandPosition(QVector3D t_pos)
 {
-  hand aHand = leftHand;
-  setHandPosition(t_pos, aHand);
+//  hand aHand = leftHand;
+  setHandPosition(t_pos, hand(leftHand));
 }
 
 void Juggler::setRightHandPosition(QVector3D t_pos)
 {
-  hand aHand = rightHand;
-  setHandPosition(t_pos, aHand);
+//  hand aHand = rightHand;
+  setHandPosition(t_pos, hand(rightHand));
 }
 
 void Juggler::setHandPosition(QVector3D t_pos, hand t_hand)
@@ -312,7 +306,6 @@ void Juggler::setHandPosition(QVector3D t_pos, hand t_hand)
 
   // Get angle on (y) for arm and forearm
   float angleY = qRadiansToDegrees(qAtan2(relativePos.x() + hand_offset_x, relativePos.z()));
-  qDebug() << "angleY" << angleY;
 
   // find global Angle between z axis and [shoulder, prop's position]
   float globalAngle1 = qRadiansToDegrees(qAtan2(SHOULDER_Y - relativePos.y(), relativePos.z()));
@@ -364,7 +357,7 @@ void Juggler::setHandPosition(QVector3D t_pos, hand t_hand)
   QMatrix4x4 forearmMatrix;
   // translate as in creation + follow elbow
   forearmMatrix.translate(forearm_translation + translateToElbow);
-//  // rotate as in creation
+  // rotate as in creation
   forearmMatrix.rotate(QQuaternion::fromEulerAngles(FOREARM_ROTATION));
   // rotate from elbow
   forearmMatrix.translate(QVector3D(0, FOREARM_LENGHT / 2, 0));

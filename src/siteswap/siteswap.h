@@ -67,7 +67,6 @@ public:
   void setPropType(jugglingProp t_prop);
   void setLaunchType(int t_launchType) { m_launchType = t_launchType; };
 
-
 private:
 
   void setState();

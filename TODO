@@ -23,8 +23,10 @@ Il n'est pas nécessaire de définir une instance statique ou partagée de l'obj
 car à chaque instanciation c'est le même fichier de réglages qui est lu ou écrit et Qt
 sait où il se trouve.
 
+Eloigner les anneaux et les massues suivant z dans le repére jongleur, peut-être dans jongleur avant
+translate rotate ? m_posLHint_zPlus ?
 
-Pour la rotation des avants-bras rotate de base (comme un helico)
-puis translate pour raccorder
-puis rotate de base comme une rotation normal puis translate pour rattraper.
-sinon regarder de près getRotMatrix() ?
+Revoir mouvement du lancer 1, il est pas bon,
+problème lié au positionnement suivant x dans juggler ?
+
+donner une rotation y sur les massues pour être réaliste
