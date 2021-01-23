@@ -109,13 +109,6 @@ private:
 
   void setPosHead();
 
-  // needed to find angle to animate
-  QVector3D getAbsoluteLeftShoulderPosition() const;
-  QVector3D getAbsoluteLeftElbowPosition() const;
-  QVector3D getAbsoluteRightShoulderPosition() const;
-  QVector3D getAbsoluteRightElbowPosition() const;
-
-
   void makeMember(QCylinderMesh *t_member,
                   Qt3DCore::QTransform *t_memberTransform,
                   QEntity *t_memberEntity,
@@ -135,6 +128,7 @@ private slots:
 
 signals:
 
+  // TODO: check if we need all of these
   void skeletonTransformChanged();
   void positionChanged();
   void leftHandPositionChanged();

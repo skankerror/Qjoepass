@@ -320,10 +320,10 @@ void Juggler::setHandPosition(QVector3D t_pos, hand t_hand)
   // NOTE: simple because arm and forearm have same lenght
   float globalAngle2 = qRadiansToDegrees(qAcos(dist / (2 * FOREARM_LENGHT)));
 
-  // find arm angle (on (x))
+  // find arm angle on (x)
   float armAngle = - (90 - globalAngle1 - globalAngle2);
 
-  // find forearm angle
+  // find forearm angle on (x)
   float forearmAngle = 90 - globalAngle1 + globalAngle2;
 
   // let's move arm
@@ -361,6 +361,7 @@ void Juggler::setHandPosition(QVector3D t_pos, hand t_hand)
   forearmMatrix.rotate(QQuaternion::fromEulerAngles(FOREARM_ROTATION));
   // rotate from elbow
   forearmMatrix.translate(QVector3D(0, FOREARM_LENGHT / 2, 0));
+  // because of initial rotation angleY apply on (z)
   forearmMatrix.rotate(QQuaternion::fromEulerAngles(QVector3D(90 - forearmAngle, 0, angleY)));
   forearmMatrix.translate(QVector3D(0, - FOREARM_LENGHT / 2, 0));
   forearmTransform->setMatrix(forearmMatrix);
@@ -467,38 +468,10 @@ void Juggler::setPosHead()
 {
   m_posHead = QVector3D(m_position.x(), HEAD_POS_Y, m_position.z());
 
-  QVector3D temp = m_posHead + QVector3D(0, 0, 5);
+  QVector3D temp = m_posHead + LOOK_AT_VECTOR;
   QMatrix4x4 rot = getRotMatrix();
   temp = rot * temp;
   m_headLookAt = temp;
-}
-
-QVector3D Juggler::getAbsoluteLeftShoulderPosition() const
-{
-  QVector3D retVector = LEFT_SHOULDER_TRANSLATION;
-  // rajouter position puis faire tourner suivant rotY
-  return retVector;
-}
-
-QVector3D Juggler::getAbsoluteLeftElbowPosition() const
-{
-  QVector3D retVector = LEFT_ELBOW_TRANSLATION;
-  // rajouter position puis faire tourner suivant rotY
-  return retVector;
-}
-
-QVector3D Juggler::getAbsoluteRightShoulderPosition() const
-{
-  QVector3D retVector = RIGHT_SHOULDER_TRANSLATION;
-  // rajouter position puis faire tourner suivant rotY
-  return retVector;
-}
-
-QVector3D Juggler::getAbsoluteRightElbowPosition() const
-{
-  QVector3D retVector = RIGHT_ELBOW_TRANSLATION;
-  // rajouter position puis faire tourner suivant rotY
-  return retVector;
 }
 
 void Juggler::setPositionHands()
@@ -521,7 +494,6 @@ void Juggler::makeMember(QCylinderMesh *t_member,
                          QVector3D t_trans,
                          float t_length)
 {
-
   t_memberEntity->addComponent(t_member);
 
   t_member->setRadius(MEMBERS_RADIUS);

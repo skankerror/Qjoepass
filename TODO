@@ -1,22 +1,15 @@
-BUG: launch 97531, then switch to juggler 2 view. Only 3 props left...
+- BUG: launch 97531, then switch to juggler 2 view. Only 3 props left...
+props disappear when we're too close. Qt3D bug ??
 
 - see if we can spare resources with frustrum calling
 
 - be more precise in include to reduce binary size
 
-- implement ball rebounds
+- implement ball rebounds, wall for clubs
 
 recréer le bon ordre de widget dans la toolbar pour qu'on puisse tabber bien.
 là ça fait period, period1, launch, camera, puis les autres périodes,
 il faut recréer tous les widgets dans le bon ordre ou trouver la fn qui va bien ?
-
-
-gérer le retard lié au state dans animevent ?
-
-Faire une classe propAnim, qui hérite de QSequentialAnimGroup qui gère tout le trajet
-propAnim contient un delay, puis une anim sequential qui tourne en boucle
-donc on doit lui envoyer vjug, vprop...
-Et dans siteswap remplacer getAnimEvent par cet objet. dans un vec pour chaque balle ?
 
 QSettings
 Il n'est pas nécessaire de définir une instance statique ou partagée de l'objet QSettings
@@ -26,7 +19,8 @@ sait où il se trouve.
 Eloigner les anneaux et les massues suivant z dans le repére jongleur, peut-être dans jongleur avant
 translate rotate ? m_posLHint_zPlus ?
 
-Revoir mouvement du lancer 1, il est pas bon,
-problème lié au positionnement suivant x dans juggler ?
-
 donner une rotation y sur les massues pour être réaliste
+
+le trajet empty hand est linéaire, c'est pas réaliste il doit être un peu courbe,
+partir de la tangente (verticale) du lancer pour récupérer l'objet sur une tangente
+verticale aussi, mais sans faire un arc de cercle...Q

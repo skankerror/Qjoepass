@@ -45,7 +45,7 @@ void Animation::setAnim()
 
   // NOTE: this approch must be changed to handle 0 launch, hand must stay quiet
   // rightHandAnim is a seq anim that will handle all right hand anim
-  auto rightHandAnimation = handAnim(m_v_juggler.at(0), propNum, 3, rightHand);
+  auto rightHandAnimation = handAnim(m_v_juggler.at(0), propNum, 3, rightHand); // TODO: change 3 with right value
   // infinite Loop
   rightHandAnimation->setLoopCount(INFINITE_LOOP);
   // add right hand to the main paral anim
@@ -57,7 +57,7 @@ void Animation::setAnim()
   auto handPauseAnim = new QSequentialAnimationGroup();
   handPauseAnim->addPause((HAND_PERIOD / 2) * S_TO_MS);
   // leftHandAnim is a seq anim that will handle all left hand anim
-  auto leftHandAnimation = handAnim(m_v_juggler.at(0), propNum, 3, leftHand);
+  auto leftHandAnimation = handAnim(m_v_juggler.at(0), propNum, 3, leftHand); // TODO: change 3 with right value
   // add hand mouvement to anim with initial pause
   handPauseAnim->addAnimation(leftHandAnimation);
   // inifinite loop
@@ -106,7 +106,7 @@ void Animation::setAnim()
       }
       // we add to the anim containing starting pause
       propGlobAnim->addAnimation(propMoveAnim);
-      propMoveAnim->setLoopCount(-1);
+      propMoveAnim->setLoopCount(INFINITE_LOOP);
       addAnimation(propGlobAnim); // and we add to the main parallel anim
 
       propNum++;
@@ -173,6 +173,7 @@ QSequentialAnimationGroup *Animation::handAnim(Juggler *t_juggler,
       dwellAnimation = new QPropertyAnimation(t_juggler, QByteArrayLiteral("m_rightHandPosition"));
       emptyHandAnimation = new QPropertyAnimation(t_juggler, QByteArrayLiteral("m_rightHandPosition"));
     }
+    // TODO: vérifier la durée
     dwellAnimation->setDuration((int)(DWELL_TIME_LAUNCH1 * S_TO_MS));
     dwellAnimation->setStartValue(pos);
     dwellAnimation->setEndValue(pos2);
@@ -180,6 +181,7 @@ QSequentialAnimationGroup *Animation::handAnim(Juggler *t_juggler,
     dwellAnimation->setLoopCount(ONE_LOOP);
     animGroup->addAnimation(dwellAnimation);
 
+    // TODO: vérifier la durée
     emptyHandAnimation->setDuration((int)((HAND_PERIOD - DWELL_TIME_LAUNCH1) * S_TO_MS));
     emptyHandAnimation->setStartValue(pos2);
     emptyHandAnimation->setEndValue(pos);
@@ -309,7 +311,7 @@ QSequentialAnimationGroup *Animation::parabolicAnim(Juggler *t_juggler, // TODO:
 
   // we calculate velocity launch
   QVector3D velBall = ((posFinal - posProp) - 0.5 *
-                       (GRAVITY * arcTime * arcTime)) / arcTime;
+                       (GRAVITY * qPow(arcTime, 2))) / arcTime;
 
   int frameCount = (int)((arcTime / (DELTA_TIME)));
 

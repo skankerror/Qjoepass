@@ -36,6 +36,8 @@ SOURCES += \
   src/3d/jugglingball.cpp \
   src/3d/jugglingring.cpp \
   src/3d/light.cpp \
+  src/animation/handanim.cpp \
+  src/animation/propanim.cpp \
   src/main.cpp \
   src/gui/mainwindow.cpp \
   src/3d/pirouette.cpp \
@@ -53,6 +55,8 @@ HEADERS += \
   src/3d/jugglingball.h \
   src/3d/jugglingring.h \
   src/3d/light.h \
+  src/animation/handanim.h \
+  src/animation/propanim.h \
   src/gui/mainwindow.h \
   src/3d/pirouette.h \
   src/gui/preferences.h \

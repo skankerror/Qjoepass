@@ -1,4 +1,4 @@
-﻿/*
+/*
  * (c) 2020 Pat Co / M. C.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -43,14 +43,12 @@
 #define SKYBOX_EXTENSION ".jpg"
 #define SKYBOX_SCALE 10.0F
 // Juggler
-#define JUGGLER_SCALE /*0.8f*/ 1.0f
-//#define JUGGLER_ROT_X 0
-//#define JUGGLER_ROT_Z 0
+#define JUGGLER_SCALE 1.0f
 #define JUGGLER_TRANSLATION_Y 0
 #define HAND_OFFSET_X  1
 #define HAND_OFFSET_Y  4.8
 #define HAND_OFFSET_Z  1.5
-#define HAND_OFFSET_EXT 1
+#define HAND_OFFSET_EXT 0.8
 #define HAND_OFFSET_EXT_PLUS 1.5f // helico pancakes
 #define HAND_OFFSET_INT 0.5
 #define HEAD_POS_Y 7
@@ -61,6 +59,7 @@
   #define HEAD_RINGS 32
   #define HEAD_SLICES 32
   #define HEAD_TRANSLATE QVector3D(0.0f,7.0f,0.0f)
+  #define LOOK_AT_VECTOR QVector3D(0.0f,0.0f,5.0f)
   // Shoulders
   #define SHOULDERS_ROTATION QVector3D(0.0f,0.0f,90.0f)
   #define SHOULDERS_TRANSLATION QVector3D(0.0f,6.3f,0.0f)
@@ -112,9 +111,9 @@
   #define ARTICULATION_RINGS 8
   #define ARTICULATION_SLICES 32
 // Ground
-#define GROUND_WIDTH 20
-#define GROUND_HEIGHT 20
-#define GROUND_POSY /*-4*/ 0
+#define GROUND_WIDTH 30
+#define GROUND_HEIGHT 30
+#define GROUND_POSY 0
 #define GROUND_AMBIENT_OCCLUSION "qrc:/woodfloor/res/images/WoodFloor/wooden_planks_01_ambient_occlusion.png"
 #define GROUND_ROUGHNESS "qrc:/woodfloor/res/images/WoodFloor/wooden_planks_01_roughness.png"
 #define GROUND_BASE_COLOR "qrc:/woodfloor/res/images/WoodFloor/wooden_planks_01_basecolor.png"
