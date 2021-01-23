@@ -18,13 +18,13 @@
 #include "siteswap.h"
 #include <QDebug>
 
-SiteSwap::SiteSwap(QVector<SiteswapEvent*> &t_v_Int,
+SiteSwap::SiteSwap(QVector<siteswapEvent *> &t_v_event,
                    int t_jugCount,
                    jugglingProp t_prop,
                    bool t_synchron,
                    QObject *parent)
   : QObject(parent),
-    m_v_event(t_v_Int),
+    m_v_event(t_v_event),
     m_synchron(t_synchron),
     m_prop(t_prop),
     m_jugglerCount(t_jugCount)
@@ -77,7 +77,7 @@ void SiteSwap::setPropType(jugglingProp t_prop)
   m_prop = t_prop;
 }
 
-QVector<animEvent*> SiteSwap::getAnimEvents(int t_launchPos, hand t_handLaunch, int t_jugLaunchId)
+QVector<animEvent *> SiteSwap::getAnimEvents(int t_launchPos, hand t_handLaunch, int t_jugLaunchId)
 {
   QVector<animEvent*> v_returnVec;
 
@@ -90,7 +90,7 @@ QVector<animEvent*> SiteSwap::getAnimEvents(int t_launchPos, hand t_handLaunch, 
   (myLaunch % 2 == 1) ? newLaunchHand = changeHand(t_handLaunch) : newLaunchHand = t_handLaunch;
   int newLaunchPos = (myLaunch + t_launchPos) % m_period;
   int myNewLaunch = at(newLaunchPos);
-  int newJugId = m_v_event.at(t_launchPos)->getReceiveJugId();
+  int newJugId = m_v_event.at(t_launchPos)->jugRecieveId;
   struct animEvent *myAnimEvent = new struct animEvent; // TODO: vérifier le delete
   myAnimEvent->launch = myLaunch;
   myAnimEvent->handLaunch = t_handLaunch;
@@ -115,7 +115,7 @@ QVector<animEvent*> SiteSwap::getAnimEvents(int t_launchPos, hand t_handLaunch, 
     if (t_jugLaunchId != initialJugLaunchId) // if it's the other juggler
       newJugId = 0; // get back to first
     else
-      newJugId = m_v_event.at(t_launchPos)->getReceiveJugId();
+      newJugId = m_v_event.at(t_launchPos)->jugRecieveId;
 
     struct animEvent *newAnimEvent = new struct animEvent;
     newAnimEvent->launch = myLaunch;

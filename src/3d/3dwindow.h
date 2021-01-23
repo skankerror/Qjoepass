@@ -66,7 +66,7 @@ public slots:
   void createPirouette(QColor t_color);
   void createBall(QColor t_color);
   void createRing(QColor t_color);
-  void createSiteSwap(QVector<SiteswapEvent*> t_v_Event,
+  void createSiteSwap(QVector<siteswapEvent *> t_v_event,
                       int t_jugCount,
                       jugglingProp t_propType = ball,
                       int t_launchType = normalBall,

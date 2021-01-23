@@ -22,8 +22,17 @@
 #include <QVector>
 #include <QBitArray>
 #include "qjoepass.h"
-#include "siteswapevent.h"
 
+// To handle atomic siteswap information
+struct siteswapEvent
+{
+  int launch;
+  int jugLaunchId;
+  int jugRecieveId;
+  bool isMulti; // if true, group with next one.
+};
+
+// To send informations to animation
 struct animEvent
 {
   int jugLaunchId;
@@ -35,6 +44,7 @@ struct animEvent
   // int launchType;
 };
 
+
 class SiteSwap : public QObject
 {
 
@@ -42,13 +52,13 @@ class SiteSwap : public QObject
 
 public:
 
-  explicit SiteSwap(QVector<SiteswapEvent *> &t_v_Int,
+  explicit SiteSwap(QVector<siteswapEvent *> &t_v_event,
                     int t_jugCount,
                     jugglingProp t_prop = ball,
                     bool t_synchron = false,
                     QObject *parent = nullptr);
 
-  int at(int i) const { return m_v_event.at(i)->getLaunch(); }
+  int at(int i) const { return m_v_event.at(i)->launch; }
 
   // getters
   bool isValid() const;
@@ -59,7 +69,7 @@ public:
   QBitArray getState() const { return m_state; };
   int getJugglerCount() const { return m_jugglerCount; };
   // For sending datas to animation
-  QVector<animEvent*> getAnimEvents(int t_launchPos,
+  QVector<animEvent *> getAnimEvents(int t_launchPos,
                                     hand t_handLaunch,
                                     int t_jugLaunchId);
 
@@ -74,7 +84,7 @@ private:
 
 private:
 
-  QVector<SiteswapEvent *> m_v_event;
+  QVector<siteswapEvent *> m_v_event;
   int m_period;
   bool m_valid = false;
   bool m_synchron = false;

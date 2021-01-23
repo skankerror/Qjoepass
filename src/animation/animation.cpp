@@ -96,11 +96,17 @@ void Animation::setAnim()
       for (int j = 0; j < v_animEvent.size(); j++)
       {
         auto myAnimEvent = v_animEvent.at(j);
-        auto launchAnim = parabolicAnim(juggler, propNum, myAnimEvent->launch, myAnimEvent->handLaunch);
+        auto launchAnim = parabolicAnim(juggler,
+                                        propNum,
+                                        myAnimEvent->launch,
+                                        myAnimEvent->handLaunch);
         launchAnim->setLoopCount(ONE_LOOP);
         propMoveAnim->addAnimation(launchAnim);
         // dwell
-        auto dwellAnimation = dwellAnim(juggler, propNum, myAnimEvent->newLaunch, myAnimEvent->handRecieve);
+        auto dwellAnimation = dwellAnim(juggler,
+                                        propNum,
+                                        myAnimEvent->newLaunch,
+                                        myAnimEvent->handRecieve);
         dwellAnimation->setLoopCount(ONE_LOOP);
         propMoveAnim->addAnimation(dwellAnimation);
       }

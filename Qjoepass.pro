@@ -43,8 +43,7 @@ SOURCES += \
   src/3d/pirouette.cpp \
   src/gui/preferences.cpp \
   src/gui/settings.cpp \
-  src/siteswap/siteswap.cpp \
-  src/siteswap/siteswapevent.cpp
+  src/siteswap/siteswap.cpp
 
 HEADERS += \
   src/3d/3dwindow.h \
@@ -62,8 +61,7 @@ HEADERS += \
   src/gui/preferences.h \
   src/qjoepass.h \
   src/gui/settings.h \
-  src/siteswap/siteswap.h \
-  src/siteswap/siteswapevent.h
+  src/siteswap/siteswap.h
 
 TRANSLATIONS += \
     Qjoepass_fr_FR.ts
