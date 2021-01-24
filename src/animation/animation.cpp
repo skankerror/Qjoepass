@@ -327,7 +327,7 @@ QSequentialAnimationGroup *Animation::parabolicAnim(Juggler *t_juggler, // TODO:
   // declare one object for each prop in case we need it in switch routines
   JugglingBall *aBall = nullptr;
   JugglingRing *aRing = nullptr;
-  Pirouette *aClub = nullptr;
+  JugglingClub *aClub = nullptr;
 
   // for ring or club rotation we have to create 3 more anims
   QParallelAnimationGroup *animTempGroup = nullptr;
@@ -548,7 +548,7 @@ QSequentialAnimationGroup *Animation::dwellAnim(Juggler *t_juggler,
   QPropertyAnimation *dwellAnimation;
   JugglingBall *aBall;
   JugglingRing *aRing;
-  Pirouette *aClub;
+  JugglingClub *aClub;
 
   if (t_nextLaunch == 1) // that's special for launch 1
   {

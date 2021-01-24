@@ -17,40 +17,19 @@
 
 #include "jugglingring.h"
 
-
 JugglingRing::JugglingRing(QEntity *t_rootEntity,
                            QTorusMesh *t_torusMesh,
-                           QColor t_color,
+                           QColor &t_color,
                            launchTypeRing t_launchType)
 
-  : m_ringMetalRoughMaterial(new QMetalRoughMaterial()),
-    m_ringTransform(new Qt3DCore::QTransform()),
-    m_color(t_color),
+  :JugglingProp(t_rootEntity, t_color),
     m_launchType(t_launchType)
 
 {
-  m_ringTransform->setScale3D(QVector3D(RING_SCALE_X, RING_SCALE_Y, RING_SCALE_Z));
-
-  m_ringMetalRoughMaterial->setBaseColor(m_color);
-  m_ringMetalRoughMaterial->setMetalness(PROP_METALNESS);
-  m_ringMetalRoughMaterial->setRoughness(PROP_ROUGHNESS);
-
-
-  QEntity::setParent(t_rootEntity);
+  m_propTransform->setScale3D(QVector3D(RING_SCALE_X,
+                                        RING_SCALE_Y,
+                                        RING_SCALE_Z));
   addComponent(t_torusMesh);
-  addComponent(m_ringTransform);
-  addComponent(m_ringMetalRoughMaterial);
-  setEnabled(m_enabled);
-}
-
-void JugglingRing::setPosition(QVector3D t_position)
-{
-  if (m_position == t_position)
-    return;
-
-  m_position = t_position;
-  emit positionChanged(t_position);
-  updateTranslation();
 }
 
 void JugglingRing::setRotX(float t_rotX)
@@ -83,22 +62,17 @@ void JugglingRing::setRotZ(float t_rotZ)
   updateRotZ();
 }
 
-void JugglingRing::updateTranslation()
-{
-  m_ringTransform->setTranslation(m_position);
-}
-
 void JugglingRing::updateRotX()
 {
-  m_ringTransform->setRotationX(m_rotX);
+  m_propTransform->setRotationX(m_rotX);
 }
 
 void JugglingRing::updateRotY()
 {
-  m_ringTransform->setRotationY(m_rotY);
+  m_propTransform->setRotationY(m_rotY);
 }
 
 void JugglingRing::updateRotZ()
 {
-  m_ringTransform->setRotationZ(m_rotZ);
+  m_propTransform->setRotationZ(m_rotZ);
 }

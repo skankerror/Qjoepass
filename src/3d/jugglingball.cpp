@@ -22,34 +22,9 @@ JugglingBall::JugglingBall(QEntity *t_rootEntity,
                            QColor &t_color,
                            launchTypeBall t_launchType)
 
-  : m_ballMetalRoughMaterial(new QMetalRoughMaterial()),
-    m_sphereTransform(new Qt3DCore::QTransform()),
-    m_color(t_color),
+  :JugglingProp(t_rootEntity, t_color),
     m_launchType(t_launchType)
 {
-  m_sphereTransform->setScale(BALL_SCALE);
-
-  m_ballMetalRoughMaterial->setBaseColor(m_color);
-  m_ballMetalRoughMaterial->setMetalness(PROP_METALNESS);
-  m_ballMetalRoughMaterial->setRoughness(PROP_ROUGHNESS);
-
-  QEntity::setParent(t_rootEntity);
+  m_propTransform->setScale(BALL_SCALE);
   addComponent(t_sphereMesh);
-  addComponent(m_ballMetalRoughMaterial);
-  addComponent(m_sphereTransform);
-}
-
-void JugglingBall::setPosition(QVector3D t_position)
-{
-  if (m_position == t_position)
-    return;
-
-  m_position = t_position;
-  emit positionChanged(t_position);
-  updateTransForm();
-}
-
-void JugglingBall::updateTransForm()
-{
-  m_sphereTransform->setTranslation(m_position);
 }

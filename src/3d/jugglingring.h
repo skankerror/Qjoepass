@@ -18,24 +18,12 @@
 #ifndef JUGGLINGRING_H
 #define JUGGLINGRING_H
 
-#include <Qt3DCore>
-#include <Qt3DExtras>
-#include <Qt3DRender>
-#include "qjoepass.h"
+#include "jugglingprop.h"
 
-using namespace Qt3DCore;
-using namespace Qt3DExtras;
-using namespace Qt3DRender;
-
-class JugglingRing: public QEntity
+class JugglingRing: public JugglingProp
 {
 
   Q_OBJECT
-
-  Q_PROPERTY(QVector3D m_position
-             READ getPosition
-             WRITE setPosition
-             NOTIFY positionChanged)
 
   Q_PROPERTY(float m_rotX
              READ getRotX
@@ -56,10 +44,9 @@ public:
 
   JugglingRing(QEntity *t_rootEntity,
                QTorusMesh *t_torusMesh,
-               QColor t_color,
+               QColor &t_color,
                launchTypeRing t_launchType = normalRing);
 
-  QVector3D getPosition() const { return m_position; };
   float getRotX() const { return m_rotX; };
   float getRotY() const { return m_rotY; };
   float getRotZ() const { return m_rotZ; };
@@ -67,14 +54,12 @@ public:
 
 private:
 
-  void updateTranslation();
   void updateRotX();
   void updateRotY();
   void updateRotZ();
 
 public slots:
 
-  void setPosition(QVector3D t_position);
   void setRotX(float t_rotX);
   void setRotY(float t_rotY);
   void setRotZ(float t_rotZ);
@@ -82,18 +67,12 @@ public slots:
 
 signals:
 
-  void positionChanged(QVector3D t_position);
   void rotXChanged(float t_rotX);
   void rotYChanged(float t_rotY);
   void rotZChanged(float t_rotZ);
 
 private:
 
-  QMetalRoughMaterial *m_ringMetalRoughMaterial;
-  Qt3DCore::QTransform *m_ringTransform;
-  QVector3D m_position;
-  QColor m_color;
-  bool m_enabled = true;
   launchTypeRing m_launchType;
 
   float m_rotX = 0;

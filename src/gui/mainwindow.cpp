@@ -229,14 +229,14 @@ void MainWindow::launchSiteSwap()
 {
   QVector<siteswapEvent *> v_event;
   int f_launch = m_firstSiteSpinBox->value();
-  auto event = new struct siteswapEvent;
+  auto event = new struct siteswapEvent; // TODO: le delete !
   event->launch = f_launch;
   // paramétrer les autres arguments ici
   v_event.append(event);
   for (int i = 0; i < m_v_spinBox.size(); i++)
   {
     f_launch = m_v_spinBox.at(i)->value();
-    auto newEvent = new struct siteswapEvent;
+    auto newEvent = new struct siteswapEvent; // TODO: le delete
     newEvent->launch = f_launch;
     // pareil
     v_event.append(newEvent);

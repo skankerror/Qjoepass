@@ -153,10 +153,10 @@ void My3DWindow::createLighting()
   m_envLight->setParent(m_rootEntity);
 }
 
-void My3DWindow::createPirouette(QColor t_color)
+void My3DWindow::createClub(QColor t_color)
 {
-  auto pirouette = new Pirouette(m_rootEntity, m_pirouetteMesh, t_color);
-  m_v_pirouette.append(pirouette);
+  auto club = new JugglingClub(m_rootEntity, m_pirouetteMesh, t_color);
+  m_v_club.append(club);
 }
 
 void My3DWindow::createBall(QColor t_color)
@@ -177,6 +177,7 @@ void My3DWindow::createSiteSwap(QVector<siteswapEvent *> t_v_event,
                                 int t_launchType,
                                 bool t_synchron)
 {
+  // TODO: delete existing siteswap, make a private arg ?
   // create siteswap with values
   auto siteswap = new SiteSwap(t_v_event, t_jugCount, t_propType, t_synchron, this);
   // test if it's valid
@@ -198,16 +199,16 @@ void My3DWindow::createSiteSwap(QVector<siteswapEvent *> t_v_event,
     for (int i = 0; i < m_v_ring.size(); i++)
       m_v_ring.at(i)->setEnabled(false);
 
-  if (m_v_pirouette.size())
-    for (int i = 0; i < m_v_pirouette.size(); i++)
-      m_v_pirouette.at(i)->setEnabled(false);
+  if (m_v_club.size())
+    for (int i = 0; i < m_v_club.size(); i++)
+      m_v_club.at(i)->setEnabled(false);
 
   m_v_ball.clear();
   m_v_ball.squeeze();
   m_v_ring.clear();
   m_v_ring.squeeze();
-  m_v_pirouette.clear();
-  m_v_pirouette.squeeze();
+  m_v_club.clear();
+  m_v_club.squeeze();
 
   // now it's surely clean...
   //NOTE: what about jugglers ?
@@ -227,8 +228,8 @@ void My3DWindow::createSiteSwap(QVector<siteswapEvent *> t_v_event,
       m_v_ring.at(i)->setLaunchType((launchTypeRing)(t_launchType));
       break;
     case club:
-      createPirouette(QColor(QRgb(0xA3A600)));
-      m_v_pirouette.at(i)->setLaunchType((launchTypeClub)(t_launchType));
+      createClub(QColor(QRgb(0xA3A600)));
+      m_v_club.at(i)->setLaunchType((launchTypeClub)(t_launchType));
       break;
     default: break;
     }
@@ -240,7 +241,7 @@ void My3DWindow::createSiteSwap(QVector<siteswapEvent *> t_v_event,
   m_anim->setVJuggler(m_v_juggler);
   m_anim->setVBall(m_v_ball);
   m_anim->setVRing(m_v_ring);
-  m_anim->setVClub(m_v_pirouette);
+  m_anim->setVClub(m_v_club);
   m_anim->setSiteSwap(siteswap);
   m_anim->setAnim();
   m_anim->start();

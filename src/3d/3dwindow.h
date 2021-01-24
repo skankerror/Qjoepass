@@ -25,9 +25,10 @@
 #include "juggler.h"
 #include "light.h"
 #include "ground.h"
-#include "pirouette.h"
+//#include "pirouette.h"
 #include "jugglingball.h"
 #include "jugglingring.h"
+#include "jugglingclub.h"
 #include "siteswap.h"
 #include "animation.h"
 
@@ -63,7 +64,7 @@ public slots:
   void changeBackground(QColor t_color);
   void changeGroundColor(QColor t_color);
   void createJuggler(float t_rotY, QVector2D t_position, QColor t_color);
-  void createPirouette(QColor t_color);
+  void createClub(QColor t_color);
   void createBall(QColor t_color);
   void createRing(QColor t_color);
   void createSiteSwap(QVector<siteswapEvent *> t_v_event,
@@ -101,7 +102,7 @@ private:
 
   // club
   QMesh *m_pirouetteMesh;
-  QVector<Pirouette *> m_v_pirouette;
+  QVector<JugglingClub *> m_v_club;
 
   // ball
   QSphereMesh *m_sphereMesh;

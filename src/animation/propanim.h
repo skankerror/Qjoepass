@@ -23,7 +23,7 @@
 #include <juggler.h>
 #include "jugglingball.h"
 #include "jugglingring.h"
-#include "pirouette.h"
+#include "jugglingclub.h"
 #include "siteswap.h"
 #include "qjoepass.h"
 #include "curve.h"
@@ -40,6 +40,7 @@ public:
   explicit PropAnim(QVector<Juggler *> t_v_juggler,
                     int t_propId = 0,
                     jugglingProp t_jugglingProp = ball,
+                    int t_launchType = 0,
                     QObject *parent = nullptr);
 
 private:
@@ -58,9 +59,13 @@ private:
   int m_propId; // the id of the prop
   int m_decay; // depending on propId, locate on the timeline
   QVector<Juggler *> m_v_juggler;
-  JugglingBall *m_ball;
-  JugglingRing *m_ring;
-  Pirouette *m_club;
+
+  jugglingProp m_jugglingProp;
+  JugglingProp *m_prop;
+//  JugglingBall *m_ball;
+//  JugglingRing *m_ring;
+//  JugglingClub *m_club;
+
   launchTypeBall m_launchTypeBall;
   launchTypeRing m_launchTypeRing;
   launchTypeClub m_launchTypeClub;

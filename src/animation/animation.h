@@ -23,7 +23,7 @@
 #include "juggler.h"
 #include "jugglingball.h"
 #include "jugglingring.h"
-#include "pirouette.h"
+#include "jugglingclub.h"
 #include "siteswap.h"
 #include "qjoepass.h"
 
@@ -39,7 +39,7 @@ public:
   void setVJuggler(QVector<Juggler*> t_v_juggler) { m_v_juggler = t_v_juggler; };
   void setVBall(QVector<JugglingBall *> t_v_ball) { m_v_ball = t_v_ball; };
   void setVRing(QVector<JugglingRing *> t_v_ring) { m_v_ring = t_v_ring; };
-  void setVClub(QVector<Pirouette *> t_v_club) { m_v_club = t_v_club; };
+  void setVClub(QVector<JugglingClub *> t_v_club) { m_v_club = t_v_club; };
   void setSiteSwap(SiteSwap *t_siteSwap);
   void setAnim();
 
@@ -65,7 +65,7 @@ private:
   QVector<Juggler *> m_v_juggler;
   QVector<JugglingBall *> m_v_ball;
   QVector<JugglingRing *> m_v_ring;
-  QVector<Pirouette *> m_v_club;
+  QVector<JugglingClub *> m_v_club;
   SiteSwap *m_siteSwap;
   jugglingProp m_propType;
   int m_period;

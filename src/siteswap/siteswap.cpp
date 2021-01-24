@@ -77,7 +77,9 @@ void SiteSwap::setPropType(jugglingProp t_prop)
   m_prop = t_prop;
 }
 
-QVector<animEvent *> SiteSwap::getAnimEvents(int t_launchPos, hand t_handLaunch, int t_jugLaunchId)
+QVector<animEvent *> SiteSwap::getAnimEvents(int t_launchPos,
+                                             hand t_handLaunch,
+                                             int t_jugLaunchId)
 {
   QVector<animEvent*> v_returnVec;
 
@@ -87,11 +89,13 @@ QVector<animEvent *> SiteSwap::getAnimEvents(int t_launchPos, hand t_handLaunch,
 
   int myLaunch = at(t_launchPos);
   hand newLaunchHand;
-  (myLaunch % 2 == 1) ? newLaunchHand = changeHand(t_handLaunch) : newLaunchHand = t_handLaunch;
+  (myLaunch % 2 == 1) ?
+        newLaunchHand = changeHand(t_handLaunch) :
+      newLaunchHand = t_handLaunch;
   int newLaunchPos = (myLaunch + t_launchPos) % m_period;
   int myNewLaunch = at(newLaunchPos);
   int newJugId = m_v_event.at(t_launchPos)->jugRecieveId;
-  struct animEvent *myAnimEvent = new struct animEvent; // TODO: vérifier le delete
+  auto myAnimEvent = new struct animEvent; // TODO: vérifier le delete
   myAnimEvent->launch = myLaunch;
   myAnimEvent->handLaunch = t_handLaunch;
   myAnimEvent->handRecieve = newLaunchHand;
@@ -100,12 +104,16 @@ QVector<animEvent *> SiteSwap::getAnimEvents(int t_launchPos, hand t_handLaunch,
   myAnimEvent->newLaunch = myNewLaunch;
   v_returnVec.append(myAnimEvent);
 
-  while (newLaunchPos != initialLaunchPos || newLaunchHand != initialHandLaunch || t_jugLaunchId != initialJugLaunchId)
+  while (newLaunchPos != initialLaunchPos ||
+         newLaunchHand != initialHandLaunch ||
+         t_jugLaunchId != initialJugLaunchId)
   {
     t_handLaunch = newLaunchHand;
     t_launchPos = newLaunchPos;
     myLaunch = at(t_launchPos);
-    (myLaunch % 2 == 1) ? newLaunchHand = changeHand(t_handLaunch) : newLaunchHand = t_handLaunch;
+    (myLaunch % 2 == 1) ?
+          newLaunchHand = changeHand(t_handLaunch) :
+        newLaunchHand = t_handLaunch;
     newLaunchPos = (myNewLaunch + t_launchPos) % m_period;
     myNewLaunch = at(newLaunchPos);
     if (t_jugLaunchId != initialJugLaunchId && newJugId == t_jugLaunchId)
@@ -117,7 +125,7 @@ QVector<animEvent *> SiteSwap::getAnimEvents(int t_launchPos, hand t_handLaunch,
     else
       newJugId = m_v_event.at(t_launchPos)->jugRecieveId;
 
-    struct animEvent *newAnimEvent = new struct animEvent;
+    struct animEvent *newAnimEvent = new struct animEvent; // TODO: le delete
     newAnimEvent->launch = myLaunch;
     newAnimEvent->handLaunch = t_handLaunch;
     newAnimEvent->handRecieve = newLaunchHand;

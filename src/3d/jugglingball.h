@@ -18,24 +18,12 @@
 #ifndef JUGGLINGBALL_H
 #define JUGGLINGBALL_H
 
-#include <Qt3DCore>
-#include <Qt3DExtras>
-#include <Qt3DRender>
-#include "qjoepass.h"
+#include "jugglingprop.h"
 
-using namespace Qt3DCore;
-using namespace Qt3DExtras;
-using namespace Qt3DRender;
-
-class JugglingBall: public QEntity
+class JugglingBall: public JugglingProp
 {
 
   Q_OBJECT
-
-  Q_PROPERTY(QVector3D m_position
-             READ getPosition
-             WRITE setPosition
-             NOTIFY positionChanged)
 
 public:
 
@@ -44,29 +32,14 @@ public:
                QColor &t_color,
                launchTypeBall t_launchType = normalBall);
 
-  QVector3D getPosition() const { return m_position; };
   launchTypeBall getLaunchType() const { return m_launchType; };
 
 public slots:
 
-  void setPosition(QVector3D t_position);
   void setLaunchType(launchTypeBall t_launchType) { m_launchType = t_launchType; };
 
-signals:
-
-  void positionChanged(QVector3D position);
-
 private:
 
-  void updateTransForm();
-
-private:
-
-  QMetalRoughMaterial *m_ballMetalRoughMaterial;
-  Qt3DCore::QTransform *m_sphereTransform;
-  QVector3D m_position;
-  QColor m_color;
-  bool m_enabled = true;
   launchTypeBall m_launchType;
 };
 

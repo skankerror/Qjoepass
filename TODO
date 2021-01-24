@@ -7,8 +7,6 @@ props disappear when we're too close. Qt3D bug ??
 
 - implement ball rebounds, wall for clubs
 
-- rename Pirouette Class as JugglingClub
-
 recréer le bon ordre de widget dans la toolbar pour qu'on puisse tabber bien.
 là ça fait period, period1, launch, camera, puis les autres périodes,
 il faut recréer tous les widgets dans le bon ordre ou trouver la fn qui va bien ?

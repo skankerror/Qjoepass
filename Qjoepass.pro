@@ -29,6 +29,8 @@ INCLUDEPATH += \
 
 SOURCES += \
   src/3d/3dwindow.cpp \
+  src/3d/jugglingclub.cpp \
+  src/3d/jugglingprop.cpp \
   src/animation/animation.cpp \
   src/animation/curve.cpp \
   src/3d/ground.cpp \
@@ -40,13 +42,14 @@ SOURCES += \
   src/animation/propanim.cpp \
   src/main.cpp \
   src/gui/mainwindow.cpp \
-  src/3d/pirouette.cpp \
   src/gui/preferences.cpp \
   src/gui/settings.cpp \
   src/siteswap/siteswap.cpp
 
 HEADERS += \
   src/3d/3dwindow.h \
+  src/3d/jugglingclub.h \
+  src/3d/jugglingprop.h \
   src/animation/animation.h \
   src/animation/curve.h \
   src/3d/ground.h \
@@ -57,7 +60,6 @@ HEADERS += \
   src/animation/handanim.h \
   src/animation/propanim.h \
   src/gui/mainwindow.h \
-  src/3d/pirouette.h \
   src/gui/preferences.h \
   src/qjoepass.h \
   src/gui/settings.h \

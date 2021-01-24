@@ -23,6 +23,8 @@
 #include <QBitArray>
 #include "qjoepass.h"
 
+// NOTE: faut-il calculer le nombre de jongleur ici ?
+
 // To handle atomic siteswap information
 struct siteswapEvent
 {
@@ -68,6 +70,7 @@ public:
   int getLaunchType() const { return m_launchType ;};
   QBitArray getState() const { return m_state; };
   int getJugglerCount() const { return m_jugglerCount; };
+
   // For sending datas to animation
   QVector<animEvent *> getAnimEvents(int t_launchPos,
                                     hand t_handLaunch,
