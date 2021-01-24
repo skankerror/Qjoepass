@@ -37,24 +37,51 @@ class JugglingProp : public QEntity
              WRITE setPosition
              NOTIFY positionChanged)
 
+  Q_PROPERTY(float m_rotX
+             READ getRotX
+             WRITE setRotX
+             NOTIFY rotXChanged)
+
+  Q_PROPERTY(float m_rotY
+             READ getRotY
+             WRITE setRotY
+             NOTIFY rotYChanged)
+
+  Q_PROPERTY(float m_rotZ
+             READ getRotZ
+             WRITE setRotZ
+             NOTIFY rotZChanged)
+
 public:
 
   JugglingProp(QEntity *t_rootEntity,
                QColor &t_color);
 
   QVector3D getPosition() const { return m_position; };
+  float getRotX() const { return m_rotX; };
+  float getRotY() const { return m_rotY; };
+  float getRotZ() const { return m_rotZ; };
 
 public slots:
 
   void setPosition(QVector3D t_position);
+  void setRotX(float t_rotX);
+  void setRotY(float t_rotY);
+  void setRotZ(float t_rotZ);
 
 signals:
 
   void positionChanged(QVector3D t_position);
+  void rotXChanged(float t_rotX);
+  void rotYChanged(float t_rotY);
+  void rotZChanged(float t_rotZ);
 
 protected:
 
   void updateTransform();
+  void updateRotX();
+  void updateRotY();
+  void updateRotZ();
 
 protected:
 
@@ -63,6 +90,9 @@ protected:
   QVector3D m_position;
   QColor m_color;
   bool m_enabled = true;
+  float m_rotX = 0;
+  float m_rotY = 0;
+  float m_rotZ = 0;
 };
 
 #endif // JUGGLINGPROP_H

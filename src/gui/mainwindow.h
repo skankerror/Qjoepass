@@ -42,7 +42,7 @@ public:
   void loadFile(const QString &t_fileName);
 
   static QString getPropToString(const int t_prop);
-  static jugglingProp getPropFromString(const QString &t_value);
+  static propType getPropFromString(const QString &t_value);
 
 private:
 

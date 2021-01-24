@@ -241,7 +241,7 @@ void MainWindow::launchSiteSwap()
     // pareil
     v_event.append(newEvent);
   }
-  jugglingProp prop = getPropFromString(m_propTypeComboBox->currentText());
+  propType prop = getPropFromString(m_propTypeComboBox->currentText());
   int launchType = 0; // normalLaunch
   switch(prop)
   {
@@ -405,7 +405,7 @@ QString MainWindow::getPropToString(const int t_prop)
   }
 }
 
-jugglingProp MainWindow::getPropFromString(const QString &t_value)
+propType MainWindow::getPropFromString(const QString &t_value)
 {
   if (t_value == "Ball") return ball;
   else if (t_value == "Ring") return ring;

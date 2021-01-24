@@ -170,7 +170,7 @@ const float DWELL_TIME_LAUNCH1 = (HAND_PERIOD / 2.0f) - LAUNCH1_TIME;
 /*********************************** Enums *******************************************/
 
 enum hand{leftHand, rightHand};
-enum jugglingProp{ball, ring, club, propNumb};
+enum propType{ball, ring, club, propNumb};
 enum launchTypeBall{normalBall, bounce};
 enum launchTypeRing{normalRing, panCake};
 enum launchTypeClub{normalClub, flat, helicopter};

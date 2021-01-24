@@ -32,47 +32,47 @@ JugglingRing::JugglingRing(QEntity *t_rootEntity,
   addComponent(t_torusMesh);
 }
 
-void JugglingRing::setRotX(float t_rotX)
-{
-  if (m_rotX == t_rotX)
-    return;
+//void JugglingRing::setRotX(float t_rotX)
+//{
+//  if (m_rotX == t_rotX)
+//    return;
 
-  m_rotX = t_rotX;
-  emit rotXChanged(m_rotX);
-  updateRotX();
-}
+//  m_rotX = t_rotX;
+//  emit rotXChanged(m_rotX);
+//  updateRotX();
+//}
 
-void JugglingRing::setRotY(float t_rotY)
-{
-  if (m_rotY == t_rotY)
-    return;
+//void JugglingRing::setRotY(float t_rotY)
+//{
+//  if (m_rotY == t_rotY)
+//    return;
 
-  m_rotY = t_rotY;
-  emit rotYChanged(m_rotY);
-  updateRotY();
-}
+//  m_rotY = t_rotY;
+//  emit rotYChanged(m_rotY);
+//  updateRotY();
+//}
 
-void JugglingRing::setRotZ(float t_rotZ)
-{
-  if (m_rotZ == t_rotZ)
-    return;
+//void JugglingRing::setRotZ(float t_rotZ)
+//{
+//  if (m_rotZ == t_rotZ)
+//    return;
 
-  m_rotZ = t_rotZ;
-  emit rotZChanged(m_rotZ);
-  updateRotZ();
-}
+//  m_rotZ = t_rotZ;
+//  emit rotZChanged(m_rotZ);
+//  updateRotZ();
+//}
 
-void JugglingRing::updateRotX()
-{
-  m_propTransform->setRotationX(m_rotX);
-}
+//void JugglingRing::updateRotX()
+//{
+//  m_propTransform->setRotationX(m_rotX);
+//}
 
-void JugglingRing::updateRotY()
-{
-  m_propTransform->setRotationY(m_rotY);
-}
+//void JugglingRing::updateRotY()
+//{
+//  m_propTransform->setRotationY(m_rotY);
+//}
 
-void JugglingRing::updateRotZ()
-{
-  m_propTransform->setRotationZ(m_rotZ);
-}
+//void JugglingRing::updateRotZ()
+//{
+//  m_propTransform->setRotationZ(m_rotZ);
+//}

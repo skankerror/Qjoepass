@@ -20,7 +20,7 @@
 
 SiteSwap::SiteSwap(QVector<siteswapEvent *> &t_v_event,
                    int t_jugCount,
-                   jugglingProp t_prop,
+                   propType t_prop,
                    bool t_synchron,
                    QObject *parent)
   : QObject(parent),
@@ -72,7 +72,7 @@ int SiteSwap::getNumProp() const
   // TODO: multiply by numbers of jugglers
 }
 
-void SiteSwap::setPropType(jugglingProp t_prop)
+void SiteSwap::setPropType(propType t_prop)
 {
   m_prop = t_prop;
 }

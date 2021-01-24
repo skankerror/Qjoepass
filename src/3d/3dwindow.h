@@ -25,7 +25,6 @@
 #include "juggler.h"
 #include "light.h"
 #include "ground.h"
-//#include "pirouette.h"
 #include "jugglingball.h"
 #include "jugglingring.h"
 #include "jugglingclub.h"
@@ -69,7 +68,7 @@ public slots:
   void createRing(QColor t_color);
   void createSiteSwap(QVector<siteswapEvent *> t_v_event,
                       int t_jugCount,
-                      jugglingProp t_propType = ball,
+                      propType t_propType = ball,
                       int t_launchType = normalBall,
                       bool t_synchron = false);
   void setCameraToOrbit();

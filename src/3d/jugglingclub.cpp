@@ -1,3 +1,20 @@
+/*
+ * (c) 2020 Pat Co / M. C.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "jugglingclub.h"
 
 
@@ -12,47 +29,3 @@ JugglingClub::JugglingClub(QEntity *t_rootEntity,
   addComponent(t_clubMesh);
 }
 
-void JugglingClub::setRotX(float t_rotX)
-{
-  if (m_rotX == t_rotX)
-    return;
-
-  m_rotX = t_rotX;
-  emit rotXChanged(m_rotX);
-  updateRotX();
-}
-
-void JugglingClub::setRotY(float t_rotY)
-{
-  if (m_rotY == t_rotY)
-    return;
-
-  m_rotY = t_rotY;
-  emit rotYChanged(m_rotY);
-  updateRotY();
-}
-
-void JugglingClub::setRotZ(float t_rotZ)
-{
-  if (m_rotZ == t_rotZ)
-    return;
-
-  m_rotZ = t_rotZ;
-  emit rotZChanged(m_rotZ);
-  updateRotZ();
-}
-
-void JugglingClub::updateRotX()
-{
-  m_propTransform->setRotationX(m_rotX);
-}
-
-void JugglingClub::updateRotY()
-{
-  m_propTransform->setRotationY(m_rotY);
-}
-
-void JugglingClub::updateRotZ()
-{
-  m_propTransform->setRotationZ(m_rotZ);
-}

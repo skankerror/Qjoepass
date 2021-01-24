@@ -1,3 +1,20 @@
+/*
+ * (c) 2020 Pat Co / M. C.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #ifndef JUGGLINGCLUB_H
 #define JUGGLINGCLUB_H
 
@@ -8,21 +25,6 @@ class JugglingClub : public JugglingProp
 
   Q_OBJECT
 
-  Q_PROPERTY(float m_rotX
-             READ getRotX
-             WRITE setRotX
-             NOTIFY rotXChanged)
-
-  Q_PROPERTY(float m_rotY
-             READ getRotY
-             WRITE setRotY
-             NOTIFY rotYChanged)
-
-  Q_PROPERTY(float m_rotZ
-             READ getRotZ
-             WRITE setRotZ
-             NOTIFY rotZChanged)
-
 public:
 
   JugglingClub(QEntity *t_rootEntity,
@@ -30,47 +32,15 @@ public:
                QColor &t_color,
                launchTypeClub t_launchType = normalClub);
 
-  float getRotX() const { return m_rotX; };
-  float getRotY() const { return m_rotY; };
-  float getRotZ() const { return m_rotZ; };
   launchTypeClub getLaunchType() const { return m_launchType; };
-
-private:
-
-//  void updateTranslation();
-  void updateRotX();
-  void updateRotY();
-  void updateRotZ();
 
 public slots:
 
-//  void setPosition(QVector3D t_position);
-  void setRotX(float t_rotX);
-  void setRotY(float t_rotY);
-  void setRotZ(float t_rotZ);
   void setLaunchType(launchTypeClub t_launchType) { m_launchType = t_launchType; };
-
-signals:
-
-//  void positionChanged(QVector3D t_position);
-  void rotXChanged(float t_rotX);
-  void rotYChanged(float t_rotY);
-  void rotZChanged(float t_rotZ);
 
 private:
 
-//  QMetalRoughMaterial *m_clubMetalRoughMaterial;
-//  Qt3DCore::QTransform *m_pirouetteTransform;
-//  QColor m_color;
-//  QVector3D m_position;
-//  bool m_enabled = true;
   launchTypeClub m_launchType;
-
-  float m_rotX = 0;
-  float m_rotY = 0;
-  float m_rotZ = 0;
-
-
 };
 
 #endif // JUGGLINGCLUB_H

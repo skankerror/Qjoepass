@@ -38,14 +38,15 @@ class PropAnim : public QSequentialAnimationGroup
 public:
 
   explicit PropAnim(QVector<Juggler *> t_v_juggler,
+                    JugglingProp *t_prop,
                     int t_propId = 0,
-                    jugglingProp t_jugglingProp = ball,
+                    propType t_propType = ball,
                     int t_launchType = 0,
                     QObject *parent = nullptr);
 
 private:
 
-  QSequentialAnimationGroup* parabolicAnim(int t_jugglerIdLaunch, hand t_handLaunch,
+  QParallelAnimationGroup *parabolicAnim(int t_jugglerIdLaunch, hand t_handLaunch,
                                            int t_jugglerIdRecieve,
                                            hand t_handRecieve,
                                            int t_launch);
@@ -60,12 +61,11 @@ private:
   int m_decay; // depending on propId, locate on the timeline
   QVector<Juggler *> m_v_juggler;
 
-  jugglingProp m_jugglingProp;
+  propType m_propType;
   JugglingProp *m_prop;
-//  JugglingBall *m_ball;
-//  JugglingRing *m_ring;
-//  JugglingClub *m_club;
-
+  JugglingBall *m_ball = nullptr;
+  JugglingRing *m_ring = nullptr;
+  JugglingClub *m_club = nullptr;
   launchTypeBall m_launchTypeBall;
   launchTypeRing m_launchTypeRing;
   launchTypeClub m_launchTypeClub;

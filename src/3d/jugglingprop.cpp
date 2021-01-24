@@ -48,3 +48,48 @@ void JugglingProp::updateTransform()
 {
   m_propTransform->setTranslation(m_position);
 }
+
+void JugglingProp::setRotX(float t_rotX)
+{
+  if (m_rotX == t_rotX)
+    return;
+
+  m_rotX = t_rotX;
+  emit rotXChanged(m_rotX);
+  updateRotX();
+}
+
+void JugglingProp::setRotY(float t_rotY)
+{
+  if (m_rotY == t_rotY)
+    return;
+
+  m_rotY = t_rotY;
+  emit rotYChanged(m_rotY);
+  updateRotY();
+}
+
+void JugglingProp::setRotZ(float t_rotZ)
+{
+  if (m_rotZ == t_rotZ)
+    return;
+
+  m_rotZ = t_rotZ;
+  emit rotZChanged(m_rotZ);
+  updateRotZ();
+}
+
+void JugglingProp::updateRotX()
+{
+  m_propTransform->setRotationX(m_rotX);
+}
+
+void JugglingProp::updateRotY()
+{
+  m_propTransform->setRotationY(m_rotY);
+}
+
+void JugglingProp::updateRotZ()
+{
+  m_propTransform->setRotationZ(m_rotZ);
+}

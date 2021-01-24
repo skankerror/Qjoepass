@@ -173,7 +173,7 @@ void My3DWindow::createRing(QColor t_color)
 
 void My3DWindow::createSiteSwap(QVector<siteswapEvent *> t_v_event,
                                 int t_jugCount,
-                                jugglingProp t_propType,
+                                propType t_propType,
                                 int t_launchType,
                                 bool t_synchron)
 {

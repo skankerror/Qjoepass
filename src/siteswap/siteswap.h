@@ -56,7 +56,7 @@ public:
 
   explicit SiteSwap(QVector<siteswapEvent *> &t_v_event,
                     int t_jugCount,
-                    jugglingProp t_prop = ball,
+                    propType t_prop = ball,
                     bool t_synchron = false,
                     QObject *parent = nullptr);
 
@@ -66,7 +66,7 @@ public:
   bool isValid() const;
   int getNumProp() const;
   int getPeriod() const { return m_period; };
-  jugglingProp getPropType() const { return m_prop; };
+  propType getPropType() const { return m_prop; };
   int getLaunchType() const { return m_launchType ;};
   QBitArray getState() const { return m_state; };
   int getJugglerCount() const { return m_jugglerCount; };
@@ -77,7 +77,7 @@ public:
                                     int t_jugLaunchId);
 
   // setters
-  void setPropType(jugglingProp t_prop);
+  void setPropType(propType t_prop);
   void setLaunchType(int t_launchType) { m_launchType = t_launchType; };
 
 private:
@@ -91,7 +91,7 @@ private:
   int m_period;
   bool m_valid = false;
   bool m_synchron = false;
-  jugglingProp m_prop;
+  propType m_prop;
   int m_launchType;
   QBitArray m_state;
   int m_propCount;

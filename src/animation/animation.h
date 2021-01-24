@@ -67,7 +67,7 @@ private:
   QVector<JugglingRing *> m_v_ring;
   QVector<JugglingClub *> m_v_club;
   SiteSwap *m_siteSwap;
-  jugglingProp m_propType;
+  propType m_propType;
   int m_period;
 
 };
