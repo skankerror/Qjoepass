@@ -7,6 +7,8 @@ props disappear when we're too close. Qt3D bug ??
 
 - implement ball rebounds, wall for clubs
 
+- make class for Arm ?
+
 recréer le bon ordre de widget dans la toolbar pour qu'on puisse tabber bien.
 là ça fait period, period1, launch, camera, puis les autres périodes,
 il faut recréer tous les widgets dans le bon ordre ou trouver la fn qui va bien ?
@@ -26,5 +28,4 @@ le trajet empty hand est linéaire, c'est pas réaliste il doit être un peu cou
 partir de la tangente (verticale) du lancer pour récupérer l'objet sur une tangente
 verticale aussi, mais sans faire un arc de cercle...Q
 
-les helicos se translatent un peu à l'intérieur au cours du temps
-les pancakes aussi
+Dans QAbstractAnimation il y a une policy où on détruit quand c'est stoppé.

@@ -45,17 +45,27 @@ My3DWindow::My3DWindow(MySettings *t_settings)
 /**************************** testing zone ***************************/
 
   // create 1 juggler for testing purpose
-//  createJuggler(0, QVector2D(0, 0), QColor(QRgb(0xFF0000)));
+  createJuggler(-90, QVector2D(12, 0), QColor(QRgb(0xFF0000)));
 
   // create 2 jugllers for passing testing
-  createJuggler(90, QVector2D(-7, 0), QColor(QRgb(0xFF0000)));
-//  createJuggler(-90, QVector2D(7, 0), QColor(QRgb(0x00FF00)));
+  createJuggler(90, QVector2D(-12, 0), QColor(QRgb(0xFF0000)));
+
+  createRing(QColor(QRgb(0xFFFF00)));
+  m_v_ring.at(0)->setRotY(m_v_juggler.at(1)->getRotY());
+  auto testAnim = new PropAnim(m_v_juggler,
+                               m_v_ring.at(0),
+                               0,
+                               propType(ring),
+                               1);
 }
 
 void My3DWindow::createCam()
 {
   m_camera = camera();
-  m_camera->lens()->setPerspectiveProjection(CAM_FOV, CAM_RATIO, CAM_NEARPLANE, CAM_FARPLANE);
+  m_camera->lens()->setPerspectiveProjection(CAM_FOV,
+                                             CAM_RATIO,
+                                             CAM_NEARPLANE,
+                                             CAM_FARPLANE);
   m_positionCamera = CAM_INITIAL_POSITION;
   m_camFPController = new QFirstPersonCameraController(m_rootEntity);
   m_camOController = new QOrbitCameraController(m_rootEntity);

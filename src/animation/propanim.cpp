@@ -16,21 +16,28 @@ PropAnim::PropAnim(QVector<Juggler *> t_v_juggler,
   switch (m_propType) // TODO: check out of range
   {
   default:
-  case  ball:
-    m_launchTypeBall = launchTypeBall(t_launchType);
-    break;
-  case ring:
-    m_launchTypeRing = launchTypeRing(t_launchType);
-    break;
-  case club:
-    m_launchTypeClub = launchTypeClub(t_launchType);
-    break;
+  case  ball: m_launchTypeBall = launchTypeBall(t_launchType); break;
+  case ring: m_launchTypeRing = launchTypeRing(t_launchType); break;
+  case club: m_launchTypeClub = launchTypeClub(t_launchType); break;
   }
 
   // là on met tout le merdier du 1er lancement ? donné par siteswap ?
   // 1er lancer, bien orienter les objets, les placer dans les bonnes mains
   // créer les 1ers dwells avec plusieurs objets dans les mains
   // ou on fait tout ça dans animation ?
+
+  // pour les mains, principe de la timeline, chaque mouvement de main doit avoir
+  // un temps de début et un temps de fin, voir dans handanim. Connecter les objets ?
+
+  /************************testing zone ****************************/
+  auto testAnim = parabolicAnim(1,
+                                hand(rightHand),
+                                0,
+                                hand(leftHand),
+                                5);
+  addAnimation(testAnim);
+  setLoopCount(INFINITE_LOOP);
+  start();
 }
 
 QParallelAnimationGroup *PropAnim::parabolicAnim(int t_jugglerIdLaunch,
@@ -41,8 +48,6 @@ QParallelAnimationGroup *PropAnim::parabolicAnim(int t_jugglerIdLaunch,
 {
   // create parallel animation group to translate and rotation if needed
   auto parallelAnimGroup = new QParallelAnimationGroup(this);
-  // create sequential for translation
-  auto translationAnimGroup = new QSequentialAnimationGroup(this);
 
   // get our concerned jugglers
   auto jugglerLaunch = m_v_juggler.at(t_jugglerIdLaunch); // TODO: check out of range
@@ -72,6 +77,7 @@ QParallelAnimationGroup *PropAnim::parabolicAnim(int t_jugglerIdLaunch,
 
   // set position where it ends
   // TODO: il faut bouger l'endroit du départ pour aller dans la direction du recieve
+  // l'obtenir de juggler ?
   if (t_handRecieve == leftHand)
   {
     isExtPlusCatch ? // helico, pancakes ?
@@ -95,13 +101,16 @@ QParallelAnimationGroup *PropAnim::parabolicAnim(int t_jugglerIdLaunch,
     arcTime = ((HAND_PERIOD) / 2) * (t_launch - (2 * DWELL_RATIO));
 
   // we calculate velocity launch
-  QVector3D velBall = ((posFinal - posProp) - 0.5 *
+  auto velBall = ((posFinal - posProp) - 0.5 *
                        (GRAVITY * qPow(arcTime, 2))) / arcTime;
 
   int frameCount = (int)((arcTime / (DELTA_TIME)));
 
   // We create our curve
-  QVector<QVector3D> v_parabolic = Curves::curveParabolic(velBall, posProp, frameCount);
+  /*QVector<QVector3D>*/ auto v_parabolic = Curves::curveParabolic(velBall, posProp, frameCount);
+
+  // create sequential for translation
+  auto translationAnimGroup = new QSequentialAnimationGroup(this);
 
   // this loop creates all animations for translation
   for (int i = 0; i < frameCount; i++)
@@ -123,32 +132,68 @@ QParallelAnimationGroup *PropAnim::parabolicAnim(int t_jugglerIdLaunch,
   // else we must rotate prop
   else
   {
-    // set rotY to align with jugglers
-    float launchRotY = jugglerLaunch->getRotY();
-    float recieveRotY = jugglerRecieve->getRotY();
-
-    // set numbers of rotations on (z)
-    // TODO: gérer suivant le postionnement du recieve.
+    // set numbers of rotations on (x)
     int rotCount = (int)(t_launch / 2);
 
-    // now set rotations for rings and clubs
+    // now set rotations
+    float initialRotX = m_prop->getRotX(); // NOTE: not sure of that
+    // maybe we have to store the rotX in an argument...
+
+    float addRotX = 0;
+    // if passing launch add some rot
+    if (t_jugglerIdLaunch != t_jugglerIdRecieve)
+      addRotX = ((initialRotX - 90.0f) * 2.0f);
+
+    // adjust values if necessary
+    // TODO: faire des if, plus simple
     switch (m_propType)
     {
     default: break;
     case ring:
       switch (m_launchTypeRing)
       {
-      case normalRing: // on a géré dans le dwell précédent le rotY
+      default: break;
+      case normalRing:
+        rotCount = 0;
+        addRotX = 0;
         break;
       case panCake:
-        // le rotX est géré dans le dwell il doit partir avec le bon angle
-        // NOTE: le récupérer pour vérifier, calculer ?
         break;
       }
       break;
+
     case club:
+      switch (m_launchTypeClub)
+      {
+      default: break;
+      case normalClub:
+        break;
+
+      case flat:
+        rotCount = 0;
+        // if passing launch, change rotx
+        if (t_jugglerIdLaunch != t_jugglerIdRecieve)
+          addRotX = ((-180 - ((initialRotX - 90.0f) * 2.0f)));
+        break;
+
+      case helicopter:
+        rotCount = 0;
+        addRotX = 0;
+        break;
+      }
+
       break;
     }
+
+    // rotation X
+    auto animRotX = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_rotX"), this);
+    animRotX->setDuration(((int)(DELTA_TIME * S_TO_MS)) * frameCount);
+    animRotX->setStartValue((360 * rotCount) + initialRotX);
+//    animRotX->setStartValue(720);
+    animRotX->setEndValue(initialRotX + addRotX);
+//    animRotX->setEndValue(0);
+    animRotX->setLoopCount(ONE_LOOP);
+    parallelAnimGroup->addAnimation(animRotX);
 
     // finally return anim
     return parallelAnimGroup;

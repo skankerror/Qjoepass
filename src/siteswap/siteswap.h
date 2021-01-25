@@ -77,7 +77,7 @@ public:
                                     int t_jugLaunchId);
 
   // setters
-  void setPropType(propType t_prop);
+  void setPropType(propType t_prop) { m_prop = t_prop; };
   void setLaunchType(int t_launchType) { m_launchType = t_launchType; };
 
 private:

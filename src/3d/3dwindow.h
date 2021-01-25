@@ -30,6 +30,7 @@
 #include "jugglingclub.h"
 #include "siteswap.h"
 #include "animation.h"
+#include "propanim.h" // pour tester
 
 using namespace Qt3DCore;
 using namespace Qt3DRender;

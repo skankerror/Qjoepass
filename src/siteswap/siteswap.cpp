@@ -39,6 +39,7 @@ SiteSwap::SiteSwap(QVector<siteswapEvent *> &t_v_event,
 
 bool SiteSwap::isValid() const
 {
+  // TODO: what about passing siteswap ?
   // create a vector to test our values
   QVector<int> v_test;
   // let's be optimistic !
@@ -70,11 +71,6 @@ int SiteSwap::getNumProp() const
     totalLaunch += at(i);
   return totalLaunch / m_period;
   // TODO: multiply by numbers of jugglers
-}
-
-void SiteSwap::setPropType(propType t_prop)
-{
-  m_prop = t_prop;
 }
 
 QVector<animEvent *> SiteSwap::getAnimEvents(int t_launchPos,
