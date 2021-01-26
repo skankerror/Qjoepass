@@ -44,19 +44,21 @@ My3DWindow::My3DWindow(MySettings *t_settings)
 
 /**************************** testing zone ***************************/
 
-  // create 1 juggler for testing purpose
   createJuggler(-90, QVector2D(12, 0), QColor(QRgb(0xFF0000)));
 
-  // create 2 jugllers for passing testing
   createJuggler(90, QVector2D(-12, 0), QColor(QRgb(0xFF0000)));
 
-  createRing(QColor(QRgb(0xFFFF00)));
-  m_v_ring.at(0)->setRotY(m_v_juggler.at(1)->getRotY());
+  createClub(QColor(QRgb(0xFFFF00)));
+  m_v_prop.at(0)->setRotX(CLUB_BASIC_ROTX);
+  m_v_prop.at(0)->setRotY(m_v_juggler.at(0)->getRotY());
   auto testAnim = new PropAnim(m_v_juggler,
-                               m_v_ring.at(0),
+                               m_v_prop.at(0),
                                0,
-                               propType(ring),
-                               1);
+                               propType(club),
+                               0,
+                               this);
+
+  testAnim->start();
 }
 
 void My3DWindow::createCam()
@@ -166,19 +168,23 @@ void My3DWindow::createLighting()
 void My3DWindow::createClub(QColor t_color)
 {
   auto club = new JugglingClub(m_rootEntity, m_pirouetteMesh, t_color);
-  m_v_club.append(club);
+//  m_v_club.append(club);
+  m_v_prop.append(club);
+
 }
 
 void My3DWindow::createBall(QColor t_color)
 {
   auto ball = new JugglingBall(m_rootEntity, m_sphereMesh, t_color);
-  m_v_ball.append(ball);
+//  m_v_ball.append(ball);
+  m_v_prop.append(ball);
 }
 
 void My3DWindow::createRing(QColor t_color)
 {
   auto ring = new JugglingRing(m_rootEntity, m_torusMesh, t_color);
-  m_v_ring.append(ring);
+//  m_v_ring.append(ring);
+  m_v_prop.append(ring);
 }
 
 void My3DWindow::createSiteSwap(QVector<siteswapEvent *> t_v_event,

@@ -100,17 +100,20 @@ private:
   // juggler
   QVector<Juggler *> m_v_juggler;
 
-  // club
-  QMesh *m_pirouetteMesh;
-  QVector<JugglingClub *> m_v_club;
+  // prop
+  QVector<JugglingProp *> m_v_prop;
 
-  // ball
-  QSphereMesh *m_sphereMesh;
-  QVector<JugglingBall *> m_v_ball;
+    // club
+    QMesh *m_pirouetteMesh;
+    QVector<JugglingClub *> m_v_club;
 
-  // ring
-  QTorusMesh *m_torusMesh;
-  QVector<JugglingRing *> m_v_ring;
+    // ball
+    QSphereMesh *m_sphereMesh;
+    QVector<JugglingBall *> m_v_ball;
+
+    // ring
+    QTorusMesh *m_torusMesh;
+    QVector<JugglingRing *> m_v_ring;
 
   // global app settings
   MySettings *m_settings;

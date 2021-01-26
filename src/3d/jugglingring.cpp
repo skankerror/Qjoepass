@@ -29,5 +29,8 @@ JugglingRing::JugglingRing(QEntity *t_rootEntity,
   m_propTransform->setScale3D(QVector3D(RING_SCALE_X,
                                         RING_SCALE_Y,
                                         RING_SCALE_Z));
+
+//  m_propTransform->setRotationY(RING_BASIC_ROTY);
+
   addComponent(t_torusMesh);
 }

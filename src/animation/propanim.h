@@ -63,9 +63,6 @@ private:
 
   propType m_propType;
   JugglingProp *m_prop;
-//  JugglingBall *m_ball = nullptr;
-//  JugglingRing *m_ring = nullptr;
-//  JugglingClub *m_club = nullptr;
   launchTypeBall m_launchTypeBall;
   launchTypeRing m_launchTypeRing;
   launchTypeClub m_launchTypeClub;

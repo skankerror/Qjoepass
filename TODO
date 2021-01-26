@@ -1,5 +1,5 @@
 - BUG: launch 97531, then switch to juggler 2 view. Only 3 props left...
-props disappear when we're too close. Qt3D bug ??
+props disappear when we're too close. Qt3D bug ?? Camera settings ?
 
 - see if we can spare resources with frustrum calling
 
@@ -9,10 +9,6 @@ props disappear when we're too close. Qt3D bug ??
 
 - make class for Arm ?
 
-recréer le bon ordre de widget dans la toolbar pour qu'on puisse tabber bien.
-là ça fait period, period1, launch, camera, puis les autres périodes,
-il faut recréer tous les widgets dans le bon ordre ou trouver la fn qui va bien ?
-
 QSettings
 Il n'est pas nécessaire de définir une instance statique ou partagée de l'objet QSettings
 car à chaque instanciation c'est le même fichier de réglages qui est lu ou écrit et Qt
@@ -21,7 +17,7 @@ sait où il se trouve.
 Eloigner les anneaux et les massues suivant z dans le repére jongleur,
 peut-être dans jongleur avant translate rotate ? m_posLHint_zPlus ?
 
-donner une rotation y sur les massues normal et flat et les anneaux normal
+donner une rotation y dans le dwell sur les massues normal et flat et les anneaux normal
 pour être réaliste
 
 le trajet empty hand est linéaire, c'est pas réaliste il doit être un peu courbe,
