@@ -51,9 +51,11 @@ private:
                                            hand t_handRecieve,
                                            int t_launch);
 
-  QSequentialAnimationGroup* dwellAnim(int t_jugglerId,
-                                       int t_nextLaunch,
-                                       hand t_hand);
+  QSequentialAnimationGroup* dwellAnim(int t_jugglerIdLaunch,
+                                       hand t_handLaunch,
+                                       int t_jugglerIdRecieve,
+                                       hand t_handRecieve,
+                                       int t_launch);
 
 private:
 

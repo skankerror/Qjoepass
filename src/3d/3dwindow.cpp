@@ -49,13 +49,13 @@ My3DWindow::My3DWindow(MySettings *t_settings)
   createJuggler(90, QVector2D(-12, 0), QColor(QRgb(0xFF0000)));
 
   createClub(QColor(QRgb(0xFFFF00)));
-  m_v_prop.at(0)->setRotX(CLUB_BASIC_ROTX);
-  m_v_prop.at(0)->setRotY(m_v_juggler.at(0)->getRotY());
+  m_v_prop.at(0)->setRotX(CLUB_HELICOPTER_ROTX);
+  m_v_prop.at(0)->setRotY(m_v_juggler.at(0)->getRotY() - 90);
   auto testAnim = new PropAnim(m_v_juggler,
                                m_v_prop.at(0),
                                0,
                                propType(club),
-                               0,
+                               2,
                                this);
 
   testAnim->start();
