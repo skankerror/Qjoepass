@@ -29,6 +29,7 @@ INCLUDEPATH += \
 
 SOURCES += \
   src/3d/3dwindow.cpp \
+  src/3d/jugglerarm.cpp \
   src/3d/jugglingclub.cpp \
   src/3d/jugglingprop.cpp \
   src/animation/animation.cpp \
@@ -48,6 +49,7 @@ SOURCES += \
 
 HEADERS += \
   src/3d/3dwindow.h \
+  src/3d/jugglerarm.h \
   src/3d/jugglingclub.h \
   src/3d/jugglingprop.h \
   src/animation/animation.h \

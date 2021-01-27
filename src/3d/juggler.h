@@ -21,6 +21,7 @@
 #include <Qt3DCore>
 #include <Qt3DExtras>
 #include <Qt3DRender>
+#include "jugglerarm.h"
 #include "qjoepass.h"
 
 using namespace Qt3DCore;
@@ -84,14 +85,8 @@ public:
 private:
 
   void createHead();
-  void createShoulders();
+  void createBody();
   void createArms();
-  void createElbows();
-  void createForearms();
-  void createTrunk();
-  void createThighs();
-  void createKnees();
-  void createLegs();
 
   void updateTransform();
 
@@ -172,44 +167,13 @@ private:
   Qt3DCore::QTransform *m_headTransform;
 
   // shoulders
-  QEntity *m_shoulderEntity;
-  QCylinderMesh *m_shoulders;
-  Qt3DCore::QTransform *m_shouldersTransform;
+  QEntity *m_claviclesEntity;
+  QCylinderMesh *m_clavicles;
+  Qt3DCore::QTransform *m_claviclesTransform;
 
-  QEntity *m_rightShoulderEntity;
-  QSphereMesh *m_rightShoulder;
-  Qt3DCore::QTransform *m_rightShoulderTransform;
-
-  QEntity *m_leftShoulderEntity;
-  QSphereMesh *m_leftShoulder;
-  Qt3DCore::QTransform *m_leftShoulderTransform;
-
-  // arms
-  QEntity *m_leftArmEntity;
-  QCylinderMesh *m_leftArm;
-  Qt3DCore::QTransform *m_leftArmTransform;
-
-  QEntity *m_rightArmEntity;
-  QCylinderMesh *m_rightArm;
-  Qt3DCore::QTransform *m_rightArmTransform;
-
-  // elbows
-  QEntity *m_rightElbowEntity;
-  QSphereMesh *m_rightElbow;
-  Qt3DCore::QTransform *m_rightElbowTransform;
-
-  QEntity *m_leftElbowEntity;
-  QSphereMesh *m_leftElbow;
-  Qt3DCore::QTransform *m_leftElbowTransform;
-
-  // forearms
-  QEntity *m_leftForearmEntity;
-  QCylinderMesh *m_leftForearm;
-  Qt3DCore::QTransform *m_leftForearmTransform;
-
-  QEntity *m_rightForearmEntity;
-  QCylinderMesh *m_rightForearm;
-  Qt3DCore::QTransform *m_rightForearmTransform;
+  //Arms
+  JugglerArm *m_leftArm;
+  JugglerArm *m_rightArm;
 
   // trunk
   QEntity *m_trunkEntity;
@@ -226,23 +190,22 @@ private:
   Qt3DCore::QTransform *m_rightThighTransform;
 
   // knees
-  QEntity *m_rightKneeEntity;
-  QSphereMesh *m_rightKnee;
-  Qt3DCore::QTransform *m_rightKneeTransform;
-
   QEntity *m_leftKneeEntity;
   QSphereMesh *m_leftKnee;
   Qt3DCore::QTransform *m_leftKneeTransform;
 
-  // legs
-  QEntity *m_rightLegEntity;
-  QCylinderMesh *m_rightLeg;
-  Qt3DCore::QTransform *m_rightLegTransform;
+  QEntity *m_rightKneeEntity;
+  QSphereMesh *m_rightKnee;
+  Qt3DCore::QTransform *m_rightKneeTransform;
 
+  // legs
   QEntity *m_leftLegEntity;
   QCylinderMesh *m_leftLeg;
   Qt3DCore::QTransform *m_leftLegTransform;
 
+  QEntity *m_rightLegEntity;
+  QCylinderMesh *m_rightLeg;
+  Qt3DCore::QTransform *m_rightLegTransform;
 };
 
 #endif // JUGGLER_H

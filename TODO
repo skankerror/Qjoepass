@@ -7,7 +7,9 @@ props disappear when we're too close. Qt3D bug ?? Camera settings ?
 
 - implement ball rebounds, wall for clubs
 
-- make class for Arm ?
+- make class for Arm
+with a tree of entity, so if we rotate shoulder the rest is rotate
+if we rotate elbow the forearm is moving
 
 QSettings
 Il n'est pas nécessaire de définir une instance statique ou partagée de l'objet QSettings

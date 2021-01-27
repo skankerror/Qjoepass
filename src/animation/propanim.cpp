@@ -30,35 +30,36 @@ PropAnim::PropAnim(QVector<Juggler *> t_v_juggler,
   // un temps de début et un temps de fin, voir dans handanim. Connecter les objets ?
 
   /************************testing zone ****************************/
-  auto testAnim = parabolicAnim(0,
-                                hand(rightHand),
-                                1,
-                                hand(leftHand),
-                                5);
+//  auto testAnim = parabolicAnim(0,
+//                                hand(rightHand),
+//                                1,
+//                                hand(leftHand),
+//                                5);
 
-  auto testAnim2 = parabolicAnim(1,
-                                 hand(leftHand),
-                                 1,
-                                 hand(rightHand),
-                                 3);
+//  auto testAnim2 = parabolicAnim(1,
+//                                 hand(leftHand),
+//                                 1,
+//                                 hand(rightHand),
+//                                 3);
 
-  auto testAnim3 = parabolicAnim(1,
-                                 hand(rightHand),
-                                 0,
-                                 hand(leftHand),
-                                 5);
+//  auto testAnim3 = parabolicAnim(1,
+//                                 hand(rightHand),
+//                                 0,
+//                                 hand(leftHand),
+//                                 5);
 
-  auto testAnim4 = parabolicAnim(0,
-                                 hand(leftHand),
-                                 0,
-                                 hand(rightHand),
-                                 3);
+//  auto testAnim4 = parabolicAnim(0,
+//                                 hand(leftHand),
+//                                 0,
+//                                 hand(rightHand),
+//                                 3);
 
-  addAnimation(testAnim);
-  addAnimation(testAnim2);
-  addAnimation(testAnim3);
-  addAnimation(testAnim4);
-  setLoopCount(INFINITE_LOOP);
+//  addAnimation(testAnim);
+//  addAnimation(testAnim2);
+//  addAnimation(testAnim3);
+//  addAnimation(testAnim4);
+//  setLoopCount(INFINITE_LOOP);
+
 }
 
 QParallelAnimationGroup *PropAnim::parabolicAnim(int t_jugglerIdLaunch,

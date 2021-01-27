@@ -83,29 +83,16 @@
     #define HEAD_SLICES 32
     #define HEAD_TRANSLATE QVector3D(NULL_FLOAT,HEAD_POS_Y,NULL_FLOAT)
     #define LOOK_AT_VECTOR QVector3D(NULL_FLOAT,NULL_FLOAT,5.0f)
-    // Shoulders
-    #define SHOULDERS_ROTATION QVector3D(NULL_FLOAT,NULL_FLOAT,90.0f)
-    #define SHOULDERS_LENGHT 2.0f
+    // Clavicles
+    #define CLAVICLES_ROTATION QVector3D(NULL_FLOAT,NULL_FLOAT,90.0f)
+    #define CLAVICLES_LENGHT 2.0f
+    #define CLAVICLES_Y 6.3f
+    #define CLAVICLES_Z NULL_FLOAT
+    #define CLAVICLES_TRANSLATION QVector3D(NULL_FLOAT,CLAVICLES_Y,NULL_FLOAT)
     #define LEFT_SHOULDER_X 1.0f
     #define RIGHT_SHOULDER_X -1.0f
-    #define SHOULDER_Y 6.3f
-    #define SHOULDER_Z NULL_FLOAT
-    #define LEFT_SHOULDER_TRANSLATION QVector3D(LEFT_SHOULDER_X,SHOULDER_Y,SHOULDER_Z)
-    #define RIGHT_SHOULDER_TRANSLATION QVector3D(RIGHT_SHOULDER_X,SHOULDER_Y,SHOULDER_Z)
-    #define SHOULDERS_TRANSLATION QVector3D(NULL_FLOAT,SHOULDER_Y,NULL_FLOAT)
-    // Arms
-    #define ARM_ROTATION NULL_VECTOR
-    #define LEFT_ARM_TRANSLATION QVector3D(1.0f,5.55f,NULL_FLOAT)
-    #define RIGHT_ARM_TRANSLATION QVector3D(-1.0f,5.55f,NULL_FLOAT)
-    #define ARM_LENGHT 1.5f
-    // Elbows
-    #define LEFT_ELBOW_TRANSLATION QVector3D(1.0f,4.8f,NULL_FLOAT)
-    #define RIGHT_ELBOW_TRANSLATION QVector3D(-1.0f,4.8f,NULL_FLOAT)
-    // Forearms
-    #define FOREARM_ROTATION QVector3D(-90.0f,NULL_FLOAT,NULL_FLOAT)
-    #define LEFT_FOREARM_TRANSLATION QVector3D(1.0f,4.8f,0.75f)
-    #define RIGHT_FOREARM_TRANSLATION QVector3D(-1.0f,4.8f,0.75f)
-    #define FOREARM_LENGHT 1.5f
+    #define SHOULDER_Y CLAVICLES_Y
+    #define SHOULDER_Z CLAVICLES_Z
     // Trunk
     #define TRUNK_ROTATION NULL_VECTOR
     #define TRUNK_TRANLATION QVector3D(NULL_FLOAT,5.3f,NULL_FLOAT)
@@ -133,6 +120,21 @@
     #define ARTICULATION_RADIUS 0.1f
     #define ARTICULATION_RINGS 8
     #define ARTICULATION_SLICES 32
+      /****************************** Arms *****************************/
+      #define GLOBAL_LEFT_ARM_TRANSLATION QVector3D(-6.3,-1,0)
+      #define GLOBAL_RIGHT_ARM_TRANSLATION QVector3D(-6.3f,1,0)
+      // Shoulder
+      #define SHOULDER_TRANSLATION NULL_VECTOR
+      // Arm
+      #define ARM_ROTATION NULL_VECTOR
+      #define ARM_LENGHT 1.5f
+      #define ARM_TRANSLATION QVector3D(NULL_FLOAT,-ARM_LENGHT/2.0f,NULL_FLOAT)
+      // Elbows
+      #define ELBOW_TRANSLATION QVector3D(NULL_FLOAT,-ARM_LENGHT/2.0f,NULL_FLOAT)
+      // Forearms
+      #define FOREARM_ROTATION NULL_VECTOR
+      #define FOREARM_LENGHT 1.5f
+      #define FOREARM_TRANSLATION QVector3D(NULL_FLOAT,-ARM_LENGHT/2.0f,NULL_FLOAT)
 
   /********************************** Prop ********************************/
   // Prop Global
