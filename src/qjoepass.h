@@ -143,7 +143,7 @@
   // Prop Global
   #define PROP_METALNESS 0.2
   #define PROP_ROUGHNESS 0.5
-  #define PROP_JUGGLING_DECAY_ROT_Y 10
+  #define PROP_JUGGLING_DECAY_ROT_Y 15
     // Ball
     #define BALL_RINGS 20
     #define BALL_SLICES 20
@@ -164,7 +164,7 @@
     #define CLUB_MESH_SRC "qrc:/mesh/res/mesh/J_club3.obj"
     #define CLUB_BASIC_ROTX 110
     #define CLUB_HELICOPTER_ROTX 90
-//    #define CLUB_JUGGLING_DECAY_ROT_Y 15
+    #define CLUB_DWELL_X_DECAY -15
 
 /******************************** Animation *****************************************/
 

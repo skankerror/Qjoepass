@@ -44,11 +44,11 @@ My3DWindow::My3DWindow(MySettings *t_settings)
 
 /**************************** testing zone ***************************/
 
-  createJuggler(-90, QVector2D(12, 0), QColor(QRgb(0xFF0000)));
+//  createJuggler(-90, QVector2D(12, 0), QColor(QRgb(0xFF0000)));
 
 //  createJuggler(90, QVector2D(-12, 0), QColor(QRgb(0xFF0000)));
 
-//  createJuggler(0, QVector2D(0, 0), QColor(QRgb(0xFFFFFF)));
+  createJuggler(0, QVector2D(0, 0), QColor(QRgb(0xFFFFFF)));
 
 //  auto juggler3 = m_v_juggler.at(2);
 //  juggler3->setLeftHandPosition(juggler3->getPositionLHextPlus());
@@ -56,7 +56,7 @@ My3DWindow::My3DWindow(MySettings *t_settings)
 
   createClub(QColor(QRgb(0xFFFF00)));
   m_v_prop.at(0)->setRotX(CLUB_BASIC_ROTX);
-  m_v_prop.at(0)->setRotY(180 - m_v_juggler.at(0)->getRotY());
+  m_v_prop.at(0)->setRotY(m_v_juggler.at(0)->getRotY());
   auto testAnim = new PropAnim(m_v_juggler,
                                m_v_prop.at(0),
                                0,

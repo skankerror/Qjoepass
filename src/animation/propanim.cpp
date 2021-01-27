@@ -37,30 +37,6 @@ PropAnim::PropAnim(QVector<Juggler *> t_v_juggler,
   // un temps de début et un temps de fin, voir dans handanim. Connecter les objets ?
 
   /************************testing zone ****************************/
-//  auto testAnim = parabolicAnim(0,
-//                                hand(rightHand),
-//                                1,
-//                                hand(leftHand),
-//                                5);
-
-//  auto testAnim2 = parabolicAnim(1,
-//                                 hand(leftHand),
-//                                 1,
-//                                 hand(rightHand),
-//                                 3);
-
-//  auto testAnim3 = parabolicAnim(1,
-//                                 hand(rightHand),
-//                                 0,
-//                                 hand(leftHand),
-//                                 5);
-
-//  auto testAnim4 = parabolicAnim(0,
-//                                 hand(leftHand),
-//                                 0,
-//                                 hand(rightHand),
-//                                 3);
-
   auto testAnim = dwellAnim(0,
                             hand(leftHand),
                             0,
@@ -123,7 +99,7 @@ QParallelAnimationGroup *PropAnim::parabolicAnim(int t_jugglerIdLaunch,
   if (t_handRecieve == leftHand)
   {
     m_isExtPlusCatch ? // helico, pancakes ?
-          posFinal = jugglerRecieve->getPositionLHextPlus():
+                       posFinal = jugglerRecieve->getPositionLHextPlus():
         posFinal = jugglerRecieve->getPositionLHext();
   }
   else
@@ -144,7 +120,7 @@ QParallelAnimationGroup *PropAnim::parabolicAnim(int t_jugglerIdLaunch,
 
   // we calculate velocity launch
   auto velBall = ((posFinal - posProp) - 0.5 *
-                       (GRAVITY * qPow(arcTime, 2))) / arcTime;
+                  (GRAVITY * qPow(arcTime, 2))) / arcTime;
 
   int frameCount = (int)((arcTime / (DELTA_TIME)));
 
@@ -157,8 +133,7 @@ QParallelAnimationGroup *PropAnim::parabolicAnim(int t_jugglerIdLaunch,
   // this loop creates all animations for translation
   for (int i = 0; i < frameCount; i++)
   {
-    auto translationAnim = new QPropertyAnimation(m_prop,
-                                                  QByteArrayLiteral("m_position"));
+    auto translationAnim = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_position"));
     translationAnim->setDuration((int)(DELTA_TIME * S_TO_MS));
     translationAnim->setStartValue(v_parabolic.at(i));
     translationAnim->setEndValue(v_parabolic.at(i + 1));
@@ -228,10 +203,9 @@ QParallelAnimationGroup *PropAnim::parabolicAnim(int t_jugglerIdLaunch,
       float initialRotY = m_prop->getRotY();
       float endValue = jugglerRecieve->getRotY();
       t_handRecieve == leftHand ? // NOTE: doesn't seem totally good
-          endValue += 90 - (rotYCount * 360):
+                                  endValue += 90 - (rotYCount * 360):
           endValue -= 90 - (rotYCount * 360);
-      auto animRotY = new QPropertyAnimation(m_prop,
-                                             QByteArrayLiteral("m_rotY"));
+      auto animRotY = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_rotY"));
       animRotY->setDuration(((int)(DELTA_TIME * S_TO_MS)) * frameCount);
       animRotY->setStartValue(initialRotY);
       animRotY->setEndValue(endValue);
@@ -242,8 +216,7 @@ QParallelAnimationGroup *PropAnim::parabolicAnim(int t_jugglerIdLaunch,
     }
 
     // rotation X
-    auto animRotX = new QPropertyAnimation(m_prop,
-                                           QByteArrayLiteral("m_rotX"));
+    auto animRotX = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_rotX"));
     animRotX->setDuration(((int)(DELTA_TIME * S_TO_MS)) * frameCount);
     animRotX->setStartValue((360 * rotXCount) + initialRotX);
     animRotX->setEndValue(initialRotX + addRotX);
@@ -256,11 +229,12 @@ QParallelAnimationGroup *PropAnim::parabolicAnim(int t_jugglerIdLaunch,
 }
 
 QParallelAnimationGroup *PropAnim::dwellAnim(int t_jugglerIdLaunch,
-                                               hand t_handLaunch,
-                                               int t_jugglerIdRecieve,
-                                               hand t_handRecieve,
-                                               int t_launch)
+                                             hand t_handLaunch,
+                                             int t_jugglerIdRecieve,
+                                             hand t_handRecieve,
+                                             int t_launch)
 {
+  qDebug() << "rotY au début" << m_prop->getRotY();
   // create parallel animation group to translate and rotation if needed
   auto parallelAnimGroup = new QParallelAnimationGroup();
 
@@ -280,49 +254,52 @@ QParallelAnimationGroup *PropAnim::dwellAnim(int t_jugglerIdLaunch,
   {
     m_isExtPlusCatch ?
           posProp = jugglerLaunch->getPositionLHextPlus():
-          posProp = jugglerLaunch->getPositionLHext();
+        posProp = jugglerLaunch->getPositionLHext();
   }
   else
   {
     m_isExtPlusCatch ?
           posProp = jugglerLaunch->getPositionRHextPlus():
-          posProp = jugglerLaunch->getPositionRHext();
+        posProp = jugglerLaunch->getPositionRHext();
   }
 
   // set position where it ends
   t_handLaunch == leftHand ?
         posFinal = jugglerLaunch->getPositionLHint():
-        posFinal = jugglerLaunch->getPositionRHint();
+      posFinal = jugglerLaunch->getPositionRHint();
 
   // create sequential for translation
   auto translationAnimGroup = new QSequentialAnimationGroup(this);
 
   if (isPassing)
   {
+    // si c'est un passing reculer la main, jusqu'à z = 0
+    // sur le point aligné entre la main du reciever
+    // et le point de départ (m_pos*Hint)
 
   }
-  else
+
+  else // it's self launch
   {
+    // determine axis for curve, on the plane in front of juggler
+    float jugglerRotY = jugglerLaunch->getRotY();
+
+    // translate for 1 launch
     if (t_launch == 1) // that's special for launch 1
     {
-      auto translationAnim = new QPropertyAnimation(m_prop,
-                                                    QByteArrayLiteral("m_position"));
+      auto translationAnim = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_position"));
       translationAnim->setDuration((int)(DWELL_TIME_LAUNCH1 * S_TO_MS));
       translationAnim->setStartValue(posProp);
       translationAnim->setEndValue(posFinal);
       translationAnim->setLoopCount(ONE_LOOP);
       translationAnimGroup->addAnimation(translationAnim); // in that case it's useless
                                                            // but to be coherent with other cases
+                                                           // add to return anim
       // add to return anim
       parallelAnimGroup->addAnimation(translationAnimGroup);
-
-      // no rot, we can return
-      return parallelAnimGroup;
     }
-    else
+    else // translate for launch > 1
     {
-      // determine axis for curve, on the plane in front of juggler
-      float jugglerRotY = jugglerLaunch->getRotY();
 
       // determine number of frames
       int frameCount = (int)((DWELL_TIME / DELTA_TIME));
@@ -336,8 +313,7 @@ QParallelAnimationGroup *PropAnim::dwellAnim(int t_jugglerIdLaunch,
       // loop creating our tranlation anim
       for (int i = 0; i < frameCount; i++)
       {
-        auto translationAnim = new QPropertyAnimation(m_prop,
-                                                      QByteArrayLiteral("m_position"));
+        auto translationAnim = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_position"));
         translationAnim->setDuration((int)(DELTA_TIME * S_TO_MS));
         translationAnim->setStartValue(v_semiCircular.at(i));
         translationAnim->setEndValue(v_semiCircular.at(i + 1));
@@ -347,48 +323,92 @@ QParallelAnimationGroup *PropAnim::dwellAnim(int t_jugglerIdLaunch,
       // add to return anim
       parallelAnimGroup->addAnimation(translationAnimGroup);
 
-      // let's rotate if necessary
-      // give a little (x) rotation for normal and flat club
-      // give a little (y) rotation for normal ring and normal and flat club
-      if ((m_propType == ring && m_launchTypeRing == normalRing) ||
-          (m_propType == club && (m_launchTypeClub == normalClub || m_launchTypeClub == flat)))
+    }
+
+    // let's rotate if necessary
+    // give a little (x) rotation for normal and flat club.
+    if (m_propType == club && (m_launchTypeClub == normalClub || m_launchTypeClub == flat))
+    {
+      // create a sequential anim group cos we have 2 property animations
+      auto animRotX = new QSequentialAnimationGroup();
+
+      // it's a club we have to know it's rot (x), because it may have been passed
+      float propRotX = m_prop->getRotX();
+
+      // final rotX
+      float finalRotX = CLUB_BASIC_ROTX; // we always send with this angle
+
+      // mid angle
+      float midAngleRotX;
+      // if prop's just been passed
+      if (propRotX != finalRotX)
       {
-        // get (y) rot prop
-        float propRotY = m_prop->getRotY();
-
-        // set final (y) rot
-        float finalRotY;
-        // angle will depend on side and oddity of launch
-        if (t_handLaunch == leftHand)
-        {
-          t_launch % 2 ? // is it even ?
-              finalRotY = jugglerRotY - PROP_JUGGLING_DECAY_ROT_Y:
-              finalRotY = jugglerRotY + PROP_JUGGLING_DECAY_ROT_Y;
-        }
-        else
-        {
-          t_launch % 2 ? // is it even ?
-              finalRotY = jugglerRotY + PROP_JUGGLING_DECAY_ROT_Y:
-              finalRotY = jugglerRotY - PROP_JUGGLING_DECAY_ROT_Y;
-        }
-
-        // set anim rot (y)
-        auto animRotY = new QPropertyAnimation(m_prop,
-                                               QByteArrayLiteral("m_rotY"));
-        animRotY->setDuration((int)(DWELL_TIME * S_TO_MS));
-        animRotY->setStartValue(propRotY);
-        animRotY->setEndValue(finalRotY);
-        animRotY->setLoopCount(ONE_LOOP);
-        parallelAnimGroup->addAnimation(animRotY);
-
-        // we can return
-        return parallelAnimGroup;
-
+        midAngleRotX = propRotX + ((propRotX - finalRotX) / 2);
       }
+      else
+      {
+        (t_launch == 1) ?
+          midAngleRotX = propRotX: // the X rot will be neutralized
+          midAngleRotX = propRotX + CLUB_DWELL_X_DECAY;
+      }
+
+      // create first anim to low down angle
+      auto animRotX1 = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_rotX"));
+      animRotX1->setDuration((int)(DWELL_TIME * S_TO_MS / 2));
+      animRotX1->setStartValue(propRotX);
+      animRotX1->setEndValue(midAngleRotX);
+      animRotX1->setLoopCount(ONE_LOOP);
+      // add to sequential anim group
+      animRotX->addAnimation(animRotX1);
+
+      // create second anim
+      auto animRotX2 = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_rotX"));
+      animRotX2->setDuration((int)(DWELL_TIME * S_TO_MS / 2));
+      animRotX2->setStartValue(midAngleRotX);
+      animRotX2->setEndValue(finalRotX);
+      animRotX2->setLoopCount(ONE_LOOP);
+      // add to sequential anim group
+      animRotX->addAnimation(animRotX2);
+
+      // add sequential to return parallel anim group
+      parallelAnimGroup->addAnimation(animRotX);
+    }
+
+    // give a little (y) rotation for normal ring and normal and flat club
+    if ((m_propType == ring && m_launchTypeRing == normalRing) ||
+        (m_propType == club && (m_launchTypeClub == normalClub || m_launchTypeClub == flat)))
+    {
+      // get (y) rot prop
+      float propRotY = m_prop->getRotY();
+
+      // set final (y) rot
+      float finalRotY;
+      // angle will depend on side and oddity of launch
+      if (t_handLaunch == leftHand)
+      {
+        t_launch % 2 ? // is it even ?
+                       finalRotY = jugglerRotY - PROP_JUGGLING_DECAY_ROT_Y:
+            finalRotY = jugglerRotY + PROP_JUGGLING_DECAY_ROT_Y;
+      }
+      else
+      {
+        t_launch % 2 ? // is it even ?
+                       finalRotY = jugglerRotY + PROP_JUGGLING_DECAY_ROT_Y:
+            finalRotY = jugglerRotY - PROP_JUGGLING_DECAY_ROT_Y;
+      }
+      qDebug() << "propRotY" << propRotY << "finalRotY" << finalRotY;
+
+      // set anim rot (y)
+      auto animRotY = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_rotY"));
+      animRotY->setDuration((int)(DWELL_TIME * S_TO_MS));
+      animRotY->setStartValue(propRotY);
+      animRotY->setEndValue(finalRotY);
+      animRotY->setLoopCount(ONE_LOOP);
+      parallelAnimGroup->addAnimation(animRotY);
+
+      // we can return
+      return parallelAnimGroup;
     }
   }
-
-  // si c'est un passing reculer la main, jusqu'à z = 0
-  // se diriger dans la direction de la main du reciever
 }
 

@@ -47,6 +47,7 @@ void JugglingProp::setPosition(QVector3D t_position)
 void JugglingProp::updateTransform()
 {
   m_propTransform->setTranslation(m_position);
+//  updateRotY();
 }
 
 void JugglingProp::setRotX(float t_rotX)

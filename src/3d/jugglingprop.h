@@ -90,9 +90,9 @@ protected:
   QVector3D m_position;
   QColor m_color;
   bool m_enabled = true;
-  float m_rotX = 0;
-  float m_rotY = 0;
-  float m_rotZ = 0;
+  float m_rotX/* = 0*/;
+  float m_rotY/* = 0*/;
+  float m_rotZ/* = 0*/;
 };
 
 #endif // JUGGLINGPROP_H
