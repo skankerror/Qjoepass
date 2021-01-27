@@ -34,6 +34,7 @@
 #define NULL_VECTOR QVector3D(NULL_FLOAT,NULL_FLOAT,NULL_FLOAT)
 
   /***************************** World *******************************/
+
   // camera
   #define CAM_FOV 65.0f
   #define CAM_RATIO 16.0f/9.0f
@@ -65,6 +66,7 @@
   #define SPECULAR "qrc:/cubemaps/res/cubemaps/default_specular.dds"
 
   /************************************* Juggler **************************/
+
   // Juggler Global
   #define JUGGLER_SCALE 1.0f
   #define JUGGLER_TRANSLATION_Y NULL_FLOAT
@@ -137,9 +139,11 @@
       #define FOREARM_TRANSLATION QVector3D(NULL_FLOAT,-ARM_LENGHT/2.0f,NULL_FLOAT)
 
   /********************************** Prop ********************************/
+
   // Prop Global
   #define PROP_METALNESS 0.2
   #define PROP_ROUGHNESS 0.5
+  #define PROP_JUGGLING_DECAY_ROT_Y 10
     // Ball
     #define BALL_RINGS 20
     #define BALL_SLICES 20
@@ -160,6 +164,7 @@
     #define CLUB_MESH_SRC "qrc:/mesh/res/mesh/J_club3.obj"
     #define CLUB_BASIC_ROTX 110
     #define CLUB_HELICOPTER_ROTX 90
+//    #define CLUB_JUGGLING_DECAY_ROT_Y 15
 
 /******************************** Animation *****************************************/
 

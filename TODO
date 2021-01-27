@@ -1,29 +1,17 @@
-- BUG: launch 97531, then switch to juggler 2 view. Only 3 props left...
-props disappear when we're too close. Qt3D bug ?? Camera settings ?
+- BUG: props disappear when we're too close. Qt3D bug ?? Camera settings ?
+
+- we badly use QSettings, no need to define a static or shared instance of
+object QSetting. Because for each instanciation that's the same file read or written
+and Qt knows where it is.
 
 - see if we can spare resources with frustrum calling
 
 - be more precise in include to reduce binary size
 
-- implement ball rebounds, wall for clubs
+- implement ball rebounds, wall for clubs, back cross, back catch
 
-- make class for Arm
-with a tree of entity, so if we rotate shoulder the rest is rotate
-if we rotate elbow the forearm is moving
+- make leg class like arm
 
-QSettings
-Il n'est pas nécessaire de définir une instance statique ou partagée de l'objet QSettings
-car à chaque instanciation c'est le même fichier de réglages qui est lu ou écrit et Qt
-sait où il se trouve.
+- add tr for translations
 
-Eloigner les anneaux et les massues suivant z dans le repére jongleur,
-peut-être dans jongleur avant translate rotate ? m_posLHint_zPlus ?
-
-donner une rotation y dans le dwell sur les massues normal et flat et les anneaux normal
-pour être réaliste
-
-le trajet empty hand est linéaire, c'est pas réaliste il doit être un peu courbe,
-partir de la tangente (verticale) du lancer pour récupérer l'objet sur une tangente
-verticale aussi, mais sans faire un arc de cercle...Q
-
-Dans QAbstractAnimation il y a une policy où on détruit quand c'est stoppé.
+- implement shadows

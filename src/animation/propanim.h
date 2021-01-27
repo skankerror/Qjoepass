@@ -46,12 +46,13 @@ public:
 
 private:
 
-  QParallelAnimationGroup *parabolicAnim(int t_jugglerIdLaunch, hand t_handLaunch,
-                                           int t_jugglerIdRecieve,
-                                           hand t_handRecieve,
-                                           int t_launch);
+  QParallelAnimationGroup *parabolicAnim(int t_jugglerIdLaunch,
+                                         hand t_handLaunch,
+                                         int t_jugglerIdRecieve,
+                                         hand t_handRecieve,
+                                         int t_launch);
 
-  QSequentialAnimationGroup* dwellAnim(int t_jugglerIdLaunch,
+  QParallelAnimationGroup *dwellAnim(int t_jugglerIdLaunch,
                                        hand t_handLaunch,
                                        int t_jugglerIdRecieve,
                                        hand t_handRecieve,
@@ -60,7 +61,7 @@ private:
 private:
 
   int m_propId; // the id of the prop
-  int m_decay; // depending on propId, locate on the timeline
+  int m_decayTime; // depending on propId, locate on the timeline
   QVector<Juggler *> m_v_juggler;
 
   propType m_propType;
@@ -68,6 +69,8 @@ private:
   launchTypeBall m_launchTypeBall;
   launchTypeRing m_launchTypeRing;
   launchTypeClub m_launchTypeClub;
+  // bool to know if we need to enlarge juggling
+  bool m_isExtPlusCatch;
 };
 
 #endif // PROPANIM_H

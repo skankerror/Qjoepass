@@ -22,6 +22,7 @@ Juggler::Juggler(QEntity *t_rootEntity,
                  float &t_rotY,
                  QVector2D &t_position,
                  QColor &t_color)
+
   : m_jugglerMetalRoughMaterial(new QMetalRoughMaterial()),
     m_skeletonTransform(new Qt3DCore::QTransform()),
     m_color(t_color),
@@ -97,7 +98,6 @@ void Juggler::createHead()
   m_headEntity->addComponent(m_head);
   m_headEntity->addComponent(m_headTransform);
   m_headEntity->addComponent(m_jugglerMetalRoughMaterial);
-
 }
 
 void Juggler::createBody()

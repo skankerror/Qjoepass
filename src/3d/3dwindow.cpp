@@ -46,25 +46,25 @@ My3DWindow::My3DWindow(MySettings *t_settings)
 
   createJuggler(-90, QVector2D(12, 0), QColor(QRgb(0xFF0000)));
 
-  createJuggler(90, QVector2D(-12, 0), QColor(QRgb(0xFF0000)));
+//  createJuggler(90, QVector2D(-12, 0), QColor(QRgb(0xFF0000)));
 
-  createJuggler(0, QVector2D(0, 0), QColor(QRgb(0xFFFFFF)));
+//  createJuggler(0, QVector2D(0, 0), QColor(QRgb(0xFFFFFF)));
 
-  auto juggler3 = m_v_juggler.at(2);
-  juggler3->setLeftHandPosition(juggler3->getPositionLHextPlus());
-  juggler3->setRightHandPosition(juggler3->getPositionRHint());
+//  auto juggler3 = m_v_juggler.at(2);
+//  juggler3->setLeftHandPosition(juggler3->getPositionLHextPlus());
+//  juggler3->setRightHandPosition(juggler3->getPositionRHint());
 
-//  createClub(QColor(QRgb(0xFFFF00)));
-//  m_v_prop.at(0)->setRotX(CLUB_HELICOPTER_ROTX);
-//  m_v_prop.at(0)->setRotY(m_v_juggler.at(0)->getRotY() - 90);
-//  auto testAnim = new PropAnim(m_v_juggler,
-//                               m_v_prop.at(0),
-//                               0,
-//                               propType(club),
-//                               2,
-//                               this);
+  createClub(QColor(QRgb(0xFFFF00)));
+  m_v_prop.at(0)->setRotX(CLUB_BASIC_ROTX);
+  m_v_prop.at(0)->setRotY(180 - m_v_juggler.at(0)->getRotY());
+  auto testAnim = new PropAnim(m_v_juggler,
+                               m_v_prop.at(0),
+                               0,
+                               propType(club),
+                               0,
+                               this);
 
-//  testAnim->start();
+  testAnim->start();
 }
 
 void My3DWindow::createCam()

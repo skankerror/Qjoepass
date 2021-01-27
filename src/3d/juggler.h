@@ -124,18 +124,15 @@ private:
 
   // global members
   QMetalRoughMaterial *m_jugglerMetalRoughMaterial;
-
   Qt3DCore::QTransform *m_skeletonTransform;
-
   QVector3D m_position;
   QColor m_color;
   float m_rotY;
-
   bool m_enabled = true;
 
   // hands positions
-  QVector3D m_leftHandPosition;
-  QVector3D m_rightHandPosition;
+  QVector3D m_leftHandPosition; // for property
+  QVector3D m_rightHandPosition; // for property
 
   QVector3D m_posLHextPlus; // helico pancake
   QVector3D m_posLHext;
@@ -160,7 +157,7 @@ private:
   QCylinderMesh *m_clavicles;
   Qt3DCore::QTransform *m_claviclesTransform;
 
-  //Arms
+  // Arms
   JugglerArm *m_leftArm;
   JugglerArm *m_rightArm;
 
