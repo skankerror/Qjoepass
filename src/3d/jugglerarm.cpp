@@ -1,4 +1,4 @@
-/*
+﻿/*
  * (c) 2020 Pat Co / M. C.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -87,8 +87,52 @@ JugglerArm::JugglerArm(QEntity *t_rootEntity,
 //  m_side == leftHand ?
 //        m_shoulderTransform->setRotationY(45):
 //        m_shoulderTransform->setRotationY(-45);
-  m_elbowTransform->setRotationX(-90);
+//  m_elbowTransform->setRotationX(-90);
 
+}
+
+void JugglerArm::setHandPosition(QVector3D &t_pos)
+{
+  // declare variables differently defined between left and right
+  float hand_offset_x;
+  float shoulder_x;
+
+  // set variables depending on witch hand
+  if (m_side == leftHand)
+  {
+    hand_offset_x = - HAND_OFFSET_X;
+    shoulder_x = LEFT_SHOULDER_X;
+  }
+  else
+  {
+    hand_offset_x = HAND_OFFSET_X;
+    shoulder_x = RIGHT_SHOULDER_X;
+  }
+  // Get angle on (y) for arm and forearm
+  float angleY = qRadiansToDegrees(qAtan2(t_pos.x() + hand_offset_x, t_pos.z()));
+
+  // find global Angle between (z) axis and [shoulder, prop's position]
+  float globalAngle1 = qRadiansToDegrees(qAtan2(SHOULDER_Y - t_pos.y(), t_pos.z()));
+
+  // get distance between shoulder and position
+  float dist = qSqrt(
+        qPow(shoulder_x - t_pos.x(), 2) +
+        qPow(SHOULDER_Y - t_pos.y(), 2) +
+        qPow(SHOULDER_Z - t_pos.z(), 2));
+
+  // find angle between arm and [shoulder, position]
+  // NOTE: simple because arm and forearm have same lenght
+  float globalAngle2 = qRadiansToDegrees(qAcos(dist / (2 * FOREARM_LENGHT)));
+
+  // find arm angle on (x)
+  float armAngle = - (90 - globalAngle1 - globalAngle2);
+
+  // find forearm angle on (x)
+  float forearmAngle = - 90 + globalAngle1 - globalAngle2;
+
+  m_shoulderTransform->setRotationX(armAngle);
+  m_shoulderTransform->setRotationY(angleY);
+  m_elbowTransform->setRotationX(forearmAngle);
 }
 
 void JugglerArm::setShoulderRotationX(float t_angle)
@@ -120,10 +164,9 @@ void JugglerArm::makeMember(QCylinderMesh *t_member,
   t_member->setSlices(MEMBERS_SLICES);
   t_member->setLength(t_length);
 
-  QMatrix4x4 aMatrix = t_memberTransform->matrix();
-  aMatrix.translate(t_trans);
-  aMatrix.rotate(QQuaternion::fromEulerAngles(t_rot));
-  t_memberTransform->setMatrix(aMatrix);
+  t_memberTransform->setTranslation(t_trans);
+  t_memberTransform->setRotation(QQuaternion::fromEulerAngles(t_rot));
+
   t_memberEntity->addComponent(t_memberTransform);
   t_memberEntity->addComponent(m_armMaterial);
 }
@@ -137,9 +180,7 @@ void JugglerArm::makeArticulation(QSphereMesh *t_sphere,
   t_sphere->setRings(ARTICULATION_RINGS);
   t_sphere->setSlices(ARTICULATION_SLICES);
 
-  QMatrix4x4 aMatrix = t_sphereTransform->matrix();
-  aMatrix.translate(t_trans);
-  t_sphereTransform->setMatrix(aMatrix);
+  t_sphereTransform->setTranslation(t_trans);
 
   t_sphereEntity->addComponent(t_sphere);
   t_sphereEntity->addComponent(t_sphereTransform);

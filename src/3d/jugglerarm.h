@@ -32,13 +32,6 @@ class JugglerArm : public QEntity
 
   Q_OBJECT
 
-//  Q_PROPERTY(QVector3D m_handPosition
-//             READ getHandPosition
-//             WRITE setHandPosition
-//             NOTIFY handPositionChanged)
-
-  // CACA BOUDIN
-
 public:
 
   JugglerArm(QEntity *t_rootEntity,
@@ -46,13 +39,12 @@ public:
              QColor &t_color,
              hand t_side);
 
+  void setHandPosition(QVector3D &t_pos);
+
+  // in case we need for demo or initialisation
   void setShoulderRotationX(float t_angle);
   void setShoulderRotationY(float t_angle);
-
   void setElbowRotationX(float t_angle);
-
-//  QVector3D getHandPosition() const { return m_handPosition; };
-//  void setHandPosition(const QVector3D &t_handPosition) { m_handPosition = t_handPosition; };
 
 private:
 
@@ -69,17 +61,12 @@ private:
                         QVector3D t_trans);
 
 
-//signals:
-
-//  void handPositionChanged();
-
 private:
 
   QMetalRoughMaterial *m_armMaterial;
   QColor m_color;
   bool m_enabled = true;
   hand m_side;
-//  QVector3D m_handPosition;
 
   Qt3DCore::QTransform *m_globalArmTransform;
 

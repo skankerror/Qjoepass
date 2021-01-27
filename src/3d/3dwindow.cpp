@@ -182,7 +182,7 @@ void My3DWindow::createClub(QColor t_color)
 void My3DWindow::createBall(QColor t_color)
 {
   auto ball = new JugglingBall(m_rootEntity, m_sphereMesh, t_color);
-//  m_v_ball.append(ball);
+  m_v_ball.append(ball);
   m_v_prop.append(ball);
 }
 

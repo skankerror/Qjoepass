@@ -33,16 +33,19 @@ class Juggler: public QEntity
 
   Q_OBJECT
 
+  // in case we animate juggler position
   Q_PROPERTY(QVector3D m_position
              READ getPosition
              WRITE setPosition
              NOTIFY positionChanged)
 
+  // needed for anim
   Q_PROPERTY(QVector3D m_leftHandPosition
              READ getLeftHandPosition
              WRITE setLeftHandPosition
              NOTIFY leftHandPositionChanged)
 
+  // needed for anim
   Q_PROPERTY(QVector3D m_rightHandPosition
              READ getRightHandPosition
              WRITE setRightHandPosition
@@ -56,16 +59,15 @@ public:
                    QVector2D &t_position,
                    QColor &t_color);
 
+  // property getters
   QVector3D getPosition() const { return m_position; }
-  Qt3DCore::QTransform * getSkeletonTransform() const { return m_skeletonTransform; };
-  void setPosition(QVector3D t_position);
-  void setSkeletonTransform(Qt3DCore::QTransform *t_transform) { m_skeletonTransform = t_transform; };
-
   QVector3D getLeftHandPosition() { return m_leftHandPosition; };
-  void setLeftHandPosition(QVector3D t_pos);
   QVector3D getRightHandPosition() { return m_rightHandPosition; };
+
+  // property setters
+  void setPosition(QVector3D t_position);
+  void setLeftHandPosition(QVector3D t_pos);
   void setRightHandPosition(QVector3D t_pos);
-  void setHandPosition(QVector3D t_pos, hand t_hand);
 
   // getters for hands positions ext to catch, int to launch, med for siteswap 2
   QVector3D getPositionLHextPlus() const { return m_posLHextPlus; }; // helico, pancakes
@@ -80,55 +82,43 @@ public:
   QVector3D getPositionHead() const { return m_posHead; };
   QVector3D getLookAt() const { return m_headLookAt; };
 
+  // needed for rotate props
   float getRotY() const { return m_rotY; };
 
 private:
 
+  // cstr private methods
   void createHead();
   void createBody();
   void createArms();
-
-  void updateTransform();
-
-  QMatrix4x4 getRotMatrix();
-
-  // setters for hands pos
-  void setPositionLHextPlus(); // for helico, pancakes
-  void setPositionLHext();
-  void setPositionLHint();
-  void setPositionLHmed();
-  void setPositionRHextPlus(); // for helico, pancakes
-  void setPositionRHext();
-  void setPositionRHint();
-  void setPositionRHmed();
-
-  void setPosHead();
-
   void makeMember(QCylinderMesh *t_member,
                   Qt3DCore::QTransform *t_memberTransform,
                   QEntity *t_memberEntity,
                   QVector3D t_rot,
                   QVector3D t_trans,
                   float t_length);
-
   void makeArticulation(QSphereMesh *t_phere,
                         Qt3DCore::QTransform *t_sphereTransform,
                         QEntity *t_sphereEntity,
                         QVector3D t_trans);
 
+  // used by several methods
+  QMatrix4x4 getRotMatrix();
+  // needed to pass vec between juggler and world
+  QVector3D worldVecToJugglerVec(const QVector3D t_pos);
+  QVector3D jugglerVecToWorldVec(const QVector3D t_pos);
 
 private slots:
 
-  void setPositionHands();
+  // update all juggling positions and head position for camera
+  void setBodyPositions();
 
 signals:
 
-  // TODO: check if we need all of these
-  void skeletonTransformChanged();
-  void positionChanged();
-  void leftHandPositionChanged();
-  void rightHandPositionChanged();
-  void handPositionChanged();
+  // signals properties
+  void positionChanged(); // connected to setBodyPositions()
+  void leftHandPositionChanged(); // unused
+  void rightHandPositionChanged(); // unused
 
 private:
 
@@ -146,7 +136,6 @@ private:
   // hands positions
   QVector3D m_leftHandPosition;
   QVector3D m_rightHandPosition;
-  QVector3D m_myHandPosition;
 
   QVector3D m_posLHextPlus; // helico pancake
   QVector3D m_posLHext;

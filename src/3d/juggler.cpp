@@ -55,35 +55,35 @@ Juggler::Juggler(QEntity *t_rootEntity,
     m_rightLegTransform(new Qt3DCore::QTransform())
 
 {
+  // set global material apllied on each entities
   m_jugglerMetalRoughMaterial->setBaseColor(m_color);
   m_jugglerMetalRoughMaterial->setMetalness(JUGGLER_METALNESS);
   m_jugglerMetalRoughMaterial->setRoughness(JUGGLER_ROUGHNESS);
 
+  // create all the parts
   createHead();
   createBody();
   createArms();
 
-  QMatrix4x4 aMatrix = m_skeletonTransform->matrix();
-  aMatrix.rotate(m_rotY, QVector3D(0, 1, 0));
-  m_skeletonTransform->setMatrix(aMatrix);
-
+  // translate our juggler
   m_position = QVector3D(t_position.x(), JUGGLER_TRANSLATION_Y, t_position.y());
   m_skeletonTransform->setTranslation(m_position);
   m_skeletonTransform->setScale(JUGGLER_SCALE);
 
+  // rot our juggler
+  m_skeletonTransform->setRotationY(m_rotY);
+
+  // hello world here I am
   QEntity::setParent(t_rootEntity);
   addComponent(m_skeletonTransform);
 
   // we update hands positions and head
-  setPositionHands();
+  setBodyPositions();
 
-  connect(this, SIGNAL(positionChanged()), this, SLOT(setPositionHands()));
+  // connect to always have correct send and recieve props positions
+  connect(this, SIGNAL(positionChanged()), this, SLOT(setBodyPositions()));
 
   /*********************** testing zone *********************************/
-  m_leftArm->setShoulderRotationY(45);
-  m_rightArm->setShoulderRotationY(-45);
-  m_leftArm->setElbowRotationX(-75);
-  m_rightArm->setElbowRotationX(-30);
 }
 
 void Juggler::createHead()
@@ -92,9 +92,7 @@ void Juggler::createHead()
   m_head->setRings(HEAD_RINGS);
   m_head->setSlices(HEAD_SLICES);
 
-  QMatrix4x4 headMatrix = m_headTransform->matrix();
-  headMatrix.translate(HEAD_TRANSLATE);
-  m_headTransform->setMatrix(headMatrix);
+  m_headTransform->setTranslation(HEAD_TRANSLATE);
 
   m_headEntity->addComponent(m_head);
   m_headEntity->addComponent(m_headTransform);
@@ -172,137 +170,24 @@ void Juggler::createArms()
                               m_jugglerMetalRoughMaterial,
                               m_color,
                               hand(rightHand));
-
 }
 
 void Juggler::setLeftHandPosition(QVector3D t_pos)
 {
-  setHandPosition(t_pos, hand(leftHand));
+  // get relative coordonate of our position
+  QVector3D relativePos = worldVecToJugglerVec(t_pos);
+
+  // send to our arm
+  m_leftArm->setHandPosition(relativePos);
 }
 
 void Juggler::setRightHandPosition(QVector3D t_pos)
 {
-  setHandPosition(t_pos, hand(rightHand));
-}
-
-void Juggler::setHandPosition(QVector3D t_pos, hand t_hand)
-{
-  // declare variables differently defined between left and hand
-  float hand_offset_x;
-  float shoulder_x;
-//  QVector3D arm_translation;
-//  QVector3D elbow_translation;
-//  QVector3D forearm_translation;
-//  Qt3DCore::QTransform *armTransform;
-//  Qt3DCore::QTransform *elbowTransform;
-//  Qt3DCore::QTransform *forearmTransform;
-
-  // set variables depending on witch hand
-  if (t_hand == leftHand)
-  {
-    hand_offset_x = - HAND_OFFSET_X;
-    shoulder_x = LEFT_SHOULDER_X;
-////    arm_translation = LEFT_ARM_TRANSLATION;
-////    elbow_translation = LEFT_ELBOW_TRANSLATION;
-////    forearm_translation = LEFT_FOREARM_TRANSLATION;
-////    armTransform = m_leftArmTransform;
-////    elbowTransform = m_leftElbowTransform;
-////    forearmTransform = m_leftForearmTransform;
-  }
-  else
-  {
-    hand_offset_x = HAND_OFFSET_X;
-    shoulder_x = RIGHT_SHOULDER_X;
-////    arm_translation = RIGHT_ARM_TRANSLATION;
-////    elbow_translation = RIGHT_ELBOW_TRANSLATION;
-////    forearm_translation = RIGHT_FOREARM_TRANSLATION;
-////    armTransform = m_rightArmTransform;
-////    elbowTransform = m_rightElbowTransform;
-////    forearmTransform = m_rightForearmTransform;
-  }
-
   // get relative coordonate of our position
-  QVector3D relativePos(t_pos.x() - m_position.x(), t_pos.y(), t_pos.z() - m_position.z());
-  QMatrix4x4 rot;
-  rot.setToIdentity();
-  rot.rotate(-m_rotY, QVector3D(0, 1, 0));
-  relativePos = rot * relativePos;
+  QVector3D relativePos = worldVecToJugglerVec(t_pos);
 
-  // Get angle on (y) for arm and forearm
-  float angleY = qRadiansToDegrees(qAtan2(relativePos.x() + hand_offset_x, relativePos.z()));
-
-  // find global Angle between (z) axis and [shoulder, prop's position]
-  float globalAngle1 = qRadiansToDegrees(qAtan2(SHOULDER_Y - relativePos.y(), relativePos.z()));
-
-  // get distance between shoulder and position
-  float dist = qSqrt(
-        qPow(shoulder_x - relativePos.x(), 2) +
-        qPow(SHOULDER_Y - relativePos.y(), 2) +
-        qPow(SHOULDER_Z - relativePos.z(), 2));
-
-  // find angle between arm and [shoulder, position]
-  // NOTE: simple because arm and forearm have same lenght
-  float globalAngle2 = qRadiansToDegrees(qAcos(dist / (2 * FOREARM_LENGHT)));
-
-  // find arm angle on (x)
-  float armAngle = - (90 - globalAngle1 - globalAngle2);
-
-  // find forearm angle on (x)
-  float forearmAngle = 90 - globalAngle1 + globalAngle2;
-
-//  if (t_hand == leftHand)
-//  {
-//    m_leftArm->setShoulderRotationX(armAngle);
-//    m_leftArm->setShoulderRotationY(angleY);
-//    m_leftArm->setElbowRotationX(forearmAngle);
-//  }
-//  else
-//  {
-//    m_rightArm->setShoulderRotationX(armAngle);
-//    m_rightArm->setShoulderRotationY(angleY);
-//    m_rightArm->setElbowRotationX(forearmAngle);
-//  }
-
-
-//  // let's move arm
-//  // create new matrix
-//  QMatrix4x4 armMatrix;
-//  // translate as in creation
-//  armMatrix.translate(arm_translation);
-//  // rotate as in creation (currently useless as arm doesn't have initial rotation)
-//  armMatrix.rotate(QQuaternion::fromEulerAngles(ARM_ROTATION));
-//  // then rotate from shoulder
-//  armMatrix.translate(QVector3D(0, ARM_LENGHT / 2, 0));
-//  armMatrix.rotate(QQuaternion::fromEulerAngles(QVector3D(armAngle, angleY, 0)));
-//  armMatrix.translate(QVector3D(0, - ARM_LENGHT / 2, 0));
-//  armTransform->setMatrix(armMatrix);
-
-//  // translate elbow position
-//  // create matrix
-//  QMatrix4x4 elbowMatrix;
-//  // translate as in creation
-//  elbowMatrix.translate(elbow_translation);
-//  // rotate from shoulder
-//  elbowMatrix.translate(QVector3D(0, ARM_LENGHT, 0));
-//  elbowMatrix.rotate(QQuaternion::fromEulerAngles(QVector3D(armAngle, angleY, 0)));
-//  elbowMatrix.translate(QVector3D(0, - ARM_LENGHT, 0));
-//  elbowTransform->setMatrix(elbowMatrix);
-
-//  // let's move forearm
-//  // create a vec3 to follow elbow
-//  QVector3D translateToElbow = elbowTransform->translation() - elbow_translation;
-//  // create Matrix
-//  QMatrix4x4 forearmMatrix;
-//  // translate as in creation + follow elbow
-//  forearmMatrix.translate(forearm_translation + translateToElbow);
-//  // rotate as in creation
-//  forearmMatrix.rotate(QQuaternion::fromEulerAngles(FOREARM_ROTATION));
-//  // rotate from elbow
-//  forearmMatrix.translate(QVector3D(0, FOREARM_LENGHT / 2, 0));
-//  // because of initial rotation angleY apply on (z)
-//  forearmMatrix.rotate(QQuaternion::fromEulerAngles(QVector3D(90 - forearmAngle, 0, angleY)));
-//  forearmMatrix.translate(QVector3D(0, - FOREARM_LENGHT / 2, 0));
-//  forearmTransform->setMatrix(forearmMatrix);
+  // send to our arm
+  m_rightArm->setHandPosition(relativePos);
 }
 
 void Juggler::setPosition(QVector3D t_position)
@@ -311,13 +196,8 @@ void Juggler::setPosition(QVector3D t_position)
     return;
 
   m_position = t_position;
-  emit positionChanged();
-  updateTransform();
-}
-
-void Juggler::updateTransform()
-{
   m_skeletonTransform->setTranslation(m_position);
+  emit positionChanged();
 }
 
 QMatrix4x4 Juggler::getRotMatrix()
@@ -330,99 +210,76 @@ QMatrix4x4 Juggler::getRotMatrix()
   return rot;
 }
 
-void Juggler::setPositionLHextPlus()
+QVector3D Juggler::worldVecToJugglerVec(const QVector3D t_pos)
 {
-  QVector3D vecOffset(HAND_OFFSET_X + HAND_OFFSET_EXT_PLUS, HAND_OFFSET_Y, HAND_OFFSET_Z);
-  QVector3D vecMain = m_position + vecOffset;
-  QMatrix4x4 rot = getRotMatrix();
-  vecMain = rot * vecMain;
-  m_posLHextPlus = vecMain;
+  // we translate
+  QVector3D relativePos(t_pos.x() - m_position.x(), t_pos.y(), t_pos.z() - m_position.z());
+
+  // we rotate
+  QMatrix4x4 rot;
+  rot.setToIdentity();
+  rot.rotate(-m_rotY, QVector3D(0, 1, 0));
+  relativePos = rot * relativePos;
+
+  // we return
+  return relativePos;
 }
 
-void Juggler::setPositionLHext()
+QVector3D Juggler::jugglerVecToWorldVec(const QVector3D t_pos)
 {
-  QVector3D vecOffset(HAND_OFFSET_X + HAND_OFFSET_EXT, HAND_OFFSET_Y, HAND_OFFSET_Z);
-  QVector3D vecMain = m_position + vecOffset;
+  // we translate
+  QVector3D retPos = m_position + t_pos;
+  // we rot
   QMatrix4x4 rot = getRotMatrix();
-  vecMain = rot * vecMain;
-  m_posLHext = vecMain;
+  retPos = rot * retPos;
+  // we return
+  return retPos;
 }
 
-void Juggler::setPositionLHint()
+void Juggler::setBodyPositions()
 {
-  QVector3D vecOffset(HAND_OFFSET_X - HAND_OFFSET_INT, HAND_OFFSET_Y, HAND_OFFSET_Z);
-  QVector3D vecMain = m_position + vecOffset;
-  QMatrix4x4 rot = getRotMatrix();
-  vecMain = rot * vecMain;
-  m_posLHint = vecMain;
-}
+  // set all values to know where to and from the props will move
+  m_posLHextPlus = jugglerVecToWorldVec(QVector3D(HAND_OFFSET_X + HAND_OFFSET_EXT_PLUS,
+                                                  HAND_OFFSET_Y,
+                                                  HAND_OFFSET_Z));
 
-void Juggler::setPositionLHmed()
-{
-  QVector3D vecOffset(HAND_OFFSET_X, HAND_OFFSET_Y, HAND_OFFSET_Z);
-  QVector3D vecMain = m_position + vecOffset;
-  QMatrix4x4 rot = getRotMatrix();
-  vecMain = rot * vecMain;
-  m_posLHmed = vecMain;
-}
+  m_posLHext = jugglerVecToWorldVec(QVector3D(HAND_OFFSET_X + HAND_OFFSET_EXT,
+                                              HAND_OFFSET_Y,
+                                              HAND_OFFSET_Z));
 
-void Juggler::setPositionRHextPlus()
-{
-  QVector3D vecOffset(-HAND_OFFSET_X - HAND_OFFSET_EXT_PLUS, HAND_OFFSET_Y, HAND_OFFSET_Z);
-  QVector3D vecMain = m_position + vecOffset;
-  QMatrix4x4 rot = getRotMatrix();
-  vecMain = rot * vecMain;
-  m_posRHextPlus = vecMain;
-}
+  m_posLHmed = jugglerVecToWorldVec(QVector3D(HAND_OFFSET_X,
+                                              HAND_OFFSET_Y,
+                                              HAND_OFFSET_Z));
 
-void Juggler::setPositionRHext()
-{
-  QVector3D vecOffset(-HAND_OFFSET_X - HAND_OFFSET_EXT, HAND_OFFSET_Y, HAND_OFFSET_Z);
-  QVector3D vecMain = m_position + vecOffset;
-  QMatrix4x4 rot = getRotMatrix();
-  vecMain = rot * vecMain;
-  m_posRHext = vecMain;
-}
+  m_posLHint = jugglerVecToWorldVec(QVector3D(HAND_OFFSET_X - HAND_OFFSET_INT,
+                                              HAND_OFFSET_Y,
+                                              HAND_OFFSET_Z));
 
-void Juggler::setPositionRHint()
-{
-  QVector3D vecOffset(-HAND_OFFSET_X + HAND_OFFSET_INT, HAND_OFFSET_Y, HAND_OFFSET_Z);
-  QVector3D vecMain = m_position + vecOffset;
-  QMatrix4x4 rot = getRotMatrix();
-  vecMain = rot * vecMain;
-  m_posRHint = vecMain;
-}
+  m_posRHextPlus = jugglerVecToWorldVec(QVector3D(-HAND_OFFSET_X - HAND_OFFSET_EXT_PLUS,
+                                                  HAND_OFFSET_Y,
+                                                  HAND_OFFSET_Z));
 
-void Juggler::setPositionRHmed()
-{
-  QVector3D vecOffset(-HAND_OFFSET_X, HAND_OFFSET_Y, HAND_OFFSET_Z);
-  QVector3D vecMain = m_position + vecOffset;
-  QMatrix4x4 rot = getRotMatrix();
-  vecMain = rot * vecMain;
-  m_posRHmed = vecMain;
-}
+  m_posRHext = jugglerVecToWorldVec(QVector3D(-HAND_OFFSET_X - HAND_OFFSET_EXT,
+                                              HAND_OFFSET_Y,
+                                              HAND_OFFSET_Z));
 
-void Juggler::setPosHead()
-{
-  m_posHead = QVector3D(m_position.x(), HEAD_POS_Y, m_position.z());
+  m_posRHmed = jugglerVecToWorldVec(QVector3D(-HAND_OFFSET_X,
+                                              HAND_OFFSET_Y,
+                                              HAND_OFFSET_Z));
+
+  m_posRHint = jugglerVecToWorldVec(QVector3D(-HAND_OFFSET_X + HAND_OFFSET_INT,
+                                              HAND_OFFSET_Y,
+                                              HAND_OFFSET_Z));
+
+  // set head position for juggler camera
+  m_posHead = QVector3D(m_position.x(),
+                        HEAD_POS_Y,
+                        m_position.z());
 
   QVector3D temp = m_posHead + LOOK_AT_VECTOR;
   QMatrix4x4 rot = getRotMatrix();
   temp = rot * temp;
   m_headLookAt = temp;
-}
-
-void Juggler::setPositionHands()
-{
-  setPositionLHextPlus();
-  setPositionLHext();
-  setPositionLHmed();
-  setPositionLHint();
-  setPositionRHextPlus();
-  setPositionRHext();
-  setPositionRHmed();
-  setPositionRHint();
-  setPosHead();
 }
 
 void Juggler::makeMember(QCylinderMesh *t_member,
@@ -439,10 +296,9 @@ void Juggler::makeMember(QCylinderMesh *t_member,
   t_member->setSlices(MEMBERS_SLICES);
   t_member->setLength(t_length);
 
-  QMatrix4x4 aMatrix = t_memberTransform->matrix();
-  aMatrix.translate(t_trans);
-  aMatrix.rotate(QQuaternion::fromEulerAngles(t_rot));
-  t_memberTransform->setMatrix(aMatrix);
+  t_memberTransform->setTranslation(t_trans);
+  t_memberTransform->setRotation(QQuaternion::fromEulerAngles(t_rot));
+
   t_memberEntity->addComponent(t_memberTransform);
   t_memberEntity->addComponent(m_jugglerMetalRoughMaterial);
 }
@@ -456,9 +312,7 @@ void Juggler::makeArticulation(QSphereMesh *t_sphere,
   t_sphere->setRings(ARTICULATION_RINGS);
   t_sphere->setSlices(ARTICULATION_SLICES);
 
-  QMatrix4x4 aMatrix = t_sphereTransform->matrix();
-  aMatrix.translate(t_trans);
-  t_sphereTransform->setMatrix(aMatrix);
+  t_sphereTransform->setTranslation(t_trans);
 
   t_sphereEntity->addComponent(t_sphere);
   t_sphereEntity->addComponent(t_sphereTransform);
