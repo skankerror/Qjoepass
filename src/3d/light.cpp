@@ -18,16 +18,16 @@
 #include "light.h"
 
 Light::Light(QEntity *t_rootEntity,
-             QPointLight *aLight,
-             QVector3D &t_position)
+             QPointLight *t_light,
+             QVector3D t_position)
   : m_rootEntity(t_rootEntity),
-    light(aLight),
-    position(t_position)
+    m_light(t_light),
+    m_position(t_position)
 {
   QEntity::setParent(m_rootEntity);
-  addComponent(light);
-  lightTransform = new Qt3DCore::QTransform(this);
-  lightTransform->setTranslation(position);
-  addComponent(lightTransform);
-  setEnabled(enabled);
+  addComponent(m_light);
+  m_lightTransform = new Qt3DCore::QTransform(this);
+  m_lightTransform->setTranslation(m_position);
+  addComponent(m_lightTransform);
+  setEnabled(m_enabled);
 }

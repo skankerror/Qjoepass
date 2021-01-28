@@ -44,11 +44,11 @@ My3DWindow::My3DWindow(MySettings *t_settings)
 
 /**************************** testing zone ***************************/
 
-//  createJuggler(-90, QVector2D(12, 0), QColor(QRgb(0xFF0000)));
+  createJuggler(-90, QVector2D(12, 0), QColor(QRgb(0xFF0000)));
 
-//  createJuggler(90, QVector2D(-12, 0), QColor(QRgb(0xFF0000)));
+  createJuggler(90, QVector2D(-12, 0), QColor(QRgb(0xFF0000)));
 
-  createJuggler(0, QVector2D(0, 0), QColor(QRgb(0xFFFFFF)));
+//  createJuggler(0, QVector2D(2, 7), QColor(QRgb(0xFFFFFF)));
 
 //  auto juggler3 = m_v_juggler.at(2);
 //  juggler3->setLeftHandPosition(juggler3->getPositionLHextPlus());
@@ -83,7 +83,8 @@ void My3DWindow::createCam()
 void My3DWindow::createGround()
 {
   QColor colorG = m_settings->value("world/groundColor").value<QColor>();
-  m_ground = new Ground(m_rootEntity, colorG);
+  m_ground = new Ground(m_rootEntity,
+                        colorG);
 }
 
 void My3DWindow::setGlobalObject()
@@ -122,7 +123,9 @@ void My3DWindow::changeGroundColor(QColor t_color)
   m_ground->setColor(t_color);
 }
 
-void My3DWindow::createJuggler(float t_rotY, QVector2D t_position, QColor t_color)
+void My3DWindow::createJuggler(float t_rotY,
+                               QVector2D t_position,
+                               QColor t_color)
 {
   auto juggler = new Juggler(m_rootEntity, t_rotY, t_position, t_color);
   m_v_juggler.append(juggler);
@@ -134,24 +137,29 @@ void My3DWindow::createSkybox()
   m_skybox->setBaseName(QStringLiteral(SKYBOX_BASE_NAME));
   m_skybox->setExtension(QStringLiteral(SKYBOX_EXTENSION));
 
-  Qt3DCore::QTransform * skyTransform = new Qt3DCore::QTransform(m_skybox);
-  skyTransform->setScale3D(QVector3D( SKYBOX_SCALE, SKYBOX_SCALE, SKYBOX_SCALE));
+  auto *skyTransform = new Qt3DCore::QTransform(m_skybox);
+  skyTransform->setScale3D(QVector3D(SKYBOX_SCALE,
+                                     SKYBOX_SCALE,
+                                     SKYBOX_SCALE));
   m_skybox->addComponent(skyTransform);
   m_skybox->setParent(m_rootEntity);
 }
 
 void My3DWindow::createLighting()
 {
-  QVector3D pos1 = LIGHT1_POS;
-  auto light = new Light(m_rootEntity, m_pointLight, pos1);
+  auto light = new Light(m_rootEntity,
+                         m_pointLight,
+                         LIGHT1_POS);
   m_v_light.append(light);
 
-  QVector3D pos2 = LIGHT2_POS;
-  auto light2 = new Light(m_rootEntity, m_pointLight, pos2);
+  auto light2 = new Light(m_rootEntity,
+                          m_pointLight,
+                          LIGHT2_POS);
   m_v_light.append(light2);
 
-  QVector3D pos3 = LIGHT3_POS;
-  auto light3 = new Light(m_rootEntity, m_pointLight, pos3);
+  auto light3 = new Light(m_rootEntity,
+                          m_pointLight,
+                          LIGHT3_POS);
   m_v_light.append(light3);
 
   m_envLight = new QEnvironmentLight();
@@ -173,7 +181,9 @@ void My3DWindow::createLighting()
 
 void My3DWindow::createClub(QColor t_color)
 {
-  auto club = new JugglingClub(m_rootEntity, m_pirouetteMesh, t_color);
+  auto club = new JugglingClub(m_rootEntity,
+                               m_pirouetteMesh,
+                               t_color);
 //  m_v_club.append(club);
   m_v_prop.append(club);
 
@@ -181,14 +191,18 @@ void My3DWindow::createClub(QColor t_color)
 
 void My3DWindow::createBall(QColor t_color)
 {
-  auto ball = new JugglingBall(m_rootEntity, m_sphereMesh, t_color);
+  auto ball = new JugglingBall(m_rootEntity,
+                               m_sphereMesh,
+                               t_color);
   m_v_ball.append(ball);
   m_v_prop.append(ball);
 }
 
 void My3DWindow::createRing(QColor t_color)
 {
-  auto ring = new JugglingRing(m_rootEntity, m_torusMesh, t_color);
+  auto ring = new JugglingRing(m_rootEntity,
+                               m_torusMesh,
+                               t_color);
 //  m_v_ring.append(ring);
   m_v_prop.append(ring);
 }
@@ -201,7 +215,11 @@ void My3DWindow::createSiteSwap(QVector<siteswapEvent *> t_v_event,
 {
   // TODO: delete existing siteswap, make a private arg ?
   // create siteswap with values
-  auto siteswap = new SiteSwap(t_v_event, t_jugCount, t_propType, t_synchron, this);
+  auto siteswap = new SiteSwap(t_v_event,
+                               t_jugCount,
+                               t_propType,
+                               t_synchron,
+                               this);
   // test if it's valid
   if (!(siteswap->isValid()))
   {

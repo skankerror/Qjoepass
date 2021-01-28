@@ -1,4 +1,4 @@
-/*
+﻿/*
  * (c) 2020 Pat Co / M. C.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -85,6 +85,10 @@ public:
   // needed for rotate props
   float getRotY() const { return m_rotY; };
 
+  // needed to pass vec between juggler and world
+  QVector3D worldVecToJugglerVec(const QVector3D t_pos);
+  QVector3D jugglerVecToWorldVec(const QVector3D t_pos);
+
 private:
 
   // cstr private methods
@@ -104,9 +108,6 @@ private:
 
   // used by several methods
   QMatrix4x4 getRotMatrix();
-  // needed to pass vec between juggler and world
-  QVector3D worldVecToJugglerVec(const QVector3D t_pos);
-  QVector3D jugglerVecToWorldVec(const QVector3D t_pos);
 
 private slots:
 

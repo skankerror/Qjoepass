@@ -32,15 +32,21 @@ public:
   Curves();
   ~Curves();
 
+  // for translation in the air
   static QVector<QVector3D> curveParabolic(QVector3D &t_velocity,
                                            QVector3D &t_startPos,
                                            int &t_frameCount);
 
+  // for self dwell
   static QVector<QVector3D> curveSemiCircular(QVector3D &t_startPos,
                                               QVector3D &t_endPos,
-                                              float &t_rotY, // juggler pos
-                                              hand &t_hand,
                                               int &t_frameCount);
+
+  // for passing dwell
+  static QVector<QVector3D> curveTwoQuarterCircular(QVector3D &t_startPos,
+                                                    QVector3D &t_midPos,
+                                                    QVector3D &t_endPos,
+                                                    int &t_frameCount);
 
 };
 

@@ -78,6 +78,7 @@
   #define HAND_OFFSET_INT 0.5
   #define JUGGLER_METALNESS 0.8
   #define JUGGLER_ROUGHNESS 0.5
+  #define HAND_BACKEST_PASSING_Y 4.0f
     // Head
     #define HEAD_POS_Y 7.0f
     #define HEAD_RADIUS 0.5f
@@ -164,7 +165,7 @@
     #define CLUB_MESH_SRC "qrc:/mesh/res/mesh/J_club3.obj"
     #define CLUB_BASIC_ROTX 110
     #define CLUB_HELICOPTER_ROTX 90
-    #define CLUB_DWELL_X_DECAY -15
+    #define CLUB_DWELL_X_DECAY 30
 
 /******************************** Animation *****************************************/
 

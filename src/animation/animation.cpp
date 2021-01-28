@@ -208,7 +208,9 @@ QSequentialAnimationGroup *Animation::handAnim(Juggler *t_juggler,
   axisCurve = rotAxis * axisCurve;
 
   // we create our curve
-  QVector<QVector3D> v_semiCircular = Curves::curveSemiCircular(pos, pos2, rotY, t_hand, frameCount);
+  QVector<QVector3D> v_semiCircular = Curves::curveSemiCircular(pos,
+                                                                pos2,
+                                                                frameCount);
 
   // loop creates all our animations for dwell time
   for (int i = 0; i < frameCount; i++)
@@ -589,7 +591,9 @@ QSequentialAnimationGroup *Animation::dwellAnim(Juggler *t_juggler,
   axisCurve = rotAxis * axisCurve;
 
   // we create our curve
-  QVector<QVector3D> v_semiCircular = Curves::curveSemiCircular(pos, pos2, rotY, t_hand, frameCount);
+  QVector<QVector3D> v_semiCircular = Curves::curveSemiCircular(pos,
+                                                                pos2,
+                                                                frameCount);
 
   // loop creates all our animations for dwell time
   for (int i = 0; i < frameCount; i++)

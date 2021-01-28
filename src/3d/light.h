@@ -34,17 +34,17 @@ class Light: public QEntity
 public:
 
   explicit Light(QEntity *t_rootEntity,
-                 QPointLight *aLight,
-                 QVector3D &t_position);
+                 QPointLight *t_light,
+                 QVector3D t_position);
 
 private:
 
-  Qt3DCore::QTransform *lightTransform;
+  Qt3DCore::QTransform *m_lightTransform;
   QEntity *m_rootEntity;
-  QPointLight *light;
-  QVector3D position;
+  QPointLight *m_light;
+  QVector3D m_position;
 
-  bool enabled = true;
+  bool m_enabled = true;
 };
 
 #endif // LIGHT_H
