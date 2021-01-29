@@ -24,17 +24,19 @@ Curves::Curves()
 Curves::~Curves()
 {}
 
-QVector<QVector3D> Curves::curveParabolic(QVector3D &t_velocity,
-                                            QVector3D &t_startPos,
-                                            int &t_frameCount)
+QVector<QVector3D> Curves::curveParabolic(const QVector3D &t_velocity,
+                                          const QVector3D &t_startPos,
+                                          int &t_frameCount)
 {
   QVector<QVector3D> retVector;
-  retVector.append(t_startPos);
+  QVector3D pos = t_startPos;
+  QVector3D vel = t_velocity;
+  retVector.append(pos);
   for (int i = 0; i <= t_frameCount; i++)
   {
-    t_startPos += DELTA_TIME * t_velocity;
-    retVector.append(t_startPos);
-    t_velocity += DELTA_TIME * GRAVITY;
+    pos += DELTA_TIME * vel;
+    retVector.append(pos);
+    vel += DELTA_TIME * GRAVITY;
   }
   return retVector;
 }

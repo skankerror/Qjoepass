@@ -53,17 +53,35 @@ private:
                                          int t_launch);
 
   QParallelAnimationGroup *dwellAnim(int t_jugglerIdLaunch,
-                                       hand t_handLaunch,
-                                       int t_jugglerIdRecieve,
-                                       hand t_handRecieve,
-                                       int t_launch);
+                                     hand t_handLaunch,
+                                     int t_jugglerIdRecieve,
+                                     hand t_handRecieve,
+                                     int t_launch);
+
+  QSequentialAnimationGroup *dwellParabolicAnim(int t_jugglerIdLaunch,
+                                                hand t_handLaunch,
+                                                int t_jugglerIdRecieve,
+                                                hand t_handRecieve,
+                                                int t_launch);
+
+  QVector3D getExtHandPos(const Juggler *t_juggler,
+                          const hand t_side) const;
+
+  QVector3D getIntHandPos(const Juggler *t_juggler,
+                          const hand t_side) const;
+
+  float getArcTime(const int t_launch) const; // TODO: check if arctime is different for passing
+
+  QSequentialAnimationGroup *parabolicTranslataionAnimGroup(const QVector3D t_startPos,
+                                                            const QVector3D t_endPos,
+                                                            const float t_arcTime);
+
 
 private:
 
   int m_propId; // the id of the prop
   int m_decayTime; // depending on propId, locate on the timeline
   QVector<Juggler *> m_v_juggler;
-
   propType m_propType;
   JugglingProp *m_prop;
   launchTypeBall m_launchTypeBall;
@@ -71,6 +89,8 @@ private:
   launchTypeClub m_launchTypeClub;
   // bool to know if we need to enlarge juggling
   bool m_isExtPlusCatch;
+  float m_propRotX;
+  float m_propRotY;
 };
 
 #endif // PROPANIM_H

@@ -33,8 +33,8 @@ public:
   ~Curves();
 
   // for translation in the air
-  static QVector<QVector3D> curveParabolic(QVector3D &t_velocity,
-                                           QVector3D &t_startPos,
+  static QVector<QVector3D> curveParabolic(const QVector3D &t_velocity,
+                                           const QVector3D &t_startPos,
                                            int &t_frameCount);
 
   // for self dwell
