@@ -86,8 +86,8 @@ public:
   float getRotY() const { return m_rotY; };
 
   // needed to pass vec between juggler and world
-  QVector3D worldVecToJugglerVec(const QVector3D t_pos);
-  QVector3D jugglerVecToWorldVec(const QVector3D t_pos);
+  QVector3D worldVecToJugglerVec(const QVector3D t_pos) const;
+  QVector3D jugglerVecToWorldVec(const QVector3D t_pos) const;
 
 private:
 
@@ -107,7 +107,7 @@ private:
                         QVector3D t_trans);
 
   // used by several methods
-  QMatrix4x4 getRotMatrix();
+  QMatrix4x4 getRotMatrix() const;
 
 private slots:
 

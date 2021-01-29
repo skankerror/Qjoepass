@@ -41,8 +41,8 @@ QVector<QVector3D> Curves::curveParabolic(const QVector3D &t_velocity,
   return retVector;
 }
 
-QVector<QVector3D> Curves::curveSemiCircular(QVector3D &t_startPos,
-                                             QVector3D &t_endPos,
+QVector<QVector3D> Curves::curveSemiCircular(const QVector3D &t_startPos,
+                                             const QVector3D &t_endPos,
                                              int &t_frameCount)
 {
 
@@ -52,7 +52,7 @@ QVector<QVector3D> Curves::curveSemiCircular(QVector3D &t_startPos,
   float deltaAngles = (float)(180 / t_frameCount);
   QVector3D centerCurve = (t_startPos + t_endPos) / 2;
   float rotY = - qRadiansToDegrees(qAtan2(t_startPos.z() - t_endPos.z(),
-                                            t_startPos.x() - t_endPos.x()));
+                                          t_startPos.x() - t_endPos.x()));
   QVector3D axisCurve = QVector3D(0, 0, 1);
   QMatrix4x4 rotAxis;
   rotAxis.setToIdentity();
@@ -73,9 +73,9 @@ QVector<QVector3D> Curves::curveSemiCircular(QVector3D &t_startPos,
   return retVector;
 }
 
-QVector<QVector3D> Curves::curveTwoQuarterCircular(QVector3D &t_startPos,
-                                                   QVector3D &t_midPos,
-                                                   QVector3D &t_endPos,
+QVector<QVector3D> Curves::curveTwoQuarterCircular(const QVector3D &t_startPos,
+                                                   const QVector3D &t_midPos,
+                                                   const QVector3D &t_endPos,
                                                    int &t_frameCount)
 {
   QVector<QVector3D> retVector;

@@ -200,7 +200,7 @@ void Juggler::setPosition(QVector3D t_position)
   emit positionChanged();
 }
 
-QMatrix4x4 Juggler::getRotMatrix()
+QMatrix4x4 Juggler::getRotMatrix() const
 {
   QMatrix4x4 rot;
   rot.setToIdentity();
@@ -210,7 +210,7 @@ QMatrix4x4 Juggler::getRotMatrix()
   return rot;
 }
 
-QVector3D Juggler::worldVecToJugglerVec(const QVector3D t_pos)
+QVector3D Juggler::worldVecToJugglerVec(const QVector3D t_pos) const
 {
   // we translate
   QVector3D relativePos(t_pos.x() - m_position.x(), t_pos.y(), t_pos.z() - m_position.z());
@@ -225,7 +225,7 @@ QVector3D Juggler::worldVecToJugglerVec(const QVector3D t_pos)
   return relativePos;
 }
 
-QVector3D Juggler::jugglerVecToWorldVec(const QVector3D t_pos)
+QVector3D Juggler::jugglerVecToWorldVec(const QVector3D t_pos) const
 {
   // we translate
   QVector3D retPos = m_position + t_pos;

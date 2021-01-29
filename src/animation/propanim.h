@@ -76,6 +76,24 @@ private:
                                                             const QVector3D t_endPos,
                                                             const float t_arcTime);
 
+  QPropertyAnimation *dwellSelfLaunch1TranslationAnim(const QVector3D t_startPos,
+                                                      const QVector3D t_endPos);
+
+  QSequentialAnimationGroup *dwellSelfTranslationAnim(const QVector3D t_startPos,
+                                                      const QVector3D t_endPos,
+                                                      const int t_launch);
+
+  QSequentialAnimationGroup *dwellClubSelfRotXAnim(const int t_launch);
+
+  QPropertyAnimation *dwellClubSelfRotYAnim(const float t_jugglerRotY,
+                                            const int t_launch,
+                                            const hand t_side);
+
+  QSequentialAnimationGroup *dwellPassingTranslationAnim(const Juggler *t_jugglerLaunch,
+                                                         const Juggler *t_jugglerReceive,
+                                                         const QVector3D t_startPos,
+                                                         const QVector3D t_endPos,
+                                                         hand t_handReceive);
 
 private:
 

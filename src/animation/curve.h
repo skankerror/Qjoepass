@@ -38,14 +38,14 @@ public:
                                            int &t_frameCount);
 
   // for self dwell
-  static QVector<QVector3D> curveSemiCircular(QVector3D &t_startPos,
-                                              QVector3D &t_endPos,
+  static QVector<QVector3D> curveSemiCircular(const QVector3D &t_startPos,
+                                              const QVector3D &t_endPos,
                                               int &t_frameCount);
 
   // for passing dwell
-  static QVector<QVector3D> curveTwoQuarterCircular(QVector3D &t_startPos,
-                                                    QVector3D &t_midPos,
-                                                    QVector3D &t_endPos,
+  static QVector<QVector3D> curveTwoQuarterCircular(const QVector3D &t_startPos,
+                                                    const QVector3D &t_midPos,
+                                                    const QVector3D &t_endPos,
                                                     int &t_frameCount);
 
 };
