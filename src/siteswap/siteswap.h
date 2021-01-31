@@ -27,22 +27,21 @@
 // To handle atomic siteswap information
 struct siteswapEvent
 {
-  int launch;
-  int jugLaunchId;
-  int jugRecieveId;
-  bool isMulti; // if true, group with next one.
+  int s_launch;
+  int s_jugLaunchId;
+  int s_jugRecieveId;
+  bool s_isMulti; // if true, group with next one.
 };
 
 // To send informations to animation
 struct animEvent
 {
-  int jugLaunchId;
-  hand handLaunch;
-  int launch;
-  int jugRecieveId;
-  hand handRecieve;
-  int newLaunch;
-  // int launchType;
+  int s_jugLaunchId;
+  hand s_handLaunch;
+  int s_launch;
+  int s_jugRecieveId;
+  hand s_handRecieve;
+  int s_newLaunch;
 };
 
 
@@ -58,7 +57,7 @@ public:
                     bool t_synchron = false,
                     QObject *parent = nullptr);
 
-  int at(int i) const { return m_v_event.at(i)->launch; }
+  int at(int i) const { return m_v_event.at(i)->s_launch; }
 
   // getters
   bool isValid() const;
