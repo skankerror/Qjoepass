@@ -163,6 +163,11 @@ void MainWindow::createToolBar()
     m_launchClubTypeComboBox->addItem("helicopter", helicopter);
   m_propTypeComboBox->setCurrentIndex(ball);
 
+  m_jugglerCountLabel = new QLabel("number of juggler", this);
+  m_jugglerCountSpinBox = new QSpinBox(this);
+    m_jugglerCountSpinBox->setMinimum(1);
+    m_jugglerCountSpinBox->setValue(1);
+
   m_periodLabel = new QLabel("period", this);
   m_periodSpinBox = new QSpinBox(this);
     m_periodSpinBox->setMinimum(1);
@@ -184,6 +189,8 @@ void MainWindow::createToolBar()
 
   m_toolBarLayout->addWidget(m_propLabel);
   m_toolBarLayout->addWidget(m_propTypeComboBox);
+  m_toolBarLayout->addWidget(m_jugglerCountLabel);
+  m_toolBarLayout->addWidget(m_jugglerCountSpinBox);
   m_toolBarLayout->addWidget(m_launchPropTypeLabel);
   m_toolBarLayout->addWidget(m_launchBallTypeComboBox);
   m_toolBarLayout->addWidget(m_launchRingTypeComboBox);
@@ -251,10 +258,10 @@ void MainWindow::launchSiteSwap()
   default: break;
   }
 
-  // TODO: set several jugglers capabilities
-  // waiting for better things...
-  int jugglerCount = 1;
-  // on ne gère pas encore le multiplex
+  // get number of juggler
+  int jugglerCount = m_jugglerCountSpinBox->value();
+  // NOTE: we don't yet handle multiplex
+  // pass every information to siteswap
   m_my3DWindow->createSiteSwap(v_event, jugglerCount, prop, launchType, false);
 }
 

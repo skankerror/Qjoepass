@@ -37,7 +37,6 @@ SiteSwap::SiteSwap(QVector<siteswapEvent *> &t_v_event,
 
 bool SiteSwap::isValid() const
 {
-  // TODO: what about passing siteswap ?
   // create a vector to test our values
   QVector<int> v_test;
   // let's be optimistic !
@@ -68,17 +67,18 @@ int SiteSwap::getNumProp() const
   for (int i = 0; i < m_v_event.size(); i++)
     totalLaunch += at(i);
   return totalLaunch / m_period;
-  // TODO: multiply by numbers of jugglers
 }
 
 QVector<animEvent *> SiteSwap::getAnimEvents(int t_launchPos,
                                              hand t_handLaunch,
                                              int t_jugLaunchId)
 {
+  // TODO: handle multiple juggler
   QVector<animEvent*> v_returnVec;
 
-  hand initialHandLaunch = t_handLaunch; // to keep it
-  int initialLaunchPos = t_launchPos; // idem
+  // to keep nitial values
+  hand initialHandLaunch = t_handLaunch;
+  int initialLaunchPos = t_launchPos;
   int initialJugLaunchId = t_jugLaunchId;
 
   int myLaunch = at(t_launchPos);
@@ -88,14 +88,14 @@ QVector<animEvent *> SiteSwap::getAnimEvents(int t_launchPos,
       newLaunchHand = t_handLaunch;
   int newLaunchPos = (myLaunch + t_launchPos) % m_period;
   int myNewLaunch = at(newLaunchPos);
-  int newJugId = m_v_event.at(t_launchPos)->jugRecieveId;
+  int newJugId = m_v_event.at(t_launchPos)->s_jugRecieveId;
   auto myAnimEvent = new struct animEvent; // TODO: vérifier le delete
-  myAnimEvent->launch = myLaunch;
-  myAnimEvent->handLaunch = t_handLaunch;
-  myAnimEvent->handRecieve = newLaunchHand;
-  myAnimEvent->jugLaunchId = t_jugLaunchId;
-  myAnimEvent->jugRecieveId = newJugId;
-  myAnimEvent->newLaunch = myNewLaunch;
+  myAnimEvent->s_launch = myLaunch;
+  myAnimEvent->s_handLaunch = t_handLaunch;
+  myAnimEvent->s_handRecieve = newLaunchHand;
+  myAnimEvent->s_jugLaunchId = t_jugLaunchId;
+  myAnimEvent->s_jugRecieveId = newJugId;
+  myAnimEvent->s_newLaunch = myNewLaunch;
   v_returnVec.append(myAnimEvent);
 
   while (newLaunchPos != initialLaunchPos ||
@@ -117,15 +117,15 @@ QVector<animEvent *> SiteSwap::getAnimEvents(int t_launchPos,
     if (t_jugLaunchId != initialJugLaunchId) // if it's the other juggler
       newJugId = 0; // get back to first
     else
-      newJugId = m_v_event.at(t_launchPos)->jugRecieveId;
+      newJugId = m_v_event.at(t_launchPos)->s_jugRecieveId;
 
     struct animEvent *newAnimEvent = new struct animEvent; // TODO: le delete
-    newAnimEvent->launch = myLaunch;
-    newAnimEvent->handLaunch = t_handLaunch;
-    newAnimEvent->handRecieve = newLaunchHand;
-    newAnimEvent->jugLaunchId = t_jugLaunchId;
-    newAnimEvent->jugRecieveId = newJugId;
-    newAnimEvent->newLaunch = myNewLaunch;
+    newAnimEvent->s_launch = myLaunch;
+    newAnimEvent->s_handLaunch = t_handLaunch;
+    newAnimEvent->s_handRecieve = newLaunchHand;
+    newAnimEvent->s_jugLaunchId = t_jugLaunchId;
+    newAnimEvent->s_jugRecieveId = newJugId;
+    newAnimEvent->s_newLaunch = myNewLaunch;
     v_returnVec.append(newAnimEvent);
   }
   return v_returnVec;

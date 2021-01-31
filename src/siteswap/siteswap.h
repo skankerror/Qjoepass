@@ -23,7 +23,6 @@
 #include <QBitArray>
 #include "qjoepass.h"
 
-// NOTE: faut-il calculer le nombre de jongleur ici ?
 
 // To handle atomic siteswap information
 struct siteswapEvent

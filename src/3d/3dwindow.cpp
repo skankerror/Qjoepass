@@ -27,7 +27,9 @@ My3DWindow::My3DWindow(MySettings *t_settings)
     m_sphereMesh(new QSphereMesh()),
     m_torusMesh(new QTorusMesh()),
     m_settings(t_settings),
+    m_siteswap(nullptr),
     m_anim(new Animation())
+//    m_anim(nullptr)
 {
   // Root entity, root object of the scene
   setRootEntity(m_rootEntity);
@@ -218,14 +220,19 @@ void My3DWindow::createSiteSwap(QVector<siteswapEvent *> t_v_event,
                                 int t_launchType,
                                 bool t_synchron)
 {
-  // TODO: delete existing siteswap, make a private arg ?
+  // delete possibly existing siteswap
+  if (m_siteswap)
+  {
+    m_siteswap->deleteLater();
+  }
+
   // create siteswap with values
-  auto siteswap = new SiteSwap(t_v_event,
-                               t_jugCount,
-                               t_synchron,
-                               this);
+  m_siteswap = new SiteSwap(t_v_event,
+                            t_jugCount,
+                            t_synchron,
+                            this);
   // test if it's valid
-  if (!(siteswap->isValid()))
+  if (!(m_siteswap->isValid()))
   {
     qDebug() << "siteswap is not valid !";
     return;
@@ -246,7 +253,7 @@ void My3DWindow::createSiteSwap(QVector<siteswapEvent *> t_v_event,
   //NOTE: what about jugglers ?
 
   // create props
-  int numProp = siteswap->getNumProp();
+  int numProp = m_siteswap->getNumProp();
   for (int i = 0; i < numProp; i++)
   {
     switch(t_propType)
@@ -269,7 +276,7 @@ void My3DWindow::createSiteSwap(QVector<siteswapEvent *> t_v_event,
   m_anim->setVProp(m_v_prop);
   m_anim->setPropType(t_propType);
   m_anim->setLaunchType(t_launchType);
-  m_anim->setSiteSwap(siteswap);
+  m_anim->setSiteSwap(m_siteswap);
   m_anim->setAnim();
   m_anim->start();
 }

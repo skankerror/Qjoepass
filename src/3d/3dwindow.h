@@ -115,6 +115,9 @@ private:
   // global app settings
   MySettings *m_settings;
 
+  // siteswap
+  SiteSwap *m_siteswap;
+
   // animation
   Animation *m_anim;
 };

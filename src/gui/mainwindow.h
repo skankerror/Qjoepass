@@ -105,6 +105,9 @@ private:
     QLabel *m_propLabel;
       QComboBox *m_propTypeComboBox;
 
+    QLabel *m_jugglerCountLabel;
+      QSpinBox *m_jugglerCountSpinBox;
+
     QLabel *m_launchPropTypeLabel;
       QComboBox *m_launchBallTypeComboBox;
       QComboBox *m_launchRingTypeComboBox;
