@@ -165,7 +165,8 @@
     #define CLUB_MESH_SRC "qrc:/mesh/res/mesh/J_club3.obj"
     #define CLUB_BASIC_ROTX 110
     #define CLUB_HELICOPTER_ROTX 90
-    #define CLUB_DWELL_X_DECAY 30
+    #define CLUB_DWELL_SELF_X_DECAY 30
+    #define CLUB_DWELL_PASSING_X_DECAY 60
 
 /******************************** Animation *****************************************/
 

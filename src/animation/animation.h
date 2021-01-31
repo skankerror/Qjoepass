@@ -21,10 +21,9 @@
 #include <QPropertyAnimation>
 #include <QSequentialAnimationGroup>
 #include "juggler.h"
-#include "jugglingball.h"
-#include "jugglingring.h"
-#include "jugglingclub.h"
+#include "jugglingprop.h"
 #include "siteswap.h"
+#include "propanim.h"
 #include "qjoepass.h"
 
 class Animation : public QParallelAnimationGroup
@@ -37,23 +36,19 @@ public:
   explicit Animation(QObject *parent = nullptr);
 
   void setVJuggler(QVector<Juggler*> t_v_juggler) { m_v_juggler = t_v_juggler; };
-  void setVBall(QVector<JugglingBall *> t_v_ball) { m_v_ball = t_v_ball; };
-  void setVRing(QVector<JugglingRing *> t_v_ring) { m_v_ring = t_v_ring; };
-  void setVClub(QVector<JugglingClub *> t_v_club) { m_v_club = t_v_club; };
+  void setVProp(QVector<JugglingProp *> t_v_prop) { m_v_prop = t_v_prop; };
   void setSiteSwap(SiteSwap *t_siteSwap);
   void setAnim();
 
+  void setPropType(propType t_propType) { m_propType = t_propType; };
+  void setLaunchType(int t_launchType) { m_launchType = t_launchType; };
+
+  // getters
+  propType getPropType() const { return m_propType; };
+  int getLaunchType() const { return m_launchType ;};
+
+
 private:
-
-  QSequentialAnimationGroup* parabolicAnim(Juggler *t_juggler,
-                                           int t_indexProp,
-                                           int t_launch,
-                                           hand t_hand);
-
-  QSequentialAnimationGroup* dwellAnim(Juggler *t_juggler,
-                                       int t_indexProp,
-                                       int t_nextLaunch,
-                                       hand t_hand);
 
   QSequentialAnimationGroup* handAnim(Juggler *t_juggler,
                                       int t_indexProp,
@@ -63,9 +58,8 @@ private:
 private:
 
   QVector<Juggler *> m_v_juggler;
-  QVector<JugglingBall *> m_v_ball;
-  QVector<JugglingRing *> m_v_ring;
-  QVector<JugglingClub *> m_v_club;
+  QVector<JugglingProp *> m_v_prop;
+  int m_launchType;
   SiteSwap *m_siteSwap;
   propType m_propType;
   int m_period;

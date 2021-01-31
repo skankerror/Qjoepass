@@ -20,13 +20,11 @@
 
 SiteSwap::SiteSwap(QVector<siteswapEvent *> &t_v_event,
                    int t_jugCount,
-                   propType t_prop,
                    bool t_synchron,
                    QObject *parent)
   : QObject(parent),
     m_v_event(t_v_event),
     m_synchron(t_synchron),
-    m_prop(t_prop),
     m_jugglerCount(t_jugCount)
 {
   m_period = m_v_event.size();

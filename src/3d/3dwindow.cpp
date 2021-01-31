@@ -44,23 +44,31 @@ My3DWindow::My3DWindow(MySettings *t_settings)
 
 /**************************** testing zone ***************************/
 
-  createJuggler(-90, QVector2D(12, 0), QColor(QRgb(0xFF0000)));
+  createJuggler(-90, QVector2D(6, 0), QColor(QRgb(0xFF0000)));
 
-  createJuggler(90, QVector2D(-12, 0), QColor(QRgb(0xFF0000)));
+  createJuggler(90, QVector2D(-6, 0), QColor(QRgb(0xFF0000)));
 
-//  createJuggler(0, QVector2D(2, 7), QColor(QRgb(0xFFFFFF)));
+//  createJuggler(180, QVector2D(2, 7), QColor(QRgb(0xFFFFFF)));
 
 //  auto juggler3 = m_v_juggler.at(2);
 //  juggler3->setLeftHandPosition(juggler3->getPositionLHextPlus());
 //  juggler3->setRightHandPosition(juggler3->getPositionRHint());
 
-  createClub(QColor(QRgb(0xFFFF00)));
-  m_v_prop.at(0)->setRotX(CLUB_BASIC_ROTX);
-  m_v_prop.at(0)->setRotY(m_v_juggler.at(0)->getRotY());
+//  createClub(QColor(QRgb(0xFFFF00)));
+//  m_v_prop.at(0)->setRotX(CLUB_BASIC_ROTX);
+//  m_v_prop.at(0)->setRotY(m_v_juggler.at(0)->getRotY());
+//  auto testAnim = new PropAnim(m_v_juggler,
+//                               m_v_prop.at(0),
+//                               0,
+//                               propType(club),
+//                               0,
+//                               this);
+
+  createBall(QColor(QRgb(0xFFFF00)));
   auto testAnim = new PropAnim(m_v_juggler,
                                m_v_prop.at(0),
                                0,
-                               propType(club),
+                               propType(ball),
                                0,
                                this);
 
@@ -184,7 +192,6 @@ void My3DWindow::createClub(QColor t_color)
   auto club = new JugglingClub(m_rootEntity,
                                m_pirouetteMesh,
                                t_color);
-//  m_v_club.append(club);
   m_v_prop.append(club);
 
 }
@@ -194,7 +201,6 @@ void My3DWindow::createBall(QColor t_color)
   auto ball = new JugglingBall(m_rootEntity,
                                m_sphereMesh,
                                t_color);
-  m_v_ball.append(ball);
   m_v_prop.append(ball);
 }
 
@@ -203,7 +209,6 @@ void My3DWindow::createRing(QColor t_color)
   auto ring = new JugglingRing(m_rootEntity,
                                m_torusMesh,
                                t_color);
-//  m_v_ring.append(ring);
   m_v_prop.append(ring);
 }
 
@@ -217,7 +222,6 @@ void My3DWindow::createSiteSwap(QVector<siteswapEvent *> t_v_event,
   // create siteswap with values
   auto siteswap = new SiteSwap(t_v_event,
                                t_jugCount,
-                               t_propType,
                                t_synchron,
                                this);
   // test if it's valid
@@ -230,25 +234,13 @@ void My3DWindow::createSiteSwap(QVector<siteswapEvent *> t_v_event,
   m_anim->stop();
   m_anim->clear();
 
-  // and destroy any prop if there is
-  if (m_v_ball.size())
-    for (int i = 0; i < m_v_ball.size(); i++)
-      m_v_ball.at(i)->setEnabled(false);
+  // destroy existing props
+  if (m_v_prop.size())
+    for (int i = 0; i < m_v_prop.size(); i++)
+      m_v_prop.at(i)->setEnabled(false);
 
-  if (m_v_ring.size())
-    for (int i = 0; i < m_v_ring.size(); i++)
-      m_v_ring.at(i)->setEnabled(false);
-
-  if (m_v_club.size())
-    for (int i = 0; i < m_v_club.size(); i++)
-      m_v_club.at(i)->setEnabled(false);
-
-  m_v_ball.clear();
-  m_v_ball.squeeze();
-  m_v_ring.clear();
-  m_v_ring.squeeze();
-  m_v_club.clear();
-  m_v_club.squeeze();
+  m_v_prop.clear();
+  m_v_prop.squeeze();
 
   // now it's surely clean...
   //NOTE: what about jugglers ?
@@ -261,27 +253,22 @@ void My3DWindow::createSiteSwap(QVector<siteswapEvent *> t_v_event,
     {
     case ball:
       createBall(QColor(QRgb(0xA3A600)));
-      m_v_ball.at(i)->setLaunchType((launchTypeBall)(t_launchType));
       break;
     case ring:
       createRing(QColor(QRgb(0xA3A600)));
-      m_v_ring.at(i)->setLaunchType((launchTypeRing)(t_launchType));
       break;
     case club:
       createClub(QColor(QRgb(0xA3A600)));
-      m_v_club.at(i)->setLaunchType((launchTypeClub)(t_launchType));
       break;
     default: break;
     }
   }
 
-  siteswap->setLaunchType(t_launchType);
-
   // pass all the jobs to anim
   m_anim->setVJuggler(m_v_juggler);
-  m_anim->setVBall(m_v_ball);
-  m_anim->setVRing(m_v_ring);
-  m_anim->setVClub(m_v_club);
+  m_anim->setVProp(m_v_prop);
+  m_anim->setPropType(t_propType);
+  m_anim->setLaunchType(t_launchType);
   m_anim->setSiteSwap(siteswap);
   m_anim->setAnim();
   m_anim->start();

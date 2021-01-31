@@ -105,15 +105,12 @@ private:
 
     // club
     QMesh *m_pirouetteMesh;
-    QVector<JugglingClub *> m_v_club;
 
     // ball
     QSphereMesh *m_sphereMesh;
-    QVector<JugglingBall *> m_v_ball;
 
     // ring
     QTorusMesh *m_torusMesh;
-    QVector<JugglingRing *> m_v_ring;
 
   // global app settings
   MySettings *m_settings;

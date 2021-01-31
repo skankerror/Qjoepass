@@ -1,4 +1,4 @@
-QT       += core gui 3dcore 3drender 3dinput 3dlogic 3dextras 3danimation widgets
+QT       += core gui 3dcore 3drender 3dextras widgets
 
 #greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -22,6 +22,9 @@ DEFINES -= UNICODE
 INCLUDEPATH += \
   src \
   src/3d \
+  src/3d/juggler \
+  src/3d/world \
+  src/3d/prop \
   src/animation \
   src/gui \
   src/siteswap \
@@ -29,16 +32,16 @@ INCLUDEPATH += \
 
 SOURCES += \
   src/3d/3dwindow.cpp \
-  src/3d/jugglerarm.cpp \
-  src/3d/jugglingclub.cpp \
-  src/3d/jugglingprop.cpp \
+  src/3d/world/light.cpp \
+  src/3d/world/ground.cpp \
+  src/3d/juggler/juggler.cpp \
+  src/3d/juggler/jugglerarm.cpp \
+  src/3d/prop/jugglingprop.cpp \
+  src/3d/prop/jugglingball.cpp \
+  src/3d/prop/jugglingclub.cpp \
+  src/3d/prop/jugglingring.cpp \
   src/animation/animation.cpp \
   src/animation/curve.cpp \
-  src/3d/ground.cpp \
-  src/3d/juggler.cpp \
-  src/3d/jugglingball.cpp \
-  src/3d/jugglingring.cpp \
-  src/3d/light.cpp \
   src/animation/handanim.cpp \
   src/animation/propanim.cpp \
   src/main.cpp \
@@ -49,16 +52,16 @@ SOURCES += \
 
 HEADERS += \
   src/3d/3dwindow.h \
-  src/3d/jugglerarm.h \
-  src/3d/jugglingclub.h \
-  src/3d/jugglingprop.h \
+  src/3d/world/light.h \
+  src/3d/world/ground.h \
+  src/3d/juggler/juggler.h \
+  src/3d/juggler/jugglerarm.h \
+  src/3d/prop/jugglingprop.h \
+  src/3d/prop/jugglingball.h \
+  src/3d/prop/jugglingclub.h \
+  src/3d/prop/jugglingring.h \
   src/animation/animation.h \
   src/animation/curve.h \
-  src/3d/ground.h \
-  src/3d/juggler.h \
-  src/3d/jugglingball.h \
-  src/3d/jugglingring.h \
-  src/3d/light.h \
   src/animation/handanim.h \
   src/animation/propanim.h \
   src/gui/mainwindow.h \

@@ -70,7 +70,7 @@ private:
   QVector3D getIntHandPos(const Juggler *t_juggler,
                           const hand t_side) const;
 
-  float getArcTime(const int t_launch) const; // TODO: check if arctime is different for passing
+  float getArcTime(const int t_launch) const; // TODO: check if arctime is different for passing launch
 
   QSequentialAnimationGroup *parabolicTranslataionAnimGroup(const QVector3D t_startPos,
                                                             const QVector3D t_endPos,
@@ -83,7 +83,8 @@ private:
                                                       const QVector3D t_endPos,
                                                       const int t_launch);
 
-  QSequentialAnimationGroup *dwellClubSelfRotXAnim(const int t_launch);
+  QSequentialAnimationGroup *dwellClubRotXAnim(const int t_launch,
+                                               const bool t_isPassing);
 
   QPropertyAnimation *dwellClubSelfRotYAnim(const float t_jugglerRotY,
                                             const int t_launch,
@@ -94,6 +95,11 @@ private:
                                                          const QVector3D t_startPos,
                                                          const QVector3D t_endPos,
                                                          hand t_handReceive);
+
+  QPropertyAnimation *dwellClubPassingRotYAnim(const Juggler *t_jugglerReceive,
+                                               const QVector3D t_endPos,
+                                               hand t_handReceive);
+
 
 private:
 
