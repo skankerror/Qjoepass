@@ -44,6 +44,8 @@ public:
                     int t_launchType = 0,
                     QObject *parent = nullptr);
 
+  void setAnim(QVector<animEvent *> t_v_animEvents);
+
 private:
 
   QParallelAnimationGroup *parabolicAnim(int t_jugglerIdLaunch,

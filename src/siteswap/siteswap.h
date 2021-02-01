@@ -57,18 +57,20 @@ public:
   int at(int i) const { return m_v_event.at(i)->s_launch; }
 
   // getters
-  bool isValid() const;
-  int getNumProp() const;
+  bool isValid() const { return m_valid; };
+  int getPropCount() const { return m_propCount; };
   int getPeriod() const { return m_period; };
   QBitArray getState() const { return m_state; };
-  int getJugglerCount() const { return m_jugglerCount; };
-
+//  int getJugglerCount() const { return m_jugglerCount; };
   // For sending datas to animation
   QVector<QVector<animEvent *>> getTotalAnimEvents() const { return m_v_v_propAnimEvents; };
 
 private:
 
+  void setValidity();
+  void setPropCount();
   void setState();
+  // NOTE: en faire une static ?
   hand changeHand(hand t_hand){ return (t_hand == leftHand) ? rightHand : leftHand; };
   void setTotalAnimEvents();
   QVector<animEvent *> getPropAnimEvents(int t_launchPos);

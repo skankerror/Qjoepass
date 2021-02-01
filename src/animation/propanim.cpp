@@ -46,64 +46,24 @@ PropAnim::PropAnim(QVector<Juggler *> t_v_juggler,
   m_propRotX = m_prop->getRotX();
   m_propRotY = m_prop->getRotY();
 
-  // TODO: if 0 launch don't create anything, just pause
-  // create particular first dwell with good rot
-
-  // là on met tout le merdier du 1er lancement ? donné par siteswap ?
-  // 1er lancer, bien orienter les objets, les placer dans les bonnes mains
-  // créer les 1ers dwells avec plusieurs objets dans les mains
-  // ou on fait tout ça dans animation ?
-
-  // pour les mains, principe de la timeline, chaque mouvement de main doit avoir
-  // un temps de début et un temps de fin, voir dans handanim. Connecter les objets ?
-
   /************************testing zone ****************************/
-  setLoopCount(INFINITE_LOOP);
+}
 
-//  auto test1Anim1 = dwellParabolicAnim(0,
-//                                       hand(rightHand),
-//                                       0,
-//                                       hand(leftHand),
-//                                       3);
-
-//  auto test1Anim2 = dwellParabolicAnim(0,
-//                                       hand(leftHand),
-//                                       0,
-//                                       hand(rightHand),
-//                                       3);
-
-//  addAnimation(test1Anim1);
-//  addAnimation(test1Anim2);
-
-  auto test2Anim1 = dwellParabolicAnim(0,
-                                       hand(rightHand),
-                                       1,
-                                       hand(leftHand),
-                                       3);
-
-  auto test2Anim2 = dwellParabolicAnim(1,
-                                       hand(leftHand),
-                                       1,
-                                       hand(rightHand),
-                                       3);
-
-  auto test2Anim3 = dwellParabolicAnim(1,
-                                       hand(rightHand),
-                                       0,
-                                       hand(leftHand),
-                                       3);
-
-  auto test2Anim4 = dwellParabolicAnim(0,
-                                       hand(leftHand),
-                                       0,
-                                       hand(rightHand),
-                                       3);
-
-
-  addAnimation(test2Anim1);
-  addAnimation(test2Anim2);
-  addAnimation(test2Anim3);
-  addAnimation(test2Anim4);
+void PropAnim::setAnim(QVector<animEvent *> t_v_animEvents)
+{
+  for (int i = 0; i < t_v_animEvents.size(); i++)
+  {
+    auto propAnimEvent = t_v_animEvents.at(i);
+    // ATTENTION LE TEMPS DU LAUNCH DOIT S'ADAPTER AU NOMBRE DE JONGLEURS
+    // car c'est du vanilla
+    auto aDwellParabolicAnim = dwellParabolicAnim(propAnimEvent->s_jugglerLaunchId,
+                                                  propAnimEvent->s_launchHand,
+                                                  propAnimEvent->s_jugglerRecieveId,
+                                                  propAnimEvent->s_receiveHand,
+                                                  propAnimEvent->s_launch);
+    addAnimation(aDwellParabolicAnim);
+    setLoopCount(INFINITE_LOOP);
+  }
 }
 
 QParallelAnimationGroup *PropAnim::parabolicAnim(int t_jugglerIdLaunch,

@@ -28,14 +28,17 @@ SiteSwap::SiteSwap(QVector<siteswapEvent *> &t_v_event,
     m_jugglerCount(t_jugCount)
 {
   m_period = m_v_event.size();
-  m_valid = isValid();
-  m_propCount = getNumProp();
+  setValidity();
+  setPropCount();
   if (m_valid)
+  {
     setState();
+    setTotalAnimEvents();
+  }
 }
 
 
-bool SiteSwap::isValid() const
+void SiteSwap::setValidity()
 {
   // create a vector to test our values
   QVector<int> v_test;
@@ -55,18 +58,18 @@ bool SiteSwap::isValid() const
     // this seems good, we're adding to our vector for next tests
     v_test.append(modLaunch);
   }
-  return ret;
+  m_valid = ret;
 }
 
-int SiteSwap::getNumProp() const
+void SiteSwap::setPropCount()
 {
   if(!m_valid)
-    return 0;
+    m_propCount = 0;
 
   int totalLaunch = 0;
   for (int i = 0; i < m_v_event.size(); i++)
     totalLaunch += at(i);
-  return totalLaunch / m_period;
+  m_propCount =  totalLaunch / m_period;
 }
 
 
@@ -120,9 +123,9 @@ void SiteSwap::setState()
   }
 }
 
-void SiteSwap::setTotalAnimEvents()
+void SiteSwap::setTotalAnimEvents() // chercher la main et le juggler qui lance ici...
 {
-  // utiliser le state puis appeler getPropAnimEvents
+  // we use state
   for (int i = 0; i < m_state.size(); i++) // for each bit in state
   {
     if (m_state.testBit(i)) // if it's a site launch
@@ -146,6 +149,8 @@ QVector<animEvent *> SiteSwap::getPropAnimEvents(int t_launchPos)
   // find launching hand
   hand launchHand;
   // int to check wich hand is launching
+  // BUG: marche pas, par exemple pour period = 1...
+  // utiliser state ?
   int checkLaunchHand = t_launchPos % (2 * m_jugglerCount);
   (checkLaunchHand < m_jugglerCount) ?
         launchHand = rightHand: // NOTE: we always begin with right hands

@@ -46,9 +46,11 @@ My3DWindow::My3DWindow(MySettings *t_settings)
 
 /**************************** testing zone ***************************/
 
-  createJuggler(-90, QVector2D(6, 0), QColor(QRgb(0xFF0000)));
+  createJuggler(0, QVector2D(0, 0), QColor(QRgb(0xFF0000)));
 
-  createJuggler(90, QVector2D(-6, 0), QColor(QRgb(0xFF0000)));
+//  createJuggler(-90, QVector2D(6, 0), QColor(QRgb(0xFF0000)));
+
+//  createJuggler(90, QVector2D(-6, 0), QColor(QRgb(0xFF0000)));
 
 //  createJuggler(180, QVector2D(2, 7), QColor(QRgb(0xFFFFFF)));
 
@@ -66,15 +68,15 @@ My3DWindow::My3DWindow(MySettings *t_settings)
 //                               0,
 //                               this);
 
-  createBall(QColor(QRgb(0xFFFF00)));
-  auto testAnim = new PropAnim(m_v_juggler,
-                               m_v_prop.at(0),
-                               0,
-                               propType(ball),
-                               0,
-                               this);
+//  createBall(QColor(QRgb(0xFFFF00)));
+//  auto testAnim = new PropAnim(m_v_juggler,
+//                               m_v_prop.at(0),
+//                               0,
+//                               propType(ball),
+//                               0,
+//                               this);
 
-  testAnim->start();
+//  testAnim->start();
 }
 
 void My3DWindow::createCam()
@@ -251,9 +253,11 @@ void My3DWindow::createSiteSwap(QVector<siteswapEvent *> t_v_event,
 
   // now it's surely clean...
   //NOTE: what about jugglers ?
+  // delete jugglers
+  // calculate default position and rotY of jugglers
 
   // create props
-  int numProp = m_siteswap->getNumProp();
+  int numProp = m_siteswap->getPropCount();
   for (int i = 0; i < numProp; i++)
   {
     switch(t_propType)
