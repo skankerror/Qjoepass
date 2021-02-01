@@ -235,16 +235,16 @@ void MainWindow::preferencesDial()
 void MainWindow::launchSiteSwap()
 {
   QVector<siteswapEvent *> v_event;
-  int f_launch = m_firstSiteSpinBox->value();
+  int launch = m_firstSiteSpinBox->value();
   auto event = new struct siteswapEvent; // TODO: le delete !
-  event->launch = f_launch;
+  event->s_launch = launch;
   // paramétrer les autres arguments ici
   v_event.append(event);
   for (int i = 0; i < m_v_spinBox.size(); i++)
   {
-    f_launch = m_v_spinBox.at(i)->value();
+    launch = m_v_spinBox.at(i)->value();
     auto newEvent = new struct siteswapEvent; // TODO: le delete
-    newEvent->launch = f_launch;
+    newEvent->s_launch = launch;
     // pareil
     v_event.append(newEvent);
   }

@@ -69,67 +69,6 @@ int SiteSwap::getNumProp() const
   return totalLaunch / m_period;
 }
 
-QVector<animEvent *> SiteSwap::getAnimEvents(int t_launchPos,
-                                             hand t_handLaunch,
-                                             int t_jugLaunchId)
-{
-  // TODO: handle multiple juggler
-  QVector<animEvent*> v_returnVec;
-
-  // to keep nitial values
-  hand initialHandLaunch = t_handLaunch;
-  int initialLaunchPos = t_launchPos;
-  int initialJugLaunchId = t_jugLaunchId;
-
-  int myLaunch = at(t_launchPos);
-  hand newLaunchHand;
-  (myLaunch % 2 == 1) ?
-        newLaunchHand = changeHand(t_handLaunch) :
-      newLaunchHand = t_handLaunch;
-  int newLaunchPos = (myLaunch + t_launchPos) % m_period;
-  int myNewLaunch = at(newLaunchPos);
-  int newJugId = m_v_event.at(t_launchPos)->s_jugRecieveId;
-  auto myAnimEvent = new struct animEvent; // TODO: vérifier le delete
-  myAnimEvent->s_launch = myLaunch;
-  myAnimEvent->s_handLaunch = t_handLaunch;
-  myAnimEvent->s_handRecieve = newLaunchHand;
-  myAnimEvent->s_jugLaunchId = t_jugLaunchId;
-  myAnimEvent->s_jugRecieveId = newJugId;
-  myAnimEvent->s_newLaunch = myNewLaunch;
-  v_returnVec.append(myAnimEvent);
-
-  while (newLaunchPos != initialLaunchPos ||
-         newLaunchHand != initialHandLaunch ||
-         t_jugLaunchId != initialJugLaunchId)
-  {
-    t_handLaunch = newLaunchHand;
-    t_launchPos = newLaunchPos;
-    myLaunch = at(t_launchPos);
-    (myLaunch % 2 == 1) ?
-          newLaunchHand = changeHand(t_handLaunch) :
-        newLaunchHand = t_handLaunch;
-    newLaunchPos = (myNewLaunch + t_launchPos) % m_period;
-    myNewLaunch = at(newLaunchPos);
-    if (t_jugLaunchId != initialJugLaunchId && newJugId == t_jugLaunchId)
-      t_jugLaunchId = 1; // TODO: Ugly !
-    else
-      t_jugLaunchId = newJugId;
-    if (t_jugLaunchId != initialJugLaunchId) // if it's the other juggler
-      newJugId = 0; // get back to first
-    else
-      newJugId = m_v_event.at(t_launchPos)->s_jugRecieveId;
-
-    struct animEvent *newAnimEvent = new struct animEvent; // TODO: le delete
-    newAnimEvent->s_launch = myLaunch;
-    newAnimEvent->s_handLaunch = t_handLaunch;
-    newAnimEvent->s_handRecieve = newLaunchHand;
-    newAnimEvent->s_jugLaunchId = t_jugLaunchId;
-    newAnimEvent->s_jugRecieveId = newJugId;
-    newAnimEvent->s_newLaunch = myNewLaunch;
-    v_returnVec.append(newAnimEvent);
-  }
-  return v_returnVec;
-}
 
 void SiteSwap::setState()
 {
@@ -179,4 +118,118 @@ void SiteSwap::setState()
     m_state.resize(m_state.size() - 1); // erase last bit
     test = m_state.testBit(m_state.size() - 1);
   }
+}
+
+void SiteSwap::setTotalAnimEvents()
+{
+  // utiliser le state puis appeler getPropAnimEvents
+  for (int i = 0; i < m_state.size(); i++) // for each bit in state
+  {
+    if (m_state.testBit(i)) // if it's a site launch
+    {
+      int launchPos = i % m_period; // i may be beyond period
+      // get prop anim loop
+      auto propAnimLoop = getPropAnimEvents(launchPos);
+      // add to our argument
+      m_v_v_propAnimEvents.append(propAnimLoop);
+    }
+  }
+}
+
+QVector<animEvent *> SiteSwap::getPropAnimEvents(int t_launchPos)
+{
+  QVector<animEvent *> v_returnVec;
+
+  // find id of launching juggler
+  int jugglerLaunchId = t_launchPos % m_jugglerCount;
+
+  // find launching hand
+  hand launchHand;
+  // int to check wich hand is launching
+  int checkLaunchHand = t_launchPos % (2 * m_jugglerCount);
+  (checkLaunchHand < m_jugglerCount) ?
+        launchHand = rightHand: // NOTE: we always begin with right hands
+      launchHand = leftHand;
+
+  // to keep nitial values
+  hand initialHandLaunch = launchHand;
+  int initialLaunchPos = t_launchPos;
+  int initialJugglerLaunchId = jugglerLaunchId;
+
+  // get launch
+  int launch = at(t_launchPos);
+
+  // find next launch pos
+  int nextLaunchPos = (launch + t_launchPos) % m_period;
+
+  // find id of receiving juggler
+  int jugglerReceiveId = nextLaunchPos % m_jugglerCount;
+
+  // find hand of receiving juggler
+  hand receiveHand;
+  // int to check wich hand is receiving
+  int checkReceiveHand = (launch + (t_launchPos % m_jugglerCount)) % (2 * m_jugglerCount);
+  (checkReceiveHand < m_jugglerCount) ?
+        receiveHand = launchHand:
+      receiveHand = changeHand(launchHand);
+
+  // we can set our first anim event
+  auto firstAnimEvent = new struct animEvent; // TODO: vérifier le delete
+  firstAnimEvent->s_jugglerLaunchId = jugglerLaunchId;
+  firstAnimEvent->s_launchHand = launchHand;
+  firstAnimEvent->s_launch = launch;
+  firstAnimEvent->s_jugglerRecieveId = jugglerReceiveId;
+  firstAnimEvent->s_receiveHand = receiveHand;
+  // append to our vec
+  v_returnVec.append(firstAnimEvent);
+
+  // to prepare the rest
+  // set next hand
+  hand nextLaunchHand = receiveHand;
+  // set next juggler launch id
+  int nextJugglerLaunchId = jugglerReceiveId;
+
+  // while prop hasn't finished his total loop
+  while (nextLaunchPos != initialLaunchPos ||
+         nextLaunchHand != initialHandLaunch ||
+         nextJugglerLaunchId != initialJugglerLaunchId)
+  {
+    // we're in the next throw
+    launchHand = nextLaunchHand;
+    t_launchPos = nextLaunchPos;
+    jugglerLaunchId = nextJugglerLaunchId;
+
+    // get launch
+    launch = at(t_launchPos);
+
+    // find next launch pos
+    nextLaunchPos = (launch + t_launchPos) % m_period;
+
+    // find id of receiving juggler
+    jugglerReceiveId = nextLaunchPos % m_jugglerCount;
+
+    // for while loop check
+    nextJugglerLaunchId = jugglerReceiveId;
+
+    // find hand of receiving juggler
+    checkReceiveHand = (launch + (t_launchPos % m_jugglerCount)) % (2 * m_jugglerCount);
+      (checkReceiveHand < m_jugglerCount) ?
+            receiveHand = launchHand:
+          receiveHand = changeHand(launchHand);
+
+    // for while loop check
+    nextLaunchHand = receiveHand;
+
+    // set next anim event
+    auto nextAnimEvent = new struct animEvent; // TODO: vérifier le delete
+    nextAnimEvent->s_jugglerLaunchId = jugglerLaunchId;
+    nextAnimEvent->s_launchHand = launchHand;
+    nextAnimEvent->s_launch = launch;
+    nextAnimEvent->s_jugglerRecieveId = jugglerReceiveId;
+    nextAnimEvent->s_receiveHand = receiveHand;
+    // append to our vec
+    v_returnVec.append(nextAnimEvent);
+  }
+  // we have complete prop loop
+  return v_returnVec;
 }

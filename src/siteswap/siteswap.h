@@ -28,20 +28,17 @@
 struct siteswapEvent
 {
   int s_launch;
-  int s_jugLaunchId;
-  int s_jugRecieveId;
   bool s_isMulti; // if true, group with next one.
 };
 
 // To send informations to animation
 struct animEvent
 {
-  int s_jugLaunchId;
-  hand s_handLaunch;
+  int s_jugglerLaunchId;
+  hand s_launchHand;
   int s_launch;
-  int s_jugRecieveId;
-  hand s_handRecieve;
-  int s_newLaunch;
+  int s_jugglerRecieveId;
+  hand s_receiveHand;
 };
 
 
@@ -67,14 +64,14 @@ public:
   int getJugglerCount() const { return m_jugglerCount; };
 
   // For sending datas to animation
-  QVector<animEvent *> getAnimEvents(int t_launchPos,
-                                    hand t_handLaunch,
-                                    int t_jugLaunchId);
+  QVector<QVector<animEvent *>> getTotalAnimEvents() const { return m_v_v_propAnimEvents; };
 
 private:
 
   void setState();
   hand changeHand(hand t_hand){ return (t_hand == leftHand) ? rightHand : leftHand; };
+  void setTotalAnimEvents();
+  QVector<animEvent *> getPropAnimEvents(int t_launchPos);
 
 private:
 
@@ -82,11 +79,10 @@ private:
   int m_period;
   bool m_valid = false;
   bool m_synchron = false;
-//  propType m_prop;
-//  int m_launchType;
   QBitArray m_state;
   int m_propCount;
   int m_jugglerCount;
+  QVector<QVector<animEvent *>> m_v_v_propAnimEvents;
 
 };
 
