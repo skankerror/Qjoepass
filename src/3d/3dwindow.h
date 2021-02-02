@@ -30,7 +30,6 @@
 #include "jugglingclub.h"
 #include "siteswap.h"
 #include "animation.h"
-#include "propanim.h" // pour tester
 
 using namespace Qt3DCore;
 using namespace Qt3DRender;
@@ -54,6 +53,19 @@ private:
   void createSkybox();
   void createLighting();
   void setGlobalObject();
+  void createJuggler(float t_rotY,
+                     QVector2D t_position,
+                     QColor t_color);
+  void createClub(QColor t_color);
+  void createBall(QColor t_color);
+  void createRing(QColor t_color);
+  void deleteJugglers();
+  void createJugglers(int t_jugglerCount);
+  void deleteProps();
+  void createProps(int t_propCount,
+                   propType t_propType);
+  void setAnimation(propType t_propType,
+                    int t_launchType);
 
 signals:
 
@@ -63,10 +75,6 @@ public slots:
 
   void changeBackground(QColor t_color);
   void changeGroundColor(QColor t_color);
-  void createJuggler(float t_rotY, QVector2D t_position, QColor t_color);
-  void createClub(QColor t_color);
-  void createBall(QColor t_color);
-  void createRing(QColor t_color);
   void createSiteSwap(QVector<siteswapEvent *> t_v_event,
                       int t_jugCount,
                       propType t_propType = ball,

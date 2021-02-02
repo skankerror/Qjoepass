@@ -1,4 +1,4 @@
-/*
+﻿/*
  * (c) 2020 Pat Co / M. C.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,6 +16,7 @@
  */
 
 #include "3dwindow.h"
+#include <QtMath>
 #include <QDebug>
 
 My3DWindow::My3DWindow(MySettings *t_settings)
@@ -29,7 +30,6 @@ My3DWindow::My3DWindow(MySettings *t_settings)
     m_settings(t_settings),
     m_siteswap(nullptr),
     m_anim(new Animation())
-//    m_anim(nullptr)
 {
   // Root entity, root object of the scene
   setRootEntity(m_rootEntity);
@@ -46,37 +46,6 @@ My3DWindow::My3DWindow(MySettings *t_settings)
 
 /**************************** testing zone ***************************/
 
-  createJuggler(0, QVector2D(0, 0), QColor(QRgb(0xFF0000)));
-
-//  createJuggler(-90, QVector2D(6, 0), QColor(QRgb(0xFF0000)));
-
-//  createJuggler(90, QVector2D(-6, 0), QColor(QRgb(0xFF0000)));
-
-//  createJuggler(180, QVector2D(2, 7), QColor(QRgb(0xFFFFFF)));
-
-//  auto juggler3 = m_v_juggler.at(2);
-//  juggler3->setLeftHandPosition(juggler3->getPositionLHextPlus());
-//  juggler3->setRightHandPosition(juggler3->getPositionRHint());
-
-//  createClub(QColor(QRgb(0xFFFF00)));
-//  m_v_prop.at(0)->setRotX(CLUB_BASIC_ROTX);
-//  m_v_prop.at(0)->setRotY(m_v_juggler.at(0)->getRotY());
-//  auto testAnim = new PropAnim(m_v_juggler,
-//                               m_v_prop.at(0),
-//                               0,
-//                               propType(club),
-//                               0,
-//                               this);
-
-//  createBall(QColor(QRgb(0xFFFF00)));
-//  auto testAnim = new PropAnim(m_v_juggler,
-//                               m_v_prop.at(0),
-//                               0,
-//                               propType(ball),
-//                               0,
-//                               this);
-
-//  testAnim->start();
 }
 
 void My3DWindow::createCam()
@@ -118,6 +87,87 @@ void My3DWindow::setGlobalObject()
 
   // For club creations
   m_pirouetteMesh->setSource(QUrl(CLUB_MESH_SRC));
+}
+
+void My3DWindow::deleteJugglers()
+{
+  if (m_v_juggler.size())
+    for (int i = 0; i < m_v_juggler.size(); i++)
+      m_v_juggler.at(i)->setEnabled(false);
+
+  m_v_juggler.clear();
+  m_v_juggler.squeeze();
+}
+
+void My3DWindow::createJugglers(int t_jugglerCount)
+{
+  if (!t_jugglerCount)
+    return;
+
+  deleteJugglers();
+
+  for (int i = 0; i < t_jugglerCount; i++)
+  {
+    float angle = 360.0f / t_jugglerCount;
+    float rotY = i * angle;
+    auto pos = QVector2D(- qSin(qDegreesToRadians(rotY)) * DEFAULT_JUG_POS_CIRC_RADIUS,
+                         - qCos(qDegreesToRadians(rotY)) * DEFAULT_JUG_POS_CIRC_RADIUS);
+    createJuggler(rotY, pos, QColor(QRgb(0xFF0000)));
+  }
+}
+
+void My3DWindow::deleteProps()
+{
+  if (m_v_prop.size())
+    for (int i = 0; i < m_v_prop.size(); i++)
+      m_v_prop.at(i)->setEnabled(false);
+
+  m_v_prop.clear();
+  m_v_prop.squeeze();
+}
+
+void My3DWindow::createProps(int t_propCount,
+                             propType t_propType)
+{
+  if (!t_propCount)
+    return;
+
+  deleteProps();
+
+  for (int i = 0; i < t_propCount; i++)
+  {
+    switch(t_propType)
+    {
+    case ball:
+      createBall(QColor(QRgb(0xA3A600)));
+      break;
+    case ring:
+      createRing(QColor(QRgb(0xA3A600)));
+      break;
+    case club:
+      createClub(QColor(QRgb(0xA3A600)));
+      break;
+    default: break;
+    }
+  }
+
+}
+
+void My3DWindow::setAnimation(propType t_propType,
+                              int t_launchType)
+{
+  // stop and clear existing anim
+  m_anim->stop();
+  m_anim->clear();
+
+  // pass all the jobs to anim
+  m_anim->setVJuggler(m_v_juggler);
+  m_anim->setVProp(m_v_prop);
+  m_anim->setPropType(t_propType);
+  m_anim->setLaunchType(t_launchType);
+  m_anim->setSiteSwap(m_siteswap);
+  m_anim->setAnim();
+  m_anim->start();
 }
 
 int My3DWindow::getJugglerCount() const
@@ -224,9 +274,7 @@ void My3DWindow::createSiteSwap(QVector<siteswapEvent *> t_v_event,
 {
   // delete possibly existing siteswap
   if (m_siteswap)
-  {
     m_siteswap->deleteLater();
-  }
 
   // create siteswap with values
   m_siteswap = new SiteSwap(t_v_event,
@@ -239,50 +287,18 @@ void My3DWindow::createSiteSwap(QVector<siteswapEvent *> t_v_event,
     qDebug() << "siteswap is not valid !";
     return;
   }
-  // it's valid, we stop existing anim
-  m_anim->stop();
-  m_anim->clear();
 
-  // destroy existing props
-  if (m_v_prop.size())
-    for (int i = 0; i < m_v_prop.size(); i++)
-      m_v_prop.at(i)->setEnabled(false);
-
-  m_v_prop.clear();
-  m_v_prop.squeeze();
-
-  // now it's surely clean...
-  //NOTE: what about jugglers ?
-  // delete jugglers
-  // calculate default position and rotY of jugglers
+  // create jugglers
+  createJugglers(t_jugCount);
 
   // create props
-  int numProp = m_siteswap->getPropCount();
-  for (int i = 0; i < numProp; i++)
-  {
-    switch(t_propType)
-    {
-    case ball:
-      createBall(QColor(QRgb(0xA3A600)));
-      break;
-    case ring:
-      createRing(QColor(QRgb(0xA3A600)));
-      break;
-    case club:
-      createClub(QColor(QRgb(0xA3A600)));
-      break;
-    default: break;
-    }
-  }
+  int propCount = m_siteswap->getPropCount();
+  createProps(propCount,
+              t_propType);
 
-  // pass all the jobs to anim
-  m_anim->setVJuggler(m_v_juggler);
-  m_anim->setVProp(m_v_prop);
-  m_anim->setPropType(t_propType);
-  m_anim->setLaunchType(t_launchType);
-  m_anim->setSiteSwap(m_siteswap);
-  m_anim->setAnim();
-  m_anim->start();
+  // set animation
+  setAnimation(t_propType,
+               t_launchType);
 }
 
 void My3DWindow::setCameraToOrbit()

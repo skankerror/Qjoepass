@@ -61,7 +61,6 @@ public:
   int getPropCount() const { return m_propCount; };
   int getPeriod() const { return m_period; };
   QBitArray getState() const { return m_state; };
-//  int getJugglerCount() const { return m_jugglerCount; };
   // For sending datas to animation
   QVector<QVector<animEvent *>> getTotalAnimEvents() const { return m_v_v_propAnimEvents; };
 
@@ -73,7 +72,9 @@ private:
   // NOTE: en faire une static ?
   hand changeHand(hand t_hand){ return (t_hand == leftHand) ? rightHand : leftHand; };
   void setTotalAnimEvents();
-  QVector<animEvent *> getPropAnimEvents(int t_launchPos);
+  QVector<animEvent *> getPropAnimEvents(int t_launchPos,
+                                         int t_jugglerLaunchId,
+                                         hand t_launchHand);
 
 private:
 

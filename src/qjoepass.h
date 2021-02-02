@@ -180,6 +180,7 @@
 #define EMPTY_TIME HAND_PERIOD-DWELL_TIME
 #define S_TO_MS 1000.0f
 const float DWELL_TIME_LAUNCH1 = (HAND_PERIOD / 2.0f) - LAUNCH1_TIME;
+#define DEFAULT_JUG_POS_CIRC_RADIUS 10.0f
 // for QAbstractAnimation::setLoopCount(int)
 #define INFINITE_LOOP -1
 #define ONE_LOOP 1
