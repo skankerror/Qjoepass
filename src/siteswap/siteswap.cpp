@@ -183,7 +183,7 @@ void SiteSwap::setTotalAnimEvents()
 QVector<animEvent *> SiteSwap::getPropAnimEvents(int t_launchPos,
                                                  int t_jugglerLaunchId,
                                                  hand t_launchHand)
-{
+{// TODO: rewrite with a do while
   QVector<animEvent *> v_returnVec;
 
   // to keep nitial values

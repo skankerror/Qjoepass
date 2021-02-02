@@ -70,7 +70,7 @@ private:
   void setPropCount();
   void setState();
   void setCompleteSiteswap();
-  // NOTE: en faire une static public ?
+  // NOTE: make a static public method ?
   hand changeHand(hand t_hand){ return (t_hand == leftHand) ? rightHand : leftHand; };
   void setTotalAnimEvents();
   QVector<animEvent *> getPropAnimEvents(int t_launchPos,
@@ -84,7 +84,10 @@ private:
   bool m_valid = false;
   bool m_synchron = false;
   QBitArray m_state;
-  // set complete form of siteswap
+
+  /* set complete form of siteswap
+   * simplier for set animEvent
+   * for example a 3 siteswap will become 333 */
   QVector<int> m_v_completeSiteswap;
   int m_periodCompleteSiteswap;
 

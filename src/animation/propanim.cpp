@@ -54,13 +54,21 @@ void PropAnim::setAnim(QVector<animEvent *> t_v_animEvents)
   for (int i = 0; i < t_v_animEvents.size(); i++)
   {
     auto propAnimEvent = t_v_animEvents.at(i);
-    // ATTENTION LE TEMPS DU LAUNCH DOIT S'ADAPTER AU NOMBRE DE JONGLEURS
-    // car c'est du vanilla
-    auto aDwellParabolicAnim = dwellParabolicAnim(propAnimEvent->s_jugglerLaunchId,
+
+    /* this is a vanilla launch, so we must adjust it according to number of jugglers
+     * we create an adjust int. */
+    int jugglerLaunchId = propAnimEvent->s_jugglerLaunchId;
+    int jugglerReceiveId = propAnimEvent->s_jugglerRecieveId;
+    int adjustLaunch = jugglerLaunchId - jugglerReceiveId;
+    int launch = propAnimEvent->s_launch;
+//    qDebug() << "launch in propAnim" << launch;
+    int realLaunch = (launch + adjustLaunch) / m_v_juggler.size();
+//    qDebug() << "real launch in propAnim" << realLaunch;
+    auto aDwellParabolicAnim = dwellParabolicAnim(jugglerLaunchId,
                                                   propAnimEvent->s_launchHand,
-                                                  propAnimEvent->s_jugglerRecieveId,
+                                                  jugglerReceiveId,
                                                   propAnimEvent->s_receiveHand,
-                                                  propAnimEvent->s_launch);
+                                                  realLaunch);
     addAnimation(aDwellParabolicAnim);
     setLoopCount(INFINITE_LOOP);
   }
