@@ -12,6 +12,7 @@ Coding style
 * function and method names camelCase, with lowercase first letter
 * class names CamelCase
 * name private data members with an 'm_' as a prefix: m_likeThis
+* name struct var with an 's_' as a prefix : s_likeThis;
 * name method and constructor parameters with a 't_' prefix: t_likeThis
 * container var begins with initial + underscore: QVector v_likeThis
 * constants are all upper case: const double PI=3.14159265358979323;

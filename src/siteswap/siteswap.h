@@ -69,7 +69,8 @@ private:
   void setValidity();
   void setPropCount();
   void setState();
-  // NOTE: en faire une static ?
+  void setCompleteSiteswap();
+  // NOTE: en faire une static public ?
   hand changeHand(hand t_hand){ return (t_hand == leftHand) ? rightHand : leftHand; };
   void setTotalAnimEvents();
   QVector<animEvent *> getPropAnimEvents(int t_launchPos,
@@ -83,6 +84,10 @@ private:
   bool m_valid = false;
   bool m_synchron = false;
   QBitArray m_state;
+  // set complete form of siteswap
+  QVector<int> m_v_completeSiteswap;
+  int m_periodCompleteSiteswap;
+
   int m_propCount;
   int m_jugglerCount;
   QVector<QVector<animEvent *>> m_v_v_propAnimEvents;

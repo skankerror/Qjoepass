@@ -33,6 +33,7 @@ SiteSwap::SiteSwap(QVector<siteswapEvent *> &t_v_event,
   if (m_valid)
   {
     setState();
+    setCompleteSiteswap();
     setTotalAnimEvents();
   }
 }
@@ -123,14 +124,39 @@ void SiteSwap::setState()
   }
 }
 
+void SiteSwap::setCompleteSiteswap()
+{
+  // transform siteswap so his lenght >= prop Count
+
+  // simple case, we copy launches in our vector and return
+  if (m_propCount <= m_v_event.size())
+  {
+    for (int i = 0; i < m_v_event.size(); i++)
+    {
+      int launch = at(i);
+      m_v_completeSiteswap.append(launch);
+    }
+  }
+  else
+  {
+    for (int i = 0; i < m_propCount; i++) //
+    {
+      int launch = at(i % m_period);
+      m_v_completeSiteswap.append(launch);
+    }
+  }
+  m_periodCompleteSiteswap = m_v_completeSiteswap.size();
+}
+
 void SiteSwap::setTotalAnimEvents()
 {
+
   // we use state
   for (int i = 0; i < m_state.size(); i++) // for each bit in state
   {
     if (m_state.testBit(i)) // if it's a site launch
     {
-      int launchPos = i % m_period; // i may be beyond period
+      int launchPos = i % m_periodCompleteSiteswap; // i may be beyond period
 
       // find which juggler is launching
       int jugglerLaunchId = i % m_jugglerCount;
@@ -154,25 +180,11 @@ void SiteSwap::setTotalAnimEvents()
   }
 }
 
-// TODO: check this, this might be buggy
-// better to pass state place with corresponding launch than just launchpos
-// maybe we must set a QVector<int> based on state with launch
 QVector<animEvent *> SiteSwap::getPropAnimEvents(int t_launchPos,
                                                  int t_jugglerLaunchId,
                                                  hand t_launchHand)
 {
   QVector<animEvent *> v_returnVec;
-
-  // find id of launching juggler
-//  int jugglerLaunchId = t_launchPos % m_jugglerCount;
-
-//  // find launching hand
-//  hand launchHand;
-//  // int to check wich hand is launching
-//  int checkLaunchHand = t_launchPos % (2 * m_jugglerCount);
-//  (checkLaunchHand < m_jugglerCount) ?
-//        launchHand = rightHand: // NOTE: we always begin with right hands
-//      launchHand = leftHand;
 
   // to keep nitial values
   hand initialHandLaunch = t_launchHand;
@@ -180,10 +192,10 @@ QVector<animEvent *> SiteSwap::getPropAnimEvents(int t_launchPos,
   int initialJugglerLaunchId = t_jugglerLaunchId;
 
   // get launch
-  int launch = at(t_launchPos);
+  int launch = m_v_completeSiteswap.at(t_launchPos);
 
   // find next launch pos
-  int nextLaunchPos = (launch + t_launchPos) % m_period;
+  int nextLaunchPos = (launch + t_launchPos) % m_periodCompleteSiteswap;
 
   // find id of receiving juggler
   int jugglerReceiveId = nextLaunchPos % m_jugglerCount;
@@ -223,10 +235,10 @@ QVector<animEvent *> SiteSwap::getPropAnimEvents(int t_launchPos,
     t_jugglerLaunchId = nextJugglerLaunchId;
 
     // get launch
-    launch = at(t_launchPos);
+    launch = m_v_completeSiteswap.at(t_launchPos);
 
     // find next launch pos
-    nextLaunchPos = (launch + t_launchPos) % m_period;
+    nextLaunchPos = (launch + t_launchPos) % m_periodCompleteSiteswap;
 
     // find id of receiving juggler
     jugglerReceiveId = nextLaunchPos % m_jugglerCount;
