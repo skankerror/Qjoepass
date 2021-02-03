@@ -33,7 +33,9 @@ SiteSwap::SiteSwap(QVector<siteswapEvent *> &t_v_event,
   if (m_valid)
   {
     setState();
+    qDebug() << m_state;
     setCompleteSiteswap();
+    qDebug() << m_v_completeSiteswap;
     setTotalAnimEvents();
   }
 }
@@ -124,12 +126,14 @@ void SiteSwap::setState()
   }
 }
 
+// TODO: make a do while ?
 void SiteSwap::setCompleteSiteswap()
 {
   // transform siteswap so his lenght >= prop Count
 
   // simple case, we copy launches in our vector and return
-  if (m_propCount <= m_v_event.size())
+//  if (m_propCount <= m_v_event.size())
+  if (m_state.size() <= m_v_event.size())
   {
     for (int i = 0; i < m_v_event.size(); i++)
     {
@@ -139,12 +143,17 @@ void SiteSwap::setCompleteSiteswap()
   }
   else
   {
-    for (int i = 0; i < m_propCount; i++) //
+//    while (m_propCount > m_v_completeSiteswap.size())
+    while (m_state.size() > m_v_completeSiteswap.size())
     {
-      int launch = at(i % m_period);
-      m_v_completeSiteswap.append(launch);
+      for (int i = 0; i < m_v_event.size(); i++)
+      {
+        int launch = at(i);
+        m_v_completeSiteswap.append(launch);
+      }
     }
   }
+
   m_periodCompleteSiteswap = m_v_completeSiteswap.size();
 }
 
@@ -180,10 +189,11 @@ void SiteSwap::setTotalAnimEvents()
   }
 }
 
+// TODO: rewrite with a do while
 QVector<animEvent *> SiteSwap::getPropAnimEvents(int t_launchPos,
                                                  int t_jugglerLaunchId,
                                                  hand t_launchHand)
-{// TODO: rewrite with a do while
+{
   QVector<animEvent *> v_returnVec;
 
   // to keep nitial values

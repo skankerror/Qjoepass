@@ -49,7 +49,7 @@ void Animation::setAnim()
     if (state.testBit(i)) // if it's a launching site
     {
       // prendre la bonne boucle de v_v_propAnimEvents
-      auto v_propAnimEvents = v_v_propAnimEvents.at(i);
+      auto v_propAnimEvents = v_v_propAnimEvents.at(propNum);
       // on crée un PropAnim
       auto propAnim = new PropAnim(m_v_juggler,
                                    m_v_prop.at(propNum),
@@ -58,11 +58,10 @@ void Animation::setAnim()
                                    m_launchType);
 
       // we had delay according to place in state
-      // TODO: ATTENTION, À ADAPTER SUIVANT LE NOMBRE DE JUGGLER
 
       // créer une seq pour décaler le début
       auto seqAnimForDelay = new QSequentialAnimationGroup();
-//      seqAnimForDelay->addPause((int)(i * (HAND_PERIOD / 2) * S_TO_MS));
+      // NOTE: we assume that each juggler start juggling at the same time
       seqAnimForDelay->addPause((int)((i / m_v_juggler.size()) * (HAND_PERIOD / 2) * S_TO_MS));
       // on lui donne un vec d'animEvent, il s'en occupe
       propAnim->setAnim(v_propAnimEvents);
@@ -71,6 +70,7 @@ void Animation::setAnim()
 
       propNum++;
     }
+//    propNum++;
   }
 }
 
