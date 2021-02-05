@@ -18,6 +18,8 @@
 #ifndef QJOEPASS_H
 #define QJOEPASS_H
 
+#include <QDebug>
+
 /**************************** App ***************************************/
 
 #define APP_ICON "://res/images/icone.png"
@@ -38,7 +40,7 @@
   // camera
   #define CAM_FOV 65.0f
   #define CAM_RATIO 16.0f/9.0f
-  #define CAM_NEARPLANE /*0.1f*/ 1.0f
+  #define CAM_NEARPLANE /*0.1f*/ /*1.0f*/ 0.01f
   #define CAM_FARPLANE 1000.0f
   #define CAM_INITIAL_POSITION QVector3D(NULL_FLOAT,8.0f,30.0f)
   #define CAM_UP_VECTOR QVector3D(NULL_FLOAT,1.0f,NULL_FLOAT)
@@ -172,14 +174,19 @@
 
 #define SCALE_FACTOR 4.03f // for gravity... size of juggler / normal man size (7.25/1.8)
 #define DELTA_TIME 0.015f // in second
+//#define DELTA_TIME 15 // in ms
 #define HAND_PERIOD 0.7f // in second
+//#define HAND_PERIOD 700 // in ms
 #define DWELL_RATIO 0.6f // seems to be dwell average of a good juggler
+//#define DWELL_RATIO 60 //  in % seems to be dwell average of a good juggler
 #define LAUNCH1_TIME 0.1f // in second. launch siteswap 1. Must be < HAND_PERIOD/2
+//#define LAUNCH1_TIME 100 // in ms. launch siteswap 1. Must be < HAND_PERIOD/2
 #define GRAVITY QVector3D(NULL_FLOAT,-9.8f*SCALE_FACTOR,NULL_FLOAT)
-#define DWELL_TIME DWELL_RATIO*HAND_PERIOD
-#define EMPTY_TIME HAND_PERIOD-DWELL_TIME
+#define DWELL_TIME DWELL_RATIO*HAND_PERIOD// must be currently 0.42
+#define EMPTY_TIME HAND_PERIOD-DWELL_TIME // must be currently 0.23
 #define S_TO_MS 1000.0f
-const float DWELL_TIME_LAUNCH1 = (HAND_PERIOD / 2.0f) - LAUNCH1_TIME;
+//#define S_TO_MS 1
+const float DWELL_TIME_LAUNCH1 = (HAND_PERIOD / 2.0f) - LAUNCH1_TIME; // must be currently 250
 #define DEFAULT_JUG_POS_CIRC_RADIUS 8.0f
 // for QAbstractAnimation::setLoopCount(int)
 #define INFINITE_LOOP -1

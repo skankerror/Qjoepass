@@ -31,7 +31,7 @@ QVector<QVector3D> Curves::curveParabolic(const QVector3D &t_velocity,
   QVector<QVector3D> retVector;
   QVector3D pos = t_startPos;
   QVector3D vel = t_velocity;
-  retVector.append(pos);
+//  retVector.append(pos);
   for (int i = 0; i <= t_frameCount; i++)
   {
     pos += DELTA_TIME * vel;
@@ -125,6 +125,6 @@ QVector<QVector3D> Curves::curveTwoQuarterCircular(const QVector3D &t_startPos,
     retVector.append(nextPos);
     pos = nextPos;
   }
-  qDebug() << "in curve factory" << "frameCount" << t_frameCount << "size of return" << retVector.size();
+//  qDebug() << "in curve factory" << "frameCount" << t_frameCount << "size of return" << retVector.size();
   return retVector;
 }

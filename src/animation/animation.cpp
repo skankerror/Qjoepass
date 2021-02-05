@@ -68,9 +68,10 @@ void Animation::setAnim()
       seqAnimForDelay->addAnimation(propAnim);
       addAnimation(seqAnimForDelay);
 
+      qDebug() << "lenght of prop anim n°" << i << propAnim->duration();
+
       propNum++;
     }
-//    propNum++;
   }
 }
 

@@ -33,9 +33,7 @@ SiteSwap::SiteSwap(QVector<siteswapEvent *> &t_v_event,
   if (m_valid)
   {
     setState();
-    qDebug() << m_state;
     setCompleteSiteswap();
-    qDebug() << m_v_completeSiteswap;
     setTotalAnimEvents();
   }
 }

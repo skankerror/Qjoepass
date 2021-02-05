@@ -47,13 +47,13 @@ public:
   propType getPropType() const { return m_propType; };
   int getLaunchType() const { return m_launchType ;};
 
-private:
+//private:
 
 private:
 
   QVector<Juggler *> m_v_juggler;
   QVector<JugglingProp *> m_v_prop;
-  QVector<PropAnim *> m_v_propAnim;
+//  QVector<PropAnim *> m_v_propAnim;
   int m_launchType;
   SiteSwap *m_siteSwap;
   propType m_propType;

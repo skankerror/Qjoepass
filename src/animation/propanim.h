@@ -20,7 +20,8 @@
 
 #include <QSequentialAnimationGroup>
 #include <QPropertyAnimation>
-#include <juggler.h>
+#include <QtMath>
+#include "juggler.h"
 #include "jugglingball.h"
 #include "jugglingring.h"
 #include "jugglingclub.h"
@@ -72,7 +73,7 @@ private:
   QVector3D getIntHandPos(const Juggler *t_juggler,
                           const hand t_side) const;
 
-  float getArcTime(const int t_launch) const; // TODO: check if arctime is different for passing launch
+  float getArcTime(const int t_launch) const;
 
   QSequentialAnimationGroup *parabolicTranslataionAnimGroup(const QVector3D t_startPos,
                                                             const QVector3D t_endPos,
@@ -102,6 +103,7 @@ private:
                                                const QVector3D t_endPos,
                                                hand t_handReceive);
 
+private slots:
 
 private:
 

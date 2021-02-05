@@ -46,7 +46,6 @@ PropAnim::PropAnim(QVector<Juggler *> t_v_juggler,
   m_propRotX = m_prop->getRotX();
   m_propRotY = m_prop->getRotY();
 
-  /************************testing zone ****************************/
 }
 
 void PropAnim::setAnim(QVector<animEvent *> t_v_animEvents)
@@ -55,15 +54,13 @@ void PropAnim::setAnim(QVector<animEvent *> t_v_animEvents)
   {
     auto propAnimEvent = t_v_animEvents.at(i);
 
-    /* this is a vanilla launch, so we must adjust it according to number of jugglers
+    /* this is a vanilla launch, so we must adjust launch according to number of jugglers
      * we create an adjust int. */
     int jugglerLaunchId = propAnimEvent->s_jugglerLaunchId;
     int jugglerReceiveId = propAnimEvent->s_jugglerRecieveId;
     int adjustLaunch = jugglerLaunchId - jugglerReceiveId;
     int launch = propAnimEvent->s_launch;
-//    qDebug() << "launch in propAnim" << launch;
     int realLaunch = (launch + adjustLaunch) / m_v_juggler.size();
-//    qDebug() << "real launch in propAnim" << realLaunch;
     auto aDwellParabolicAnim = dwellParabolicAnim(jugglerLaunchId,
                                                   propAnimEvent->s_launchHand,
                                                   jugglerReceiveId,
@@ -98,12 +95,20 @@ QParallelAnimationGroup *PropAnim::parabolicAnim(int t_jugglerIdLaunch,
   float arcTime = getArcTime(t_launch);
 
   //
-  int frameCount = (int)((arcTime / (DELTA_TIME)));
+//  int frameCount = (int)((arcTime / (DELTA_TIME)));
+  int duration = qRound(arcTime * S_TO_MS);
 
   // create translation seq animation
   auto translationAnimGroup = parabolicTranslataionAnimGroup(posProp,
                                                              posFinal,
                                                              arcTime);
+
+  // Time adjustment if necessary
+  int intDecay = duration - translationAnimGroup->duration();
+//  qDebug() << "decay in translaton" << intDecay;
+  if (intDecay)
+    translationAnimGroup->addPause(intDecay);
+  qDebug() << "PropAnim::parabolicAnim() duration" << translationAnimGroup->duration();
 
   // add it to our parallel
   parallelAnimGroup->addAnimation(translationAnimGroup);
@@ -172,7 +177,8 @@ QParallelAnimationGroup *PropAnim::parabolicAnim(int t_jugglerIdLaunch,
 
     // rotation X
     auto animRotX = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_rotX"));
-    animRotX->setDuration(((int)(DELTA_TIME * S_TO_MS)) * frameCount);
+//    animRotX->setDuration(((int)(DELTA_TIME * S_TO_MS)) * frameCount);
+    animRotX->setDuration(duration);
     animRotX->setStartValue((360 * rotXCount) + initialRotX);
     animRotX->setEndValue(initialRotX + addRotX);
     animRotX->setLoopCount(ONE_LOOP);
@@ -192,6 +198,7 @@ QParallelAnimationGroup *PropAnim::dwellAnim(int t_jugglerIdLaunch,
                                              hand t_handRecieve,
                                              int t_launch)
 {
+
   // create parallel animation group to translate and rotation if needed
   auto parallelAnimGroup = new QParallelAnimationGroup();
 
@@ -237,7 +244,6 @@ QParallelAnimationGroup *PropAnim::dwellAnim(int t_jugglerIdLaunch,
       // add to return parallel anim group
       parallelAnimGroup->addAnimation(animRotY);
     }
-
   }
 
   else // it's self launch
@@ -342,6 +348,8 @@ float PropAnim::getArcTime(const int t_launch) const
   else // Shannon Theorem
     arcTime = ((HAND_PERIOD) / 2) * (t_launch - (2 * DWELL_RATIO));
 
+//  qDebug() << "arcTime" << arcTime;
+
   return arcTime;
 }
 
@@ -367,7 +375,7 @@ QSequentialAnimationGroup *PropAnim::parabolicTranslataionAnimGroup(const QVecto
   for (int i = 0; i < frameCount; i++)
   {
     auto translationAnim = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_position"));
-    translationAnim->setDuration((int)(DELTA_TIME * S_TO_MS));
+    translationAnim->setDuration(qRound(DELTA_TIME * S_TO_MS));
     translationAnim->setStartValue(v_parabolic.at(i));
     translationAnim->setEndValue(v_parabolic.at(i + 1));
     translationAnim->setLoopCount(ONE_LOOP);
@@ -399,7 +407,8 @@ QSequentialAnimationGroup *PropAnim::dwellSelfTranslationAnim(const QVector3D t_
     for (int i = 0; i < frameCount; i++)
     {
       auto translationAnim = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_position"));
-      translationAnim->setDuration((int)(DELTA_TIME * S_TO_MS));
+//      translationAnim->setDuration((int)(DELTA_TIME * S_TO_MS));
+      translationAnim->setDuration(qRound(DELTA_TIME * S_TO_MS));
       translationAnim->setStartValue(v_semiCircular.at(i));
       translationAnim->setEndValue(v_semiCircular.at(i + 1));
       translationAnim->setLoopCount(ONE_LOOP);
@@ -436,6 +445,7 @@ QSequentialAnimationGroup *PropAnim::dwellClubRotXAnim(const int t_launch,
     }
   }
 
+  // TODO: verify time
   // create first anim to low down angle
   auto animRotX1 = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_rotX"));
   animRotX1->setDuration((int)(DWELL_TIME * S_TO_MS / 2));
@@ -464,8 +474,6 @@ QPropertyAnimation *PropAnim::dwellClubSelfRotYAnim(const float t_jugglerRotY,
                                                     const int t_launch,
                                                     const hand t_side)
 {
-  qDebug() << "rotY before dwell animation" << m_propRotY;
-
   // set final (y) rot
   float finalRotY;
   // angle will depend on side and oddity of launch
@@ -491,7 +499,6 @@ QPropertyAnimation *PropAnim::dwellClubSelfRotYAnim(const float t_jugglerRotY,
 
   // upadate prop rotY
   m_propRotY = finalRotY;
-  qDebug() << "rotY after dwell animation" << m_propRotY;
 
   return animRotY;
 }
@@ -540,6 +547,7 @@ QSequentialAnimationGroup *PropAnim::dwellPassingTranslationAnim(const Juggler *
                                                               handBackVec,
                                                               t_endPos,
                                                               frameCount);
+  // TODO: verify time
   // loop creating our tranlation anim
   for (int i = 0; i < frameCount; i++)
   {
@@ -577,6 +585,7 @@ QPropertyAnimation *PropAnim::dwellClubPassingRotYAnim(const Juggler *t_jugglerR
   float finalRotY = -qRadiansToDegrees(qAtan2(dirVec.z() - t_endPos.z(),
                                               dirVec.x() - t_endPos.x()));
 
+  // TODO: verify time
   // set anim rot (y)
   auto animRotY = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_rotY"));
   animRotY->setDuration((int)(DWELL_TIME * S_TO_MS));
@@ -589,4 +598,3 @@ QPropertyAnimation *PropAnim::dwellClubPassingRotYAnim(const Juggler *t_jugglerR
 
   return animRotY;
 }
-

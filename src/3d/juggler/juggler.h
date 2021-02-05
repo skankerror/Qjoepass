@@ -64,11 +64,6 @@ public:
   QVector3D getLeftHandPosition() { return m_leftHandPosition; };
   QVector3D getRightHandPosition() { return m_rightHandPosition; };
 
-  // property setters
-  void setPosition(QVector3D t_position);
-  void setLeftHandPosition(QVector3D t_pos);
-  void setRightHandPosition(QVector3D t_pos);
-
   // getters for hands positions ext to catch, int to launch, med for siteswap 2
   QVector3D getPositionLHextPlus() const { return m_posLHextPlus; }; // helico, pancakes
   QVector3D getPositionLHext() const { return m_posLHext; };
@@ -88,6 +83,13 @@ public:
   // needed to pass vec between juggler and world
   QVector3D worldVecToJugglerVec(const QVector3D t_pos) const;
   QVector3D jugglerVecToWorldVec(const QVector3D t_pos) const;
+
+public slots:
+
+  // property setters
+  void setPosition(QVector3D t_position);
+  void setLeftHandPosition(QVector3D t_pos);
+  void setRightHandPosition(QVector3D t_pos);
 
 private:
 

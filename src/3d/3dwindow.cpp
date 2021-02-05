@@ -46,6 +46,10 @@ My3DWindow::My3DWindow(MySettings *t_settings)
 
 /**************************** testing zone ***************************/
 
+//  qDebug() << "dwell time 420 : " << DWELL_TIME;
+//  qDebug() << "empty time 280 : " << EMPTY_TIME;
+//  qDebug() << "dwell time launch 1 250 : " << DWELL_TIME_LAUNCH1;
+
 }
 
 void My3DWindow::createCam()
