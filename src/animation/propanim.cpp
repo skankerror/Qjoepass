@@ -224,14 +224,21 @@ QParallelAnimationGroup *PropAnim::dwellAnim(int t_jugglerIdLaunch,
                                                             posFinal,
                                                             t_handRecieve);
 
+    qDebug() << "dwell passing translat anim duration" << translationAnimGroup->duration();
+
     // add to return anim
     parallelAnimGroup->addAnimation(translationAnimGroup);
 
     // make x y rotations for club
-    if (m_propType == club && (m_launchTypeClub == normalClub || m_launchTypeClub == flat))
+    if (m_propType == club &&
+        (m_launchTypeClub == normalClub ||
+         m_launchTypeClub == flat))
     {
       // make x rot for club
-      auto animRotX = dwellClubRotXAnim(t_launch, isPassing);
+      auto animRotX = dwellClubRotXAnim(t_launch,
+                                        isPassing);
+
+      qDebug() << "dwell club rotX anim duration" << animRotX->duration();
 
       // add sequential to return parallel anim group
       parallelAnimGroup->addAnimation(animRotX);
@@ -240,6 +247,8 @@ QParallelAnimationGroup *PropAnim::dwellAnim(int t_jugglerIdLaunch,
       auto animRotY = dwellClubPassingRotYAnim(jugglerRecieve,
                                                posFinal,
                                                t_handRecieve);
+
+      qDebug() << "dwell club rotY anim duration" << animRotY->duration();
 
       // add to return parallel anim group
       parallelAnimGroup->addAnimation(animRotY);
@@ -252,13 +261,18 @@ QParallelAnimationGroup *PropAnim::dwellAnim(int t_jugglerIdLaunch,
                                                          posFinal,
                                                          t_launch);
 
+    qDebug() << "dwell self translat anim duration" << translationAnimGroup->duration();
+
     parallelAnimGroup->addAnimation(translationAnimGroup);
 
     // let's rotate if necessary
     // give a little (x) rotation for normal and flat club.
     if (m_propType == club && (m_launchTypeClub == normalClub || m_launchTypeClub == flat))
     {
-      auto animRotX = dwellClubRotXAnim(t_launch, isPassing);
+      auto animRotX = dwellClubRotXAnim(t_launch,
+                                        isPassing);
+
+      qDebug() << "dwell club rotX anim duration" << animRotX->duration();
 
       // add sequential to return parallel anim group
       parallelAnimGroup->addAnimation(animRotX);
@@ -273,6 +287,8 @@ QParallelAnimationGroup *PropAnim::dwellAnim(int t_jugglerIdLaunch,
       auto animRotY = dwellClubSelfRotYAnim(jugglerRotY,
                                             t_launch,
                                             t_handLaunch);
+
+      qDebug() << "dwell club rotY anim duration" << animRotY->duration();
 
       parallelAnimGroup->addAnimation(animRotY);
     }
@@ -427,6 +443,9 @@ QSequentialAnimationGroup *PropAnim::dwellClubRotXAnim(const int t_launch,
   // final rotX
   float finalRotX = CLUB_BASIC_ROTX; // we always send with this angle
 
+  // duration
+  int duration = (int)(DWELL_TIME * S_TO_MS / 2);
+
   // mid angle
   float midAngleRotX;
   if (t_isPassing)
@@ -438,6 +457,7 @@ QSequentialAnimationGroup *PropAnim::dwellClubRotXAnim(const int t_launch,
     if (t_launch == 1)
     {
       midAngleRotX = m_propRotX + ((m_propRotX - finalRotX) / 2);
+      duration = (int)(DWELL_TIME_LAUNCH1 * S_TO_MS / 2);
     }
     else
     {
@@ -448,7 +468,8 @@ QSequentialAnimationGroup *PropAnim::dwellClubRotXAnim(const int t_launch,
   // TODO: verify time
   // create first anim to low down angle
   auto animRotX1 = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_rotX"));
-  animRotX1->setDuration((int)(DWELL_TIME * S_TO_MS / 2));
+//  animRotX1->setDuration((int)(DWELL_TIME * S_TO_MS / 2));
+  animRotX1->setDuration(duration);
   animRotX1->setStartValue(m_propRotX);
   animRotX1->setEndValue(midAngleRotX);
   animRotX1->setLoopCount(ONE_LOOP);
@@ -457,7 +478,8 @@ QSequentialAnimationGroup *PropAnim::dwellClubRotXAnim(const int t_launch,
 
   // create second anim
   auto animRotX2 = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_rotX"));
-  animRotX2->setDuration((int)(DWELL_TIME * S_TO_MS / 2));
+//  animRotX2->setDuration((int)(DWELL_TIME * S_TO_MS / 2));
+  animRotX2->setDuration(duration);
   animRotX2->setStartValue(midAngleRotX);
   animRotX2->setEndValue(finalRotX);
   animRotX2->setLoopCount(ONE_LOOP);
@@ -490,9 +512,17 @@ QPropertyAnimation *PropAnim::dwellClubSelfRotYAnim(const float t_jugglerRotY,
         finalRotY = t_jugglerRotY - PROP_JUGGLING_DECAY_ROT_Y;
   }
 
+  // duration
+  int duration = (int)(DWELL_TIME * S_TO_MS);
+  if (t_launch == 1)
+  {
+    duration = (int)(DWELL_TIME_LAUNCH1 * S_TO_MS);
+  }
+
   // set anim rot (y)
   auto animRotY = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_rotY"));
-  animRotY->setDuration((int)(DWELL_TIME * S_TO_MS));
+//  animRotY->setDuration((int)(DWELL_TIME * S_TO_MS));
+  animRotY->setDuration(duration);
   animRotY->setStartValue(m_propRotY); // NOTE: sure ?
   animRotY->setEndValue(finalRotY);
   animRotY->setLoopCount(ONE_LOOP);
