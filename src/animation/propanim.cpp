@@ -222,7 +222,8 @@ QParallelAnimationGroup *PropAnim::dwellAnim(int t_jugglerIdLaunch,
                                                             jugglerRecieve,
                                                             posProp,
                                                             posFinal,
-                                                            t_handRecieve);
+                                                            t_handRecieve,
+                                                            t_launch);
 
     qDebug() << "dwell passing translat anim duration" << translationAnimGroup->duration();
 
@@ -363,8 +364,6 @@ float PropAnim::getArcTime(const int t_launch) const
   }
   else // Shannon Theorem
     arcTime = ((HAND_PERIOD) / 2) * (t_launch - (2 * DWELL_RATIO));
-
-//  qDebug() << "arcTime" << arcTime;
 
   return arcTime;
 }
@@ -537,7 +536,8 @@ QSequentialAnimationGroup *PropAnim::dwellPassingTranslationAnim(const Juggler *
                                                                  const Juggler *t_jugglerReceive,
                                                                  const QVector3D t_startPos,
                                                                  const QVector3D t_endPos,
-                                                                 hand t_handReceive)
+                                                                 hand t_handReceive,
+                                                                 const int t_launch)
 {
   /* si c'est un passing reculer la main, jusqu'à z = 0
   sur le point aligné entre la main du reciever
@@ -570,6 +570,11 @@ QSequentialAnimationGroup *PropAnim::dwellPassingTranslationAnim(const Juggler *
 
   // determine number of frames
   int frameCount = (int)((DWELL_TIME / DELTA_TIME));
+  // if it's a passing launch 1 ? NOTE: is it realistic
+  if ( t_launch == 1)
+  {
+    frameCount = (int)(DWELL_TIME_LAUNCH1 / DELTA_TIME);
+  }
 
   // faire anim arc de cercle jusqu'à ce point
   // puis jusqu'au point de lancement

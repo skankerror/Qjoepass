@@ -70,6 +70,7 @@ private:
   void setPropCount();
   void setState();
   void setCompleteSiteswap();
+
   // NOTE: make a static public method ?
   hand changeHand(hand t_hand){ return (t_hand == leftHand) ? rightHand : leftHand; };
   void setTotalAnimEvents();
@@ -77,11 +78,14 @@ private:
                                          int t_jugglerLaunchId,
                                          hand t_launchHand);
 
+  void setRealistic();
+
 private:
 
   QVector<siteswapEvent *> m_v_event;
   int m_period;
   bool m_valid = false;
+  bool m_realistic = false; // bool to know is this can be really animed irl
   bool m_synchron = false;
   QBitArray m_state;
 

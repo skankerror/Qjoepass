@@ -35,7 +35,9 @@ SiteSwap::SiteSwap(QVector<siteswapEvent *> &t_v_event,
     setState();
     setCompleteSiteswap();
     setTotalAnimEvents();
+    setRealistic();
   }
+
 }
 
 
@@ -275,4 +277,27 @@ QVector<animEvent *> SiteSwap::getPropAnimEvents(int t_launchPos,
   }
   // we have complete prop loop
   return v_returnVec;
+}
+
+// FIXME: this doesn't work for 5511 2 jugglers
+void SiteSwap::setRealistic()
+{
+  for (int i = 0; i < m_v_v_propAnimEvents.size(); i++)
+  {
+    QVector<animEvent *> v_propAnimEvents;
+    for (int j = 0; j < v_propAnimEvents.size(); j++)
+    {
+      auto anAnimEvent = v_propAnimEvents.at(j);
+      if (anAnimEvent->s_jugglerLaunchId != anAnimEvent->s_jugglerRecieveId
+          && anAnimEvent->s_launch < m_jugglerCount)
+      {
+        qDebug() << "vanilla siteswap can not be realisticly animed,"
+                << "because there's at least one launch arriving at the moment it will be launch";
+        m_realistic = false;
+        return;
+      }
+    }
+  }
+  m_realistic = true;
+  return;
 }

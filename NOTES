@@ -3,9 +3,10 @@ peut-être dans jongleur avant translate rotate ? m_posLHint_zPlus ?
 
 le trajet empty hand est linéaire, c'est pas réaliste il doit être un peu courbe,
 partir de la tangente (verticale) du lancer pour récupérer l'objet sur une tangente
-verticale aussi, mais sans faire un arc de cercle...Q
+verticale aussi, mais sans faire un arc de cercle...Qeasing curve ?
 
 Dans QAbstractAnimation il y a une policy où on détruit quand c'est stoppé.
 
-Trouver une bidouille pour faire simplement les time adjustments
-Une fonction statique dans curve ?
+interdire les lancers 1 pour 2 jugglers
+1-2 pour 3 jugglers, etc...
+Et voir que le 1 devient du 2 avec 2 jugglers

@@ -97,13 +97,12 @@ private:
                                                          const Juggler *t_jugglerReceive,
                                                          const QVector3D t_startPos,
                                                          const QVector3D t_endPos,
-                                                         hand t_handReceive);
+                                                         hand t_handReceive,
+                                                         const int t_launch);
 
   QPropertyAnimation *dwellClubPassingRotYAnim(const Juggler *t_jugglerReceive,
                                                const QVector3D t_endPos,
                                                hand t_handReceive);
-
-private slots:
 
 private:
 
