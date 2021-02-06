@@ -33,7 +33,6 @@ public:
   PropDwellAnim(JugglingProp *t_prop,
                 QVector3D t_initialPos,
                 QVector3D t_finalPos,
-                int dwellDuration,
                 int t_launch,
                 QObject * parent = nullptr);
 
@@ -42,7 +41,6 @@ public:
                 QVector3D t_initialPos,
                 QVector3D t_medPos,
                 QVector3D t_finalPos,
-                int dwellDuration,
                 int t_launch,
                 QObject * parent = nullptr);
 
@@ -50,7 +48,6 @@ public:
   PropDwellAnim(JugglingProp *t_prop,
                 QVector3D t_initialPos,
                 QVector3D t_finalPos,
-                int dwellDuration,
                 int t_launch,
                 float t_initialRotX,
                 float t_finalRotX,
@@ -63,7 +60,6 @@ public:
                 QVector3D t_initialPos,
                 QVector3D t_medPos,
                 QVector3D t_finalPos,
-                int dwellDuration,
                 int t_launch,
                 float t_initialRotX,
                 float t_finalRotX,
@@ -75,13 +71,22 @@ public:
 private:
 
   QSequentialAnimationGroup *passingTranslationAnim();
-  QSequentialAnimationGroup *selfPassingTranslationAnim();
-  QSequentialAnimationGroup *clubRotXAnim();
-  QSequentialAnimationGroup *clubRotYAnim();
+  QSequentialAnimationGroup *selfTranslationAnim();
+  QSequentialAnimationGroup *selfClubRotXAnim();
+  QSequentialAnimationGroup *passingClubRotXAnim();
+  QPropertyAnimation *clubRotYAnim();
 
 private:
 
-
+  JugglingProp *m_prop;
+  QVector3D m_initialPos;
+  QVector3D m_medPos;
+  QVector3D m_finalPos;
+  int m_launch;
+  float m_initialRotX;
+  float m_finalRotX;
+  float m_initialRotY;
+  float m_finalRotY;
 
 };
 
