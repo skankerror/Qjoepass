@@ -77,49 +77,29 @@ QParallelAnimationGroup *PropAnim::parabolicAnim(int t_jugglerIdLaunch,
                                                  hand t_handRecieve,
                                                  int t_launch)
 {
-  // create parallel animation group if we need to rotate during translation
-  auto parallelAnimGroup = new QParallelAnimationGroup();
+  // create our return anim
+  PropParabolicAnim *parabolicAnimGroup = nullptr;
 
   // get our concerned jugglers
   auto jugglerLaunch = m_v_juggler.at(t_jugglerIdLaunch); // TODO: check out of range
   auto jugglerRecieve = m_v_juggler.at(t_jugglerIdRecieve); // TODO: check out of range
 
   // find our 2 positions
-  auto posProp = getIntHandPos(jugglerLaunch, t_handLaunch); // pos where it starts
-  auto posFinal = getExtHandPos(jugglerRecieve, t_handRecieve); // pos where it should finish
+  auto initialPos = getIntHandPos(jugglerLaunch, t_handLaunch); // pos where it starts
+  auto finalPos = getExtHandPos(jugglerRecieve, t_handRecieve); // pos where it should finish
+
 
   // bool to know if it's a passing launch
   bool isPassing = (t_jugglerIdLaunch != t_jugglerIdRecieve);
 
-  // calculate arc time
-  float arcTime = getArcTime(t_launch);
-
-  //
-//  int frameCount = (int)((arcTime / (DELTA_TIME)));
-  int duration = qRound(arcTime * S_TO_MS);
-
-  // create translation seq animation
-  auto translationAnimGroup = parabolicTranslataionAnimGroup(posProp,
-                                                             posFinal,
-                                                             arcTime);
-
-  // Time adjustment if necessary
-  int intDecay = duration - translationAnimGroup->duration();
-//  qDebug() << "decay in translaton" << intDecay;
-  if (intDecay)
-    translationAnimGroup->addPause(intDecay);
-  qDebug() << "PropAnim::parabolicAnim() duration" << translationAnimGroup->duration();
-
-  // add it to our parallel
-  parallelAnimGroup->addAnimation(translationAnimGroup);
-
-  // NOTE: see rebounds stuff when it will be implemented
-  // if prop is a ball simply return translation
   if (m_propType == ball)
-    return parallelAnimGroup;
-
-  // else we must rotate prop
-  else
+  {
+    parabolicAnimGroup = new PropParabolicAnim(m_prop,
+                                               initialPos,
+                                               finalPos,
+                                               t_launch);
+  }
+  else // else we must rotate prop
   {
     // set numbers of rotations on (x)
     int rotXCount = (int)(t_launch / 2);
@@ -174,22 +154,20 @@ QParallelAnimationGroup *PropAnim::parabolicAnim(int t_jugglerIdLaunch,
 
 //      return parallelAnimGroup;
 //    }
+    float startRotX = (360 * rotXCount) + initialRotX;
+    float finalRotX = initialRotX + addRotX;
 
-    // rotation X
-    auto animRotX = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_rotX"));
-//    animRotX->setDuration(((int)(DELTA_TIME * S_TO_MS)) * frameCount);
-    animRotX->setDuration(duration);
-    animRotX->setStartValue((360 * rotXCount) + initialRotX);
-    animRotX->setEndValue(initialRotX + addRotX);
-    animRotX->setLoopCount(ONE_LOOP);
-    parallelAnimGroup->addAnimation(animRotX);
+    parabolicAnimGroup = new PropParabolicAnim(m_prop,
+                                               initialPos,
+                                               finalPos,
+                                               t_launch,
+                                               startRotX,
+                                               finalRotX);
 
-    // update our rotX to our endValue
     m_propRotX = initialRotX + addRotX;
 
-    // finally return anim
-    return parallelAnimGroup;
   }
+  return parabolicAnimGroup;
 }
 
 QParallelAnimationGroup *PropAnim::dwellAnim(int t_jugglerIdLaunch,
@@ -373,51 +351,6 @@ QVector3D PropAnim::getIntHandPos(const Juggler *t_juggler,
         retVector = t_juggler->getPositionLHint():
       retVector = t_juggler->getPositionRHint();
   return retVector;
-}
-
-float PropAnim::getArcTime(const int t_launch) const
-{
-  float arcTime;
-
-  if (t_launch == 1) // For launch 1 Shannon doesn't work
-  {
-    arcTime = LAUNCH1_TIME;
-  }
-  else // Shannon Theorem
-    arcTime = ((HAND_PERIOD) / 2) * (t_launch - (2 * DWELL_RATIO));
-
-  return arcTime;
-}
-
-QSequentialAnimationGroup *PropAnim::parabolicTranslataionAnimGroup(const QVector3D t_startPos,
-                                                                    const QVector3D t_endPos,
-                                                                    const float t_arcTime)
-{
-  // we calculate velocity launch
-  auto velBall = ((t_endPos - t_startPos) - 0.5 *
-                  (GRAVITY * qPow(t_arcTime, 2))) / t_arcTime;
-
-  int frameCount = (int)((t_arcTime / (DELTA_TIME)));
-
-  // We create our curve
-  auto v_parabolic = Curves::curveParabolic(velBall,
-                                            t_startPos,
-                                            frameCount);
-
-  // create sequential for translation
-  auto translationAnimGroup = new QSequentialAnimationGroup();
-
-  // this loop creates all animations for translation
-  for (int i = 0; i < frameCount; i++)
-  {
-    auto translationAnim = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_position"));
-    translationAnim->setDuration(qRound(DELTA_TIME * S_TO_MS));
-    translationAnim->setStartValue(v_parabolic.at(i));
-    translationAnim->setEndValue(v_parabolic.at(i + 1));
-    translationAnim->setLoopCount(ONE_LOOP);
-    translationAnimGroup->addAnimation(translationAnim);
-  }
-  return translationAnimGroup;
 }
 
 QVector3D PropAnim::setMedPosForPassingDwell(QVector3D t_finalPos,

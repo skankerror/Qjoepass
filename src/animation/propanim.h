@@ -22,13 +22,15 @@
 #include <QPropertyAnimation>
 #include <QtMath>
 #include "juggler.h"
-#include "jugglingball.h"
-#include "jugglingring.h"
-#include "jugglingclub.h"
+//#include "jugglingball.h"
+//#include "jugglingring.h"
+//#include "jugglingclub.h"
+#include "jugglingprop.h"
 #include "siteswap.h"
 #include "qjoepass.h"
 #include "curve.h"
 #include "propdwellanim.h"
+#include "propparabolicanim.h"
 
 // classe pour créer tout le trajet d'un objet
 
@@ -74,7 +76,7 @@ private:
   QVector3D getIntHandPos(const Juggler *t_juggler,
                           const hand t_side) const;
 
-  float getArcTime(const int t_launch) const;
+//  float getArcTime(const int t_launch) const;
 
   QSequentialAnimationGroup *parabolicTranslataionAnimGroup(const QVector3D t_startPos,
                                                             const QVector3D t_endPos,

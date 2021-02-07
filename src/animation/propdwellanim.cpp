@@ -288,6 +288,5 @@ QPropertyAnimation *PropDwellAnim::clubRotYAnim()
   animRotY->setEndValue(m_finalRotY);
   animRotY->setLoopCount(ONE_LOOP);
   return animRotY;
-
 }
 
