@@ -48,16 +48,16 @@ PropAnim::PropAnim(QVector<Juggler *> t_v_juggler,
 
 }
 
-void PropAnim::setAnim(QVector<animEvent *> t_v_animEvents)
+void PropAnim::setAnim(QVector<propAnimEvent *> t_v_propAnimEvents)
 {
-  for (int i = 0; i < t_v_animEvents.size(); i++)
+  for (int i = 0; i < t_v_propAnimEvents.size(); i++)
   {
-    auto propAnimEvent = t_v_animEvents.at(i);
+    auto propAnimEvent = t_v_propAnimEvents.at(i);
 
     /* this is a vanilla launch, so we must adjust launch according to number of jugglers
      * we create an adjust int. */
     int jugglerLaunchId = propAnimEvent->s_jugglerLaunchId;
-    int jugglerReceiveId = propAnimEvent->s_jugglerRecieveId;
+    int jugglerReceiveId = propAnimEvent->s_jugglerReceiveId;
     int adjustLaunch = jugglerLaunchId - jugglerReceiveId;
     int launch = propAnimEvent->s_launch;
     int realLaunch = (launch + adjustLaunch) / m_v_juggler.size();
@@ -73,8 +73,8 @@ void PropAnim::setAnim(QVector<animEvent *> t_v_animEvents)
 
 QParallelAnimationGroup *PropAnim::parabolicAnim(int t_jugglerIdLaunch,
                                                  hand t_handLaunch,
-                                                 int t_jugglerIdRecieve,
-                                                 hand t_handRecieve,
+                                                 int t_jugglerIdReceive,
+                                                 hand t_handReceive,
                                                  int t_launch)
 {
   // create our return anim
@@ -82,15 +82,15 @@ QParallelAnimationGroup *PropAnim::parabolicAnim(int t_jugglerIdLaunch,
 
   // get our concerned jugglers
   auto jugglerLaunch = m_v_juggler.at(t_jugglerIdLaunch); // TODO: check out of range
-  auto jugglerRecieve = m_v_juggler.at(t_jugglerIdRecieve); // TODO: check out of range
+  auto jugglerReceive = m_v_juggler.at(t_jugglerIdReceive); // TODO: check out of range
 
   // find our 2 positions
   auto initialPos = getIntHandPos(jugglerLaunch, t_handLaunch); // pos where it starts
-  auto finalPos = getExtHandPos(jugglerRecieve, t_handRecieve); // pos where it should finish
+  auto finalPos = getExtHandPos(jugglerReceive, t_handReceive); // pos where it should finish
 
 
   // bool to know if it's a passing launch
-  bool isPassing = (t_jugglerIdLaunch != t_jugglerIdRecieve);
+  bool isPassing = (t_jugglerIdLaunch != t_jugglerIdReceive);
 
   if (m_propType == ball)
   {
@@ -141,8 +141,8 @@ QParallelAnimationGroup *PropAnim::parabolicAnim(int t_jugglerIdLaunch,
 //      // rotation (x) become (y)
 //      int rotYCount = rotXCount;
 //      float initialRotY = m_prop->getRotY();
-//      float endValue = jugglerRecieve->getRotY();
-//      t_handRecieve == leftHand ? // NOTE: doesn't seem totally good
+//      float endValue = jugglerReceive->getRotY();
+//      t_handReceive == leftHand ? // NOTE: doesn't seem totally good
 //              endValue += 90 - (rotYCount * 360):
 //          endValue -= 90 - (rotYCount * 360);
 //      auto animRotY = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_rotY"));
@@ -172,13 +172,13 @@ QParallelAnimationGroup *PropAnim::parabolicAnim(int t_jugglerIdLaunch,
 
 QParallelAnimationGroup *PropAnim::dwellAnim(int t_jugglerIdLaunch,
                                              hand t_handLaunch,
-                                             int t_jugglerIdRecieve,
-                                             hand t_handRecieve,
+                                             int t_jugglerIdReceive,
+                                             hand t_handReceive,
                                              int t_launch)
 {
   // get our concerned jugglers
   auto jugglerLaunch = m_v_juggler.at(t_jugglerIdLaunch); // TODO: check out of range
-  auto jugglerRecieve = m_v_juggler.at(t_jugglerIdRecieve); // TODO: check out of range
+  auto jugglerReceive = m_v_juggler.at(t_jugglerIdReceive); // TODO: check out of range
 
   // pos where it starts
   QVector3D initialPos = getExtHandPos(jugglerLaunch,
@@ -188,7 +188,7 @@ QParallelAnimationGroup *PropAnim::dwellAnim(int t_jugglerIdLaunch,
                                      t_handLaunch);
 
   // bool to know if it's a passing launch
-  bool isPassing = (t_jugglerIdLaunch != t_jugglerIdRecieve);
+  bool isPassing = (t_jugglerIdLaunch != t_jugglerIdReceive);
 
   PropDwellAnim *dwellAnim = nullptr;
 
@@ -199,8 +199,8 @@ QParallelAnimationGroup *PropAnim::dwellAnim(int t_jugglerIdLaunch,
       // set medPos for passing
       auto medPos = setMedPosForPassingDwell(finalPos,
                                              jugglerLaunch,
-                                             jugglerRecieve,
-                                             t_handRecieve);
+                                             jugglerReceive,
+                                             t_handReceive);
 
       // create our dwell anim
       dwellAnim = new PropDwellAnim(m_prop,
@@ -242,12 +242,12 @@ QParallelAnimationGroup *PropAnim::dwellAnim(int t_jugglerIdLaunch,
         // set medPos for passing
         auto medPos = setMedPosForPassingDwell(finalPos,
                                                jugglerLaunch,
-                                               jugglerRecieve,
-                                               t_handRecieve);
+                                               jugglerReceive,
+                                               t_handReceive);
 
         // get position where launch arrives
-        auto dirVec = getExtHandPos(jugglerRecieve,
-                                       t_handRecieve);
+        auto dirVec = getExtHandPos(jugglerReceive,
+                                       t_handReceive);
 
         // set final angle
         finalRotY = -qRadiansToDegrees(qAtan2(dirVec.z() - finalPos.z(),
@@ -300,20 +300,20 @@ QParallelAnimationGroup *PropAnim::dwellAnim(int t_jugglerIdLaunch,
 
 QSequentialAnimationGroup* PropAnim::dwellParabolicAnim(int t_jugglerIdLaunch,
                                                         hand t_handLaunch,
-                                                        int t_jugglerIdRecieve,
-                                                        hand t_handRecieve,
+                                                        int t_jugglerIdReceive,
+                                                        hand t_handReceive,
                                                         int t_launch)
 {
   auto dwell = dwellAnim(t_jugglerIdLaunch,
                          t_handLaunch,
-                         t_jugglerIdRecieve,
-                         t_handRecieve,
+                         t_jugglerIdReceive,
+                         t_handReceive,
                          t_launch);
 
   auto parabolic = parabolicAnim(t_jugglerIdLaunch,
                                  t_handLaunch,
-                                 t_jugglerIdRecieve,
-                                 t_handRecieve,
+                                 t_jugglerIdReceive,
+                                 t_handReceive,
                                  t_launch);
 
   auto retAnim = new QSequentialAnimationGroup();
@@ -355,24 +355,24 @@ QVector3D PropAnim::getIntHandPos(const Juggler *t_juggler,
 
 QVector3D PropAnim::setMedPosForPassingDwell(QVector3D t_finalPos,
                                              Juggler *t_jugglerLaunch,
-                                             Juggler *t_jugglerRecieve,
-                                             hand t_handRecieve)
+                                             Juggler *t_jugglerReceive,
+                                             hand t_handReceive)
 {
   // get vec where launch will arrive
-  auto handRecievePos = getExtHandPos(t_jugglerRecieve,
-                                      t_handRecieve);
+  auto handReceivePos = getExtHandPos(t_jugglerReceive,
+                                      t_handReceive);
 
   // transform in jugglerLaunch vec
-  auto handRecievePosRelative = t_jugglerLaunch->worldVecToJugglerVec(handRecievePos);
+  auto handReceivePosRelative = t_jugglerLaunch->worldVecToJugglerVec(handReceivePos);
   auto posFinalRelative = t_jugglerLaunch->worldVecToJugglerVec(t_finalPos);
 
   // determine vec where launching hand will get for preparing launch
   // find line coeff
-  float lineCoeff = (handRecievePosRelative.z() - posFinalRelative.z())
-      / (handRecievePosRelative.x() - posFinalRelative.x());
+  float lineCoeff = (handReceivePosRelative.z() - posFinalRelative.z())
+      / (handReceivePosRelative.x() - posFinalRelative.x());
   // find origine ordinate
-  float originOrdinate = handRecievePosRelative.z()
-      - (lineCoeff * handRecievePosRelative.x());
+  float originOrdinate = handReceivePosRelative.z()
+      - (lineCoeff * handReceivePosRelative.x());
   // our vec will be at z = 0
   // find x pos
   float vecX = - (originOrdinate / lineCoeff);

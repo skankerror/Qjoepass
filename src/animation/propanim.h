@@ -48,26 +48,26 @@ public:
                     int t_launchType = 0,
                     QObject *parent = nullptr);
 
-  void setAnim(QVector<animEvent *> t_v_animEvents);
+  void setAnim(QVector<propAnimEvent *> t_v_propAnimEvents);
 
 private:
 
   QParallelAnimationGroup *parabolicAnim(int t_jugglerIdLaunch,
                                          hand t_handLaunch,
-                                         int t_jugglerIdRecieve,
-                                         hand t_handRecieve,
+                                         int t_jugglerIdReceive,
+                                         hand t_handReceive,
                                          int t_launch);
 
   QParallelAnimationGroup *dwellAnim(int t_jugglerIdLaunch,
                                      hand t_handLaunch,
-                                     int t_jugglerIdRecieve,
-                                     hand t_handRecieve,
+                                     int t_jugglerIdReceive,
+                                     hand t_handReceive,
                                      int t_launch);
 
   QSequentialAnimationGroup *dwellParabolicAnim(int t_jugglerIdLaunch,
                                                 hand t_handLaunch,
-                                                int t_jugglerIdRecieve,
-                                                hand t_handRecieve,
+                                                int t_jugglerIdReceive,
+                                                hand t_handReceive,
                                                 int t_launch);
 
   QVector3D getExtHandPos(const Juggler *t_juggler,
@@ -84,8 +84,8 @@ private:
 
   QVector3D setMedPosForPassingDwell(QVector3D t_finalPos,
                                      Juggler *t_jugglerLaunch,
-                                     Juggler *t_jugglerRecieve,
-                                     hand t_handRecieve);
+                                     Juggler *t_jugglerReceive,
+                                     hand t_handReceive);
 
 private:
 

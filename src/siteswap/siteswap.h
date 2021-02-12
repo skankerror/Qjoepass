@@ -31,16 +31,26 @@ struct siteswapEvent
   bool s_isMulti; // if true, group with next one.
 };
 
-// To send informations to animation
-struct animEvent
+// To send informations to animation about props moves
+struct propAnimEvent
 {
   int s_jugglerLaunchId;
   hand s_launchHand;
   int s_launch;
-  int s_jugglerRecieveId;
+  int s_jugglerReceiveId;
   hand s_receiveHand;
+  int s_startTime; // needed to pass to hand anim
 };
 
+// To send informations to animation about hands moves
+struct handAnimEvent
+{
+  int s_propId;
+  int s_startTime;
+  int s_launch;
+  int s_jugglerReceiveId;
+  hand s_receiveHand;
+};
 
 class SiteSwap : public QObject
 {
@@ -62,7 +72,7 @@ public:
   int getPeriod() const { return m_period; };
   QBitArray getState() const { return m_state; };
   // For sending datas to animation
-  QVector<QVector<animEvent *>> getTotalAnimEvents() const { return m_v_v_propAnimEvents; };
+  QVector<QVector<propAnimEvent *>> getTotalPropAnimEvents() const { return m_v_v_propAnimEvents; };
 
 private:
 
@@ -74,9 +84,11 @@ private:
   // NOTE: make a static public method ?
   hand changeHand(hand t_hand){ return (t_hand == leftHand) ? rightHand : leftHand; };
   void setTotalAnimEvents();
-  QVector<animEvent *> getPropAnimEvents(int t_launchPos,
-                                         int t_jugglerLaunchId,
-                                         hand t_launchHand);
+  void setPropAnimEvents(int t_launchPos,
+                         int t_jugglerLaunchId,
+                         hand t_launchHand,
+                         int t_idInState);
+  void setHandsAnimEvents();
 
   void setRealistic();
 
@@ -90,14 +102,19 @@ private:
   QBitArray m_state;
 
   /* set complete form of siteswap
-   * simplier for set animEvent
+   * simplier for set propAnimEvent
    * for example a 3 siteswap will become 333 */
   QVector<int> m_v_completeSiteswap;
   int m_periodCompleteSiteswap;
 
   int m_propCount;
   int m_jugglerCount;
-  QVector<QVector<animEvent *>> m_v_v_propAnimEvents;
+
+  // all informations to move props
+  QVector<QVector<propAnimEvent *>> m_v_v_propAnimEvents;
+
+  // all informations to move hands
+  QVector<QVector<handAnimEvent *>*> m_v_v_handAnimEvents;
 
 };
 

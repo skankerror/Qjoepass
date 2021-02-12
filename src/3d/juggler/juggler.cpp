@@ -81,7 +81,7 @@ Juggler::Juggler(QEntity *t_rootEntity,
   // we update hands positions and head
   setBodyPositions();
 
-  // connect to always have correct send and recieve props positions
+  // connect to always have correct send and receive props positions
   connect(this, SIGNAL(positionChanged()), this, SLOT(setBodyPositions()));
 
   /*********************** testing zone *********************************/

@@ -67,6 +67,8 @@ public:
                 float t_finalRotY,
                 QObject *parent = nullptr);
 
+  // faire une methode qui crée une handAnim
+
 
 private:
 
