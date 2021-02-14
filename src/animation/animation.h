@@ -47,7 +47,6 @@ public:
   propType getPropType() const { return m_propType; };
   int getLaunchType() const { return m_launchType ;};
 
-//private:
 
 private:
 

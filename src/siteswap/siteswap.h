@@ -40,6 +40,7 @@ struct propAnimEvent
   int s_jugglerReceiveId;
   hand s_receiveHand;
   int s_startTime; // needed to pass to hand anim
+  int s_propId; // needed to pass to hand anim
 };
 
 // To send informations to animation about hands moves
@@ -87,8 +88,13 @@ private:
   void setPropAnimEvents(int t_launchPos,
                          int t_jugglerLaunchId,
                          hand t_launchHand,
-                         int t_idInState);
+                         int t_idInState,
+                         int t_propId);
   void setHandsAnimEvents();
+  // needed to reorder m_v_v_handAnimEvents
+  static bool wayToSort(handAnimEvent *t_firstHandAnimEvent,
+                 handAnimEvent *t_secondHandAnimEvent);
+  void reorderHandsAnimEvents();
 
   void setRealistic();
 
