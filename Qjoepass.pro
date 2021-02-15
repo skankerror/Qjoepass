@@ -44,7 +44,6 @@ SOURCES += \
   src/animation/curve.cpp \
   src/animation/handanim.cpp \
   src/animation/handdwellanim.cpp \
-  src/animation/handemptyanim.cpp \
   src/animation/propanim.cpp \
   src/animation/propdwellanim.cpp \
   src/animation/propparabolicanim.cpp \
@@ -68,7 +67,6 @@ HEADERS += \
   src/animation/curve.h \
   src/animation/handanim.h \
   src/animation/handdwellanim.h \
-  src/animation/handemptyanim.h \
   src/animation/propanim.h \
   src/animation/propdwellanim.h \
   src/animation/propparabolicanim.h \

@@ -182,7 +182,7 @@ QParallelAnimationGroup *PropAnim::dwellAnim(int t_jugglerIdLaunch,
 
   // pos where it starts
   QVector3D initialPos = getExtHandPos(jugglerLaunch,
-                                    t_handLaunch);
+                                       t_handLaunch);
   // pos where it should finish
   QVector3D finalPos = getIntHandPos(jugglerLaunch,
                                      t_handLaunch);
@@ -204,18 +204,18 @@ QParallelAnimationGroup *PropAnim::dwellAnim(int t_jugglerIdLaunch,
 
       // create our dwell anim
       dwellAnim = new PropDwellAnim(m_prop,
-                                         initialPos,
-                                         medPos,
-                                         finalPos,
-                                         t_launch);
+                                    initialPos,
+                                    medPos,
+                                    finalPos,
+                                    t_launch);
     }
     else
     {
       // create our dwell anim
       dwellAnim = new PropDwellAnim(m_prop,
-                                         initialPos,
-                                         finalPos,
-                                         t_launch);
+                                    initialPos,
+                                    finalPos,
+                                    t_launch);
     }
   }
   else // make translation and rotation

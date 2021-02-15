@@ -19,15 +19,52 @@
 #define HANDDWELLANIM_H
 
 #include <QSequentialAnimationGroup>
+#include "juggler.h"
+#include "jugglingprop.h"
+#include "qjoepass.h"
 
-class HandDwellAnim : public QSequentialAnimationGroup
+class HandDwellAnim : public QParallelAnimationGroup
 {
 
   Q_OBJECT
 
 public:
 
-  HandDwellAnim();
+  // cstr for self launch
+  HandDwellAnim(Juggler *t_juggler,
+                hand t_hand,
+                JugglingProp *t_prop,
+                QVector3D t_initialPos,
+                QVector3D t_finalPos,
+                int t_launch,
+                QObject * parent = nullptr);
+
+  // cstr for passing launch
+  HandDwellAnim(Juggler *t_juggler,
+                hand t_hand,
+                JugglingProp *t_prop,
+                QVector3D t_initialPos,
+                QVector3D t_medPos,
+                QVector3D t_finalPos,
+                int t_launch,
+                QObject * parent = nullptr);
+
+private:
+
+  void passingAnim();
+  void selfAnim();
+
+private:
+
+  Juggler *m_juggler;
+  hand m_hand;
+  JugglingProp *m_prop;
+  QVector3D m_initialPos;
+  QVector3D m_medPos;
+  QVector3D m_finalPos;
+  int m_launch;
+  QByteArray m_propertyName;
+
 };
 
 #endif // HANDDWELLANIM_H

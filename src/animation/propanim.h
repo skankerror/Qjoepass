@@ -22,9 +22,6 @@
 #include <QPropertyAnimation>
 #include <QtMath>
 #include "juggler.h"
-//#include "jugglingball.h"
-//#include "jugglingring.h"
-//#include "jugglingclub.h"
 #include "jugglingprop.h"
 #include "siteswap.h"
 #include "qjoepass.h"
@@ -76,8 +73,6 @@ private:
   QVector3D getIntHandPos(const Juggler *t_juggler,
                           const hand t_side) const;
 
-//  float getArcTime(const int t_launch) const;
-
   QSequentialAnimationGroup *parabolicTranslataionAnimGroup(const QVector3D t_startPos,
                                                             const QVector3D t_endPos,
                                                             const float t_arcTime);
@@ -90,7 +85,7 @@ private:
 private:
 
   int m_propId; // the id of the prop
-  int m_decayTime; // depending on propId, locate on the timeline
+  int m_decayTime; // depending on propId
   QVector<Juggler *> m_v_juggler;
   propType m_propType;
   JugglingProp *m_prop;

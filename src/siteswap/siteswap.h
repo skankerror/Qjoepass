@@ -93,7 +93,9 @@ private:
   void setHandsAnimEvents();
   // needed to reorder m_v_v_handAnimEvents
   static bool wayToSort(handAnimEvent *t_firstHandAnimEvent,
-                 handAnimEvent *t_secondHandAnimEvent);
+                        handAnimEvent *t_secondHandAnimEvent)
+  { return t_firstHandAnimEvent->s_startTime < t_secondHandAnimEvent->s_startTime; };
+
   void reorderHandsAnimEvents();
 
   void setRealistic();

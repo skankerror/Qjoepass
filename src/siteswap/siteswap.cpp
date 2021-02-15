@@ -352,20 +352,14 @@ void SiteSwap::setHandsAnimEvents()
   reorderHandsAnimEvents();
 
   /***************** check *******************/
-  qDebug() << "m_v_v_handAnimEvents size : " << m_v_v_handAnimEvents.size();
-  for (int i = 0; i < m_v_v_handAnimEvents.size(); i++)
-  {
-    auto v_handAnimEvents = m_v_v_handAnimEvents.at(i);
-    qDebug() << "hand anim n° : " << i << "size : " << v_handAnimEvents->size();
-    qDebug() << "starting time : " << v_handAnimEvents->at(0)->s_startTime;
-  }
+//  qDebug() << "m_v_v_handAnimEvents size : " << m_v_v_handAnimEvents.size();
+//  for (int i = 0; i < m_v_v_handAnimEvents.size(); i++)
+//  {
+//    auto v_handAnimEvents = m_v_v_handAnimEvents.at(i);
+//    qDebug() << "hand anim n° : " << i << "size : " << v_handAnimEvents->size();
+//    qDebug() << "starting time : " << v_handAnimEvents->at(0)->s_startTime;
+//  }
 
-}
-
-bool SiteSwap::wayToSort(handAnimEvent *t_firstHandAnimEvent,
-                         handAnimEvent *t_secondHandAnimEvent)
-{
-  return t_firstHandAnimEvent->s_startTime < t_secondHandAnimEvent->s_startTime;
 }
 
 void SiteSwap::reorderHandsAnimEvents()
