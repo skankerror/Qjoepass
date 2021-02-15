@@ -83,20 +83,20 @@ void HandDwellAnim::passingAnim()
                                                               m_finalPos,
                                                               frameCount);
 
-  auto translationPropGroup = new QSequentialAnimationGroup();
+//  auto translationPropGroup = new QSequentialAnimationGroup();
 
-  // TODO: verify time
-  // loop creating our tranlation anim
-  for (int i = 0; i < frameCount; i++)
-  {
-    auto translationAnim = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_position"));
-    translationAnim->setDuration((int)(DELTA_TIME * S_TO_MS));
-    translationAnim->setStartValue(v_twoQuarterCircular.at(i));
-    translationAnim->setEndValue(v_twoQuarterCircular.at(i + 1));
-    translationAnim->setLoopCount(ONE_LOOP);
-    translationPropGroup->addAnimation(translationAnim);
-  }
-  addAnimation(translationPropGroup);
+//  // TODO: verify time
+//  // loop creating our tranlation anim
+//  for (int i = 0; i < frameCount; i++)
+//  {
+//    auto translationAnim = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_position"));
+//    translationAnim->setDuration((int)(DELTA_TIME * S_TO_MS));
+//    translationAnim->setStartValue(v_twoQuarterCircular.at(i));
+//    translationAnim->setEndValue(v_twoQuarterCircular.at(i + 1));
+//    translationAnim->setLoopCount(ONE_LOOP);
+//    translationPropGroup->addAnimation(translationAnim);
+//  }
+//  addAnimation(translationPropGroup);
 
   auto translationHandGroup = new QSequentialAnimationGroup();
 
@@ -121,13 +121,13 @@ void HandDwellAnim::selfAnim()
 
   if (m_launch == 1) // dwell is a linear move
   {
-    auto propTranslation = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_position"));
-    propTranslation->setDuration((int)(DWELL_TIME_LAUNCH1 * S_TO_MS));
-    propTranslation->setStartValue(m_initialPos);
-    propTranslation->setEndValue(m_finalPos);
-    propTranslation->setLoopCount(ONE_LOOP);
+//    auto propTranslation = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_position"));
+//    propTranslation->setDuration((int)(DWELL_TIME_LAUNCH1 * S_TO_MS));
+//    propTranslation->setStartValue(m_initialPos);
+//    propTranslation->setEndValue(m_finalPos);
+//    propTranslation->setLoopCount(ONE_LOOP);
 
-    addAnimation(propTranslation);
+//    addAnimation(propTranslation);
 
     auto handTranslation = new QPropertyAnimation(m_juggler, m_propertyName);
     handTranslation->setDuration((int)(DWELL_TIME_LAUNCH1 * S_TO_MS));
@@ -147,19 +147,19 @@ void HandDwellAnim::selfAnim()
                                                                   m_finalPos,
                                                                   frameCount);
 
-    auto translationPropGroup = new QSequentialAnimationGroup();
-    // loop creating our tranlation anim
-    for (int i = 0; i < frameCount; i++)
-    {
-      auto translationAnim = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_position"));
-      translationAnim->setDuration(qRound(DELTA_TIME * S_TO_MS));
-      translationAnim->setStartValue(v_semiCircular.at(i));
-      translationAnim->setEndValue(v_semiCircular.at(i + 1));
-      translationAnim->setLoopCount(ONE_LOOP);
+//    auto translationPropGroup = new QSequentialAnimationGroup();
+//    // loop creating our tranlation anim
+//    for (int i = 0; i < frameCount; i++)
+//    {
+//      auto translationAnim = new QPropertyAnimation(m_prop, QByteArrayLiteral("m_position"));
+//      translationAnim->setDuration(qRound(DELTA_TIME * S_TO_MS));
+//      translationAnim->setStartValue(v_semiCircular.at(i));
+//      translationAnim->setEndValue(v_semiCircular.at(i + 1));
+//      translationAnim->setLoopCount(ONE_LOOP);
 
-      translationPropGroup->addAnimation(translationAnim);
-     }
-    addAnimation(translationPropGroup);
+//      translationPropGroup->addAnimation(translationAnim);
+//     }
+//    addAnimation(translationPropGroup);
 
     auto translationHandGroup = new QSequentialAnimationGroup();
     // loop creating our tranlation anim

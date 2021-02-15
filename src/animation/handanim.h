@@ -23,7 +23,6 @@
 #include "jugglingprop.h"
 #include "siteswap.h"
 #include "handdwellanim.h"
-#include "handemptyanim.h"
 
 class HandAnim : public QSequentialAnimationGroup
 {
@@ -32,7 +31,8 @@ class HandAnim : public QSequentialAnimationGroup
 
 public:
 
-  explicit HandAnim(QVector<Juggler *> t_v_juggler, int t_jugglerId,
+  explicit HandAnim(QVector<Juggler *> t_v_juggler,
+                    int t_jugglerId,
                     hand t_hand,
                     QVector<JugglingProp *> t_v_prop,
                     bool t_isExtCatchPlus,

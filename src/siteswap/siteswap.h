@@ -51,6 +51,15 @@ struct handAnimEvent
   int s_launch;
   int s_jugglerReceiveId;
   hand s_receiveHand;
+  int s_dwellDuration; // à setter dans dwell anim
+};
+
+// To get correct timing in hand anim
+struct hand0AnimEvent
+{
+  int s_startTime;
+  int s_jugglerId;
+  int s_hand;
 };
 
 class SiteSwap : public QObject
@@ -74,6 +83,7 @@ public:
   QBitArray getState() const { return m_state; };
   // For sending datas to animation
   QVector<QVector<propAnimEvent *>> getTotalPropAnimEvents() const { return m_v_v_propAnimEvents; };
+  QVector<QVector<handAnimEvent *>*> getTotalHandAnimEvents() const { return m_v_v_handAnimEvents; };
 
 private:
 
@@ -90,7 +100,7 @@ private:
                          hand t_launchHand,
                          int t_idInState,
                          int t_propId);
-  void setHandsAnimEvents();
+  void setHandsAnimEvents(QVector<hand0AnimEvent *> t_v_hand0animEvents);
   // needed to reorder m_v_v_handAnimEvents
   static bool wayToSort(handAnimEvent *t_firstHandAnimEvent,
                         handAnimEvent *t_secondHandAnimEvent)

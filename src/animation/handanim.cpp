@@ -36,11 +36,25 @@ void HandAnim::setAnim(QVector<handAnimEvent *> *t_v_handAnimEvents)
   for (int i = 0; i < t_v_handAnimEvents->size(); i++)
   {
     auto myHandAnimEvent = t_v_handAnimEvents->at(i);
+    int launch = myHandAnimEvent->s_launch;
+    int dwellDuration;
 
-    auto myDwellAnim = dwellAnim(myHandAnimEvent->s_propId,
-                                 myHandAnimEvent->s_launch,
-                                 myHandAnimEvent->s_jugglerReceiveId,
-                                 myHandAnimEvent->s_receiveHand);
+    if (launch) // launch is not 0
+    {
+      auto myDwellAnim = dwellAnim(myHandAnimEvent->s_propId,
+                                   myHandAnimEvent->s_launch,
+                                   myHandAnimEvent->s_jugglerReceiveId,
+                                   myHandAnimEvent->s_receiveHand);
+      addAnimation(myDwellAnim);
+      (launch == 1) ?
+            dwellDuration = DWELL_TIME_LAUNCH1 * S_TO_MS :
+          dwellDuration = DWELL_TIME * S_TO_MS;
+    }
+    else // it's 0 launch, no dwell
+    {
+      dwellDuration = 0;
+      // FIXME: pas bon y faut choper le prochain qui n'est pas un 0
+    }
 
     // empty hand
     handAnimEvent *nextHandAnimEvent = nullptr;
@@ -51,21 +65,21 @@ void HandAnim::setAnim(QVector<handAnimEvent *> *t_v_handAnimEvents)
     // if it's last event ?
     if (i == t_v_handAnimEvents->size() - 1)
     {
-      nextHandAnimEvent = t_v_handAnimEvents->at(0); // get the first of loop
-      duration = myHandAnimEvent->s_launch * (HAND_PERIOD / 2);
+      duration = qRound((HAND_PERIOD * S_TO_MS) - dwellDuration);
     }
     else
     {
       nextHandAnimEvent = t_v_handAnimEvents->at(i + 1); // else get next
-      duration = nextHandAnimEvent->s_startTime - myHandAnimEvent->s_startTime;
+      duration = nextHandAnimEvent->s_startTime - myHandAnimEvent->s_startTime - dwellDuration;
     }
 
+    qDebug() << "event n° : " << i << "empty hand Duration : " << duration;
     // pass propId to
     auto myEmptyHandAnim = emptyHandAnim(initialPos,
                                          finalPos,
                                          duration);
 
-    addAnimation(myDwellAnim);
+//    addAnimation(myDwellAnim);
     addAnimation(myEmptyHandAnim);
   }
   setLoopCount(INFINITE_LOOP);

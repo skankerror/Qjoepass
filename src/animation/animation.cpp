@@ -20,7 +20,12 @@
 
 Animation::Animation(QObject *parent)
   : QParallelAnimationGroup(parent)
-{}
+{
+  // bool to know if we need to enlarge our juggling
+  m_isExtPlusCatch = (m_propType == ring  && m_launchType == panCake) ||
+      (m_propType == club && m_launchType == helicopter);
+
+}
 
 void Animation::setSiteSwap(SiteSwap *t_siteSwap)
 {
@@ -37,6 +42,13 @@ void Animation::setAnim()
     return;
   }
 
+  setPropAnim();
+  setHandAnim();
+
+}
+
+void Animation::setPropAnim()
+{
   // we calculate state.
   QBitArray state = m_siteSwap->getState();
   // we get all the loops for each prop
@@ -68,10 +80,68 @@ void Animation::setAnim()
       seqAnimForDelay->addAnimation(propAnim);
       addAnimation(seqAnimForDelay);
 
-      qDebug() << "lenght of prop anim n°" << i << propAnim->duration();
+//      qDebug() << "lenght of prop anim n°" << i << propAnim->duration();
 
       propId++;
     }
+  }
+
+}
+
+void Animation::setHandAnim()
+{
+  auto v_v_handAnimEvents = m_siteSwap->getTotalHandAnimEvents();
+
+  for (int i = 0; i < m_v_juggler.size(); i++)
+  {
+    // right hand
+    auto rightHandAnim = new HandAnim(m_v_juggler,
+                                      i,
+                                      hand(rightHand),
+                                      m_v_prop,
+                                      m_isExtPlusCatch);
+
+    rightHandAnim->setAnim(v_v_handAnimEvents.at(2 * i));
+    addAnimation(rightHandAnim);
+
+    /***************** check *******************/
+//      auto v_handAnimEvents = v_v_handAnimEvents.at(2 * i);
+//      qDebug() << "HAND ANIM n° : " << 2 * i;
+//      for (int j = 0; j < v_handAnimEvents->size(); j++)
+//      {
+//        auto myHandAnimEvents = v_handAnimEvents->at(j);
+//        qDebug() << "EVENT n° : " << j;
+//        qDebug() << "*start time" << myHandAnimEvents->s_startTime;
+//        qDebug() << "*prop id" << myHandAnimEvents->s_propId;
+//        qDebug() << "*rec hand" << myHandAnimEvents->s_receiveHand;
+//      }
+
+    // left hand
+    // add delay
+    auto seqForDelay = new QSequentialAnimationGroup();
+    seqForDelay->addPause((int)((HAND_PERIOD / 2) * S_TO_MS));
+    auto leftHandAnim = new HandAnim(m_v_juggler,
+                                     i,
+                                     hand(leftHand),
+                                     m_v_prop,
+                                     m_isExtPlusCatch);
+
+    leftHandAnim->setAnim(v_v_handAnimEvents.at((2 * i) + 1));
+    seqForDelay->addAnimation(leftHandAnim);
+    addAnimation(seqForDelay);
+
+    /***************** check *******************/
+//    v_handAnimEvents = v_v_handAnimEvents.at((2 * i) + 1);
+//    qDebug() << "HAND ANIM n° : " << (2 * i) + 1;
+//    for (int j = 0; j < v_handAnimEvents->size(); j++)
+//    {
+//      auto myHandAnimEvents = v_handAnimEvents->at(j);
+//      qDebug() << "EVENT n° : " << j;
+//      qDebug() << "*start time" << myHandAnimEvents->s_startTime;
+//      qDebug() << "*prop id" << myHandAnimEvents->s_propId;
+//      qDebug() << "*rec hand" << myHandAnimEvents->s_receiveHand;
+//    }
+
   }
 }
 

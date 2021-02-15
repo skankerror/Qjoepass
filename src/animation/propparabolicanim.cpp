@@ -41,7 +41,7 @@ PropParabolicAnim::PropParabolicAnim(JugglingProp *t_prop,
   int intDecay = m_duration - translatAnim->duration();
   if (intDecay)
     translatAnim->addPause(intDecay);
-  qDebug() << "PropAnim::parabolicAnim() duration" << translatAnim->duration();
+//  qDebug() << "PropAnim::parabolicAnim() duration" << translatAnim->duration();
 
   addAnimation(translatAnim);
 }
@@ -73,7 +73,7 @@ PropParabolicAnim::PropParabolicAnim(JugglingProp *t_prop,
 //  qDebug() << "decay in translaton" << intDecay;
   if (intDecay)
     translatAnim->addPause(intDecay);
-  qDebug() << "PropAnim::parabolicAnim() duration" << translatAnim->duration();
+//  qDebug() << "PropAnim::parabolicAnim() duration" << translatAnim->duration();
 
   addAnimation(translatAnim);
 

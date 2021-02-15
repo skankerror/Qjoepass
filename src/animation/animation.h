@@ -24,6 +24,7 @@
 #include "jugglingprop.h"
 #include "siteswap.h"
 #include "propanim.h"
+#include "handanim.h"
 #include "qjoepass.h"
 
 class Animation : public QParallelAnimationGroup
@@ -47,6 +48,10 @@ public:
   propType getPropType() const { return m_propType; };
   int getLaunchType() const { return m_launchType ;};
 
+private:
+
+  void setPropAnim();
+  void setHandAnim();
 
 private:
 
@@ -57,6 +62,7 @@ private:
   SiteSwap *m_siteSwap;
   propType m_propType;
   int m_period;
+  bool m_isExtPlusCatch;
 
 };
 

@@ -191,10 +191,12 @@ const float DWELL_TIME_LAUNCH1 = (HAND_PERIOD / 2.0f) - LAUNCH1_TIME; // must be
 // for QAbstractAnimation::setLoopCount(int)
 #define INFINITE_LOOP -1
 #define ONE_LOOP 1
+// for anim 0 launch
+#define NO_PROP -1
 
 /*********************************** Enums *******************************************/
 
-enum hand{leftHand, rightHand};
+enum hand{rightHand, leftHand};
 enum propType{ball, ring, club, propNumb};
 enum launchTypeBall{normalBall, bounce};
 enum launchTypeRing{normalRing, panCake};
