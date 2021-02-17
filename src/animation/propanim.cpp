@@ -48,11 +48,11 @@ PropAnim::PropAnim(QVector<Juggler *> t_v_juggler,
 
 }
 
-void PropAnim::setAnim(QVector<propAnimEvent *> t_v_propAnimEvents)
+void PropAnim::setAnim(PropAnimEvents *t_propAnimEvents)
 {
-  for (int i = 0; i < t_v_propAnimEvents.size(); i++)
+  for (int i = 0; i < t_propAnimEvents->getSize(); i++)
   {
-    auto propAnimEvent = t_v_propAnimEvents.at(i);
+    auto propAnimEvent = t_propAnimEvents->getPropAnimEventAt(i);
 
     /* this is a vanilla launch, so we must adjust launch according to number of jugglers
      * we create an adjust int. */

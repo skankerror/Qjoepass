@@ -120,8 +120,9 @@ signals:
 
   // signals properties
   void positionChanged(); // connected to setBodyPositions()
-  void leftHandPositionChanged(); // unused
-  void rightHandPositionChanged(); // unused
+  // connect to prop during dwell
+  void leftHandPositionChanged(QVector3D);
+  void rightHandPositionChanged(QVector3D);
 
 private:
 

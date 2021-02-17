@@ -22,7 +22,6 @@
 #include "juggler.h"
 #include "jugglingprop.h"
 #include "siteswap.h"
-#include "handdwellanim.h"
 
 class HandAnim : public QSequentialAnimationGroup
 {
@@ -43,9 +42,9 @@ public:
 private:
 
   QParallelAnimationGroup *dwellAnim(int t_propId,
-                                       int t_launch,
-                                       int t_jugglerReceiveId,
-                                       hand t_receiveHand);
+                                     int t_launch,
+                                     int t_jugglerReceiveId,
+                                     hand t_receiveHand);
 
   QSequentialAnimationGroup *emptyHandAnim(QVector3D t_initialPos,
                                            QVector3D t_finalPos,

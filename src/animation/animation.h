@@ -18,8 +18,7 @@
 #ifndef ANIMATION_H
 #define ANIMATION_H
 
-#include <QPropertyAnimation>
-#include <QSequentialAnimationGroup>
+#include <QParallelAnimationGroup>
 #include "juggler.h"
 #include "jugglingprop.h"
 #include "siteswap.h"
@@ -36,6 +35,7 @@ public:
 
   explicit Animation(QObject *parent = nullptr);
 
+  // setters
   void setVJuggler(QVector<Juggler*> t_v_juggler) { m_v_juggler = t_v_juggler; };
   void setVProp(QVector<JugglingProp *> t_v_prop) { m_v_prop = t_v_prop; };
   void setSiteSwap(SiteSwap *t_siteSwap);

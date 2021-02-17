@@ -16,6 +16,7 @@
  */
 
 #include "handanim.h"
+#include "handdwellanim.h"
 
 HandAnim::HandAnim(QVector<Juggler *> t_v_juggler,
                    int t_jugglerId,
@@ -35,43 +36,64 @@ void HandAnim::setAnim(QVector<handAnimEvent *> *t_v_handAnimEvents)
 {
   for (int i = 0; i < t_v_handAnimEvents->size(); i++)
   {
+    // dwell vars
     auto myHandAnimEvent = t_v_handAnimEvents->at(i);
     int launch = myHandAnimEvent->s_launch;
+    int startTime = myHandAnimEvent->s_startTime;
     int dwellDuration;
 
-    if (launch) // launch is not 0
-    {
-      auto myDwellAnim = dwellAnim(myHandAnimEvent->s_propId,
-                                   myHandAnimEvent->s_launch,
-                                   myHandAnimEvent->s_jugglerReceiveId,
-                                   myHandAnimEvent->s_receiveHand);
-      addAnimation(myDwellAnim);
-      (launch == 1) ?
-            dwellDuration = DWELL_TIME_LAUNCH1 * S_TO_MS :
-          dwellDuration = DWELL_TIME * S_TO_MS;
-    }
-    else // it's 0 launch, no dwell
-    {
-      dwellDuration = 0;
-      // FIXME: pas bon y faut choper le prochain qui n'est pas un 0
-    }
-
-    // empty hand
+    // empty hand vars
     handAnimEvent *nextHandAnimEvent = nullptr;
     auto initialPos = getIntHandPos(m_juggler, m_hand);
     auto finalPos = getExtHandPos(m_juggler, m_hand);
     int duration;
 
+    // déterminer quand ça va démarrer, si y a un décalage rajouter une pause
+    if (i == 0)
+    {
+      int pauseTime;
+      // right hand ?
+      (m_hand == rightHand) ?
+            pauseTime = startTime :
+          pauseTime = startTime - (int)((HAND_PERIOD / 2) * S_TO_MS);
+      addPause(pauseTime);
+      qDebug() << "event n° : " << i << "Pause time begining : " << startTime;
+
+    }
+
+    auto myDwellAnim = dwellAnim(myHandAnimEvent->s_propId,
+                                 myHandAnimEvent->s_launch,
+                                 myHandAnimEvent->s_jugglerReceiveId,
+                                 myHandAnimEvent->s_receiveHand);
+    addAnimation(myDwellAnim);
+    (launch == 1) ?
+          dwellDuration = DWELL_TIME_LAUNCH1 * S_TO_MS :
+        dwellDuration = DWELL_TIME * S_TO_MS;
     // if it's last event ?
     if (i == t_v_handAnimEvents->size() - 1)
     {
-      duration = qRound((HAND_PERIOD * S_TO_MS) - dwellDuration);
+      nextHandAnimEvent = t_v_handAnimEvents->at(0);
+      int nextHandAnimEventStartTime = nextHandAnimEvent->s_startTime;
+      qDebug() << "start Time ?" << nextHandAnimEventStartTime;
+      if (!nextHandAnimEventStartTime) // start time = 0 ?
+      {
+        // we can get loop duration
+        duration = nextHandAnimEvent->s_loopDuration - startTime - dwellDuration;
+      }
+      else
+      {
+//        duration = nextHandAnimEvent->s_loopDuration - startTime - dwellDuration;
+        duration = (int)((HAND_PERIOD * S_TO_MS) - dwellDuration);
+      }
     }
     else
     {
       nextHandAnimEvent = t_v_handAnimEvents->at(i + 1); // else get next
-      duration = nextHandAnimEvent->s_startTime - myHandAnimEvent->s_startTime - dwellDuration;
+      duration = nextHandAnimEvent->s_startTime - startTime - dwellDuration;
     }
+
+
+    // FIXME: doesn't work for all case
 
     qDebug() << "event n° : " << i << "empty hand Duration : " << duration;
     // pass propId to
@@ -79,7 +101,6 @@ void HandAnim::setAnim(QVector<handAnimEvent *> *t_v_handAnimEvents)
                                          finalPos,
                                          duration);
 
-//    addAnimation(myDwellAnim);
     addAnimation(myEmptyHandAnim);
   }
   setLoopCount(INFINITE_LOOP);
@@ -208,11 +229,13 @@ QVector3D HandAnim::setMedPosForPassingDwell(QVector3D t_finalPos,
   // find origine ordinate
   float originOrdinate = handReceivePosRelative.z()
       - (lineCoeff * handReceivePosRelative.x());
-  // our vec will be at z = 0
   // find x pos
   float vecX = - (originOrdinate / lineCoeff);
   // create our vec
-  QVector3D handBackVecRelative(vecX, HAND_BACKEST_PASSING_Y, 0);
+  QVector3D handBackVecRelative(vecX,
+                                HAND_BACKEST_PASSING_Y,
+                                HAND_BACKEST_PASSING_Z);
+
   // get back to world coordonate
   auto medPos = m_juggler->jugglerVecToWorldVec(handBackVecRelative);
 

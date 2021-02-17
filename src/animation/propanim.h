@@ -24,6 +24,7 @@
 #include "juggler.h"
 #include "jugglingprop.h"
 #include "siteswap.h"
+#include "propanimevents.h"
 #include "qjoepass.h"
 #include "curve.h"
 #include "propdwellanim.h"
@@ -45,7 +46,7 @@ public:
                     int t_launchType = 0,
                     QObject *parent = nullptr);
 
-  void setAnim(QVector<propAnimEvent *> t_v_propAnimEvents);
+  void setAnim(PropAnimEvents *t_propAnimEvents);
 
 private:
 

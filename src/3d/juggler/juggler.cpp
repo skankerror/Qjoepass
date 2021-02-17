@@ -179,6 +179,7 @@ void Juggler::setLeftHandPosition(QVector3D t_pos)
 
   // send to our arm
   m_leftArm->setHandPosition(relativePos);
+  emit leftHandPositionChanged(t_pos);
 }
 
 void Juggler::setRightHandPosition(QVector3D t_pos)
@@ -188,6 +189,7 @@ void Juggler::setRightHandPosition(QVector3D t_pos)
 
   // send to our arm
   m_rightArm->setHandPosition(relativePos);
+  emit rightHandPositionChanged(t_pos);
 }
 
 void Juggler::setPosition(QVector3D t_position)

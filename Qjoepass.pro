@@ -51,6 +51,8 @@ SOURCES += \
   src/gui/mainwindow.cpp \
   src/gui/preferences.cpp \
   src/gui/settings.cpp \
+  src/siteswap/handanimevents.cpp \
+  src/siteswap/propanimevents.cpp \
   src/siteswap/siteswap.cpp
 
 HEADERS += \
@@ -74,6 +76,8 @@ HEADERS += \
   src/gui/preferences.h \
   src/qjoepass.h \
   src/gui/settings.h \
+  src/siteswap/handanimevents.h \
+  src/siteswap/propanimevents.h \
   src/siteswap/siteswap.h
 
 TRANSLATIONS += \

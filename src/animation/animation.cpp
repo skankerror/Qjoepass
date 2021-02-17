@@ -52,7 +52,7 @@ void Animation::setPropAnim()
   // we calculate state.
   QBitArray state = m_siteSwap->getState();
   // we get all the loops for each prop
-  auto v_v_propAnimEvents = m_siteSwap->getTotalPropAnimEvents();
+  auto v_propAnimEvents = m_siteSwap->getTotalPropAnimEvents();
 
   int propId = 0;
 
@@ -61,7 +61,7 @@ void Animation::setPropAnim()
     if (state.testBit(i)) // if it's a launching site
     {
       // prendre la bonne boucle de v_v_propAnimEvents
-      auto v_propAnimEvents = v_v_propAnimEvents.at(propId);
+      auto propAnimEvents = v_propAnimEvents.at(propId);
       // on crée un PropAnim
       auto propAnim = new PropAnim(m_v_juggler,
                                    m_v_prop.at(propId),
@@ -69,14 +69,13 @@ void Animation::setPropAnim()
                                    m_propType,
                                    m_launchType);
 
-      // we had delay according to place in state
 
       // créer une seq pour décaler le début
       auto seqAnimForDelay = new QSequentialAnimationGroup();
       // NOTE: we assume that each juggler start juggling at the same time
       seqAnimForDelay->addPause((int)((i / m_v_juggler.size()) * (HAND_PERIOD / 2) * S_TO_MS));
       // on lui donne un vec d'propAnimEvent, il s'en occupe
-      propAnim->setAnim(v_propAnimEvents);
+      propAnim->setAnim(propAnimEvents);
       seqAnimForDelay->addAnimation(propAnim);
       addAnimation(seqAnimForDelay);
 
@@ -119,7 +118,10 @@ void Animation::setHandAnim()
     // left hand
     // add delay
     auto seqForDelay = new QSequentialAnimationGroup();
+
+    // TODO: change this for synchron
     seqForDelay->addPause((int)((HAND_PERIOD / 2) * S_TO_MS));
+
     auto leftHandAnim = new HandAnim(m_v_juggler,
                                      i,
                                      hand(leftHand),

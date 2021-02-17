@@ -21,6 +21,7 @@
 #include <QObject>
 #include <QVector>
 #include <QBitArray>
+#include "propanimevents.h"
 #include "qjoepass.h"
 
 
@@ -32,16 +33,17 @@ struct siteswapEvent
 };
 
 // To send informations to animation about props moves
-struct propAnimEvent
-{
-  int s_jugglerLaunchId;
-  hand s_launchHand;
-  int s_launch;
-  int s_jugglerReceiveId;
-  hand s_receiveHand;
-  int s_startTime; // needed to pass to hand anim
-  int s_propId; // needed to pass to hand anim
-};
+//struct propAnimEvent
+//{
+//  int s_jugglerLaunchId;
+//  hand s_launchHand;
+//  int s_launch;
+//  int s_jugglerReceiveId;
+//  hand s_receiveHand;
+//  int s_startTime; // needed to pass to hand anim
+//  int s_propId; // needed to pass to hand anim
+//  int s_loopDuration; // set this for the first one, needed by hand anim
+//};
 
 // To send informations to animation about hands moves
 struct handAnimEvent
@@ -51,15 +53,8 @@ struct handAnimEvent
   int s_launch;
   int s_jugglerReceiveId;
   hand s_receiveHand;
-  int s_dwellDuration; // à setter dans dwell anim
-};
-
-// To get correct timing in hand anim
-struct hand0AnimEvent
-{
-  int s_startTime;
-  int s_jugglerId;
-  int s_hand;
+  bool s_isFirstOne = false;
+  int s_loopDuration; // set this for the first one
 };
 
 class SiteSwap : public QObject
@@ -82,7 +77,9 @@ public:
   int getPeriod() const { return m_period; };
   QBitArray getState() const { return m_state; };
   // For sending datas to animation
-  QVector<QVector<propAnimEvent *>> getTotalPropAnimEvents() const { return m_v_v_propAnimEvents; };
+//  QVector<QVector<propAnimEvent *>> getTotalPropAnimEvents() const { return m_v_v_propAnimEvents; };
+  QVector<PropAnimEvents *> getTotalPropAnimEvents() const { return m_v_propAnimEvents; };
+
   QVector<QVector<handAnimEvent *>*> getTotalHandAnimEvents() const { return m_v_v_handAnimEvents; };
 
 private:
@@ -91,24 +88,25 @@ private:
   void setPropCount();
   void setState();
   void setCompleteSiteswap();
+  void setRealistic();
 
   // NOTE: make a static public method ?
   hand changeHand(hand t_hand){ return (t_hand == leftHand) ? rightHand : leftHand; };
+
   void setTotalAnimEvents();
   void setPropAnimEvents(int t_launchPos,
                          int t_jugglerLaunchId,
                          hand t_launchHand,
                          int t_idInState,
                          int t_propId);
-  void setHandsAnimEvents(QVector<hand0AnimEvent *> t_v_hand0animEvents);
+  void setHandsAnimEvents();
+
   // needed to reorder m_v_v_handAnimEvents
   static bool wayToSort(handAnimEvent *t_firstHandAnimEvent,
                         handAnimEvent *t_secondHandAnimEvent)
   { return t_firstHandAnimEvent->s_startTime < t_secondHandAnimEvent->s_startTime; };
 
   void reorderHandsAnimEvents();
-
-  void setRealistic();
 
 private:
 
@@ -129,7 +127,8 @@ private:
   int m_jugglerCount;
 
   // all informations to move props
-  QVector<QVector<propAnimEvent *>> m_v_v_propAnimEvents;
+//  QVector<QVector<propAnimEvent *>> m_v_v_propAnimEvents;
+  QVector<PropAnimEvents *> m_v_propAnimEvents;
 
   // all informations to move hands
   QVector<QVector<handAnimEvent *>*> m_v_v_handAnimEvents;
