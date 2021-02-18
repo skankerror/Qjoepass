@@ -22,6 +22,7 @@
 #include <QVector>
 #include <QBitArray>
 #include "propanimevents.h"
+#include "handanimevents.h"
 #include "qjoepass.h"
 
 
@@ -30,31 +31,6 @@ struct siteswapEvent
 {
   int s_launch;
   bool s_isMulti; // if true, group with next one.
-};
-
-// To send informations to animation about props moves
-//struct propAnimEvent
-//{
-//  int s_jugglerLaunchId;
-//  hand s_launchHand;
-//  int s_launch;
-//  int s_jugglerReceiveId;
-//  hand s_receiveHand;
-//  int s_startTime; // needed to pass to hand anim
-//  int s_propId; // needed to pass to hand anim
-//  int s_loopDuration; // set this for the first one, needed by hand anim
-//};
-
-// To send informations to animation about hands moves
-struct handAnimEvent
-{
-  int s_propId;
-  int s_startTime;
-  int s_launch;
-  int s_jugglerReceiveId;
-  hand s_receiveHand;
-  bool s_isFirstOne = false;
-  int s_loopDuration; // set this for the first one
 };
 
 class SiteSwap : public QObject
@@ -80,7 +56,7 @@ public:
 //  QVector<QVector<propAnimEvent *>> getTotalPropAnimEvents() const { return m_v_v_propAnimEvents; };
   QVector<PropAnimEvents *> getTotalPropAnimEvents() const { return m_v_propAnimEvents; };
 
-  QVector<QVector<handAnimEvent *>*> getTotalHandAnimEvents() const { return m_v_v_handAnimEvents; };
+  QVector<HandAnimEvents *> getTotalHandAnimEvents() const { return m_v_handAnimEvents; };
 
 private:
 
@@ -131,7 +107,7 @@ private:
   QVector<PropAnimEvents *> m_v_propAnimEvents;
 
   // all informations to move hands
-  QVector<QVector<handAnimEvent *>*> m_v_v_handAnimEvents;
+  QVector<HandAnimEvents *> m_v_handAnimEvents;
 
 };
 

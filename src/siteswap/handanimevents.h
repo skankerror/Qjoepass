@@ -48,6 +48,10 @@ public:
   int getDuration() const { return m_loopDuration; }
   int getJugglerId() const {return m_jugglerId; }
   hand getHand() const { return m_hand; }
+  int getSize() const { return m_v_handAnimEvent.size(); }
+
+  void reorderEvents();
+  void printDebug();
 
 signals:
 
@@ -56,6 +60,13 @@ signals:
 private slots:
 
   void setLoopDuration();
+
+private:
+
+  // needed to reorder m_v_handAnimEvents
+  static bool wayToSort(handAnimEvent *t_firstHandAnimEvent,
+                        handAnimEvent *t_secondHandAnimEvent)
+  { return t_firstHandAnimEvent->s_startTime < t_secondHandAnimEvent->s_startTime; };
 
 private:
 

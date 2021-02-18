@@ -32,12 +32,12 @@ HandAnim::HandAnim(QVector<Juggler *> t_v_juggler,
     m_isExtPlusCatch(t_isExtCatchPlus)
 {}
 
-void HandAnim::setAnim(QVector<handAnimEvent *> *t_v_handAnimEvents)
+void HandAnim::setAnim(HandAnimEvents *t_handAnimEvents)
 {
-  for (int i = 0; i < t_v_handAnimEvents->size(); i++)
+  for (int i = 0; i < t_handAnimEvents->getSize(); i++)
   {
     // dwell vars
-    auto myHandAnimEvent = t_v_handAnimEvents->at(i);
+    auto myHandAnimEvent = t_handAnimEvents->getHandAnimEventAt(i);
     int launch = myHandAnimEvent->s_launch;
     int startTime = myHandAnimEvent->s_startTime;
     int dwellDuration;
@@ -70,25 +70,25 @@ void HandAnim::setAnim(QVector<handAnimEvent *> *t_v_handAnimEvents)
           dwellDuration = DWELL_TIME_LAUNCH1 * S_TO_MS :
         dwellDuration = DWELL_TIME * S_TO_MS;
     // if it's last event ?
-    if (i == t_v_handAnimEvents->size() - 1)
+    if (i == t_handAnimEvents->getSize() - 1)
     {
-      nextHandAnimEvent = t_v_handAnimEvents->at(0);
-      int nextHandAnimEventStartTime = nextHandAnimEvent->s_startTime;
-      qDebug() << "start Time ?" << nextHandAnimEventStartTime;
-      if (!nextHandAnimEventStartTime) // start time = 0 ?
-      {
+//      nextHandAnimEvent = t_handAnimEvents->getHandAnimEventAt(0);
+//      int nextHandAnimEventStartTime = nextHandAnimEvent->s_startTime;
+//      qDebug() << "start Time ?" << nextHandAnimEventStartTime;
+//      if (!nextHandAnimEventStartTime) // start time = 0 ?
+//      {
         // we can get loop duration
-        duration = nextHandAnimEvent->s_loopDuration - startTime - dwellDuration;
-      }
-      else
-      {
+        duration = t_handAnimEvents->getDuration() - startTime - dwellDuration;
+//      }
+//      else
+//      {
 //        duration = nextHandAnimEvent->s_loopDuration - startTime - dwellDuration;
-        duration = (int)((HAND_PERIOD * S_TO_MS) - dwellDuration);
-      }
+//        duration = (int)((HAND_PERIOD * S_TO_MS) - dwellDuration);
+//      }
     }
     else
     {
-      nextHandAnimEvent = t_v_handAnimEvents->at(i + 1); // else get next
+      nextHandAnimEvent = t_handAnimEvents->getHandAnimEventAt(i + 1); // else get next
       duration = nextHandAnimEvent->s_startTime - startTime - dwellDuration;
     }
 

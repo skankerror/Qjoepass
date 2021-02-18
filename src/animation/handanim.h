@@ -22,6 +22,7 @@
 #include "juggler.h"
 #include "jugglingprop.h"
 #include "siteswap.h"
+#include "handanimevents.h"
 
 class HandAnim : public QSequentialAnimationGroup
 {
@@ -37,7 +38,7 @@ public:
                     bool t_isExtCatchPlus,
                     QObject *parent = nullptr);
 
-  void setAnim(QVector<handAnimEvent *>* t_v_handAnimEvents);
+  void setAnim(HandAnimEvents *t_v_handAnimEvents);
 
 private:
 

@@ -30,13 +30,14 @@ HandAnimEvents::HandAnimEvents(int t_jugglerId,
 void HandAnimEvents::appendHandAnimEvent(handAnimEvent *t_handAnimEvent)
 {
   m_v_handAnimEvent.append(t_handAnimEvent);
+  qDebug() << "HandAnimEvents::appendHandAnimEvent bluked !";
   emit sizeChanged();
 }
 
 handAnimEvent *HandAnimEvents::getHandAnimEventAt(int t_index)
 {
   if (t_index < 0 ||
-      t_index < m_v_handAnimEvent.size())
+      t_index >= m_v_handAnimEvent.size())
   {
     qDebug() << "out of range in PropAnimEvents";
     return nullptr;
@@ -44,15 +45,34 @@ handAnimEvent *HandAnimEvents::getHandAnimEventAt(int t_index)
   return m_v_handAnimEvent.at(t_index);
 }
 
+void HandAnimEvents::reorderEvents()
+{
+    std::sort(m_v_handAnimEvent.begin(), m_v_handAnimEvent.end(), wayToSort);
+}
+
+void HandAnimEvents::printDebug()
+{
+  qDebug() << "juggler ID" << m_jugglerId;
+  qDebug() << "hand : " << m_hand;
+  qDebug() << "loop duration" << m_loopDuration;
+  for (int i = 0; i < getSize(); i++)
+  {
+    auto myHandAnimEvent = getHandAnimEventAt(i);
+    qDebug() << "** event # " << i;
+    qDebug() << "** propId " << myHandAnimEvent->s_propId;
+    qDebug() << "** start time " << myHandAnimEvent->s_startTime;
+    qDebug() << "** launch" << myHandAnimEvent->s_launch;
+  }
+}
+
 void HandAnimEvents::setLoopDuration()
 {
   // prendre la plus grande duration des props qui passent par la main
   // je peux pas le prouver mais j'ai l'intuition que ça marche
-  for (int i = 0; m_v_handAnimEvent.size(); i++)
+  for (int i = 0; i < m_v_handAnimEvent.size(); i++)
   {
     int loopPropDuration = m_v_handAnimEvent.at(i)->s_loopPropDuration;
     if (loopPropDuration > m_loopDuration)
       m_loopDuration = loopPropDuration;
   }
-
 }

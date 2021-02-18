@@ -162,33 +162,30 @@ void SiteSwap::setCompleteSiteswap()
 // FIXME: this doesn't work for 5511 2 jugglers
 void SiteSwap::setRealistic()
 {
-  for (int i = 0; i < m_propAnimEvents.size(); i++)
-  {
-    QVector<propAnimEvent *> v_propAnimEvents;
-    for (int j = 0; j < v_propAnimEvents.size(); j++)
-    {
-      auto anAnimEvent = v_propAnimEvents.at(j);
-      if (anAnimEvent->s_jugglerLaunchId != anAnimEvent->s_jugglerReceiveId
-          && anAnimEvent->s_launch < m_jugglerCount)
-      {
-        qDebug() << "vanilla siteswap can not be realisticly animed,"
-                << "because there's at least one launch arriving at the moment it will be launch";
-        m_realistic = false;
-        return;
-      }
-    }
-  }
-  m_realistic = true;
-  return;
+//  for (int i = 0; i < m_v_propAnimEvents.size(); i++)
+//  {
+//    QVector<propAnimEvent *> v_propAnimEvents; // ???????
+//    for (int j = 0; j < v_propAnimEvents.size(); j++)
+//    {
+//      auto anAnimEvent = v_propAnimEvents.at(j);
+//      if (anAnimEvent->s_jugglerLaunchId != anAnimEvent->s_jugglerReceiveId
+//          && anAnimEvent->s_launch < m_jugglerCount)
+//      {
+//        qDebug() << "vanilla siteswap can not be realisticly animed,"
+//                << "because there's at least one launch arriving at the moment it will be launch";
+//        m_realistic = false;
+//        return;
+//      }
+//    }
+//  }
+//  m_realistic = true;
+//  return;
 }
 
 void SiteSwap::setTotalAnimEvents()
 {
   // we set propId to pass to handAnimEvent
   int propId = 0;
-
-  // create this to handle 0 launch in hand anim
-//  QVector<hand0AnimEvent *> v_hand0AnimEvents;
 
   // we use state
   for (int i = 0; i < m_state.size(); i++) // for each bit in state
@@ -218,18 +215,10 @@ void SiteSwap::setTotalAnimEvents()
       // update propId
       propId++;
     }
-    else // it's not a launch site
-    {
-//      // pass to handAnim
-//      auto myHand0AnimEvent = new struct hand0AnimEvent;
-//      myHand0AnimEvent->s_startTime = (i / m_jugglerCount) * ((HAND_PERIOD  * S_TO_MS) / 2.0f);
-//      myHand0AnimEvent->s_jugglerId = jugglerLaunchId;
-//      myHand0AnimEvent->s_hand = launchHand;
-//      v_hand0AnimEvents.append(myHand0AnimEvent);
-    }
   }
+  qDebug() << "I'm just after setTotalAnimEvents";
   // now that we have all prop anim events, we can set hands anims events
-  setHandsAnimEvents(/*v_hand0AnimEvents*/);
+  setHandsAnimEvents();
 }
 
 // TODO: rewrite with a do while
@@ -239,7 +228,7 @@ void SiteSwap::setPropAnimEvents(int t_launchPos,
                                  int t_idInState,
                                  int t_propId)
 {
-  auto propAnimEvents = new PropAnimEvents(this);
+  auto propAnimEvents = new PropAnimEvents(t_propId, this);
 
   // to keep nitial values
   hand initialHandLaunch = t_launchHand;
@@ -337,14 +326,6 @@ void SiteSwap::setPropAnimEvents(int t_launchPos,
     nextStartTime += (launch / m_jugglerCount) * halfHandPeriod; // TODO: check this
 //    qDebug() << "next Start time" << nextStartTime;
 
-    // To know the loop duration,
-//    if ((nextLaunchPos == initialLaunchPos &&
-//         nextLaunchHand == initialHandLaunch &&
-//         nextJugglerLaunchId == initialJugglerLaunchId))
-//    {
-//      firstAnimEvent->s_loopDuration = nextStartTime - startTime;
-//    }
-
     // append to our vec
     propAnimEvents->appendPropAnimEvent(nextAnimEvent);
 
@@ -360,18 +341,24 @@ void SiteSwap::setHandsAnimEvents()
   for (int i = 0; i < m_jugglerCount; i++)
   {
     // right hand vec
-    auto v_rightHandAnimEvents = new QVector<handAnimEvent *>();
-    m_v_v_handAnimEvents.append(v_rightHandAnimEvents);
+    auto rightHandAnimEvents = new HandAnimEvents(i,
+                                                  hand(rightHand),
+                                                  this);
+    m_v_handAnimEvents.append(rightHandAnimEvents);
 
     // left hand vec
-    auto v_leftHandAnimEvents = new QVector<handAnimEvent *>();
-    m_v_v_handAnimEvents.append(v_leftHandAnimEvents);
+    auto leftHandAnimEvents = new HandAnimEvents(i,
+                                                 hand(leftHand),
+                                                 this);
+    m_v_handAnimEvents.append(leftHandAnimEvents);
   }
-
+  qDebug() << "m_v_handAnimEvents size :" << m_v_handAnimEvents.size();
   // get all informations from prop anim events
   for (int i = 0; i < m_v_propAnimEvents.size(); i++)
   {
     auto propAnimEvents = m_v_propAnimEvents.at(i);
+    qDebug() << "bluk #" << i;
+
     for (int j = 0; j < propAnimEvents->getSize(); j++)
     {
       auto myPropAnimEvent = propAnimEvents->getPropAnimEventAt(j);
@@ -381,13 +368,9 @@ void SiteSwap::setHandsAnimEvents()
       myHandAnimEvent->s_launch = myPropAnimEvent->s_launch;
       myHandAnimEvent->s_jugglerReceiveId = myPropAnimEvent->s_jugglerReceiveId;
       myHandAnimEvent->s_receiveHand = myPropAnimEvent->s_receiveHand;
-      // add loop duration for first launch
-//      if (j == 0)
-//      {
-        myHandAnimEvent->s_loopDuration = propAnimEvents->getLoopDuration();
-//        myHandAnimEvent->s_isFirstOne = true;
-//        qDebug() << myHandAnimEvent->s_loopDuration;
-//      }
+      // mark all hand anim event with the loop prop duration they're playing with
+      myHandAnimEvent->s_loopPropDuration = propAnimEvents->getLoopDuration();
+//      qDebug() << myHandAnimEvent->s_loopPropDuration;
 
 //      qDebug() << "start time in hand anim" << myHandAnimEvents->s_startTime;
 
@@ -396,85 +379,44 @@ void SiteSwap::setHandsAnimEvents()
       (myPropAnimEvent->s_launchHand == rightHand) ?
             id = myPropAnimEvent->s_jugglerLaunchId * 2:
           id = (myPropAnimEvent->s_jugglerLaunchId * 2) + 1;
+      qDebug() << "id avant le at qui bugue :" << id;
+      m_v_handAnimEvents.at(id)->appendHandAnimEvent(myHandAnimEvent);
 
-      m_v_v_handAnimEvents.at(id)->append(myHandAnimEvent);
     }
   }
-  // add 0 anim events
-//  if (t_v_hand0animEvents.size())
-//  {
-//    for (int i = 0; i < t_v_hand0animEvents.size(); i++)
-//    {
-//      auto myHand0AnimEvents = t_v_hand0animEvents.at(i);
-//      auto myHandAnimEvents = new struct handAnimEvent; // TODO: make delete somewhere
-//      myHandAnimEvents->s_propId = NO_PROP;
-//      myHandAnimEvents->s_startTime = myHand0AnimEvents->s_startTime;
-//      myHandAnimEvents->s_launch = 0;
-
-//      // get the correct hand vec
-//      int id;
-//      (myHand0AnimEvents->s_hand == rightHand) ?
-//            id = myHand0AnimEvents->s_jugglerId * 2:
-//          id = (myHand0AnimEvents->s_jugglerId * 2) + 1;
-
-//      m_v_v_handAnimEvents.at(id)->append(myHandAnimEvents);
-
-//    }
-//  }
-
-  // gérer les 0 ici
-  // partir du state
-  // calculer le plus long propanim. Si time >= 2*state*HAND_PERIOD/2
-  // diviser time / 2*state.size()*HAND_PERIOD/2 = int
-  // multiplier le state par int.
-
-  // calculate longest prop anim
-//  int longestPropAnimDuration = 0;
-//  for (int i = 0; i < m_v_v_propAnimEvents.size(); i++)
-//  {
-//    int duration = m_v_v_propAnimEvents.at(i).at(0)->s_loopDuration;
-//    if (duration > longestPropAnimDuration)
-//      longestPropAnimDuration = duration;
-//  }
-
-//  qDebug() << "longest prop anim duration" << longestPropAnimDuration;
-
-//  // to know by which int multiply our state size
-//  int stateFactor = longestPropAnimDuration / qRound(2 * m_state.size() * (HAND_PERIOD / 2) * S_TO_MS);
-
-//  qDebug() << "multiply state by : " << stateFactor;
-
+  qDebug() << "I'm at the end of setHansAnimEvents before reorder";
   // reorder m_v_v_handAnimEvents
   reorderHandsAnimEvents();
 
   /***************** check *******************/
-  qDebug() << "m_v_v_handAnimEvents size : " << m_v_v_handAnimEvents.size();
-  for (int i = 0; i < m_v_v_handAnimEvents.size(); i++)
-  {
-    auto v_handAnimEvents = m_v_v_handAnimEvents.at(i);
-    qDebug() << "HAND ANIM n° : " << i;
-    for (int j = 0; j < v_handAnimEvents->size(); j++)
-    {
-      auto myHandAnimEvents = v_handAnimEvents->at(j);
-      qDebug() << "EVENT n° : " << j;
-      qDebug() << "*start time" << myHandAnimEvents->s_startTime;
-      qDebug() << "*prop id" << myHandAnimEvents->s_propId;
-      qDebug() << "*rec hand" << myHandAnimEvents->s_receiveHand;
-    }
-  }
+//  qDebug() << "m_v_v_handAnimEvents size : " << m_v_handAnimEvents.size();
+//  for (int i = 0; i < m_v_handAnimEvents.size(); i++)
+//  {
+//    auto handAnimEvents = m_v_handAnimEvents.at(i);
+//    qDebug() << "HAND ANIM n° : " << i;
+//    qDebug() << "JugglerId : " << handAnimEvents->getJugglerId();
+//    qDebug() << "hand : " << handAnimEvents->getHand();
+//    qDebug() << "loop duration" << handAnimEvents->getDuration();
+//    for (int j = 0; j < handAnimEvents->getSize(); j++)
+//    {
+//      auto myHandAnimEvent = handAnimEvents->getHandAnimEventAt(j);
+//      qDebug() << "EVENT n° : " << j;
+//      qDebug() << "*start time" << myHandAnimEvent->s_startTime;
+//      qDebug() << "*prop id" << myHandAnimEvent->s_propId;
+//      qDebug() << "*rec hand" << myHandAnimEvent->s_receiveHand;
+//    }
+//  }
 
 }
 
 void SiteSwap::reorderHandsAnimEvents()
 {
-  for (int i = 0; i < m_v_v_handAnimEvents.size(); i++)
+  for (int i = 0; i < m_v_handAnimEvents.size(); i++)
   {
-    auto v_handAnimEvents = m_v_v_handAnimEvents.at(i);
-    std::sort(v_handAnimEvents->begin(), v_handAnimEvents->end(), wayToSort);
-//    for (int j = 0; j < v_handAnimEvents->size(); j++)
-//    {
-//      qDebug() << "start time in : " << i << " : " << v_handAnimEvents->at(j)->s_startTime;
-//    }
+    auto v_handAnimEvents = m_v_handAnimEvents.at(i);
+//    std::sort(v_handAnimEvents->begin(), v_handAnimEvents->end(), wayToSort);
+    v_handAnimEvents->reorderEvents();
+    v_handAnimEvents->printDebug();
   }
 }
 

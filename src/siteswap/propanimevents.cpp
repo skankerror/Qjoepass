@@ -28,7 +28,7 @@ PropAnimEvents::PropAnimEvents(int t_propId,
 propAnimEvent *PropAnimEvents::getPropAnimEventAt(int t_index) const
 {
   if (t_index < 0 ||
-      t_index < getSize())
+      t_index >= getSize())
   {
     qDebug() << "out of range in PropAnimEvents";
     return nullptr;
