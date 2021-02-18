@@ -27,8 +27,8 @@ Juggler::Juggler(QEntity *t_rootEntity,
     m_skeletonTransform(new Qt3DCore::QTransform()),
     m_color(t_color),
     m_rotY(t_rotY),
-    m_headEntity(new QEntity(this)),
-    m_headTransform(new Qt3DCore::QTransform()),
+//    m_headEntity(new QEntity(this)),
+//    m_headTransform(new Qt3DCore::QTransform()),
     m_claviclesEntity(new QEntity(this)),
     m_trunkEntity(new QEntity(this)),
     m_pelvisEntity(new QEntity(this)),
@@ -40,10 +40,10 @@ Juggler::Juggler(QEntity *t_rootEntity,
   m_jugglerMetalRoughMaterial->setRoughness(JUGGLER_ROUGHNESS);
 
   // create all the parts
-  createHead();
   createBody();
   createArms();
   createLegs();
+  createHead();
 
   // translate our juggler
   m_position = QVector3D(t_position.x(), JUGGLER_TRANSLATION_Y, t_position.y());
@@ -64,20 +64,6 @@ Juggler::Juggler(QEntity *t_rootEntity,
   connect(this, SIGNAL(positionChanged()), this, SLOT(setBodyPositions()));
 
   /*********************** testing zone *********************************/
-}
-
-void Juggler::createHead()
-{
-  auto head = new QSphereMesh();
-  head->setRadius(HEAD_RADIUS);
-  head->setRings(HEAD_RINGS);
-  head->setSlices(HEAD_SLICES);
-
-  m_headTransform->setTranslation(HEAD_TRANSLATE);
-
-  m_headEntity->addComponent(head);
-  m_headEntity->addComponent(m_headTransform);
-  m_headEntity->addComponent(m_jugglerMetalRoughMaterial);
 }
 
 void Juggler::createBody()
@@ -135,6 +121,24 @@ void Juggler::createLegs()
                              m_jugglerMetalRoughMaterial,
                              m_color,
                              hand(rightHand));
+}
+
+void Juggler::createHead()
+{
+//  auto head = new QSphereMesh();
+//  head->setRadius(HEAD_RADIUS);
+//  head->setRings(HEAD_RINGS);
+//  head->setSlices(HEAD_SLICES);
+
+//  m_headTransform->setTranslation(HEAD_TRANSLATE);
+
+//  m_headEntity->addComponent(head);
+//  m_headEntity->addComponent(m_headTransform);
+//  m_headEntity->addComponent(m_jugglerMetalRoughMaterial);
+
+  m_head = new JugglerHead(m_claviclesEntity,
+                           m_jugglerMetalRoughMaterial,
+                           m_color);
 }
 
 void Juggler::setLeftHandPosition(QVector3D t_pos)

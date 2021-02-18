@@ -23,6 +23,7 @@
 #include <Qt3DRender>
 #include "jugglerarm.h"
 #include "jugglerleg.h"
+#include "jugglerhead.h"
 #include "qjoepass.h"
 
 using namespace Qt3DCore;
@@ -154,8 +155,8 @@ private:
   QVector3D m_headLookAt;
 
   // head
-  QEntity *m_headEntity;
-  Qt3DCore::QTransform *m_headTransform;
+//  QEntity *m_headEntity;
+//  Qt3DCore::QTransform *m_headTransform;
 
   // clavicles
   QEntity *m_claviclesEntity;
@@ -174,6 +175,9 @@ private:
   // legs
   JugglerLeg *m_leftLeg;
   JugglerLeg *m_rightLeg;
+
+  // head
+  JugglerHead *m_head;
 
 };
 

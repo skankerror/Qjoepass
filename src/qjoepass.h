@@ -82,13 +82,14 @@
   #define JUGGLER_ROUGHNESS 0.5
   #define HAND_BACKEST_PASSING_Y 4.0f
   #define HAND_BACKEST_PASSING_Z 0.5f
-    // Head
-    #define HEAD_POS_Y 7.0f
-    #define HEAD_RADIUS 0.5f
-    #define HEAD_RINGS 32
-    #define HEAD_SLICES 32
-    #define HEAD_TRANSLATE QVector3D(NULL_FLOAT,HEAD_POS_Y,NULL_FLOAT)
-    #define LOOK_AT_VECTOR QVector3D(NULL_FLOAT,NULL_FLOAT,5.0f)
+  // Members
+  #define MEMBERS_RADIUS 0.1f
+  #define MEMBERS_RINGS 8
+  #define MEMBERS_SLICES 32
+  // Articulations
+  #define ARTICULATION_RADIUS 0.1f
+  #define ARTICULATION_RINGS 8
+  #define ARTICULATION_SLICES 32
     // Clavicles
     #define CLAVICLES_ROTATION QVector3D(NULL_FLOAT,NULL_FLOAT,90.0f)
     #define CLAVICLES_LENGHT 2.0f
@@ -101,20 +102,14 @@
     #define SHOULDER_Z CLAVICLES_Z
     // Trunk
     #define TRUNK_ROTATION NULL_VECTOR
-    #define TRUNK_TRANLATION QVector3D(NULL_FLOAT,5.3f,NULL_FLOAT)
-    #define TRUNK_LENGHT 2.5f
+    #define TRUNK_TRANLATION QVector3D(NULL_FLOAT,5.175f,NULL_FLOAT)
+    #define TRUNK_LENGHT 2.25f
     // pelvis
     #define PELVIS_TRANSLATION QVector3D(0,4.05f,0)
 
-    // Members
-    #define MEMBERS_RADIUS 0.1f
-    #define MEMBERS_RINGS 8
-    #define MEMBERS_SLICES 32
-    // Articulations
-    #define ARTICULATION_RADIUS 0.1f
-    #define ARTICULATION_RINGS 8
-    #define ARTICULATION_SLICES 32
+
       /****************************** Arms *****************************/
+
       #define GLOBAL_LEFT_ARM_TRANSLATION QVector3D(-6.3,-1,0)
       #define GLOBAL_RIGHT_ARM_TRANSLATION QVector3D(-6.3f,1,0)
       // Shoulder
@@ -129,7 +124,9 @@
       #define FOREARM_ROTATION NULL_VECTOR
       #define FOREARM_LENGHT 1.5f
       #define FOREARM_TRANSLATION QVector3D(NULL_FLOAT,-FOREARM_LENGHT/2.0f,NULL_FLOAT)
+
       /********************************* Legs ***************************/
+
       #define GLOBAL_LEG_TRANSLATION NULL_VECTOR
       #define LEFT_LEG_ROTATION QVector3D(NULL_FLOAT,NULL_FLOAT,13.5f) // TODO: calculate from leg lenght
       #define RIGHT_LEG_ROTATION QVector3D(NULL_FLOAT,NULL_FLOAT,-13.5f)
@@ -146,6 +143,30 @@
       #define TIBIA_ROTATION NULL_VECTOR
       #define TIBIA_TRANSLATION QVector3D(NULL_FLOAT,-TIBIA_LENGHT/2.0f,NULL_FLOAT)
 
+      /******************************* Head ***************************/
+
+      #define HEAD_TRANSLATION NULL_VECTOR
+      #define HEAD_ROTATION -CLAVICLES_ROTATION
+      #define HEAD_POS_Y 7.0f // for camera positionning
+      // last vertebrate
+      #define LAST_VERTEBRATE_TRANSLATION NULL_VECTOR
+      // neck
+      #define NECK_LENGHT 0.4f
+      #define NECK_TRANSLATION QVector3D(NULL_FLOAT,NECK_LENGHT/2.0f,NULL_FLOAT)
+      #define NECK_ROTATION NULL_VECTOR
+      // skull
+      #define SKULL_POS_Y 0.7f
+      #define SKULL_RADIUS 0.5f
+      #define SKULL_RINGS 32
+      #define SKULL_SLICES 32
+      #define SKULL_TRANSLATION QVector3D(NULL_FLOAT,SKULL_POS_Y,NULL_FLOAT)
+      #define LOOK_AT_VECTOR QVector3D(NULL_FLOAT,NULL_FLOAT,5.0f)
+      // eyes
+      #define EYE_RADIUS 0.1f
+      #define EYE_RINGS 8
+      #define EYE_SLICES 32
+      #define LEFT_EYE_TRANSLATION QVector3D(SKULL_RADIUS/2.0f,NULL_FLOAT,SKULL_RADIUS*0.8f)
+      #define RIGHT_EYE_TRANSLATION QVector3D(-SKULL_RADIUS/2.0f,NULL_FLOAT,SKULL_RADIUS*0.8f)
 
 
   /********************************** Prop ********************************/
@@ -179,16 +200,19 @@
 
 /******************************** Animation *****************************************/
 
+// gravity
 #define SCALE_FACTOR 4.03f // for gravity... size of juggler / normal man size (7.25/1.8)
+#define GRAVITY QVector3D(NULL_FLOAT,-9.8f*SCALE_FACTOR,NULL_FLOAT)
+// time
 #define DELTA_TIME 0.015f // in second
 #define HAND_PERIOD 0.7f // in second
 #define DWELL_RATIO 0.6f // seems to be dwell average of a good juggler
 #define LAUNCH1_TIME 0.1f // in second. launch siteswap 1. Must be < HAND_PERIOD/2
-#define GRAVITY QVector3D(NULL_FLOAT,-9.8f*SCALE_FACTOR,NULL_FLOAT)
 #define DWELL_TIME DWELL_RATIO*HAND_PERIOD// must be currently 0.42
 #define EMPTY_TIME HAND_PERIOD-DWELL_TIME // must be currently 0.23
 #define S_TO_MS 1000.0f
 const float DWELL_TIME_LAUNCH1 = (HAND_PERIOD / 2.0f) - LAUNCH1_TIME; // must be currently 250
+// juggler positionning
 #define DEFAULT_JUG_POS_CIRC_RADIUS 8.0f
 // for QAbstractAnimation::setLoopCount(int)
 #define INFINITE_LOOP -1
