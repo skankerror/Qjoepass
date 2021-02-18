@@ -19,7 +19,7 @@
 #define PROPANIM_H
 
 #include <QSequentialAnimationGroup>
-#include <QPropertyAnimation>
+//#include <QPropertyAnimation>
 #include <QtMath>
 #include "juggler.h"
 #include "jugglingprop.h"

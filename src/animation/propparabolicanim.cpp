@@ -41,7 +41,6 @@ PropParabolicAnim::PropParabolicAnim(JugglingProp *t_prop,
   int intDecay = m_duration - translatAnim->duration();
   if (intDecay)
     translatAnim->addPause(intDecay);
-//  qDebug() << "PropAnim::parabolicAnim() duration" << translatAnim->duration();
 
   addAnimation(translatAnim);
 }
@@ -70,17 +69,14 @@ PropParabolicAnim::PropParabolicAnim(JugglingProp *t_prop,
 
   // Time adjustment if necessary
   int intDecay = m_duration - translatAnim->duration();
-//  qDebug() << "decay in translaton" << intDecay;
   if (intDecay)
     translatAnim->addPause(intDecay);
-//  qDebug() << "PropAnim::parabolicAnim() duration" << translatAnim->duration();
 
   addAnimation(translatAnim);
 
   auto animRotX = rotXAnim();
 
   addAnimation(animRotX);
-
 }
 
 QSequentialAnimationGroup *PropParabolicAnim::translationAnim()

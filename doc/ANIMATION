@@ -1,0 +1,15 @@
+Siteswap est créé par My3DWindow avec les infos reçues de MainWindow
+
+S'il est valide, Siteswap va créer toutes les données pour l'animation
+via ses 2 classes PropAnimEvents et HandAnimEvents qui contiennent respectivement
+les infos pour la loop d'un prop et celle d'une main.
+
+Animation va créer les anim via setAnim(), lancé par My3DWindow.
+Il va créer un PropAnim par prop et un HandAnim par main.
+
+PropAnim va créer une suite de PropDwellAnim (pour la rotation pendant le dwell)
+et de PropParabolicAnim (rotation et translation)
+
+Hand Anim va créer une suite de HandDwellAnim (qui va aussi gérer la translation
+du prop) et de empty hand anim (pas de classe spécifique, directement une
+QPropertyAnimation dans la classe).

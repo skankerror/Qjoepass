@@ -84,13 +84,6 @@ public:
   QVector3D worldVecToJugglerVec(const QVector3D t_pos) const;
   QVector3D jugglerVecToWorldVec(const QVector3D t_pos) const;
 
-public slots:
-
-  // property setters
-  void setPosition(QVector3D t_position);
-  void setLeftHandPosition(QVector3D t_pos);
-  void setRightHandPosition(QVector3D t_pos);
-
 private:
 
   // cstr private methods
@@ -111,11 +104,6 @@ private:
   // used by several methods
   QMatrix4x4 getRotMatrix() const;
 
-private slots:
-
-  // update all juggling positions and head position for camera
-  void setBodyPositions();
-
 signals:
 
   // signals properties
@@ -123,6 +111,18 @@ signals:
   // connect to prop during dwell
   void leftHandPositionChanged(QVector3D);
   void rightHandPositionChanged(QVector3D);
+
+public slots:
+
+  // property setters
+  void setPosition(QVector3D t_position);
+  void setLeftHandPosition(QVector3D t_pos);
+  void setRightHandPosition(QVector3D t_pos);
+
+private slots:
+
+  // update all juggling positions and head position for camera
+  void setBodyPositions();
 
 private:
 

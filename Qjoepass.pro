@@ -97,5 +97,7 @@ DISTFILES += \
   LICENCE.md \
   NOTES \
   README.md \
-  TODO
+  TODO \
+  doc/ANIMATION \
+  doc/schema_animation.pdf
 

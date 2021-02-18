@@ -21,7 +21,6 @@
 #include <QSequentialAnimationGroup>
 #include "juggler.h"
 #include "jugglingprop.h"
-#include "siteswap.h"
 #include "handanimevents.h"
 
 class HandAnim : public QSequentialAnimationGroup

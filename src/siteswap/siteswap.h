@@ -19,7 +19,6 @@
 #define SITESWAP_H
 
 #include <QObject>
-#include <QVector>
 #include <QBitArray>
 #include "propanimevents.h"
 #include "handanimevents.h"
@@ -52,10 +51,9 @@ public:
   int getPropCount() const { return m_propCount; };
   int getPeriod() const { return m_period; };
   QBitArray getState() const { return m_state; };
-  // For sending datas to animation
-//  QVector<QVector<propAnimEvent *>> getTotalPropAnimEvents() const { return m_v_v_propAnimEvents; };
-  QVector<PropAnimEvents *> getTotalPropAnimEvents() const { return m_v_propAnimEvents; };
 
+  // For sending datas to animation
+  QVector<PropAnimEvents *> getTotalPropAnimEvents() const { return m_v_propAnimEvents; };
   QVector<HandAnimEvents *> getTotalHandAnimEvents() const { return m_v_handAnimEvents; };
 
 private:
@@ -66,7 +64,6 @@ private:
   void setCompleteSiteswap();
   void setRealistic();
 
-  // NOTE: make a static public method ?
   hand changeHand(hand t_hand){ return (t_hand == leftHand) ? rightHand : leftHand; };
 
   void setTotalAnimEvents();
@@ -77,7 +74,7 @@ private:
                          int t_propId);
   void setHandsAnimEvents();
 
-  // needed to reorder m_v_v_handAnimEvents
+  // needed to reorder m_v_handAnimEvents
   static bool wayToSort(handAnimEvent *t_firstHandAnimEvent,
                         handAnimEvent *t_secondHandAnimEvent)
   { return t_firstHandAnimEvent->s_startTime < t_secondHandAnimEvent->s_startTime; };
@@ -103,7 +100,6 @@ private:
   int m_jugglerCount;
 
   // all informations to move props
-//  QVector<QVector<propAnimEvent *>> m_v_v_propAnimEvents;
   QVector<PropAnimEvents *> m_v_propAnimEvents;
 
   // all informations to move hands
