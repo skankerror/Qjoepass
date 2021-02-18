@@ -26,17 +26,11 @@ JugglerArm::JugglerArm(QEntity *t_rootEntity,
     m_side(t_side),
     m_globalArmTransform(new Qt3DCore::QTransform()),
     m_shoulderEntity(new QEntity(this)),
-    m_shoulder(new QSphereMesh()),
     m_shoulderTransform(new Qt3DCore::QTransform()),
     m_armEntity(new QEntity(m_shoulderEntity)), // connect arm to shoulder
-    m_arm(new QCylinderMesh()),
-    m_armTransform(new Qt3DCore::QTransform()),
     m_elbowEntity(new QEntity(m_armEntity)), // connect elbow to arm
-    m_elbow(new QSphereMesh()),
     m_elbowTransform(new Qt3DCore::QTransform()),
-    m_forearmEntity(new QEntity(m_elbowEntity)), // connect foreaerm to elbow
-    m_forearm(new QCylinderMesh()),
-    m_forearmTransform(new Qt3DCore::QTransform())
+    m_forearmEntity(new QEntity(m_elbowEntity)) // connect foreaerm to elbow
 
 {
   // juggler will create arms with m_claviclesEntity as rootEntity
@@ -54,40 +48,34 @@ JugglerArm::JugglerArm(QEntity *t_rootEntity,
   addComponent(m_globalArmTransform);
 
   // make shoulder
-  makeArticulation(m_shoulder,
+  makeArticulation(new QSphereMesh(),
                    m_shoulderTransform,
                    m_shoulderEntity,
                    CLAVICLES_TRANSLATION);
 
   // make arm
-  makeMember(m_arm,
-             m_armTransform,
+  makeMember(new QCylinderMesh(),
+             new Qt3DCore::QTransform(),
              m_armEntity,
              ARM_ROTATION,
              ARM_TRANSLATION,
              ARM_LENGHT);
 
   // make elbow
-  makeArticulation(m_elbow,
+  makeArticulation(new QSphereMesh(),
                    m_elbowTransform,
                    m_elbowEntity,
                    ELBOW_TRANSLATION);
 
   // make forearm
-  makeMember(m_forearm,
-             m_forearmTransform,
+  makeMember(new QCylinderMesh,
+             new Qt3DCore::QTransform(),
              m_forearmEntity,
              FOREARM_ROTATION,
              FOREARM_TRANSLATION,
              FOREARM_LENGHT);
 
   /**************************** test zone *********************************/
-
-//  m_shoulderTransform->setRotationX(-10);
-//  m_side == leftHand ?
-//        m_shoulderTransform->setRotationY(45):
-//        m_shoulderTransform->setRotationY(-45);
-//  m_elbowTransform->setRotationX(-90);
 
 }
 

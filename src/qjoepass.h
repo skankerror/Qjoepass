@@ -103,21 +103,9 @@
     #define TRUNK_ROTATION NULL_VECTOR
     #define TRUNK_TRANLATION QVector3D(NULL_FLOAT,5.3f,NULL_FLOAT)
     #define TRUNK_LENGHT 2.5f
-    // Thighs
-    #define LEFT_THIGH_ROTATION QVector3D(NULL_FLOAT,NULL_FLOAT,13.5f)
-    #define LEFT_THIGH_TRANSLATION QVector3D(0.25f,3.05f,NULL_FLOAT)
-    #define RIGHT_THIGH_ROTATION QVector3D(0.0f,0.0f,-13.5f)
-    #define RIGHT_THIGH_TRANLATION QVector3D(-0.25f,3.05f,NULL_FLOAT)
-    #define THIGH_LENGHT 2.2f
-    // Knees
-    #define LEFT_KNEE_TRANLATION QVector3D(0.5f,2.0f,NULL_FLOAT)
-    #define RIGHT_KNEE_TRANLATION QVector3D(-0.5f,2.0f,NULL_FLOAT)
-    // Legs
-    #define LEFT_LEG_ROTATION QVector3D(NULL_FLOAT,NULL_FLOAT,13.5f)
-    #define LEFT_LEG_TRANSLATION QVector3D(0.75f,1.0f,NULL_FLOAT)
-    #define RIGHT_LEG_ROTATION QVector3D(NULL_FLOAT,NULL_FLOAT,-13.5f)
-    #define RIGHT_LEG_TRANSLATION QVector3D(-0.75f,1.0f,NULL_FLOAT)
-    #define LEG_LENGHT 2.0f
+    // pelvis
+    #define PELVIS_TRANSLATION QVector3D(0,4.05f,0)
+
     // Members
     #define MEMBERS_RADIUS 0.1f
     #define MEMBERS_RINGS 8
@@ -140,7 +128,25 @@
       // Forearms
       #define FOREARM_ROTATION NULL_VECTOR
       #define FOREARM_LENGHT 1.5f
-      #define FOREARM_TRANSLATION QVector3D(NULL_FLOAT,-ARM_LENGHT/2.0f,NULL_FLOAT)
+      #define FOREARM_TRANSLATION QVector3D(NULL_FLOAT,-FOREARM_LENGHT/2.0f,NULL_FLOAT)
+      /********************************* Legs ***************************/
+      #define GLOBAL_LEG_TRANSLATION NULL_VECTOR
+      #define LEFT_LEG_ROTATION QVector3D(NULL_FLOAT,NULL_FLOAT,13.5f) // TODO: calculate from leg lenght
+      #define RIGHT_LEG_ROTATION QVector3D(NULL_FLOAT,NULL_FLOAT,-13.5f)
+      // haunch
+      #define HAUNCH_TRANSLATION NULL_VECTOR
+      // Thigh
+      #define THIGH_LENGHT 2.2f
+      #define THIGH_TRANSLATION QVector3D(NULL_FLOAT,-THIGH_LENGHT/2.0f,NULL_FLOAT)
+      #define THIGH_ROTATION NULL_VECTOR
+      // knee
+      #define KNEE_TRANSLATION QVector3D(NULL_FLOAT,-THIGH_LENGHT/2.0f,NULL_FLOAT)
+      // tibia
+      #define TIBIA_LENGHT 2.0f
+      #define TIBIA_ROTATION NULL_VECTOR
+      #define TIBIA_TRANSLATION QVector3D(NULL_FLOAT,-TIBIA_LENGHT/2.0f,NULL_FLOAT)
+
+
 
   /********************************** Prop ********************************/
 
@@ -187,8 +193,6 @@ const float DWELL_TIME_LAUNCH1 = (HAND_PERIOD / 2.0f) - LAUNCH1_TIME; // must be
 // for QAbstractAnimation::setLoopCount(int)
 #define INFINITE_LOOP -1
 #define ONE_LOOP 1
-// for anim 0 launch
-#define NO_PROP -1
 
 /*********************************** Enums *******************************************/
 

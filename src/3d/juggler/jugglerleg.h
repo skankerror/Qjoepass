@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef JUGGLERARM_H
-#define JUGGLERARM_H
+#ifndef JUGGLERLEG_H
+#define JUGGLERLEG_H
 
 #include <Qt3DCore>
 #include <Qt3DExtras>
@@ -27,24 +27,21 @@ using namespace Qt3DCore;
 using namespace Qt3DExtras;
 using namespace Qt3DRender;
 
-class JugglerArm : public QEntity
+class JugglerLeg : public QEntity
 {
 
   Q_OBJECT
 
 public:
 
-  JugglerArm(QEntity *t_rootEntity,
+  JugglerLeg(QEntity *t_rootEntity,
              QMetalRoughMaterial *t_jugglerMetalRoughMaterial,
              QColor &t_color,
              hand t_side);
 
-  void setHandPosition(QVector3D &t_pos);
-
-  // in case we need for demo or initialisation
-  void setShoulderRotationX(float t_angle);
-  void setShoulderRotationY(float t_angle);
-  void setElbowRotationX(float t_angle);
+  void setHaunchRotationX(float t_angle);
+  void setHaunchRotationY(float t_angle);
+  void setKneeRotationX(float t_angle);
 
 private:
 
@@ -55,35 +52,34 @@ private:
                   QVector3D t_trans,
                   float t_length);
 
-  void makeArticulation(QSphereMesh *t_phere,
+  void makeArticulation(QSphereMesh *t_sphere,
                         Qt3DCore::QTransform *t_sphereTransform,
                         QEntity *t_sphereEntity,
                         QVector3D t_trans);
 
-
 private:
 
-  QMetalRoughMaterial *m_armMaterial;
+  QMetalRoughMaterial *m_legMaterial;
   QColor m_color;
   bool m_enabled = true;
   hand m_side;
 
-  Qt3DCore::QTransform *m_globalArmTransform;
+  Qt3DCore::QTransform *m_globalLegTransform;
 
-  // shoulder
-  QEntity *m_shoulderEntity;
-  Qt3DCore::QTransform *m_shoulderTransform;
+  // haunch
+  QEntity *m_haunchEntity;
+  Qt3DCore::QTransform *m_haunchTransform;
 
-  // arm
-  QEntity *m_armEntity;
+  // thigh
+  QEntity *m_thighEntity;
 
-  // elbow
-  QEntity *m_elbowEntity;
-  Qt3DCore::QTransform *m_elbowTransform;
+  // knee
+  QEntity *m_kneeEntity;
+  Qt3DCore::QTransform *m_kneeTransform;
 
-  // forearm
-  QEntity *m_forearmEntity;
+  // tibia
+  QEntity *m_tibiaEntity;
 
 };
 
-#endif // JUGGLERARM_H
+#endif // JUGGLERLEG_H

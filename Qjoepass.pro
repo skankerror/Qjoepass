@@ -32,6 +32,7 @@ INCLUDEPATH += \
 
 SOURCES += \
   src/3d/3dwindow.cpp \
+  src/3d/juggler/jugglerleg.cpp \
   src/3d/world/light.cpp \
   src/3d/world/ground.cpp \
   src/3d/juggler/juggler.cpp \
@@ -57,6 +58,7 @@ SOURCES += \
 
 HEADERS += \
   src/3d/3dwindow.h \
+  src/3d/juggler/jugglerleg.h \
   src/3d/world/light.h \
   src/3d/world/ground.h \
   src/3d/juggler/juggler.h \

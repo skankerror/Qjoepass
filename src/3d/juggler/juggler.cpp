@@ -28,33 +28,11 @@ Juggler::Juggler(QEntity *t_rootEntity,
     m_color(t_color),
     m_rotY(t_rotY),
     m_headEntity(new QEntity(this)),
-    m_head(new QSphereMesh()),
     m_headTransform(new Qt3DCore::QTransform()),
     m_claviclesEntity(new QEntity(this)),
-    m_clavicles(new QCylinderMesh()),
-    m_claviclesTransform(new Qt3DCore::QTransform()),
     m_trunkEntity(new QEntity(this)),
-    m_trunk(new QCylinderMesh()),
-    m_trunkTransform(new Qt3DCore::QTransform()),
-    m_leftThighEntity(new QEntity(this)),
-    m_leftThigh(new QCylinderMesh()),
-    m_leftThighTransform(new Qt3DCore::QTransform()),
-    m_rightThighEntity(new QEntity(this)),
-    m_rightThigh(new QCylinderMesh),
-    m_rightThighTransform(new Qt3DCore::QTransform()),
-    m_leftKneeEntity(new QEntity(this)),
-    m_leftKnee(new QSphereMesh()),
-    m_leftKneeTransform(new Qt3DCore::QTransform()),
-    m_rightKneeEntity(new QEntity(this)),
-    m_rightKnee(new QSphereMesh()),
-    m_rightKneeTransform(new Qt3DCore::QTransform()),
-    m_leftLegEntity(new QEntity(this)),
-    m_leftLeg(new QCylinderMesh()),
-    m_leftLegTransform(new Qt3DCore::QTransform()),
-    m_rightLegEntity(new QEntity(this)),
-    m_rightLeg(new QCylinderMesh()),
-    m_rightLegTransform(new Qt3DCore::QTransform())
-
+    m_pelvisEntity(new QEntity(this)),
+    m_pelvisTransform(new Qt3DCore::QTransform())
 {
   // set global material apllied on each entities
   m_jugglerMetalRoughMaterial->setBaseColor(m_color);
@@ -65,6 +43,7 @@ Juggler::Juggler(QEntity *t_rootEntity,
   createHead();
   createBody();
   createArms();
+  createLegs();
 
   // translate our juggler
   m_position = QVector3D(t_position.x(), JUGGLER_TRANSLATION_Y, t_position.y());
@@ -89,13 +68,14 @@ Juggler::Juggler(QEntity *t_rootEntity,
 
 void Juggler::createHead()
 {
-  m_head->setRadius(HEAD_RADIUS);
-  m_head->setRings(HEAD_RINGS);
-  m_head->setSlices(HEAD_SLICES);
+  auto head = new QSphereMesh();
+  head->setRadius(HEAD_RADIUS);
+  head->setRings(HEAD_RINGS);
+  head->setSlices(HEAD_SLICES);
 
   m_headTransform->setTranslation(HEAD_TRANSLATE);
 
-  m_headEntity->addComponent(m_head);
+  m_headEntity->addComponent(head);
   m_headEntity->addComponent(m_headTransform);
   m_headEntity->addComponent(m_jugglerMetalRoughMaterial);
 }
@@ -103,60 +83,32 @@ void Juggler::createHead()
 void Juggler::createBody()
 {
   // clavicles
-  makeMember(m_clavicles,
-             m_claviclesTransform,
+  auto clavicles = new QCylinderMesh();
+  auto claviclesTransform = new Qt3DCore::QTransform();
+  makeMember(clavicles,
+             claviclesTransform,
              m_claviclesEntity,
              CLAVICLES_ROTATION,
              CLAVICLES_TRANSLATION,
              CLAVICLES_LENGHT);
 
   // trunk
-  makeMember(m_trunk,
-             m_trunkTransform,
+  auto trunk = new QCylinderMesh();
+  auto trunkTransform = new Qt3DCore::QTransform();
+  makeMember(trunk,
+             trunkTransform,
              m_trunkEntity,
              TRUNK_ROTATION,
              TRUNK_TRANLATION,
              TRUNK_LENGHT);
 
-  // thighs
-  makeMember(m_leftThigh,
-             m_leftThighTransform,
-             m_leftThighEntity,
-             LEFT_THIGH_ROTATION,
-             LEFT_THIGH_TRANSLATION,
-             THIGH_LENGHT);
+  // pelvis
+  auto pelvis = new QSphereMesh();
+  makeArticulation(pelvis,
+                   m_pelvisTransform,
+                   m_pelvisEntity,
+                   PELVIS_TRANSLATION);
 
-  makeMember(m_rightThigh,
-             m_rightThighTransform,
-             m_rightThighEntity,
-             RIGHT_THIGH_ROTATION,
-             RIGHT_THIGH_TRANLATION,
-             THIGH_LENGHT);
-
-  // knees
-  makeArticulation(m_leftKnee,
-                   m_leftKneeTransform,
-                   m_leftKneeEntity,
-                   LEFT_KNEE_TRANLATION);
-
-  makeArticulation(m_rightKnee,
-                   m_rightKneeTransform,
-                   m_rightKneeEntity,
-                   RIGHT_KNEE_TRANLATION);
-
-  // legs
-  makeMember(m_leftLeg,
-             m_leftLegTransform,
-             m_leftLegEntity,
-             LEFT_LEG_ROTATION,
-             LEFT_LEG_TRANSLATION,
-             LEG_LENGHT);
-  makeMember(m_rightLeg,
-             m_rightLegTransform,
-             m_rightLegEntity,
-             RIGHT_LEG_ROTATION,
-             RIGHT_LEG_TRANSLATION,
-             LEG_LENGHT);
 }
 
 void Juggler::createArms()
@@ -170,6 +122,19 @@ void Juggler::createArms()
                               m_jugglerMetalRoughMaterial,
                               m_color,
                               hand(rightHand));
+}
+
+void Juggler::createLegs()
+{
+  m_leftLeg = new JugglerLeg(m_pelvisEntity,
+                             m_jugglerMetalRoughMaterial,
+                             m_color,
+                             hand(leftHand));
+
+  m_leftLeg = new JugglerLeg(m_pelvisEntity,
+                             m_jugglerMetalRoughMaterial,
+                             m_color,
+                             hand(rightHand));
 }
 
 void Juggler::setLeftHandPosition(QVector3D t_pos)
