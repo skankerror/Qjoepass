@@ -71,6 +71,8 @@ private:
   // bool to know if we need to enlarge juggling
   bool m_isExtPlusCatch;
 
+  int m_startingPause = 0;
+
 
 };
 

@@ -30,7 +30,7 @@ HandAnimEvents::HandAnimEvents(int t_jugglerId,
 void HandAnimEvents::appendHandAnimEvent(handAnimEvent *t_handAnimEvent)
 {
   m_v_handAnimEvent.append(t_handAnimEvent);
-  qDebug() << "HandAnimEvents::appendHandAnimEvent bluked !";
+//  qDebug() << "HandAnimEvents::appendHandAnimEvent bluked !";
   emit sizeChanged();
 }
 
@@ -55,6 +55,7 @@ void HandAnimEvents::printDebug()
   qDebug() << "juggler ID" << m_jugglerId;
   qDebug() << "hand : " << m_hand;
   qDebug() << "loop duration" << m_loopDuration;
+  qDebug() << "last anim duration" << m_lastAnimDuration;
   for (int i = 0; i < getSize(); i++)
   {
     auto myHandAnimEvent = getHandAnimEventAt(i);
@@ -75,4 +76,13 @@ void HandAnimEvents::setLoopDuration()
     if (loopPropDuration > m_loopDuration)
       m_loopDuration = loopPropDuration;
   }
+//  qDebug() << "loop duration" << m_loopDuration;
+  setLastAnimDuration();
+}
+
+void HandAnimEvents::setLastAnimDuration()
+{
+  auto myHandAnimEvent = getHandAnimEventAt(getSize() - 1);
+  m_lastAnimDuration = m_loopDuration - myHandAnimEvent->s_startTime;
+//  qDebug() << "last anim duration" << m_lastAnimDuration;
 }

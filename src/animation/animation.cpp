@@ -79,8 +79,6 @@ void Animation::setPropAnim()
       seqAnimForDelay->addAnimation(propAnim);
       addAnimation(seqAnimForDelay);
 
-//      qDebug() << "lenght of prop anim n°" << i << propAnim->duration();
-
       propId++;
     }
   }
@@ -103,18 +101,6 @@ void Animation::setHandAnim()
     rightHandAnim->setAnim(v_v_handAnimEvents.at(2 * i));
     addAnimation(rightHandAnim);
 
-    /***************** check *******************/
-//      auto v_handAnimEvents = v_v_handAnimEvents.at(2 * i);
-//      qDebug() << "HAND ANIM n° : " << 2 * i;
-//      for (int j = 0; j < v_handAnimEvents->size(); j++)
-//      {
-//        auto myHandAnimEvents = v_handAnimEvents->at(j);
-//        qDebug() << "EVENT n° : " << j;
-//        qDebug() << "*start time" << myHandAnimEvents->s_startTime;
-//        qDebug() << "*prop id" << myHandAnimEvents->s_propId;
-//        qDebug() << "*rec hand" << myHandAnimEvents->s_receiveHand;
-//      }
-
     // left hand
     // add delay
     auto seqForDelay = new QSequentialAnimationGroup();
@@ -131,19 +117,6 @@ void Animation::setHandAnim()
     leftHandAnim->setAnim(v_v_handAnimEvents.at((2 * i) + 1));
     seqForDelay->addAnimation(leftHandAnim);
     addAnimation(seqForDelay);
-
-    /***************** check *******************/
-//    v_handAnimEvents = v_v_handAnimEvents.at((2 * i) + 1);
-//    qDebug() << "HAND ANIM n° : " << (2 * i) + 1;
-//    for (int j = 0; j < v_handAnimEvents->size(); j++)
-//    {
-//      auto myHandAnimEvents = v_handAnimEvents->at(j);
-//      qDebug() << "EVENT n° : " << j;
-//      qDebug() << "*start time" << myHandAnimEvents->s_startTime;
-//      qDebug() << "*prop id" << myHandAnimEvents->s_propId;
-//      qDebug() << "*rec hand" << myHandAnimEvents->s_receiveHand;
-//    }
-
   }
 }
 

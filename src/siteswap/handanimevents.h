@@ -63,6 +63,8 @@ private slots:
 
 private:
 
+  void setLastAnimDuration();
+
   // needed to reorder m_v_handAnimEvents
   static bool wayToSort(handAnimEvent *t_firstHandAnimEvent,
                         handAnimEvent *t_secondHandAnimEvent)
@@ -74,6 +76,7 @@ private:
   hand m_hand;
   QVector<handAnimEvent *> m_v_handAnimEvent;
   int m_loopDuration = 0;
+  int m_lastAnimDuration;
 };
 
 #endif // HANDANIMEVENTS_H

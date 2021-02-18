@@ -216,7 +216,6 @@ void SiteSwap::setTotalAnimEvents()
       propId++;
     }
   }
-  qDebug() << "I'm just after setTotalAnimEvents";
   // now that we have all prop anim events, we can set hands anims events
   setHandsAnimEvents();
 }
@@ -352,12 +351,12 @@ void SiteSwap::setHandsAnimEvents()
                                                  this);
     m_v_handAnimEvents.append(leftHandAnimEvents);
   }
-  qDebug() << "m_v_handAnimEvents size :" << m_v_handAnimEvents.size();
+//  qDebug() << "m_v_handAnimEvents size :" << m_v_handAnimEvents.size();
   // get all informations from prop anim events
   for (int i = 0; i < m_v_propAnimEvents.size(); i++)
   {
     auto propAnimEvents = m_v_propAnimEvents.at(i);
-    qDebug() << "bluk #" << i;
+//    qDebug() << "bluk #" << i;
 
     for (int j = 0; j < propAnimEvents->getSize(); j++)
     {
@@ -379,12 +378,12 @@ void SiteSwap::setHandsAnimEvents()
       (myPropAnimEvent->s_launchHand == rightHand) ?
             id = myPropAnimEvent->s_jugglerLaunchId * 2:
           id = (myPropAnimEvent->s_jugglerLaunchId * 2) + 1;
-      qDebug() << "id avant le at qui bugue :" << id;
+//      qDebug() << "id avant le at qui bugue :" << id;
       m_v_handAnimEvents.at(id)->appendHandAnimEvent(myHandAnimEvent);
 
     }
   }
-  qDebug() << "I'm at the end of setHansAnimEvents before reorder";
+//  qDebug() << "I'm at the end of setHansAnimEvents before reorder";
   // reorder m_v_v_handAnimEvents
   reorderHandsAnimEvents();
 

@@ -34,6 +34,7 @@ HandAnim::HandAnim(QVector<Juggler *> t_v_juggler,
 
 void HandAnim::setAnim(HandAnimEvents *t_handAnimEvents)
 {
+//  int pauseTime = 0;
   for (int i = 0; i < t_handAnimEvents->getSize(); i++)
   {
     // dwell vars
@@ -51,13 +52,13 @@ void HandAnim::setAnim(HandAnimEvents *t_handAnimEvents)
     // déterminer quand ça va démarrer, si y a un décalage rajouter une pause
     if (i == 0)
     {
-      int pauseTime;
+//      int pauseTime;
       // right hand ?
       (m_hand == rightHand) ?
-            pauseTime = startTime :
-          pauseTime = startTime - (int)((HAND_PERIOD / 2) * S_TO_MS);
-      addPause(pauseTime);
-      qDebug() << "event n° : " << i << "Pause time begining : " << startTime;
+            m_startingPause = startTime :
+          m_startingPause = startTime - (int)((HAND_PERIOD / 2) * S_TO_MS);
+      addPause(m_startingPause);
+      qDebug() << "event n° : " << i << "Pause time begining : " << m_startingPause;
 
     }
 
@@ -72,19 +73,18 @@ void HandAnim::setAnim(HandAnimEvents *t_handAnimEvents)
     // if it's last event ?
     if (i == t_handAnimEvents->getSize() - 1)
     {
-//      nextHandAnimEvent = t_handAnimEvents->getHandAnimEventAt(0);
-//      int nextHandAnimEventStartTime = nextHandAnimEvent->s_startTime;
-//      qDebug() << "start Time ?" << nextHandAnimEventStartTime;
-//      if (!nextHandAnimEventStartTime) // start time = 0 ?
-//      {
-        // we can get loop duration
-        duration = t_handAnimEvents->getDuration() - startTime - dwellDuration;
-//      }
-//      else
-//      {
-//        duration = nextHandAnimEvent->s_loopDuration - startTime - dwellDuration;
-//        duration = (int)((HAND_PERIOD * S_TO_MS) - dwellDuration);
-//      }
+      duration = t_handAnimEvents->getDuration()
+          - startTime
+          - dwellDuration
+          - m_startingPause
+          + t_handAnimEvents->getHandAnimEventAt(0)->s_startTime;
+      qDebug() << "In HandAnim::setAnim";
+      qDebug() << " ------ duration of HandAnimEvents : " << t_handAnimEvents->getDuration();
+      qDebug() << " ------ - start time :" << startTime;
+      qDebug() << " ------ - dwell duration" << dwellDuration;
+      qDebug() << " ------ - m_startingPause" << m_startingPause;
+      qDebug() << " ------ + start time of first launch" << t_handAnimEvents->getHandAnimEventAt(0)->s_startTime;
+      qDebug() << " ------ = ---------------- " << duration;
     }
     else
     {
@@ -96,7 +96,7 @@ void HandAnim::setAnim(HandAnimEvents *t_handAnimEvents)
     // FIXME: doesn't work for all case
 
     qDebug() << "event n° : " << i << "empty hand Duration : " << duration;
-    // pass propId to
+
     auto myEmptyHandAnim = emptyHandAnim(initialPos,
                                          finalPos,
                                          duration);
