@@ -91,27 +91,32 @@
   #define ARTICULATION_RINGS 8
   #define ARTICULATION_SLICES 32
     // Clavicles
-    #define CLAVICLES_ROTATION QVector3D(NULL_FLOAT,NULL_FLOAT,90.0f)
-    #define CLAVICLES_LENGHT 2.0f
     #define CLAVICLES_Y 6.3f
     #define CLAVICLES_Z NULL_FLOAT
-    #define CLAVICLES_TRANSLATION QVector3D(NULL_FLOAT,CLAVICLES_Y,NULL_FLOAT)
     #define LEFT_SHOULDER_X 1.0f
     #define RIGHT_SHOULDER_X -1.0f
     #define SHOULDER_Y CLAVICLES_Y
     #define SHOULDER_Z CLAVICLES_Z
-    // Trunk
-    #define TRUNK_ROTATION NULL_VECTOR
-    #define TRUNK_TRANLATION QVector3D(NULL_FLOAT,5.175f,NULL_FLOAT)
-    #define TRUNK_LENGHT 2.25f
-    // pelvis
-    #define PELVIS_TRANSLATION QVector3D(0,4.05f,0)
 
+      /******************************* Trunk ***************************/
+
+      #define TRUNK_TRANSLATION QVector3D(NULL_FLOAT,4.05f,NULL_FLOAT)
+      #define TRUNK_ROTATION NULL_VECTOR
+      // pelvis
+      #define PELVIS_TRANSLATION NULL_VECTOR
+      // spine
+      #define SPINE_LENGHT 2.25f
+      #define SPINE_ROTATION NULL_VECTOR
+      #define SPINE_TRANSLATION QVector3D(NULL_FLOAT,SPINE_LENGHT/2.0f,NULL_FLOAT)
+      // clavicles
+      #define CLAVICLES_LENGHT 2.0f
+      #define CLAVICLES_ROTATION QVector3D(NULL_FLOAT,NULL_FLOAT,90.0f)
+      #define CLAVICLES_TRANSLATION QVector3D(NULL_FLOAT,SPINE_LENGHT/2.0f,NULL_FLOAT)
 
       /****************************** Arms *****************************/
 
-      #define GLOBAL_LEFT_ARM_TRANSLATION QVector3D(-6.3,-1,0)
-      #define GLOBAL_RIGHT_ARM_TRANSLATION QVector3D(-6.3f,1,0)
+      #define GLOBAL_LEFT_ARM_TRANSLATION QVector3D(-SPINE_LENGHT/2.0f,-CLAVICLES_LENGHT/2.0f,0)
+      #define GLOBAL_RIGHT_ARM_TRANSLATION QVector3D(-SPINE_LENGHT/2.0f,CLAVICLES_LENGHT/2.0f,0)
       // Shoulder
       #define SHOULDER_TRANSLATION NULL_VECTOR
       // Arm

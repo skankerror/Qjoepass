@@ -21,6 +21,7 @@
 #include <Qt3DCore>
 #include <Qt3DExtras>
 #include <Qt3DRender>
+#include "jugglertrunk.h"
 #include "jugglerarm.h"
 #include "jugglerleg.h"
 #include "jugglerhead.h"
@@ -89,10 +90,10 @@ public:
 private:
 
   // cstr private methods
-  void createHead();
-  void createBody();
+  void createTrunk();
   void createArms();
   void createLegs();
+  void createHead();
   void makeMember(QCylinderMesh *t_member,
                   Qt3DCore::QTransform *t_memberTransform,
                   QEntity *t_memberEntity,
@@ -154,23 +155,22 @@ private:
   QVector3D m_posHead;
   QVector3D m_headLookAt;
 
-  // head
-//  QEntity *m_headEntity;
-//  Qt3DCore::QTransform *m_headTransform;
+  // trunk
+  JugglerTrunk *m_trunk;
 
-  // clavicles
-  QEntity *m_claviclesEntity;
+//  // clavicles
+//  QEntity *m_claviclesEntity;
 
   // Arms
   JugglerArm *m_leftArm;
   JugglerArm *m_rightArm;
 
-  // trunk
-  QEntity *m_trunkEntity;
+//  // trunk
+//  QEntity *m_trunkEntity;
 
-  // pelvis
-  QEntity *m_pelvisEntity;
-  Qt3DCore::QTransform *m_pelvisTransform;
+//  // pelvis
+//  QEntity *m_pelvisEntity;
+//  Qt3DCore::QTransform *m_pelvisTransform;
 
   // legs
   JugglerLeg *m_leftLeg;

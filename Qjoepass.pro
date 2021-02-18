@@ -34,6 +34,7 @@ SOURCES += \
   src/3d/3dwindow.cpp \
   src/3d/juggler/jugglerhead.cpp \
   src/3d/juggler/jugglerleg.cpp \
+  src/3d/juggler/jugglertrunk.cpp \
   src/3d/world/light.cpp \
   src/3d/world/ground.cpp \
   src/3d/juggler/juggler.cpp \
@@ -61,6 +62,7 @@ HEADERS += \
   src/3d/3dwindow.h \
   src/3d/juggler/jugglerhead.h \
   src/3d/juggler/jugglerleg.h \
+  src/3d/juggler/jugglertrunk.h \
   src/3d/world/light.h \
   src/3d/world/ground.h \
   src/3d/juggler/juggler.h \

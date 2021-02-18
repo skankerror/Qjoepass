@@ -26,13 +26,11 @@ Juggler::Juggler(QEntity *t_rootEntity,
   : m_jugglerMetalRoughMaterial(new QMetalRoughMaterial()),
     m_skeletonTransform(new Qt3DCore::QTransform()),
     m_color(t_color),
-    m_rotY(t_rotY),
-//    m_headEntity(new QEntity(this)),
-//    m_headTransform(new Qt3DCore::QTransform()),
-    m_claviclesEntity(new QEntity(this)),
-    m_trunkEntity(new QEntity(this)),
-    m_pelvisEntity(new QEntity(this)),
-    m_pelvisTransform(new Qt3DCore::QTransform())
+    m_rotY(t_rotY)/*,*/
+//    m_claviclesEntity(new QEntity(this)),
+//    m_trunkEntity(new QEntity(this)),
+//    m_pelvisEntity(new QEntity(this)),
+//    m_pelvisTransform(new Qt3DCore::QTransform())
 {
   // set global material apllied on each entities
   m_jugglerMetalRoughMaterial->setBaseColor(m_color);
@@ -40,7 +38,7 @@ Juggler::Juggler(QEntity *t_rootEntity,
   m_jugglerMetalRoughMaterial->setRoughness(JUGGLER_ROUGHNESS);
 
   // create all the parts
-  createBody();
+  createTrunk();
   createArms();
   createLegs();
   createHead();
@@ -66,45 +64,48 @@ Juggler::Juggler(QEntity *t_rootEntity,
   /*********************** testing zone *********************************/
 }
 
-void Juggler::createBody()
+void Juggler::createTrunk()
 {
-  // clavicles
-  auto clavicles = new QCylinderMesh();
-  auto claviclesTransform = new Qt3DCore::QTransform();
-  makeMember(clavicles,
-             claviclesTransform,
-             m_claviclesEntity,
-             CLAVICLES_ROTATION,
-             CLAVICLES_TRANSLATION,
-             CLAVICLES_LENGHT);
+  m_trunk = new JugglerTrunk(this,
+                             m_jugglerMetalRoughMaterial,
+                             m_color);
+//  // clavicles
+//  auto clavicles = new QCylinderMesh();
+//  auto claviclesTransform = new Qt3DCore::QTransform();
+//  makeMember(clavicles,
+//             claviclesTransform,
+//             m_claviclesEntity,
+//             CLAVICLES_ROTATION,
+//             CLAVICLES_TRANSLATION,
+//             CLAVICLES_LENGHT);
 
-  // trunk
-  auto trunk = new QCylinderMesh();
-  auto trunkTransform = new Qt3DCore::QTransform();
-  makeMember(trunk,
-             trunkTransform,
-             m_trunkEntity,
-             TRUNK_ROTATION,
-             TRUNK_TRANLATION,
-             TRUNK_LENGHT);
+//  // trunk
+//  auto trunk = new QCylinderMesh();
+//  auto trunkTransform = new Qt3DCore::QTransform();
+//  makeMember(trunk,
+//             trunkTransform,
+//             m_trunkEntity,
+//             TRUNK_ROTATION,
+//             TRUNK_TRANLATION,
+//             TRUNK_LENGHT);
 
-  // pelvis
-  auto pelvis = new QSphereMesh();
-  makeArticulation(pelvis,
-                   m_pelvisTransform,
-                   m_pelvisEntity,
-                   PELVIS_TRANSLATION);
+//  // pelvis
+//  auto pelvis = new QSphereMesh();
+//  makeArticulation(pelvis,
+//                   m_pelvisTransform,
+//                   m_pelvisEntity,
+//                   PELVIS_TRANSLATION);
 
 }
 
 void Juggler::createArms()
 {
-  m_leftArm = new JugglerArm(m_claviclesEntity,
+  m_leftArm = new JugglerArm(m_trunk->getClaviclesEntity(),
                              m_jugglerMetalRoughMaterial,
                              m_color,
                              hand(leftHand));
 
-  m_rightArm = new JugglerArm(m_claviclesEntity,
+  m_rightArm = new JugglerArm(m_trunk->getClaviclesEntity(),
                               m_jugglerMetalRoughMaterial,
                               m_color,
                               hand(rightHand));
@@ -112,12 +113,12 @@ void Juggler::createArms()
 
 void Juggler::createLegs()
 {
-  m_leftLeg = new JugglerLeg(m_pelvisEntity,
+  m_leftLeg = new JugglerLeg(m_trunk->getPelvisEntity(),
                              m_jugglerMetalRoughMaterial,
                              m_color,
                              hand(leftHand));
 
-  m_leftLeg = new JugglerLeg(m_pelvisEntity,
+  m_leftLeg = new JugglerLeg(m_trunk->getPelvisEntity(),
                              m_jugglerMetalRoughMaterial,
                              m_color,
                              hand(rightHand));
@@ -125,18 +126,7 @@ void Juggler::createLegs()
 
 void Juggler::createHead()
 {
-//  auto head = new QSphereMesh();
-//  head->setRadius(HEAD_RADIUS);
-//  head->setRings(HEAD_RINGS);
-//  head->setSlices(HEAD_SLICES);
-
-//  m_headTransform->setTranslation(HEAD_TRANSLATE);
-
-//  m_headEntity->addComponent(head);
-//  m_headEntity->addComponent(m_headTransform);
-//  m_headEntity->addComponent(m_jugglerMetalRoughMaterial);
-
-  m_head = new JugglerHead(m_claviclesEntity,
+  m_head = new JugglerHead(m_trunk->getClaviclesEntity(),
                            m_jugglerMetalRoughMaterial,
                            m_color);
 }
