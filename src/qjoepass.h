@@ -50,8 +50,8 @@
   #define SKYBOX_EXTENSION ".jpg"
   #define SKYBOX_SCALE 10.0F
   // Ground
-  #define GROUND_WIDTH 30
-  #define GROUND_HEIGHT 30
+  #define GROUND_SIZE 30
+//  #define GROUND_HEIGHT 30
   #define GROUND_POSY NULL_FLOAT
   #define GROUND_AMBIENT_OCCLUSION "qrc:/woodfloor/res/images/WoodFloor/wooden_planks_01_ambient_occlusion.png"
   #define GROUND_ROUGHNESS "qrc:/woodfloor/res/images/WoodFloor/wooden_planks_01_roughness.png"
@@ -202,6 +202,13 @@
     #define CLUB_HELICOPTER_ROTX 90
     #define CLUB_DWELL_SELF_X_DECAY 30
     #define CLUB_DWELL_PASSING_X_DECAY 60
+
+/**************************** Juggler Position Widget *******************/
+
+#define JUGGLER_POSITION_WIDGET_SIZE 600
+#define JUGGLER_PIXMAP "://res/images/juggler.png"
+#define GROUND_PIXMAP "://woodfloor/res/images/WoodFloor/wooden_planks_01_basecolor.png"
+#define JUGGLER_PIXMAP_SIZE FOREARM_LENGHT*(JUGGLER_POSITION_WIDGET_SIZE/GROUND_SIZE)
 
 /******************************** Animation *****************************************/
 

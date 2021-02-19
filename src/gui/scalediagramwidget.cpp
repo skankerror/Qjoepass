@@ -15,31 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef JUGGLINGCLUB_H
-#define JUGGLINGCLUB_H
+#include "scalediagramwidget.h"
 
-#include "jugglingprop.h"
-
-class JugglingClub : public JugglingProp
+ScaleDiagramWidget::ScaleDiagramWidget(QWidget *parent)
+  : QWidget(parent)
 {
 
-  Q_OBJECT
-
-public:
-
-  JugglingClub(QEntity *t_rootEntity,
-               QColor &t_color,
-               launchTypeClub t_launchType = normalClub);
-
-  launchTypeClub getLaunchType() const { return m_launchType; };
-
-public slots:
-
-  void setLaunchType(launchTypeClub t_launchType) { m_launchType = t_launchType; };
-
-private:
-
-  launchTypeClub m_launchType;
-};
-
-#endif // JUGGLINGCLUB_H
+}

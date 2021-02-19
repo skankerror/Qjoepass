@@ -29,8 +29,8 @@ Ground::Ground(QEntity *t_rootEntity, QColor &t_color)
     groundAmbientOcclusion(new QTextureLoader())
 {
   // Plane shape data
-  planeMesh->setWidth(GROUND_WIDTH);
-  planeMesh->setHeight(GROUND_HEIGHT);
+  planeMesh->setWidth(GROUND_SIZE);
+  planeMesh->setHeight(GROUND_SIZE);
 
   // Plane mesh transform
   planeTransform->setTranslation(QVector3D(0.0f, GROUND_POSY, 0.0f));

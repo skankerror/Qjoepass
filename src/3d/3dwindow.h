@@ -52,7 +52,6 @@ private:
   void createGround();
   void createSkybox();
   void createLighting();
-  void setGlobalObject();
   void createJuggler(float t_rotY,
                      QVector2D t_position,
                      QColor t_color);
@@ -69,7 +68,7 @@ private:
 
 signals:
 
-  void jugglerCountChanged();
+  void jugglerCountChanged(QVector<Juggler*>);
 
 public slots:
 
@@ -110,15 +109,6 @@ private:
 
   // prop
   QVector<JugglingProp *> m_v_prop;
-
-    // club
-    QMesh *m_pirouetteMesh;
-
-    // ball
-    QSphereMesh *m_sphereMesh;
-
-    // ring
-    QTorusMesh *m_torusMesh;
 
   // global app settings
   MySettings *m_settings;

@@ -23,6 +23,7 @@
 #include "settings.h"
 #include "preferences.h"
 #include "3dwindow.h"
+#include "jugglerpositionwidget.h"
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -75,6 +76,12 @@ private slots:
 
 private:
 
+  MySettings *m_settings;
+  Preferences *m_pref;
+  My3DWindow *m_my3DWindow;
+  QWidget *m_container;
+  JugglerPositionWidget *m_jugglerPositionWidget;
+
   QString m_curFile;
 
   QMenu *m_fileMenu;
@@ -90,14 +97,7 @@ private:
   QAction *m_aboutQtAct;
   QLabel *m_infoLabel;
 
-  MySettings *m_settings;
-
-  Preferences *m_pref;
-
   QList<QKeySequence> m_l_prefShortcut;
-
-  QWidget *m_container;
-  My3DWindow *m_my3DWindow;
 
   QToolBar *m_myToolBar;
     QHBoxLayout *m_toolBarLayout;

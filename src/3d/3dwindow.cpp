@@ -24,9 +24,6 @@ My3DWindow::My3DWindow(MySettings *t_settings)
     m_rootEntity(new QEntity()),
     m_skybox(new QSkyboxEntity()),
     m_pointLight(new QPointLight()),
-    m_pirouetteMesh(new QMesh()),
-    m_sphereMesh(new QSphereMesh()),
-    m_torusMesh(new QTorusMesh()),
     m_settings(t_settings),
     m_siteswap(nullptr),
     m_anim(new Animation())
@@ -38,17 +35,12 @@ My3DWindow::My3DWindow(MySettings *t_settings)
   QColor colorBG = m_settings->value("world/colorbg").value<QColor>();
   defaultFrameGraph()->setClearColor(colorBG);
 
-  setGlobalObject();
   createCam();
   createGround();
   createLighting();
   createSkybox();
 
 /**************************** testing zone ***************************/
-
-//  qDebug() << "dwell time 420 : " << DWELL_TIME;
-//  qDebug() << "empty time 280 : " << EMPTY_TIME;
-//  qDebug() << "dwell time launch 1 250 : " << DWELL_TIME_LAUNCH1;
 
 }
 
@@ -70,27 +62,6 @@ void My3DWindow::createGround()
   QColor colorG = m_settings->value("world/groundColor").value<QColor>();
   m_ground = new Ground(m_rootEntity,
                         colorG);
-}
-
-void My3DWindow::setGlobalObject()
-{
-  // create one pointlight for 3 sources
-  m_pointLight->setColor(QColor(QRgb(LIGHT_COLOR)));
-  m_pointLight->setIntensity(LIGHT_INTENSITY);
-
-  // For ball creations
-  m_sphereMesh->setRings(BALL_RINGS);
-  m_sphereMesh->setSlices(BALL_SLICES);
-  m_sphereMesh->setRadius(BALL_RADIUS);
-
-  // For ring creations
-  m_torusMesh->setRadius(RING_RADIUS);
-  m_torusMesh->setMinorRadius(RING_MINOR_RADIUS);
-  m_torusMesh->setRings(RING_RING_NUMBER);
-  m_torusMesh->setSlices(RING_SLICE_NUMBER);
-
-  // For club creations
-  m_pirouetteMesh->setSource(QUrl(CLUB_MESH_SRC));
 }
 
 void My3DWindow::deleteJugglers()
@@ -195,7 +166,7 @@ void My3DWindow::createJuggler(float t_rotY,
 {
   auto juggler = new Juggler(m_rootEntity, t_rotY, t_position, t_color);
   m_v_juggler.append(juggler);
-  emit jugglerCountChanged();
+  emit jugglerCountChanged(m_v_juggler);
 }
 
 void My3DWindow::createSkybox()
@@ -213,6 +184,10 @@ void My3DWindow::createSkybox()
 
 void My3DWindow::createLighting()
 {
+  // create one pointlight for 3 sources
+  m_pointLight->setColor(QColor(QRgb(LIGHT_COLOR)));
+  m_pointLight->setIntensity(LIGHT_INTENSITY);
+
   auto light = new Light(m_rootEntity,
                          m_pointLight,
                          LIGHT1_POS);
@@ -248,7 +223,6 @@ void My3DWindow::createLighting()
 void My3DWindow::createClub(QColor t_color)
 {
   auto club = new JugglingClub(m_rootEntity,
-                               m_pirouetteMesh,
                                t_color);
   m_v_prop.append(club);
 
@@ -257,7 +231,6 @@ void My3DWindow::createClub(QColor t_color)
 void My3DWindow::createBall(QColor t_color)
 {
   auto ball = new JugglingBall(m_rootEntity,
-                               m_sphereMesh,
                                t_color);
   m_v_prop.append(ball);
 }
@@ -265,7 +238,6 @@ void My3DWindow::createBall(QColor t_color)
 void My3DWindow::createRing(QColor t_color)
 {
   auto ring = new JugglingRing(m_rootEntity,
-                               m_torusMesh,
                                t_color);
   m_v_prop.append(ring);
 }

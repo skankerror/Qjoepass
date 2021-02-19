@@ -76,10 +76,6 @@ JugglerLeg::JugglerLeg(QEntity *t_rootEntity,
              TIBIA_TRANSLATION,
              TIBIA_LENGHT);
 
-  /************************* test zone ****************************/
-  setHaunchRotationX(-20);
-  setKneeRotationX(20);
-
 }
 
 void JugglerLeg::setHaunchRotationX(float t_angle)

@@ -19,30 +19,22 @@
 #include "mainwindow.h"
 
 MainWindow::MainWindow()
+  : m_settings(new MySettings()),
+    m_pref(new Preferences(m_settings)),
+    m_my3DWindow(new My3DWindow(m_settings)),
+    m_container(QWidget::createWindowContainer(m_my3DWindow)),
+    m_jugglerPositionWidget(new JugglerPositionWidget(this))
 {
   QIcon icon = QIcon(APP_ICON);
   setWindowIcon(icon);
 
-  QStringList cmdline_args = QCoreApplication::arguments();
+//  QStringList cmdline_args = QCoreApplication::arguments();
   //    QFile file(cmdline_args[0]);
-  m_settings = new MySettings() ;
 
   auto widget = new QWidget;
   setCentralWidget(widget);
 
-  auto topFiller = new QWidget;
-  topFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-  m_infoLabel = new QLabel(tr("<i>Choose a menu option, or right-click to "
-                            "invoke a context menu</i>"));
-  m_infoLabel->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
-  m_infoLabel->setAlignment(Qt::AlignCenter);
-
-  auto bottomFiller = new QWidget;
-  bottomFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-  m_my3DWindow = new My3DWindow(m_settings);
-  m_container = QWidget::createWindowContainer(m_my3DWindow);
+  // 3d window
   QSize screenSize = m_my3DWindow->screen()->size();
   m_container->setMinimumSize(QSize(WIDGET3D_MIN_W, WIDGET3D_MIN_H));
   m_container->setMaximumSize(screenSize);
@@ -54,19 +46,31 @@ MainWindow::MainWindow()
   createMenus();
   createToolBar();
 
-  QString message = tr("A context menu is available by right-clicking");
-  statusBar()->showMessage(message);
-
   setWindowTitle(tr("Qjoepass"));
   setMinimumSize(WINDOW_MINIMUM_H, WINDOW_MINIMUM_H);
 
   resize(WINDOW_W, WINDOW_H);
 
-  m_pref = new Preferences(m_settings);
+  // juggler postion widget
+  m_jugglerPositionWidget->setWindowFlag(Qt::Window);
+  m_jugglerPositionWidget->setFixedSize(JUGGLER_POSITION_WIDGET_SIZE, JUGGLER_POSITION_WIDGET_SIZE);
+  m_jugglerPositionWidget->setWindowTitle("Juggler Postion Widget");
+  m_jugglerPositionWidget->show();
 
-  connect(m_pref, SIGNAL(colorChanged(QColor)), m_my3DWindow, SLOT(changeBackground(QColor)));
-  connect(m_pref, SIGNAL(groundColorChanged(QColor)), m_my3DWindow, SLOT(changeGroundColor(QColor)));
+  connect(m_my3DWindow,
+          SIGNAL(jugglerCountChanged(QVector<Juggler*>)),
+          m_jugglerPositionWidget,
+          SLOT(jugglerCountChanged(QVector<Juggler*>)));
 
+  connect(m_pref,
+          SIGNAL(colorChanged(QColor)),
+          m_my3DWindow,
+          SLOT(changeBackground(QColor)));
+
+  connect(m_pref,
+          SIGNAL(groundColorChanged(QColor)),
+          m_my3DWindow,
+          SLOT(changeGroundColor(QColor)));
 }
 
 void MainWindow::createMenus()

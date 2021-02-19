@@ -75,8 +75,6 @@ JugglerArm::JugglerArm(QEntity *t_rootEntity,
              FOREARM_TRANSLATION,
              FOREARM_LENGHT);
 
-  /**************************** test zone *********************************/
-
 }
 
 void JugglerArm::setHandPosition(QVector3D &t_pos)

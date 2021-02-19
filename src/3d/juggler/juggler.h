@@ -94,16 +94,6 @@ private:
   void createArms();
   void createLegs();
   void createHead();
-  void makeMember(QCylinderMesh *t_member,
-                  Qt3DCore::QTransform *t_memberTransform,
-                  QEntity *t_memberEntity,
-                  QVector3D t_rot,
-                  QVector3D t_trans,
-                  float t_length);
-  void makeArticulation(QSphereMesh *t_phere,
-                        Qt3DCore::QTransform *t_sphereTransform,
-                        QEntity *t_sphereEntity,
-                        QVector3D t_trans);
 
   // used by several methods
   QMatrix4x4 getRotMatrix() const;
@@ -158,19 +148,9 @@ private:
   // trunk
   JugglerTrunk *m_trunk;
 
-//  // clavicles
-//  QEntity *m_claviclesEntity;
-
   // Arms
   JugglerArm *m_leftArm;
   JugglerArm *m_rightArm;
-
-//  // trunk
-//  QEntity *m_trunkEntity;
-
-//  // pelvis
-//  QEntity *m_pelvisEntity;
-//  Qt3DCore::QTransform *m_pelvisTransform;
 
   // legs
   JugglerLeg *m_leftLeg;

@@ -50,6 +50,8 @@ SOURCES += \
   src/animation/propanim.cpp \
   src/animation/propdwellanim.cpp \
   src/animation/propparabolicanim.cpp \
+  src/gui/jugglerpositionwidget.cpp \
+  src/gui/scalediagramwidget.cpp \
   src/main.cpp \
   src/gui/mainwindow.cpp \
   src/gui/preferences.cpp \
@@ -78,8 +80,10 @@ HEADERS += \
   src/animation/propanim.h \
   src/animation/propdwellanim.h \
   src/animation/propparabolicanim.h \
+  src/gui/jugglerpositionwidget.h \
   src/gui/mainwindow.h \
   src/gui/preferences.h \
+  src/gui/scalediagramwidget.h \
   src/qjoepass.h \
   src/gui/settings.h \
   src/siteswap/handanimevents.h \

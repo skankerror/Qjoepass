@@ -18,7 +18,6 @@
 #include "jugglingring.h"
 
 JugglingRing::JugglingRing(QEntity *t_rootEntity,
-                           QTorusMesh *t_torusMesh,
                            QColor &t_color,
                            launchTypeRing t_launchType)
 
@@ -26,11 +25,17 @@ JugglingRing::JugglingRing(QEntity *t_rootEntity,
     m_launchType(t_launchType)
 
 {
+  auto torusMesh = new QTorusMesh();
+  torusMesh->setRadius(RING_RADIUS);
+  torusMesh->setMinorRadius(RING_MINOR_RADIUS);
+  torusMesh->setRings(RING_RING_NUMBER);
+  torusMesh->setSlices(RING_SLICE_NUMBER);
+
   m_propTransform->setScale3D(QVector3D(RING_SCALE_X,
                                         RING_SCALE_Y,
                                         RING_SCALE_Z));
 
 //  m_propTransform->setRotationY(RING_BASIC_ROTY);
 
-  addComponent(t_torusMesh);
+  addComponent(torusMesh);
 }

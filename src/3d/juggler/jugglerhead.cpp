@@ -97,10 +97,6 @@ JugglerHead::JugglerHead(QEntity *t_rootEntity,
   m_rightEyeEntity->addComponent(rightEye);
   m_rightEyeEntity->addComponent(rightEyeTransform);
   m_rightEyeEntity->addComponent(m_headMaterial);
-
-  /******************* testing zone *******************/
-  setHeadRotationX(15);
-  setHeadRotationY(25);
 }
 
 void JugglerHead::setHeadRotationX(float t_angle)

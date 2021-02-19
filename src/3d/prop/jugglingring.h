@@ -28,7 +28,6 @@ class JugglingRing: public JugglingProp
 public:
 
   JugglingRing(QEntity *t_rootEntity,
-               QTorusMesh *t_torusMesh,
                QColor &t_color,
                launchTypeRing t_launchType = normalRing);
 

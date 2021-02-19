@@ -28,7 +28,6 @@ class JugglingBall: public JugglingProp
 public:
 
   JugglingBall(QEntity *t_rootEntity,
-               QSphereMesh *t_sphereMesh,
                QColor &t_color,
                launchTypeBall t_launchType = normalBall);
 

@@ -6,6 +6,7 @@
         <file>res/images/open.png</file>
         <file>res/images/save.png</file>
         <file>res/images/icone.png</file>
+        <file>res/images/juggler.png</file>
     </qresource>
     <qresource prefix="/skybox">
         <file>res/images/skybox/night_posy.jpg</file>

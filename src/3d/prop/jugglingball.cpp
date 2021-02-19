@@ -18,13 +18,16 @@
 #include "jugglingball.h"
 
 JugglingBall::JugglingBall(QEntity *t_rootEntity,
-                           QSphereMesh *t_sphereMesh,
                            QColor &t_color,
                            launchTypeBall t_launchType)
 
   :JugglingProp(t_rootEntity, t_color),
     m_launchType(t_launchType)
 {
+  auto sphereMesh = new QSphereMesh();
+  sphereMesh->setRings(BALL_RINGS);
+  sphereMesh->setSlices(BALL_SLICES);
+  sphereMesh->setRadius(BALL_RADIUS);
   m_propTransform->setScale(BALL_SCALE);
-  addComponent(t_sphereMesh);
+  addComponent(sphereMesh);
 }

@@ -26,11 +26,7 @@ Juggler::Juggler(QEntity *t_rootEntity,
   : m_jugglerMetalRoughMaterial(new QMetalRoughMaterial()),
     m_skeletonTransform(new Qt3DCore::QTransform()),
     m_color(t_color),
-    m_rotY(t_rotY)/*,*/
-//    m_claviclesEntity(new QEntity(this)),
-//    m_trunkEntity(new QEntity(this)),
-//    m_pelvisEntity(new QEntity(this)),
-//    m_pelvisTransform(new Qt3DCore::QTransform())
+    m_rotY(t_rotY)
 {
   // set global material apllied on each entities
   m_jugglerMetalRoughMaterial->setBaseColor(m_color);
@@ -62,6 +58,13 @@ Juggler::Juggler(QEntity *t_rootEntity,
   connect(this, SIGNAL(positionChanged()), this, SLOT(setBodyPositions()));
 
   /*********************** testing zone *********************************/
+
+//  m_head->setHeadRotationX(15);
+//  m_head->setHeadRotationY(25);
+//  m_leftLeg->setHaunchRotationX(-20);
+//  m_leftLeg->setKneeRotationX(20);
+//  m_trunk->setPelvisRotationX(15);
+//  m_trunk->setClaviculesRotationY(10);
 }
 
 void Juggler::createTrunk()
@@ -69,33 +72,6 @@ void Juggler::createTrunk()
   m_trunk = new JugglerTrunk(this,
                              m_jugglerMetalRoughMaterial,
                              m_color);
-//  // clavicles
-//  auto clavicles = new QCylinderMesh();
-//  auto claviclesTransform = new Qt3DCore::QTransform();
-//  makeMember(clavicles,
-//             claviclesTransform,
-//             m_claviclesEntity,
-//             CLAVICLES_ROTATION,
-//             CLAVICLES_TRANSLATION,
-//             CLAVICLES_LENGHT);
-
-//  // trunk
-//  auto trunk = new QCylinderMesh();
-//  auto trunkTransform = new Qt3DCore::QTransform();
-//  makeMember(trunk,
-//             trunkTransform,
-//             m_trunkEntity,
-//             TRUNK_ROTATION,
-//             TRUNK_TRANLATION,
-//             TRUNK_LENGHT);
-
-//  // pelvis
-//  auto pelvis = new QSphereMesh();
-//  makeArticulation(pelvis,
-//                   m_pelvisTransform,
-//                   m_pelvisEntity,
-//                   PELVIS_TRANSLATION);
-
 }
 
 void Juggler::createArms()
@@ -243,39 +219,3 @@ void Juggler::setBodyPositions()
   m_headLookAt = temp;
 }
 
-void Juggler::makeMember(QCylinderMesh *t_member,
-                         Qt3DCore::QTransform *t_memberTransform,
-                         QEntity *t_memberEntity,
-                         QVector3D t_rot,
-                         QVector3D t_trans,
-                         float t_length)
-{
-  t_memberEntity->addComponent(t_member);
-
-  t_member->setRadius(MEMBERS_RADIUS);
-  t_member->setRings(MEMBERS_RINGS);
-  t_member->setSlices(MEMBERS_SLICES);
-  t_member->setLength(t_length);
-
-  t_memberTransform->setTranslation(t_trans);
-  t_memberTransform->setRotation(QQuaternion::fromEulerAngles(t_rot));
-
-  t_memberEntity->addComponent(t_memberTransform);
-  t_memberEntity->addComponent(m_jugglerMetalRoughMaterial);
-}
-
-void Juggler::makeArticulation(QSphereMesh *t_sphere,
-                               Qt3DCore::QTransform *t_sphereTransform,
-                               QEntity *t_sphereEntity,
-                               QVector3D t_trans)
-{
-  t_sphere->setRadius(ARTICULATION_RADIUS);
-  t_sphere->setRings(ARTICULATION_RINGS);
-  t_sphere->setSlices(ARTICULATION_SLICES);
-
-  t_sphereTransform->setTranslation(t_trans);
-
-  t_sphereEntity->addComponent(t_sphere);
-  t_sphereEntity->addComponent(t_sphereTransform);
-  t_sphereEntity->addComponent(m_jugglerMetalRoughMaterial);
-}

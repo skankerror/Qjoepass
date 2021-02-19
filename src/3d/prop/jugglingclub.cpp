@@ -19,13 +19,14 @@
 
 
 JugglingClub::JugglingClub(QEntity *t_rootEntity,
-                           QMesh *t_clubMesh,
                            QColor &t_color,
                            launchTypeClub t_launchType)
   : JugglingProp(t_rootEntity, t_color),
     m_launchType(t_launchType)
 {
+  auto clubMesh = new QMesh();
+  clubMesh->setSource(QUrl(CLUB_MESH_SRC));
   m_propTransform->setScale(CLUB_SCALE);
-  addComponent(t_clubMesh);
+  addComponent(clubMesh);
 }
 
