@@ -22,8 +22,7 @@
 JugglerPositionWidget::JugglerPositionWidget(QWidget *parent)
   : QWidget(parent)
 {
-  jugglerPixmap.load(JUGGLER_PIXMAP);
-  backgroundPixmap.load(GROUND_PIXMAP);
+  m_backgroundPixmap.load(GROUND_PIXMAP);
 }
 
 
@@ -43,9 +42,9 @@ void JugglerPositionWidget::mouseMoveEvent(QMouseEvent *event)
 {
 }
 
-void JugglerPositionWidget::jugglerCountChanged(QVector<Juggler *> t_v_juggler)
+void JugglerPositionWidget::jugglerCountChanged(QVector<QVector3D> t_v_jugPosAndAngles)
 {
-  m_v_juggler = t_v_juggler;
+  m_v_jugPosAndAngle = t_v_jugPosAndAngles;
   update();
 }
 
@@ -73,31 +72,40 @@ void JugglerPositionWidget::paintEvent(QPaintEvent *event)
                      0,
                      JUGGLER_POSITION_WIDGET_SIZE,
                      JUGGLER_POSITION_WIDGET_SIZE,
-                     backgroundPixmap);
+                     m_backgroundPixmap);
 
   // paint jugglers
-  for (int i = 0; i < m_v_juggler.size(); i++)
+  for (int i = 0; i < m_v_jugPosAndAngle.size(); i++)
   {
-    auto juggler = m_v_juggler.at(i);
+    auto jugPosAndAngle = m_v_jugPosAndAngle.at(i);
 
     // set position in widget
-    int x = ((juggler->getPosition().x() + GROUND_SIZE / 2)
+    int x = ((jugPosAndAngle.x() + GROUND_SIZE / 2)
              * (JUGGLER_POSITION_WIDGET_SIZE / GROUND_SIZE)
              - JUGGLER_PIXMAP_SIZE/2);
 
-    int y = ((juggler->getPosition().z() + GROUND_SIZE / 2)
+    int y = ((jugPosAndAngle.y() + GROUND_SIZE / 2)
              * (JUGGLER_POSITION_WIDGET_SIZE / GROUND_SIZE)
              - JUGGLER_PIXMAP_SIZE/2);
 
-    float angle = juggler->getRotY();
+    float angle = jugPosAndAngle.z();
+    int pixmapSize;
+//    (angle == 0 || angle == 180) ?
+//          pixmapSize = JUGGLER_PIXMAP_SIZE / 2:
+        pixmapSize = JUGGLER_PIXMAP_SIZE;
 
+    qDebug() << " angle envoyé au widget : " << angle;
 
+    QPixmap jugglerPixmap;
+    jugglerPixmap.load(JUGGLER_PIXMAP);
+    auto jugglerPixmapTransform = QTransform();
+    jugglerPixmapTransform.rotate(-angle);
+    auto pixmap = jugglerPixmap.transformed(jugglerPixmapTransform);
     painter.drawPixmap(x,
                        y,
-                       JUGGLER_PIXMAP_SIZE,
-                       JUGGLER_PIXMAP_SIZE,
-                       jugglerPixmap);
-
+                       pixmapSize,
+                       pixmapSize,
+                       pixmap);
   }
   painter.restore();
 }

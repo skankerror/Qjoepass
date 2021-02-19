@@ -58,9 +58,9 @@ MainWindow::MainWindow()
   m_jugglerPositionWidget->show();
 
   connect(m_my3DWindow,
-          SIGNAL(jugglerCountChanged(QVector<Juggler*>)),
+          SIGNAL(jugglerCountChanged(QVector<QVector3D>)),
           m_jugglerPositionWidget,
-          SLOT(jugglerCountChanged(QVector<Juggler*>)));
+          SLOT(jugglerCountChanged(QVector<QVector3D>)));
 
   connect(m_pref,
           SIGNAL(colorChanged(QColor)),

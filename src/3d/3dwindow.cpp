@@ -166,7 +166,20 @@ void My3DWindow::createJuggler(float t_rotY,
 {
   auto juggler = new Juggler(m_rootEntity, t_rotY, t_position, t_color);
   m_v_juggler.append(juggler);
-  emit jugglerCountChanged(m_v_juggler);
+
+  // give data to juggler position widget
+  QVector<QVector3D> vecToSend;
+  for (int i = 0; i < m_v_juggler.size(); i++)
+  {
+    auto juggler = m_v_juggler.at(i);
+
+    // vec(jugX, jugZ, jugRotY)
+    auto vec = QVector3D(juggler->getPosition().x(),
+                         juggler->getPosition().z(),
+                         juggler->getRotY());
+    vecToSend.append(vec);
+  }
+  emit jugglerCountChanged(vecToSend);
 }
 
 void My3DWindow::createSkybox()

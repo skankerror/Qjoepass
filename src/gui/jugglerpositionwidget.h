@@ -1,4 +1,4 @@
-/*
+﻿/*
  * (c) 2020 Pat Co / M. C.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,11 @@
 #define JUGGLERPOSITIONWIDGET_H
 
 #include <QWidget>
-#include "juggler.h"
+#include <QtGui/qtransform.h>
+//#include <QtGui/QTransform>
+#include <QVector3D>
+#include <QPixmap>
+//#include "juggler.h"
 
 class JugglerPositionWidget : public QWidget
 {
@@ -46,14 +50,15 @@ signals:
 
 public slots:
 
-  void jugglerCountChanged(QVector<Juggler *> t_v_juggler);
+  void jugglerCountChanged(QVector<QVector3D> t_v_jugPosAndAngles);
 
 private:
 
-  QPixmap jugglerPixmap;
-  QPixmap backgroundPixmap;
+//  QPixmap jugglerPixmap;
+  QPixmap m_backgroundPixmap;
 
-  QVector<Juggler *> m_v_juggler;
+//  QVector<Juggler *> m_v_juggler;
+  QVector<QVector3D> m_v_jugPosAndAngle;
 };
 
 #endif // JUGGLERPOSITIONWIDGET_H

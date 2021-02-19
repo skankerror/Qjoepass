@@ -208,7 +208,7 @@
 #define JUGGLER_POSITION_WIDGET_SIZE 600
 #define JUGGLER_PIXMAP "://res/images/juggler.png"
 #define GROUND_PIXMAP "://woodfloor/res/images/WoodFloor/wooden_planks_01_basecolor.png"
-#define JUGGLER_PIXMAP_SIZE FOREARM_LENGHT*(JUGGLER_POSITION_WIDGET_SIZE/GROUND_SIZE)
+#define JUGGLER_PIXMAP_SIZE FOREARM_LENGHT*(JUGGLER_POSITION_WIDGET_SIZE/GROUND_SIZE)*3
 
 /******************************** Animation *****************************************/
 

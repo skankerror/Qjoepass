@@ -68,7 +68,7 @@ private:
 
 signals:
 
-  void jugglerCountChanged(QVector<Juggler*>);
+  void jugglerCountChanged(QVector<QVector3D>);
 
 public slots:
 
