@@ -18,6 +18,7 @@
 #include "jugglerpositionwidget.h"
 #include "qjoepass.h"
 #include <QPainter>
+#include <QMouseEvent>
 
 JugglerPositionWidget::JugglerPositionWidget(QWidget *parent)
   : QWidget(parent)
@@ -28,6 +29,14 @@ JugglerPositionWidget::JugglerPositionWidget(QWidget *parent)
 
 void JugglerPositionWidget::mousePressEvent(QMouseEvent *event)
 {
+  if(event->button() == Qt::LeftButton)
+  {
+
+  }
+  if(event->button() == Qt::RightButton)
+  {
+
+  }
 }
 
 void JugglerPositionWidget::mouseReleaseEvent(QMouseEvent *event)
@@ -90,11 +99,8 @@ void JugglerPositionWidget::paintEvent(QPaintEvent *event)
 
     float angle = jugPosAndAngle.z();
     int pixmapSize;
-//    (angle == 0 || angle == 180) ?
-//          pixmapSize = JUGGLER_PIXMAP_SIZE / 2:
-        pixmapSize = JUGGLER_PIXMAP_SIZE;
-
-    qDebug() << " angle envoyé au widget : " << angle;
+    //TODO: ajuster size suivant l'angle
+    pixmapSize = JUGGLER_PIXMAP_SIZE;
 
     QPixmap jugglerPixmap;
     jugglerPixmap.load(JUGGLER_PIXMAP);

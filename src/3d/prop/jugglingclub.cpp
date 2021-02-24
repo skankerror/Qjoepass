@@ -16,6 +16,7 @@
  */
 
 #include "jugglingclub.h"
+#include <Qt3DRender>
 
 
 JugglingClub::JugglingClub(QEntity *t_rootEntity,
@@ -24,7 +25,7 @@ JugglingClub::JugglingClub(QEntity *t_rootEntity,
   : JugglingProp(t_rootEntity, t_color),
     m_launchType(t_launchType)
 {
-  auto clubMesh = new QMesh();
+  auto clubMesh = new Qt3DRender::QMesh();
   clubMesh->setSource(QUrl(CLUB_MESH_SRC));
   m_propTransform->setScale(CLUB_SCALE);
   addComponent(clubMesh);

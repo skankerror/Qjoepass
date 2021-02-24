@@ -21,9 +21,9 @@
 
 My3DWindow::My3DWindow(MySettings *t_settings)
   : Qt3DWindow(nullptr/*, Qt3DRender::API::RHI*/),
-    m_rootEntity(new QEntity()),
-    m_skybox(new QSkyboxEntity()),
-    m_pointLight(new QPointLight()),
+    m_rootEntity(new Qt3DCore::QEntity()),
+    m_skybox(new Qt3DExtras::QSkyboxEntity()),
+    m_pointLight(new Qt3DRender::QPointLight()),
     m_settings(t_settings),
     m_siteswap(nullptr),
     m_anim(new Animation())
@@ -52,8 +52,8 @@ void My3DWindow::createCam()
                                              CAM_NEARPLANE,
                                              CAM_FARPLANE);
   m_positionCamera = CAM_INITIAL_POSITION;
-  m_camFPController = new QFirstPersonCameraController(m_rootEntity);
-  m_camOController = new QOrbitCameraController(m_rootEntity);
+  m_camFPController = new Qt3DExtras::QFirstPersonCameraController(m_rootEntity);
+  m_camOController = new Qt3DExtras::QOrbitCameraController(m_rootEntity);
   setCameraToOrbit();
 }
 
@@ -216,17 +216,17 @@ void My3DWindow::createLighting()
                           LIGHT3_POS);
   m_v_light.append(light3);
 
-  m_envLight = new QEnvironmentLight();
+  m_envLight = new Qt3DRender::QEnvironmentLight();
 
-  auto irradiance = new QTextureLoader();
+  auto irradiance = new Qt3DRender::QTextureLoader();
   irradiance->setSource(QUrl(QStringLiteral(IRRADIANCE)));
-  irradiance->setWrapMode(QTextureWrapMode());
+  irradiance->setWrapMode(Qt3DRender::QTextureWrapMode());
   irradiance->setGenerateMipMaps(false);
   m_envLight->setIrradiance(irradiance);
 
-  auto specular = new QTextureLoader();
+  auto specular = new Qt3DRender::QTextureLoader();
   specular->setSource(QUrl(QStringLiteral(SPECULAR)));
-  specular->setWrapMode(QTextureWrapMode());
+  specular->setWrapMode(Qt3DRender::QTextureWrapMode());
   specular->setGenerateMipMaps(false);
   m_envLight->setSpecular(specular);
 

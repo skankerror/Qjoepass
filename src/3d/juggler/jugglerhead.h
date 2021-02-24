@@ -20,14 +20,9 @@
 
 #include <Qt3DCore>
 #include <Qt3DExtras>
-#include <Qt3DRender>
 #include "qjoepass.h"
 
-using namespace Qt3DCore;
-using namespace Qt3DExtras;
-using namespace Qt3DRender;
-
-class JugglerHead : public QEntity
+class JugglerHead : public Qt3DCore::QEntity
 {
 
   Q_OBJECT
@@ -35,7 +30,7 @@ class JugglerHead : public QEntity
 public:
 
   JugglerHead(QEntity *t_rootEntity,
-              QMetalRoughMaterial *t_jugglerMetalRoughMaterial,
+              Qt3DExtras::QMetalRoughMaterial *t_jugglerMetalRoughMaterial,
               QColor &t_color);
 
   void setHeadRotationX(float t_angle);
@@ -43,7 +38,7 @@ public:
 
 private:
 
-  QMetalRoughMaterial *m_headMaterial;
+  Qt3DExtras::QMetalRoughMaterial *m_headMaterial;
   QColor m_color;
   bool m_enabled = true;
 

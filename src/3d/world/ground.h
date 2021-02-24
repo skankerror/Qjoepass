@@ -23,11 +23,7 @@
 #include <Qt3DRender>
 #include "qjoepass.h"
 
-using namespace Qt3DCore;
-using namespace Qt3DExtras;
-using namespace Qt3DRender;
-
-class Ground: public QEntity
+class Ground: public Qt3DCore::QEntity
 {
 
   Q_OBJECT
@@ -42,18 +38,18 @@ public:
 
 private:
 
-  QPlaneMesh *planeMesh;
+  Qt3DExtras::QPlaneMesh *planeMesh;
   Qt3DCore::QTransform *planeTransform;
 
   QColor color;
   bool enabled = true;
 
-  QMetalRoughMaterial *groundMetalRoughnessMaterial;
-  QTextureLoader *groundBaseColor;
-  QTextureLoader *groundMetalness;
-  QTextureLoader *groundRoughness;
-  QTextureLoader *groundNormal;
-  QTextureLoader *groundAmbientOcclusion;
+  Qt3DExtras::QMetalRoughMaterial *groundMetalRoughnessMaterial;
+  Qt3DRender::QTextureLoader *groundBaseColor;
+  Qt3DRender::QTextureLoader *groundMetalness;
+  Qt3DRender::QTextureLoader *groundRoughness;
+  Qt3DRender::QTextureLoader *groundNormal;
+  Qt3DRender::QTextureLoader *groundAmbientOcclusion;
 };
 
 #endif // GROUND_H

@@ -23,7 +23,7 @@ Juggler::Juggler(QEntity *t_rootEntity,
                  QVector2D &t_position,
                  QColor &t_color)
 
-  : m_jugglerMetalRoughMaterial(new QMetalRoughMaterial()),
+  : m_jugglerMetalRoughMaterial(new Qt3DExtras::QMetalRoughMaterial()),
     m_skeletonTransform(new Qt3DCore::QTransform()),
     m_color(t_color),
     m_rotY(t_rotY)

@@ -18,15 +18,15 @@
 #include "ground.h"
 
 Ground::Ground(QEntity *t_rootEntity, QColor &t_color)
-  : planeMesh(new QPlaneMesh()),
+  : planeMesh(new Qt3DExtras::QPlaneMesh()),
     planeTransform(new Qt3DCore::QTransform()),
     color(t_color),
-    groundMetalRoughnessMaterial(new QMetalRoughMaterial()),
-    groundBaseColor(new QTextureLoader()),
-    groundMetalness(new QTextureLoader()),
-    groundRoughness(new QTextureLoader()),
-    groundNormal(new QTextureLoader()),
-    groundAmbientOcclusion(new QTextureLoader())
+    groundMetalRoughnessMaterial(new Qt3DExtras::QMetalRoughMaterial()),
+    groundBaseColor(new Qt3DRender::QTextureLoader()),
+    groundMetalness(new Qt3DRender::QTextureLoader()),
+    groundRoughness(new Qt3DRender::QTextureLoader()),
+    groundNormal(new Qt3DRender::QTextureLoader()),
+    groundAmbientOcclusion(new Qt3DRender::QTextureLoader())
 {
   // Plane shape data
   planeMesh->setWidth(GROUND_SIZE);
@@ -37,7 +37,7 @@ Ground::Ground(QEntity *t_rootEntity, QColor &t_color)
 
   // Plane texture
   groundBaseColor->setSource(QUrl(QStringLiteral(GROUND_BASE_COLOR)));
-  groundBaseColor->setFormat(QAbstractTexture::SRGB8_Alpha8);
+  groundBaseColor->setFormat(Qt3DRender::QAbstractTexture::SRGB8_Alpha8);
   groundBaseColor->setGenerateMipMaps(true);
   groundNormal->setSource(QUrl(QStringLiteral(GROUND_NORMAL)));
   groundNormal->setGenerateMipMaps(true);

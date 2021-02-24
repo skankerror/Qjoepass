@@ -31,11 +31,7 @@
 #include "siteswap.h"
 #include "animation.h"
 
-using namespace Qt3DCore;
-using namespace Qt3DRender;
-using namespace Qt3DExtras;
-
-class My3DWindow: public Qt3DWindow
+class My3DWindow: public Qt3DExtras::Qt3DWindow
 {
 
   Q_OBJECT
@@ -68,6 +64,7 @@ private:
 
 signals:
 
+  // vec<vec<jugX, jugZ, jugRotY>>
   void jugglerCountChanged(QVector<QVector3D>);
 
 public slots:
@@ -85,23 +82,23 @@ public slots:
 private:
 
   // root entity of 3D scene
-  QEntity *m_rootEntity;
+  Qt3DCore::QEntity *m_rootEntity;
 
   // Camera
-  QCamera *m_camera;
-  QFirstPersonCameraController *m_camFPController;
-  QOrbitCameraController *m_camOController;
+  Qt3DRender::QCamera *m_camera;
+  Qt3DExtras::QFirstPersonCameraController *m_camFPController;
+  Qt3DExtras::QOrbitCameraController *m_camOController;
   QVector3D m_positionCamera;
 
   // Skybox
-  QSkyboxEntity *m_skybox;
+  Qt3DExtras::QSkyboxEntity *m_skybox;
 
   // Ground
   Ground *m_ground;
 
   // light
-  QEnvironmentLight *m_envLight;
-  QPointLight *m_pointLight;
+  Qt3DRender::QEnvironmentLight *m_envLight;
+  Qt3DRender::QPointLight *m_pointLight;
   QVector<Light *> m_v_light;
 
   // juggler

@@ -20,14 +20,9 @@
 
 #include <Qt3DCore>
 #include <Qt3DExtras>
-#include <Qt3DRender>
 #include "qjoepass.h"
 
-using namespace Qt3DCore;
-using namespace Qt3DExtras;
-using namespace Qt3DRender;
-
-class JugglerArm : public QEntity
+class JugglerArm : public Qt3DCore::QEntity
 {
 
   Q_OBJECT
@@ -35,7 +30,7 @@ class JugglerArm : public QEntity
 public:
 
   JugglerArm(QEntity *t_rootEntity,
-             QMetalRoughMaterial *t_jugglerMetalRoughMaterial,
+             Qt3DExtras::QMetalRoughMaterial *t_jugglerMetalRoughMaterial,
              QColor &t_color,
              hand t_side);
 
@@ -48,14 +43,14 @@ public:
 
 private:
 
-  void makeMember(QCylinderMesh *t_member,
+  void makeMember(Qt3DExtras::QCylinderMesh *t_member,
                   Qt3DCore::QTransform *t_memberTransform,
                   QEntity *t_memberEntity,
                   QVector3D t_rot,
                   QVector3D t_trans,
                   float t_length);
 
-  void makeArticulation(QSphereMesh *t_phere,
+  void makeArticulation(Qt3DExtras::QSphereMesh *t_phere,
                         Qt3DCore::QTransform *t_sphereTransform,
                         QEntity *t_sphereEntity,
                         QVector3D t_trans);
@@ -63,7 +58,7 @@ private:
 
 private:
 
-  QMetalRoughMaterial *m_armMaterial;
+  Qt3DExtras::QMetalRoughMaterial *m_armMaterial;
   QColor m_color;
   bool m_enabled = true;
   hand m_side;

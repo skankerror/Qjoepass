@@ -19,11 +19,8 @@
 #define JUGGLERPOSITIONWIDGET_H
 
 #include <QWidget>
-#include <QtGui/qtransform.h>
-//#include <QtGui/QTransform>
 #include <QVector3D>
 #include <QPixmap>
-//#include "juggler.h"
 
 class JugglerPositionWidget : public QWidget
 {
@@ -34,7 +31,6 @@ public:
 
   explicit JugglerPositionWidget(QWidget *parent = nullptr);
 
-//  QPaintEngine *paintEngine() const override;
   QSize sizeHint() const override;
   QSize minimumSizeHint() const override;
 

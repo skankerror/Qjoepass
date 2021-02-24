@@ -18,7 +18,7 @@
 #include "jugglerarm.h"
 
 JugglerArm::JugglerArm(QEntity *t_rootEntity,
-                       QMetalRoughMaterial *t_jugglerMetalRoughMaterial,
+                       Qt3DExtras::QMetalRoughMaterial *t_jugglerMetalRoughMaterial,
                        QColor &t_color,
                        hand t_side)
   : m_armMaterial(t_jugglerMetalRoughMaterial),
@@ -48,13 +48,13 @@ JugglerArm::JugglerArm(QEntity *t_rootEntity,
   addComponent(m_globalArmTransform);
 
   // make shoulder
-  makeArticulation(new QSphereMesh(),
+  makeArticulation(new Qt3DExtras::QSphereMesh(),
                    m_shoulderTransform,
                    m_shoulderEntity,
                    CLAVICLES_TRANSLATION);
 
   // make arm
-  makeMember(new QCylinderMesh(),
+  makeMember(new Qt3DExtras::QCylinderMesh(),
              new Qt3DCore::QTransform(),
              m_armEntity,
              ARM_ROTATION,
@@ -62,13 +62,13 @@ JugglerArm::JugglerArm(QEntity *t_rootEntity,
              ARM_LENGHT);
 
   // make elbow
-  makeArticulation(new QSphereMesh(),
+  makeArticulation(new Qt3DExtras::QSphereMesh(),
                    m_elbowTransform,
                    m_elbowEntity,
                    ELBOW_TRANSLATION);
 
   // make forearm
-  makeMember(new QCylinderMesh,
+  makeMember(new Qt3DExtras::QCylinderMesh,
              new Qt3DCore::QTransform(),
              m_forearmEntity,
              FOREARM_ROTATION,
@@ -136,7 +136,7 @@ void JugglerArm::setElbowRotationX(float t_angle)
   m_elbowTransform->setRotationX(t_angle);
 }
 
-void JugglerArm::makeMember(QCylinderMesh *t_member,
+void JugglerArm::makeMember(Qt3DExtras::QCylinderMesh *t_member,
                             Qt3DCore::QTransform *t_memberTransform,
                             QEntity *t_memberEntity,
                             QVector3D t_rot,
@@ -157,7 +157,7 @@ void JugglerArm::makeMember(QCylinderMesh *t_member,
   t_memberEntity->addComponent(m_armMaterial);
 }
 
-void JugglerArm::makeArticulation(QSphereMesh *t_sphere,
+void JugglerArm::makeArticulation(Qt3DExtras::QSphereMesh *t_sphere,
                                   Qt3DCore::QTransform *t_sphereTransform,
                                   QEntity *t_sphereEntity,
                                   QVector3D t_trans)

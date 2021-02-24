@@ -25,7 +25,7 @@ JugglingRing::JugglingRing(QEntity *t_rootEntity,
     m_launchType(t_launchType)
 
 {
-  auto torusMesh = new QTorusMesh();
+  auto torusMesh = new Qt3DExtras::QTorusMesh();
   torusMesh->setRadius(RING_RADIUS);
   torusMesh->setMinorRadius(RING_MINOR_RADIUS);
   torusMesh->setRings(RING_RING_NUMBER);

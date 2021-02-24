@@ -20,7 +20,7 @@
 JugglingProp::JugglingProp(QEntity *t_rootEntity,
                            QColor &t_color)
 
-  : m_propMetalRoughMaterial(new QMetalRoughMaterial()),
+  : m_propMetalRoughMaterial(new Qt3DExtras::QMetalRoughMaterial()),
     m_propTransform(new Qt3DCore::QTransform()),
     m_color(t_color)
 {

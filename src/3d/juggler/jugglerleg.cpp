@@ -18,7 +18,7 @@
 #include "jugglerleg.h"
 
 JugglerLeg::JugglerLeg(QEntity *t_rootEntity,
-                       QMetalRoughMaterial *t_jugglerMetalRoughMaterial,
+                       Qt3DExtras::QMetalRoughMaterial *t_jugglerMetalRoughMaterial,
                        QColor &t_color,
                        hand t_side)
   : m_legMaterial(t_jugglerMetalRoughMaterial),
@@ -49,13 +49,13 @@ JugglerLeg::JugglerLeg(QEntity *t_rootEntity,
   addComponent(m_globalLegTransform);
 
   // make haunch
-  makeArticulation(new QSphereMesh(),
+  makeArticulation(new Qt3DExtras::QSphereMesh(),
                    m_haunchTransform,
                    m_haunchEntity,
                    HAUNCH_TRANSLATION);
 
   // make thigh
-  makeMember(new QCylinderMesh(),
+  makeMember(new Qt3DExtras::QCylinderMesh(),
              new Qt3DCore::QTransform(),
              m_thighEntity,
              THIGH_ROTATION,
@@ -63,13 +63,13 @@ JugglerLeg::JugglerLeg(QEntity *t_rootEntity,
              THIGH_LENGHT);
 
   // make knee
-  makeArticulation(new QSphereMesh(),
+  makeArticulation(new Qt3DExtras::QSphereMesh(),
                    m_kneeTransform,
                    m_kneeEntity,
                    KNEE_TRANSLATION);
 
   // make tibia
-  makeMember(new QCylinderMesh,
+  makeMember(new Qt3DExtras::QCylinderMesh,
              new Qt3DCore::QTransform(),
              m_tibiaEntity,
              TIBIA_ROTATION,
@@ -93,7 +93,7 @@ void JugglerLeg::setKneeRotationX(float t_angle)
   m_kneeTransform->setRotationX(t_angle);
 }
 
-void JugglerLeg::makeMember(QCylinderMesh *t_member,
+void JugglerLeg::makeMember(Qt3DExtras::QCylinderMesh *t_member,
                             Qt3DCore::QTransform *t_memberTransform,
                             QEntity *t_memberEntity,
                             QVector3D t_rot,
@@ -114,7 +114,7 @@ void JugglerLeg::makeMember(QCylinderMesh *t_member,
   t_memberEntity->addComponent(m_legMaterial);
 }
 
-void JugglerLeg::makeArticulation(QSphereMesh *t_sphere,
+void JugglerLeg::makeArticulation(Qt3DExtras::QSphereMesh *t_sphere,
                                   Qt3DCore::QTransform *t_sphereTransform,
                                   QEntity *t_sphereEntity,
                                   QVector3D t_trans)

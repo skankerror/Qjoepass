@@ -20,18 +20,14 @@
 
 #include <Qt3DCore>
 #include <Qt3DExtras>
-#include <Qt3DRender>
+//#include <Qt3DRender>
 #include "jugglertrunk.h"
 #include "jugglerarm.h"
 #include "jugglerleg.h"
 #include "jugglerhead.h"
 #include "qjoepass.h"
 
-using namespace Qt3DCore;
-using namespace Qt3DExtras;
-using namespace Qt3DRender;
-
-class Juggler: public QEntity
+class Juggler: public Qt3DCore::QEntity
 {
 
   Q_OBJECT
@@ -121,7 +117,7 @@ private slots:
 private:
 
   // global members
-  QMetalRoughMaterial *m_jugglerMetalRoughMaterial;
+  Qt3DExtras::QMetalRoughMaterial *m_jugglerMetalRoughMaterial;
   Qt3DCore::QTransform *m_skeletonTransform;
   QVector3D m_position;
   QColor m_color;

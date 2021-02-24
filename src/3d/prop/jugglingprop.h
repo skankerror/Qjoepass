@@ -20,14 +20,9 @@
 
 #include <Qt3DCore>
 #include <Qt3DExtras>
-#include <Qt3DRender>
 #include "qjoepass.h"
 
-using namespace Qt3DCore;
-using namespace Qt3DExtras;
-using namespace Qt3DRender;
-
-class JugglingProp : public QEntity
+class JugglingProp : public Qt3DCore::QEntity
 {
 
   Q_OBJECT
@@ -85,7 +80,7 @@ protected:
 
 protected:
 
-  QMetalRoughMaterial *m_propMetalRoughMaterial;
+  Qt3DExtras::QMetalRoughMaterial *m_propMetalRoughMaterial;
   Qt3DCore::QTransform *m_propTransform;
   QVector3D m_position;
   QColor m_color;

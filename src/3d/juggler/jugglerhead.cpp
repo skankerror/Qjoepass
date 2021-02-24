@@ -18,7 +18,7 @@
 #include "jugglerhead.h"
 
 JugglerHead::JugglerHead(QEntity *t_rootEntity,
-                         QMetalRoughMaterial *t_jugglerMetalRoughMaterial,
+                         Qt3DExtras::QMetalRoughMaterial *t_jugglerMetalRoughMaterial,
                          QColor &t_color)
   : m_headMaterial(t_jugglerMetalRoughMaterial),
     m_color(t_color),
@@ -43,7 +43,7 @@ JugglerHead::JugglerHead(QEntity *t_rootEntity,
   addComponent(m_globalHeadTransform);
 
   // make last vertebrate
-  auto sphere = new QSphereMesh();
+  auto sphere = new Qt3DExtras::QSphereMesh();
   sphere->setRadius(ARTICULATION_RADIUS);
   sphere->setRings(ARTICULATION_RINGS);
   sphere->setSlices(ARTICULATION_SLICES);
@@ -53,7 +53,7 @@ JugglerHead::JugglerHead(QEntity *t_rootEntity,
   m_lastVertebrateEntity->addComponent(m_headMaterial);
 
   // make neck
-  auto cylinder = new QCylinderMesh();
+  auto cylinder = new Qt3DExtras::QCylinderMesh();
   cylinder->setRadius(MEMBERS_RADIUS);
   cylinder->setRings(MEMBERS_RINGS);
   cylinder->setSlices(MEMBERS_SLICES);
@@ -66,7 +66,7 @@ JugglerHead::JugglerHead(QEntity *t_rootEntity,
   m_neckEntity->addComponent(m_headMaterial);
 
   // make skull
-  auto skull = new QSphereMesh();
+  auto skull = new Qt3DExtras::QSphereMesh();
   skull->setRadius(SKULL_RADIUS);
   skull->setRings(SKULL_RINGS);
   skull->setSlices(SKULL_SLICES);
@@ -78,7 +78,7 @@ JugglerHead::JugglerHead(QEntity *t_rootEntity,
 
   // make eyes
   //left
-  auto leftEye = new QSphereMesh();
+  auto leftEye = new Qt3DExtras::QSphereMesh();
   leftEye->setRadius(EYE_RADIUS);
   leftEye->setRings(EYE_RINGS);
   leftEye->setSlices(EYE_SLICES);
@@ -88,7 +88,7 @@ JugglerHead::JugglerHead(QEntity *t_rootEntity,
   m_leftEyeEntity->addComponent(leftEyeTransform);
   m_leftEyeEntity->addComponent(m_headMaterial);
   //right
-  auto rightEye = new QSphereMesh();
+  auto rightEye = new Qt3DExtras::QSphereMesh();
   rightEye->setRadius(EYE_RADIUS);
   rightEye->setRings(EYE_RINGS);
   rightEye->setSlices(EYE_SLICES);

@@ -18,7 +18,7 @@
 #include "light.h"
 
 Light::Light(QEntity *t_rootEntity,
-             QPointLight *t_light,
+             Qt3DRender::QPointLight *t_light,
              QVector3D t_position)
   : m_rootEntity(t_rootEntity),
     m_light(t_light),

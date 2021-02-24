@@ -20,15 +20,10 @@
 
 #include <Qt3DCore>
 #include <Qt3DExtras>
-#include <Qt3DRender>
 #include "qjoepass.h"
 
-using namespace Qt3DCore;
-using namespace Qt3DExtras;
-using namespace Qt3DRender;
 
-
-class JugglerTrunk : public QEntity
+class JugglerTrunk : public Qt3DCore::QEntity
 {
 
   Q_OBJECT
@@ -36,7 +31,7 @@ class JugglerTrunk : public QEntity
 public:
 
   JugglerTrunk(QEntity *t_rootEntity,
-               QMetalRoughMaterial *t_jugglerMetalRoughMaterial,
+               Qt3DExtras::QMetalRoughMaterial *t_jugglerMetalRoughMaterial,
                QColor &t_color);
 
 
@@ -49,21 +44,21 @@ public:
 
 private:
 
-  void makeMember(QCylinderMesh *t_member,
+  void makeMember(Qt3DExtras::QCylinderMesh *t_member,
                   Qt3DCore::QTransform *t_memberTransform,
                   QEntity *t_memberEntity,
                   QVector3D t_rot,
                   QVector3D t_trans,
                   float t_length);
 
-  void makeArticulation(QSphereMesh *t_sphere,
+  void makeArticulation(Qt3DExtras::QSphereMesh *t_sphere,
                         Qt3DCore::QTransform *t_sphereTransform,
                         QEntity *t_sphereEntity,
                         QVector3D t_trans);
 
 private:
 
-  QMetalRoughMaterial *m_trunkMaterial;
+  Qt3DExtras::QMetalRoughMaterial *m_trunkMaterial;
   QColor m_color;
   bool m_enabled = true;
 

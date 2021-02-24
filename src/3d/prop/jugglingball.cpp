@@ -24,7 +24,7 @@ JugglingBall::JugglingBall(QEntity *t_rootEntity,
   :JugglingProp(t_rootEntity, t_color),
     m_launchType(t_launchType)
 {
-  auto sphereMesh = new QSphereMesh();
+  auto sphereMesh = new Qt3DExtras::QSphereMesh();
   sphereMesh->setRings(BALL_RINGS);
   sphereMesh->setSlices(BALL_SLICES);
   sphereMesh->setRadius(BALL_RADIUS);

@@ -22,11 +22,7 @@
 #include <Qt3DRender>
 #include "qjoepass.h"
 
-using namespace Qt3DCore;
-using namespace Qt3DRender;
-
-
-class Light: public QEntity
+class Light: public Qt3DCore::QEntity
 {
 
   Q_OBJECT
@@ -34,14 +30,14 @@ class Light: public QEntity
 public:
 
   explicit Light(QEntity *t_rootEntity,
-                 QPointLight *t_light,
+                 Qt3DRender::QPointLight *t_light,
                  QVector3D t_position);
 
 private:
 
   Qt3DCore::QTransform *m_lightTransform;
   QEntity *m_rootEntity;
-  QPointLight *m_light;
+  Qt3DRender::QPointLight *m_light;
   QVector3D m_position;
 
   bool m_enabled = true;
