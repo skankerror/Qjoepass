@@ -20,9 +20,7 @@
 JugglerHead::JugglerHead(QEntity *t_rootEntity,
                          Qt3DExtras::QMetalRoughMaterial *t_jugglerMetalRoughMaterial,
                          QColor &t_color)
-  : m_headMaterial(t_jugglerMetalRoughMaterial),
-    m_color(t_color),
-    m_globalHeadTransform(new Qt3DCore::QTransform()),
+  : JugglerPart(t_rootEntity, t_jugglerMetalRoughMaterial, t_color),
     m_lastVertebrateEntity(new QEntity(this)),
     m_lastVertebrateTransform(new Qt3DCore::QTransform()),
     m_neckEntity(new QEntity(m_lastVertebrateEntity)), // connect neck to vertebrate
@@ -34,13 +32,13 @@ JugglerHead::JugglerHead(QEntity *t_rootEntity,
   QEntity::setParent(t_rootEntity);
 
   // translate
-  m_globalHeadTransform->setTranslation(HEAD_TRANSLATION);
+  m_globalTransform->setTranslation(HEAD_TRANSLATION);
 
   // rotate
-  m_globalHeadTransform->setRotation(QQuaternion::fromEulerAngles(HEAD_ROTATION));
+  m_globalTransform->setRotation(QQuaternion::fromEulerAngles(HEAD_ROTATION));
 
   // add transform to QEntity
-  addComponent(m_globalHeadTransform);
+  addComponent(m_globalTransform);
 
   // make last vertebrate
   auto sphere = new Qt3DExtras::QSphereMesh();
@@ -50,7 +48,7 @@ JugglerHead::JugglerHead(QEntity *t_rootEntity,
   m_lastVertebrateTransform->setTranslation(LAST_VERTEBRATE_TRANSLATION);
   m_lastVertebrateEntity->addComponent(sphere);
   m_lastVertebrateEntity->addComponent(m_lastVertebrateTransform);
-  m_lastVertebrateEntity->addComponent(m_headMaterial);
+  m_lastVertebrateEntity->addComponent(m_material);
 
   // make neck
   auto cylinder = new Qt3DExtras::QCylinderMesh();
@@ -63,7 +61,7 @@ JugglerHead::JugglerHead(QEntity *t_rootEntity,
   neckTransform->setRotation(QQuaternion::fromEulerAngles(NECK_ROTATION));
   m_neckEntity->addComponent(cylinder);
   m_neckEntity->addComponent(neckTransform);
-  m_neckEntity->addComponent(m_headMaterial);
+  m_neckEntity->addComponent(m_material);
 
   // make skull
   auto skull = new Qt3DExtras::QSphereMesh();
@@ -74,7 +72,7 @@ JugglerHead::JugglerHead(QEntity *t_rootEntity,
   skullTransform->setTranslation(SKULL_TRANSLATION);
   m_skullEntity->addComponent(skull);
   m_skullEntity->addComponent(skullTransform);
-  m_skullEntity->addComponent(m_headMaterial);
+  m_skullEntity->addComponent(m_material);
 
   // make eyes
   //left
@@ -86,7 +84,7 @@ JugglerHead::JugglerHead(QEntity *t_rootEntity,
   leftEyeTransform->setTranslation(LEFT_EYE_TRANSLATION);
   m_leftEyeEntity->addComponent(leftEye);
   m_leftEyeEntity->addComponent(leftEyeTransform);
-  m_leftEyeEntity->addComponent(m_headMaterial);
+  m_leftEyeEntity->addComponent(m_material);
   //right
   auto rightEye = new Qt3DExtras::QSphereMesh();
   rightEye->setRadius(EYE_RADIUS);
@@ -96,7 +94,7 @@ JugglerHead::JugglerHead(QEntity *t_rootEntity,
   rightEyeTransform->setTranslation(RIGHT_EYE_TRANSLATION);
   m_rightEyeEntity->addComponent(rightEye);
   m_rightEyeEntity->addComponent(rightEyeTransform);
-  m_rightEyeEntity->addComponent(m_headMaterial);
+  m_rightEyeEntity->addComponent(m_material);
 }
 
 void JugglerHead::setHeadRotationX(float t_angle)

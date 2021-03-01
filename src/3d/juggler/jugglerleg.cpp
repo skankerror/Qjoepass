@@ -21,10 +21,8 @@ JugglerLeg::JugglerLeg(QEntity *t_rootEntity,
                        Qt3DExtras::QMetalRoughMaterial *t_jugglerMetalRoughMaterial,
                        QColor &t_color,
                        hand t_side)
-  : m_legMaterial(t_jugglerMetalRoughMaterial),
-    m_color(t_color),
+  : JugglerPart(t_rootEntity, t_jugglerMetalRoughMaterial, t_color),
     m_side(t_side),
-    m_globalLegTransform(new Qt3DCore::QTransform()),
     m_haunchEntity(new QEntity(this)),
     m_haunchTransform(new Qt3DCore::QTransform()),
     m_thighEntity(new QEntity(m_haunchEntity)), // connect thigh to haunch
@@ -36,17 +34,17 @@ JugglerLeg::JugglerLeg(QEntity *t_rootEntity,
   QEntity::setParent(t_rootEntity);
 
   // translate
-  m_globalLegTransform->setTranslation(GLOBAL_LEG_TRANSLATION);
+  m_globalTransform->setTranslation(GLOBAL_LEG_TRANSLATION);
 
   // rotation
   QVector3D legRotation;
   (m_side == leftHand) ?
         legRotation = LEFT_LEG_ROTATION :
       legRotation = RIGHT_LEG_ROTATION;
-  m_globalLegTransform->setRotation(QQuaternion::fromEulerAngles(legRotation));
+  m_globalTransform->setRotation(QQuaternion::fromEulerAngles(legRotation));
 
   // add transform to QEntity
-  addComponent(m_globalLegTransform);
+  addComponent(m_globalTransform);
 
   // make haunch
   makeArticulation(new Qt3DExtras::QSphereMesh(),
@@ -91,42 +89,4 @@ void JugglerLeg::setHaunchRotationY(float t_angle)
 void JugglerLeg::setKneeRotationX(float t_angle)
 {
   m_kneeTransform->setRotationX(t_angle);
-}
-
-void JugglerLeg::makeMember(Qt3DExtras::QCylinderMesh *t_member,
-                            Qt3DCore::QTransform *t_memberTransform,
-                            QEntity *t_memberEntity,
-                            QVector3D t_rot,
-                            QVector3D t_trans,
-                            float t_length)
-{
-  t_memberEntity->addComponent(t_member);
-
-  t_member->setRadius(MEMBERS_RADIUS);
-  t_member->setRings(MEMBERS_RINGS);
-  t_member->setSlices(MEMBERS_SLICES);
-  t_member->setLength(t_length);
-
-  t_memberTransform->setTranslation(t_trans);
-  t_memberTransform->setRotation(QQuaternion::fromEulerAngles(t_rot));
-
-  t_memberEntity->addComponent(t_memberTransform);
-  t_memberEntity->addComponent(m_legMaterial);
-}
-
-void JugglerLeg::makeArticulation(Qt3DExtras::QSphereMesh *t_sphere,
-                                  Qt3DCore::QTransform *t_sphereTransform,
-                                  QEntity *t_sphereEntity,
-                                  QVector3D t_trans)
-{
-  t_sphere->setRadius(ARTICULATION_RADIUS);
-  t_sphere->setRings(ARTICULATION_RINGS);
-  t_sphere->setSlices(ARTICULATION_SLICES);
-
-  t_sphereTransform->setTranslation(t_trans);
-
-  t_sphereEntity->addComponent(t_sphere);
-  t_sphereEntity->addComponent(t_sphereTransform);
-  t_sphereEntity->addComponent(m_legMaterial);
-
 }

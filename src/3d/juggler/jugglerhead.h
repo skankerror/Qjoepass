@@ -20,9 +20,10 @@
 
 #include <Qt3DCore>
 #include <Qt3DExtras>
-#include "qjoepass.h"
+//#include "qjoepass.h"
+#include "jugglerpart.h"
 
-class JugglerHead : public Qt3DCore::QEntity
+class JugglerHead : public JugglerPart
 {
 
   Q_OBJECT
@@ -37,12 +38,6 @@ public:
   void setHeadRotationY(float t_angle);
 
 private:
-
-  Qt3DExtras::QMetalRoughMaterial *m_headMaterial;
-  QColor m_color;
-  bool m_enabled = true;
-
-  Qt3DCore::QTransform *m_globalHeadTransform;
 
   // last vertebrate
   QEntity *m_lastVertebrateEntity;

@@ -20,9 +20,7 @@
 JugglerTrunk::JugglerTrunk(QEntity *t_rootEntity,
                            Qt3DExtras::QMetalRoughMaterial *t_jugglerMetalRoughMaterial,
                            QColor &t_color)
-  : m_trunkMaterial(t_jugglerMetalRoughMaterial),
-    m_color(t_color),
-    m_globalTrunkTransform(new Qt3DCore::QTransform()),
+  : JugglerPart(t_rootEntity, t_jugglerMetalRoughMaterial, t_color),
     m_pelvisEntity(new QEntity(this)),
     m_pelvisTransform(new Qt3DCore::QTransform()),
     m_spineEntity(new QEntity(m_pelvisEntity)), // connect spine to pelvis
@@ -33,13 +31,13 @@ JugglerTrunk::JugglerTrunk(QEntity *t_rootEntity,
   QEntity::setParent(t_rootEntity);
 
   // translate
-  m_globalTrunkTransform->setTranslation(TRUNK_TRANSLATION);
+  m_globalTransform->setTranslation(TRUNK_TRANSLATION);
 
   // rotation
-  m_globalTrunkTransform->setRotation(QQuaternion::fromEulerAngles(TRUNK_ROTATION));
+  m_globalTransform->setRotation(QQuaternion::fromEulerAngles(TRUNK_ROTATION));
 
   // add transform to QEntity
-  addComponent(m_globalTrunkTransform);
+  addComponent(m_globalTransform);
 
   // make pelvis
   makeArticulation(new Qt3DExtras::QSphereMesh(),
@@ -62,43 +60,5 @@ JugglerTrunk::JugglerTrunk(QEntity *t_rootEntity,
              CLAVICLES_ROTATION,
              CLAVICLES_TRANSLATION,
              CLAVICLES_LENGHT);
-
-}
-
-void JugglerTrunk::makeMember(Qt3DExtras::QCylinderMesh *t_member,
-                              Qt3DCore::QTransform *t_memberTransform,
-                              QEntity *t_memberEntity,
-                              QVector3D t_rot,
-                              QVector3D t_trans,
-                              float t_length)
-{
-  t_memberEntity->addComponent(t_member);
-
-  t_member->setRadius(MEMBERS_RADIUS);
-  t_member->setRings(MEMBERS_RINGS);
-  t_member->setSlices(MEMBERS_SLICES);
-  t_member->setLength(t_length);
-
-  t_memberTransform->setTranslation(t_trans);
-  t_memberTransform->setRotation(QQuaternion::fromEulerAngles(t_rot));
-
-  t_memberEntity->addComponent(t_memberTransform);
-  t_memberEntity->addComponent(m_trunkMaterial);
-}
-
-void JugglerTrunk::makeArticulation(Qt3DExtras::QSphereMesh *t_sphere,
-                                    Qt3DCore::QTransform *t_sphereTransform,
-                                    QEntity *t_sphereEntity,
-                                    QVector3D t_trans)
-{
-  t_sphere->setRadius(ARTICULATION_RADIUS);
-  t_sphere->setRings(ARTICULATION_RINGS);
-  t_sphere->setSlices(ARTICULATION_SLICES);
-
-  t_sphereTransform->setTranslation(t_trans);
-
-  t_sphereEntity->addComponent(t_sphere);
-  t_sphereEntity->addComponent(t_sphereTransform);
-  t_sphereEntity->addComponent(m_trunkMaterial);
 
 }

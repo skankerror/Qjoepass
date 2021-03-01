@@ -20,9 +20,11 @@
 
 #include <Qt3DCore>
 #include <Qt3DExtras>
-#include "qjoepass.h"
+//#include "qjoepass.h"
+#include "jugglerpart.h"
 
-class JugglerLeg : public Qt3DCore::QEntity
+
+class JugglerLeg : public JugglerPart
 {
 
   Q_OBJECT
@@ -40,26 +42,7 @@ public:
 
 private:
 
-  void makeMember(Qt3DExtras::QCylinderMesh *t_member,
-                  Qt3DCore::QTransform *t_memberTransform,
-                  QEntity *t_memberEntity,
-                  QVector3D t_rot,
-                  QVector3D t_trans,
-                  float t_length);
-
-  void makeArticulation(Qt3DExtras::QSphereMesh *t_sphere,
-                        Qt3DCore::QTransform *t_sphereTransform,
-                        QEntity *t_sphereEntity,
-                        QVector3D t_trans);
-
-private:
-
-  Qt3DExtras::QMetalRoughMaterial *m_legMaterial;
-  QColor m_color;
-  bool m_enabled = true;
   hand m_side;
-
-  Qt3DCore::QTransform *m_globalLegTransform;
 
   // haunch
   QEntity *m_haunchEntity;
